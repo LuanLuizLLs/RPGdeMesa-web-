@@ -104,7 +104,10 @@ function Home() {
         type: 'circular'
       })
 
-      API.post(`campaings/create/${user.id}`, valuesCampaing)
+      API.post('campaings/create', {
+        id_user: user.id,
+        ...valuesCampaing,
+      })
         .then(({ data }) => {
           setMessage(data.message)
         })
@@ -192,7 +195,8 @@ function Home() {
         type: 'circular'
       })
 
-      API.post(`characters/create/${user.id}`, {
+      API.post('characters/create', {
+        id_user: user.id,
         ...valuesCharacter,
         ...race[valuesCharacter.race],
         ...caste[valuesCharacter.caste],
