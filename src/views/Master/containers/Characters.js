@@ -113,10 +113,7 @@ function Characters({
         id_campaing: campaing.id,
       })
         .then(({ data }) => {
-          setMessage({
-            type: data.status,
-            message: data.message
-          })
+          setMessage(data.message)
           setRefresh({
             character: data
           })
@@ -156,10 +153,7 @@ function Characters({
 
       API.patch(`/characters/update/${characters[index].id}`, characters[index])
         .then(({ data }) => {
-          setMessage({
-            type: data.status,
-            message: data.message
-          })
+          setMessage(data.message)
           setRefresh({
             character: data
           })

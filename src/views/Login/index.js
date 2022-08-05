@@ -16,7 +16,6 @@ import {
   Grid,
 } from '../../components'
 
-
 const INITIAL = {
   VIEW: 'login',
   VALUES: {
@@ -65,12 +64,12 @@ function Login() {
         .then(({ data }) => {
           const [user] = data.response
           if (user) {
+            In(user)
+            setNavigate('/')
             setMessage({
               type: 'success',
               message: 'Login efetuado',
             })
-            In(user)
-            setNavigate('/')
           } else {
             setMessage({
               type: 'error',
@@ -103,10 +102,7 @@ function Login() {
 
       API.post('users/create', values)
         .then(({ data }) => {
-          setMessage({
-            type: data.status,
-            message: data.message,
-          })
+          setMessage(data.message)
         })
         .catch(() => {
           setMessage({
@@ -142,10 +138,7 @@ function Login() {
 
       API.patch(`users/update`, values)
         .then(({ data }) => {
-          setMessage({
-            type: data.status,
-            message: data.message,
-          })
+          setMessage(data.message)
           setView('login')
         })
         .catch(() => {

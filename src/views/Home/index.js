@@ -106,10 +106,7 @@ function Home() {
 
       API.post(`campaings/create/${user.id}`, valuesCampaing)
         .then(({ data }) => {
-          setMessage({
-            type: data.status,
-            message: data.message,
-          })
+          setMessage(data.message)
         })
         .catch(() => {
           setMessage({
@@ -133,10 +130,7 @@ function Home() {
 
       API.patch(`campaings/update/${id}`, valuesCampaing)
         .then(({ data }) => {
-          setMessage({
-            type: data.status,
-            message: data.message,
-          })
+          setMessage(data.message)
         })
         .catch(() => {
           setMessage({
@@ -160,10 +154,7 @@ function Home() {
 
       API.delete((`campaings/delete/${id}`))
         .then(({ data }) => {
-          setMessage({
-            type: data.status,
-            message: data.message
-          })
+          setMessage(data.message)
         })
         .catch(() => {
           setMessage({
@@ -207,10 +198,7 @@ function Home() {
         ...caste[valuesCharacter.caste],
       })
         .then(({ data }) => {
-          setMessage({
-            type: data.status,
-            message: data.message,
-          })
+          setMessage(data.message)
         })
         .catch(() => {
           setMessage({
@@ -234,10 +222,7 @@ function Home() {
 
       API.patch(`characters/update/${id}`, valuesCharacter)
         .then(({ data }) => {
-          setMessage({
-            type: data.status,
-            message: data.message,
-          })
+          setMessage(data.message)
         })
         .catch(() => {
           setMessage({
@@ -261,10 +246,7 @@ function Home() {
 
       API.delete((`characters/delete/${id}`))
         .then(({ data }) => {
-          setMessage({
-            type: data.status,
-            message: data.message
-          })
+          setMessage(data.message)
         })
         .catch(() => {
           setMessage({
