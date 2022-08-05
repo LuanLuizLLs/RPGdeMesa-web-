@@ -220,6 +220,7 @@ function Login() {
             label="Usuário"
             placeholder="Seu novo usuário"
             stateValue={[values, setValues]}
+            onEnter={handleClick.submitRegister}
           />
           <Input
             name="password"
@@ -227,6 +228,7 @@ function Login() {
             type="password"
             placeholder="Digite sua senha"
             stateValue={[values, setValues]}
+            onEnter={handleClick.submitRegister}
             validate={comparativePassword(values.password, values.new_password)}
           />
           <Input
@@ -235,6 +237,7 @@ function Login() {
             type="password"
             placeholder="Confirme sua senha"
             stateValue={[values, setValues]}
+            onEnter={handleClick.submitRegister}
             validate={comparativePassword(values.password, values.new_password)}
           />
           <Grid type="container" padding={[20, 0]}>
@@ -273,6 +276,7 @@ function Login() {
             label="Usuário"
             placeholder="Digite seu usuário"
             stateValue={[values, setValues]}
+            onEnter={handleClick.submitRecover}
           />
           <Input
             name="password"
@@ -280,6 +284,7 @@ function Login() {
             type="password"
             placeholder="Digite sua senha"
             stateValue={[values, setValues]}
+            onEnter={handleClick.submitRecover}
             validate={comparativePassword(values.password, values.new_password)}
           />
           <Input
@@ -288,6 +293,7 @@ function Login() {
             type="password"
             placeholder="Digite sua senha novamente"
             stateValue={[values, setValues]}
+            onEnter={handleClick.submitRecover}
             validate={comparativePassword(values.password, values.new_password)}
           />
           <Grid type="container" padding={[20, 0]}>
