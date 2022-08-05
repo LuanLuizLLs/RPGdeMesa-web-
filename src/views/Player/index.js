@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Page from '../../layouts/Page'
 import Features from './container/Features'
-import Personality from './container/Personality'
 import Abilities from './container/Abilities'
 import Inventory from './container/Inventory'
 import { useSelector } from 'react-redux'
@@ -136,10 +135,9 @@ function Player() {
       </Grid>
       <Divider borderStyle="solid" />
       <Card>
-        <Tab tabs={['Características', 'Personalidade', 'Habilidades', 'Invetário']} stateTab={[tab, setTab]}>
+        <Tab tabs={['Características', 'Habilidades', 'Invetário']} stateTab={[tab, setTab]}>
           {[
             <Features key="features" character={character} />,
-            <Personality key="personality" character={character} />,
             <Abilities key="abilities" character={character} />,
             <Inventory key="inventory" character={character} />
           ]}

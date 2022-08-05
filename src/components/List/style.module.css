@@ -1,6 +1,7 @@
 .container {
   overflow: auto;
   border-radius: 4px;
+  background-color: #FFF;
   border: solid var(--color-primary);
 }
 
@@ -27,6 +28,7 @@
 
 .list>tbody {
   overflow: auto;
+  background-color: #FFF;
 }
 
 .list>tbody td {

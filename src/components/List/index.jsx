@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classes from './style.module.css'
 
 export const List = ({
-  height = '',
+  height = 0,
   rows = [],
   columns = [],
   actions = () => { },
@@ -43,7 +43,7 @@ export const List = ({
 }
 
 List.propTypes = {
-  height: PropTypes.string,
+  height: PropTypes.number.isRequired,
   rows: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,
   actions: PropTypes.func,

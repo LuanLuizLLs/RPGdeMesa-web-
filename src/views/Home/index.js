@@ -507,7 +507,7 @@ function Home() {
                 Lista de Campanhas:
               </Title>
               <List
-                height="40vh"
+                height={300}
                 rows={listCampaings}
                 columns={['ID', 'Campanha', 'Descrição']}
                 onClick={(row) => handleClick.openCampaing('campaing_start', row)}
@@ -534,7 +534,7 @@ function Home() {
                 Lista de Personagens:
               </Title>
               <List
-                height="40vh"
+                height={300}
                 rows={listCharacters}
                 columns={['ID', 'Personagem', 'Descrição']}
                 onClick={(row) => handleClick.openCharacter('character_start', row)}
