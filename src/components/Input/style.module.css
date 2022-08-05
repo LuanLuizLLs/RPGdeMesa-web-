@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.label,
+.icon,
+.input {
+  font-size: inherit;
+}
+
+.label {
+  display: inline;
+  font-weight: bolder;
+  padding: 6px;
+  color: var(--color-primary);
+}
+
+.component {
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: #FFF;
+  border: solid var(--color-secondary);
+}
+
+.component[validate=valid] {
+  border: solid var(--color-success);
+}
+
+.component[validate=valid]:focus {
+  box-shadow: 0 0 4px var(--color-success);
+}
+
+.component[validate=invalid] {
+  border: solid var(--color-error);
+}
+
+.component[validate=invalid]:focus {
+  box-shadow: 0 0 4px var(--color-error);
+}
+
+.icon {
+  padding-left: 6px;
+}
+
+.input {
+  flex: auto;
+  border: none;
+  width: 100%;
+  outline: 0;
+  padding: 6px 10px;
+  color: var(--color-black);
+}
+
+.input::placeholder {
+  color: var(--color-gray);
+}

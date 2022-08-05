@@ -1,0 +1,96 @@
+.page {
+  height: 100vh;
+  flex: auto;
+  display: flex;
+  overflow: hidden;
+  align-items: stretch;
+  flex-direction: column;
+  background-color: var(--color-background);
+}
+
+.header {
+  padding: 0 10vw;
+  min-height: 80px;
+
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  justify-content: space-between;
+
+  color: var(--color-secondary);
+  background-color: var(--color-primary);
+}
+
+.user,
+.navigation {
+  display: flex;
+  align-items: center;
+}
+
+.user figure,
+.navigation>a {
+  height: 50px;
+  margin-right: 10px;
+}
+
+.user img,
+.navigation img {
+  height: 100%;
+  width: auto;
+}
+
+.user {
+  height: 50px;
+}
+
+.user figure {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-primary);
+
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  border-radius: 50px;
+  background-color: var(--color-white);
+}
+
+.user>div {
+  display: flex;
+  flex-direction: column;
+}
+
+.user>div span {
+  font-size: .8rem;
+}
+
+.logout:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.main {
+  width: 100vw;
+  padding: 20px 0;
+  overflow-y: auto;
+}
+
+.main>main {
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  margin-bottom: 20px;
+}
+
+:root[device=mobile] .title {
+  font-size: 1.4rem;
+}

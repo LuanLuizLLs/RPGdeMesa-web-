@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  padding: 5px;
+  font-weight: bolder;
+  color: var(--color-primary);
+}
+
+.select {
+  outline: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 5px;
+  color: var(--color-black);
+  border: solid var(--color-secondary);
+}
+
+.select[data-selected=false] {
+  color: var(--color-gray);
+}
+
+.select:disabled {
+  opacity: initial;
+  color: var(--color-black);
+  background-color: #FFF;
+}
+
+.select:focus {
+  box-shadow: 0 0 5px var(--color-secondary);
+}

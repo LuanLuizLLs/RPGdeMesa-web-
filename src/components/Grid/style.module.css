@@ -1,0 +1,16 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.slide {
+  overflow: hidden;
+  transition: width .3s;
+}
+
+.slide>div {
+  height: 100%;
+  padding: 10px;
+  margin-left: 10px;
+  border-left: thin solid var(--color-gray);
+}

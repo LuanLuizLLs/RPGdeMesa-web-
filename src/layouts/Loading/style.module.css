@@ -1,0 +1,78 @@
+.loading {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/** Circular loading */
+.loading[loading=circular]::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+  bottom: 0;
+  position: absolute;
+  background-color: #00000050;
+}
+
+.loading[loading=circular]::before {
+  content: '';
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 8px solid var(--color-white);
+  border-left-color: transparent;
+
+
+  z-index: 2;
+  position: absolute;
+  animation-name: circular;
+  animation-duration: .5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes circular {
+  to {
+    transform: rotate(360deg);
+  }
+
+  from {
+    transform: rotate(0);
+  }
+}
+
+/** Bar loading */
+.loading[loading=bar] {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading[loading=bar]::before {
+  content: '';
+  width: 50vw;
+  top: 0;
+  position: absolute;
+  color: var(--color-white);
+  border-top: solid 5px var(--color-white);
+
+  animation-name: bar;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bar {
+  to {
+    transform: translateX(200%);
+  }
+
+  from {
+    transform: translateX(-200%);
+  }
+}

@@ -1,0 +1,24 @@
+.button {
+  width: 100%;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: solid transparent;
+  background-color: transparent;
+}
+
+.button:hover,
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 4px var(--color-gray);
+}
+
+.button:disabled {
+  box-shadow: none;
+  color: gray !important;
+  background-color: gainsboro !important;
+}
+

@@ -1,0 +1,69 @@
+.container {
+  overflow: auto;
+  border-radius: 4px;
+  border: solid var(--color-primary);
+}
+
+.list {
+  width: 100%;
+  border-spacing: 0;
+  background-color: var(--color-white);
+}
+
+.list th,
+.list td {
+  padding: 10px;
+  max-width: 100px;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.list>thead th {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+}
+
+.list>tbody {
+  overflow: auto;
+}
+
+.list>tbody td {
+  color: var(--color-primary);
+}
+
+.list>tbody tr:hover {
+  cursor: pointer;
+  background-color: var(--color-secondary);
+}
+
+td.actions {
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+}
+
+td.actions span {
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+td.actions span:last-child {
+  margin-right: 0;
+}
+
+td.actions span[type=update]::before {
+  content: var(--icon-edit);
+}
+
+td.actions span[type=delete]::before {
+  content: var(--icon-delete);
+}
+
+:root:not([device=desktop]) .list>thead tr th:nth-child(1n+3):not(:last-child),
+:root:not([device=desktop]) .list>tbody tr td:nth-child(1n+3):not(:last-child) {
+  display: none;
+}

@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: bolder;
+  padding: 6px;
+  color: var(--color-primary);
+}
+
+.textarea {
+  padding: 6px 10px;
+  border-radius: 5px;
+  color: var(--color-black);
+  border: solid var(--color-secondary);
+}
+
+.textarea::placeholder {
+  color: var(--color-gray);
+}
+
+.textarea:focus {
+  outline: 0;
+  box-shadow: 0 0 5px var(--color-secondary);
+}
