@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import API from '../../../services/api'
 import Context from '../../../global/context'
+import theme from '../../../theme'
 import {
   Box,
   Button,
@@ -11,7 +12,6 @@ import {
   Text,
   Title,
 } from '../../../components'
-import theme from '../../../theme'
 
 const INITIAL = {
   MODAL: {
@@ -178,7 +178,7 @@ function Features({
                   />
                 </Grid>
               </Grid>
-              <Box display="flex" justifyContent="flex-end">
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
                 <Button type="filled" color="secondary" padding={10} onClick={handle.resetFeature}>
                   Cancelar
                 </Button>

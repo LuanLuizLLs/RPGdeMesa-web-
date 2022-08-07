@@ -67,6 +67,8 @@ function Characters({
       .then(({ data }) => {
         if (data.response.length) {
           setCharacters(Object.assign({}, data.response))
+        } else {
+          setCharacters(INITIAL.CHARACTERS)
         }
       })
   }, [refresh, campaing.id])
@@ -95,35 +97,35 @@ function Characters({
             search_character: character.name
           })
         })
-        .finally(handle.resetCharacter)
+        .finally(() => setLoading({}))
     },
     addCharacter: () => {
       setLoading({
         type: 'circular'
       })
 
-      API.patch(`/characters/updateCharacter/${values.id}`, {
+      API.patch(`/characters/update/${values.id}`, {
         ...values,
         id_campaing: campaing.id,
       })
         .then(({ data }) => {
           setMessage(data.message)
-          setRefresh(data)
+          setRefresh(data.message)
         })
-        .finally(handle.resetCharacter)
+        .finally((handle.resetCharacter))
     },
     removeCharacter: (data) => {
       setLoading({
         type: 'circular'
       })
       
-      API.patch(`/characters/updateCharacter/${data.id}`, {
+      API.patch(`/characters/update/${data.id}`, {
         ...data,
         id_campaing: null,
       })
         .then(({ data }) => {
           setMessage(data.message)
-          setRefresh(data)
+          setRefresh(data.message)
         })
         .finally(handle.resetCharacter)
     },
@@ -132,10 +134,10 @@ function Characters({
         type: 'circular'
       })
 
-      API.patch(`/characters/updateCharacter/${characters[index].id}`, characters[index])
+      API.patch(`/characters/update/${characters[index].id}`, characters[index])
         .then(({ data }) => {
           setMessage(data.message)
-          setRefresh(data)
+          setRefresh(data.message)
         })
         .finally(handle.resetCharacter)
     },
