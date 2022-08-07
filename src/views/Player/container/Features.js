@@ -35,7 +35,7 @@ const formatAttribute = (text = '', point = 0) => {
   const attribute = { text, point }
   if (attribute.point) {
     attribute.point = attribute.point > 0 ? `+${attribute.point}` : `${attribute.point}`
-    return `${attribute.point} ${attribute.text} `
+    return `${attribute.text}${attribute.point} `
   }
   return ''
 }
@@ -46,7 +46,7 @@ function Features({
 }) {
 
   const setMessage = useContext(Context).message[1]
-  
+
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
   const [refresh, setRefresh] = useState(INITIAL.REFRESH)
@@ -54,8 +54,8 @@ function Features({
 
   useEffect(() => {
     API.get('features/read', {
-      params: { 
-        id_character: character.id 
+      params: {
+        id_character: character.id,
       }
     })
       .then(({ data }) => {
@@ -191,16 +191,30 @@ function Features({
           detail_feature: (
             <>
               <Box backgroundColor={theme.secondary} padding="0 10px" margin={10} borderRadius={10}>
-                <Text fontWeight="bold" fontSize="larger" color="primary">
+                <Text fontWeight="bold" fontSize="larger" color="primary" >
                   {modal.data.name}
                 </Text>
-                <Text fontWeight="bold" color="gray">
-                  {formatAttribute('FOR', modal.data.strength)}
-                  {formatAttribute('DES', modal.data.dexterity)}
-                  {formatAttribute('CON', modal.data.constitution)}
-                  {formatAttribute('INT', modal.data.intelligence)}
-                  {formatAttribute('SAB', modal.data.wisdom)}
-                  {formatAttribute('CAR', modal.data.charisma)}
+                <Text fontWeight="bold">
+                  <Text inline display="inline">
+                    {formatAttribute('💪 FOR', modal.data.strength)}
+                  </Text>
+                  <Text inline display="inline">
+                    {formatAttribute('👋 DES', modal.data.dexterity)}
+                  </Text>
+                  <Text inline display="inline">
+                    {formatAttribute('✊ CON', modal.data.constitution)}
+                  </Text>
+                </Text>
+                <Text fontWeight="bold">
+                  <Text inline display="inline">
+                    {formatAttribute('📙 INT', modal.data.intelligence)}
+                  </Text>
+                  <Text inline display="inline">
+                    {formatAttribute('🙌 SAB', modal.data.wisdom)}
+                  </Text>
+                  <Text inline display="inline">
+                    {formatAttribute('🤝 CAR', modal.data.charisma)}
+                  </Text>
                 </Text>
               </Box>
               <Box display="flex" justifyContent="flex-end">

@@ -5,6 +5,7 @@ import theme from '../../theme'
 
 export const Text = ({
   children,
+  inline,
   color = 'black',
   fontSize = '',
   fontWeight = '',
@@ -20,8 +21,12 @@ export const Text = ({
     color: theme[color]
   }
 
-  return (
-    <p className={classes.text} style={style}> 
+  return inline ? (
+    <span style={style}>
+      {children}
+    </span>
+  ) : (
+    <p className={classes.text} style={style}>
       {children}
     </p>
   )
@@ -29,8 +34,9 @@ export const Text = ({
 
 Text.propTypes = {
   children: PropTypes.any,
+  inline: PropTypes.any,
+  display: PropTypes.string,
   color: PropTypes.string,
-  fontSize: PropTypes.string,
   fontWeight: PropTypes.string,
   textAlign: PropTypes.string,
   whiteSpace: PropTypes.string,
