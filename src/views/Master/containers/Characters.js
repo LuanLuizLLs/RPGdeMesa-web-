@@ -24,9 +24,7 @@ const INITIAL = {
   VALUES: {
     search_character: ''
   },
-  REFRESH: {
-    character: {}
-  },
+  REFRESH: null,
   CHARACTERS: {
     0: {
       id: 0,
@@ -71,22 +69,20 @@ function Characters({
           setCharacters(Object.assign({}, data.response))
         }
       })
-  }, [refresh.character, campaing.id])
+  }, [refresh, campaing.id])
 
-  const handleCharacter = {
-    open: (content, data = {}) => {
+  const handle = {
+    openModal: (content, data = {}) => {
       setModal({
         content, data
       })
     },
-    close: () => {
-      setValues(INITIAL.VALUES)
+    resetCharacter: () => {
+      setLoading({})
       setModal(INITIAL.MODAL)
-    },
-    reset: () => {
       setValues(INITIAL.VALUES)
     },
-    search: () => {
+    searchCharacter: () => {
       setLoading({
         type: 'circular'
       })
@@ -99,71 +95,51 @@ function Characters({
             search_character: character.name
           })
         })
-        .finally(() => {
-          setLoading({})
-        })
+        .finally(handle.resetCharacter)
     },
-    add: () => {
+    addCharacter: () => {
       setLoading({
         type: 'circular'
       })
 
-      API.patch(`/characters/update/${values.id}`, {
+      API.patch(`/characters/updateCharacter/${values.id}`, {
         ...values,
         id_campaing: campaing.id,
       })
         .then(({ data }) => {
           setMessage(data.message)
-          setRefresh({
-            character: data
-          })
+          setRefresh(data)
         })
-        .finally(() => {
-          handleCharacter.close()
-          setLoading({})
-        })
+        .finally(handle.resetCharacter)
     },
-    remove: (data) => {
+    removeCharacter: (data) => {
       setLoading({
         type: 'circular'
       })
       
-      API.patch(`/characters/update/${data.id}`, {
+      API.patch(`/characters/updateCharacter/${data.id}`, {
         ...data,
         id_campaing: null,
       })
         .then(({ data }) => {
-          setMessage({
-            type: data.status,
-            message: data.message
-          })
-          setRefresh({
-            character: data
-          })
+          setMessage(data.message)
+          setRefresh(data)
         })
-        .finally(() => {
-          handleCharacter.close()
-          setLoading({})
-        })
+        .finally(handle.resetCharacter)
     },
-    update: (index) => {
+    updateCharacter: (index) => {
       setLoading({
         type: 'circular'
       })
 
-      API.patch(`/characters/update/${characters[index].id}`, characters[index])
+      API.patch(`/characters/updateCharacter/${characters[index].id}`, characters[index])
         .then(({ data }) => {
           setMessage(data.message)
-          setRefresh({
-            character: data
-          })
+          setRefresh(data)
         })
-        .finally(() => {
-          handleCharacter.close()
-          setLoading({})
-        })
+        .finally(handle.resetCharacter)
     },
-    redirect: (character) => {
+    detailCharacter: (character) => {
       console.log(character)
     },
   }
@@ -186,7 +162,7 @@ function Characters({
       }, i) => (
         <Box key={id} borderStyle="solid" borderRadius={10} marginTop={10} borderColor={theme.primary} position="relative">
           <Box position="absolute" top={15} right={20}>
-            <Link textDecoration="none" onClick={() => handleCharacter.open('remove_character', characters[i])}>
+            <Link textDecoration="none" onClick={() => handle.openModal('removeCharacter_character', characters[i])}>
               &#10006;
             </Link>
           </Box>
@@ -205,7 +181,7 @@ function Characters({
               <Grid type="column" padding={[5, 5]} minWidth={280}>
                 <Box background={theme.secondary} padding={10} borderRadius={10}>
                   <Text fontSize="medium">
-                    <Link onClick={() => handleCharacter.redirect(characters[i])}>
+                    <Link onClick={() => handle.detailCharacter(characters[i])}>
                       {name}
                     </Link> ({race} | {caste} | {tendency})
                   </Text>
@@ -222,7 +198,7 @@ function Characters({
                         type="number"
                         fontSize="medium"
                         stateValue={[characters, setCharacters]}
-                        onEnter={() => handleCharacter.update(i)}
+                        onEnter={() => handle.updateCharacter(i)}
                       />
                     </Grid>
                     <Grid type="column" flex="none" minWidth={100}>
@@ -233,7 +209,7 @@ function Characters({
                         type="number"
                         fontSize="medium"
                         stateValue={[characters, setCharacters]}
-                        onEnter={() => handleCharacter.update(i)}
+                        onEnter={() => handle.updateCharacter(i)}
                       />
                     </Grid>
                     <Grid type="column" flex="none" minWidth={100}>
@@ -244,7 +220,7 @@ function Characters({
                         type="number"
                         fontSize="medium"
                         stateValue={[characters, setCharacters]}
-                        onEnter={() => handleCharacter.update(i)}
+                        onEnter={() => handle.updateCharacter(i)}
                       />
                     </Grid>
                   </Grid>
@@ -269,7 +245,7 @@ function Characters({
       ))}
       <Modal maxWidth={300} stateModal={[modal, setModal]}>
         {({
-          add_character: (
+          addCharacter_character: (
             <>
               <Title type="h6">
                 Adicionar personagem
@@ -280,30 +256,30 @@ function Characters({
                   name="search_character"
                   label="Personagem"
                   placeholder="ID do personagem"
-                  onEnter={handleCharacter.search}
+                  onEnter={handle.searchCharacter}
                   stateValue={[values, setValues]}
                 />
               </Box>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="outline" width="fit-content" padding={10} onClick={handleCharacter.reset}>
+                <Button type="outline" width="fit-content" padding={10} onClick={handle.resetCharacter}>
                   Limpar
                 </Button>
-                <Button type="filled" width="fit-content" disabled={Boolean(!values.name)} padding={10} onClick={handleCharacter.add}>
+                <Button type="filled" width="fit-content" disabled={Boolean(!values.name)} padding={10} onClick={handle.addCharacter}>
                   Confirmar
                 </Button>
               </Box>
             </>
           ),
-          remove_character: (
+          removeCharacter_character: (
             <>
               <Text>
-                Tem certeza que deseja remover <b>{modal.data.name}</b> da campanha?
+                Tem certeza que deseja removeCharacterr <b>{modal.data.name}</b> da campanha?
               </Text>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="outline" width="fit-content" padding={10} onClick={handleCharacter.close}>
+                <Button type="outline" width="fit-content" padding={10} onClick={handle.resetCharacter}>
                   Cancelar
                 </Button>
-                <Button type="filled" color="error" width="fit-content" padding={10} onClick={() => handleCharacter.remove(modal.data)}>
+                <Button type="filled" color="error" width="fit-content" padding={10} onClick={() => handle.removeCharacter(modal.data)}>
                   Remover
                 </Button>
               </Box>
@@ -312,7 +288,7 @@ function Characters({
         })[modal.content] || 'Conteúdo não encontrado...'}
       </Modal>
       <Box display="flex" justifyContent="flex-end">
-        <Button type="filled" padding={10} onClick={() => handleCharacter.open('add_character')}>
+        <Button type="filled" padding={10} onClick={() => handle.openModal('addCharacter_character')}>
           Adicionar
         </Button>
       </Box>
