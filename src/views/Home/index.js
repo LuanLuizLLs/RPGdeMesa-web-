@@ -340,7 +340,7 @@ function Home() {
             Tem certeza que deseja excluir a campanha <b>{data.name}</b>?
           </Text>
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaing()}>
+            <Button type="filled" padding={10} onClick={() => handle.resetCampaing()}>
               Cancelar
             </Button>
             <Button type="filled" color="error" padding={10} onClick={() => handle.deleteCampaing(data.id)}>
@@ -449,7 +449,7 @@ function Home() {
             Tem certeza que deseja excluir o personagem <b>{data.name}</b>?
           </Text>
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCharacter()}>
+            <Button type="filled" padding={10} onClick={() => handle.resetCharacter()}>
               Cancelar
             </Button>
             <Button type="filled" color="error" padding={10} onClick={() => handle.deleteCharacter(data.id)}>
