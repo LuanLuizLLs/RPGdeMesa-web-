@@ -24,12 +24,16 @@ export const Button = ({
       ...({
         filled: {
           color: clarity(color),
-          background: theme[color],
+          backgroundColor: theme[color],
         },
         outline: {
           color: theme[color],
           borderColor: theme[color],
-        }
+        },
+        bottomless: {
+          color: theme[color],
+          backgroundColor: 'transparent',
+        },
       })[type],
     }
   }

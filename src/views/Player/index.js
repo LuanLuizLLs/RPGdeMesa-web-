@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import API from '../../services/api'
 import Page from '../../layouts/Page'
 import Features from './container/Features'
 import Abilities from './container/Abilities'
 import Inventory from './container/Inventory'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   Box,
   Card,
@@ -18,14 +19,30 @@ import {
 
 const INITIAL = {
   TAB: 0,
+  REFRESH: null,
 }
 
 function Player() {
 
-  const character = useSelector(({ reducer }) => reducer.CHARACTER)
+  const setDispatch = useDispatch()
 
+  const character = useSelector(({ reducer }) => reducer.CHARACTER)
+  
   const [tab, setTab] = useState(INITIAL.TAB)
   const [values, setValues] = useState(character)
+  const [refreshCharacter, setRefreshCharacter] = useState(INITIAL.REFRESH)
+  
+  useEffect(() => {
+    API.get(`characters/read/${character.id}`)
+      .then(({ data }) => {
+        const [characterData] = data.response
+        setValues(characterData)
+        setDispatch({
+          type: 'CHARACTER',
+          data: characterData
+        })
+      })
+  }, [character.id, refreshCharacter, setValues, setDispatch])
 
   return (
     <Page tab="Jogador" title="Ficha do Jogador" width="80vw">
@@ -137,7 +154,7 @@ function Player() {
       <Card>
         <Tab tabs={['Características', 'Habilidades', 'Invetário']} stateTab={[tab, setTab]}>
           {[
-            <Features key="features" character={character} />,
+            <Features key="features" character={character} setRefreshCharacter={setRefreshCharacter} />,
             <Abilities key="abilities" character={character} />,
             <Inventory key="inventory" character={character} />
           ]}

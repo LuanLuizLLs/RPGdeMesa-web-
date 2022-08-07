@@ -12,10 +12,10 @@
 
 .modal {
   width: 80vw;
-  padding: 20px;
   margin: 0 auto;
   position: relative;
   border-radius: 10px;
+  padding: 30px 20px 20px;
   border: solid var(--color-secondary);
   background-color: var(--color-white);
 }

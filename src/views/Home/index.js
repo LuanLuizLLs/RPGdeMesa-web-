@@ -65,7 +65,6 @@ function Home() {
           id: campaing.id,
           name: campaing.name,
           description: campaing.description,
-          id_user: campaing.id_user,
           data: campaing,
         })))
       })
@@ -82,7 +81,6 @@ function Home() {
           id: character.id,
           name: character.name,
           description: character.description,
-          id_user: character.id_user,
           data: character,
         })))
       })

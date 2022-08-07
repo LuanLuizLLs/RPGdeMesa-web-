@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import API from '../../services/api'
 import Page from '../../layouts/Page'
 import Exploration from './containers/Exploration'
 import Interaction from './containers/Interaction'
 import Combat from './containers/Combat'
 import Characters from './containers/Characters'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   Card,
   Divider,
@@ -14,16 +15,28 @@ import {
   Title,
 } from '../../components'
 
-
 const INITIAL = {
   TAB: 0,
 }
 
 function Master() {
 
+  const setDispatch = useDispatch()
+
   const campaing = useSelector(({ reducer }) => reducer.CAMPAING)
 
   const [tab, setTab] = useState(INITIAL.TAB)
+  
+  useEffect(() => {
+    API.get(`campaings/read/${campaing.id}`)
+      .then(({ data }) => {
+        const [campaingData] = data.response
+        setDispatch({
+          type: 'CAMPAING',
+          data: campaingData
+        })
+      })
+  }, [campaing.id, setDispatch])
 
   return (
     <Page tab="Mestre" title="Escudo do Mestre" width="90vw">
