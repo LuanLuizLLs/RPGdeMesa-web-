@@ -86,7 +86,7 @@ function Home() {
       })
   }, [refresh.character, user.id])
 
-  const handleClick = {
+  const handle = {
     openCampaing: (content, data) => {
       setModal({ content, data })
       if (content === 'campaing_update') {
@@ -94,8 +94,9 @@ function Home() {
       }
     },
     resetCampaing: () => {
-      setValuesCampaing(INITIAL.VALUES)
+      setLoading({})
       setModal(INITIAL.MODAL)
+      setValuesCampaing(INITIAL.VALUES)
     },
     createCampaing: () => {
       setLoading({
@@ -108,6 +109,9 @@ function Home() {
       })
         .then(({ data }) => {
           setMessage(data.message)
+          setRefresh({
+            ...refresh, campaing: data
+          })
         })
         .catch(() => {
           setMessage({
@@ -115,14 +119,7 @@ function Home() {
             message: 'Erro ao criar a campanha',
           })
         })
-        .finally((response) => {
-          setLoading({})
-          setRefresh({
-            ...refresh,
-            campaing: response
-          })
-          handleClick.resetCampaing()
-        })
+        .finally(handle.resetCampaing)
     },
     updateCampaing: (id) => {
       setLoading({
@@ -132,6 +129,10 @@ function Home() {
       API.patch(`campaings/update/${id}`, valuesCampaing)
         .then(({ data }) => {
           setMessage(data.message)
+          setRefresh({
+            ...refresh,
+            campaing: data
+          })
         })
         .catch(() => {
           setMessage({
@@ -139,14 +140,7 @@ function Home() {
             message: 'Erro ao atualizar a campanha',
           })
         })
-        .finally((response) => {
-          setLoading({})
-          setRefresh({
-            ...refresh,
-            campaing: response
-          })
-          handleClick.resetCampaing()
-        })
+        .finally(handle.resetCampaing)
     },
     deleteCampaing: (id) => {
       setLoading({
@@ -156,6 +150,10 @@ function Home() {
       API.delete((`campaings/delete/${id}`))
         .then(({ data }) => {
           setMessage(data.message)
+          setRefresh(({
+            ...refresh,
+            campaing: data
+          }))
         })
         .catch(() => {
           setMessage({
@@ -163,14 +161,7 @@ function Home() {
             message: 'Erro ao deletar a campanha'
           })
         })
-        .finally((response) => {
-          setLoading({})
-          setRefresh(({
-            ...refresh,
-            campaing: response
-          }))
-          handleClick.resetCampaing()
-        })
+        .finally(handle.resetCampaing)
     },
     startCampaing: ({ data }) => {
       setDispatch({
@@ -185,8 +176,9 @@ function Home() {
       }
     },
     resetCharacter: () => {
-      setValuesCharacter(INITIAL.VALUES)
+      setLoading({})
       setModal(INITIAL.MODAL)
+      setValuesCharacter(INITIAL.VALUES)
     },
     createCharacter: () => {
       setLoading({
@@ -201,6 +193,10 @@ function Home() {
       })
         .then(({ data }) => {
           setMessage(data.message)
+          setRefresh({
+            ...refresh,
+            character: data
+          })
         })
         .catch(() => {
           setMessage({
@@ -208,14 +204,7 @@ function Home() {
             message: 'Erro ao criar o personagem',
           })
         })
-        .finally((response) => {
-          setLoading({})
-          setRefresh({
-            ...refresh,
-            character: response
-          })
-          handleClick.resetCharacter()
-        })
+        .finally(handle.resetCharacter)
     },
     updateCharacter: (id) => {
       setLoading({
@@ -225,6 +214,10 @@ function Home() {
       API.patch(`characters/update/${id}`, valuesCharacter)
         .then(({ data }) => {
           setMessage(data.message)
+          setRefresh({
+            ...refresh,
+            character: data
+          })
         })
         .catch(() => {
           setMessage({
@@ -232,14 +225,7 @@ function Home() {
             message: 'Erro ao atualizar o personagem',
           })
         })
-        .finally((response) => {
-          setLoading({})
-          setRefresh({
-            ...refresh,
-            character: response
-          })
-          handleClick.resetCharacter()
-        })
+        .finally(handle.resetCharacter)
     },
     deleteCharacter: (id) => {
       setLoading({
@@ -249,6 +235,10 @@ function Home() {
       API.delete((`characters/delete/${id}`))
         .then(({ data }) => {
           setMessage(data.message)
+          setRefresh(({
+            ...refresh,
+            character: data
+          }))
         })
         .catch(() => {
           setMessage({
@@ -256,14 +246,7 @@ function Home() {
             message: 'Erro ao deletar o personagem'
           })
         })
-        .finally((response) => {
-          setLoading({})
-          setRefresh(({
-            ...refresh,
-            character: response
-          }))
-          handleClick.resetCharacter()
-        })
+        .finally(handle.resetCharacter)
     },
     startCharacter: ({ data }) => {
       setDispatch({
@@ -290,10 +273,10 @@ function Home() {
             {data.description}
           </Text>
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handleClick.resetCampaing()}>
+            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaing()}>
               Voltar
             </Button>
-            <Button type="filled" padding={10} onClick={() => handleClick.startCampaing(data)}>
+            <Button type="filled" padding={10} onClick={() => handle.startCampaing(data)}>
               Mestrar
             </Button>
           </Box>
@@ -316,10 +299,10 @@ function Home() {
             stateValue={[valuesCampaing, setValuesCampaing]}
           />
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handleClick.resetCampaing()}>
+            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaing()}>
               Cancelar
             </Button>
-            <Button type="filled" color="primary" padding={10} onClick={() => handleClick.createCampaing()}>
+            <Button type="filled" color="primary" padding={10} onClick={() => handle.createCampaing()}>
               Criar
             </Button>
           </Box>
@@ -342,10 +325,10 @@ function Home() {
             stateValue={[valuesCampaing, setValuesCampaing]}
           />
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handleClick.resetCampaing()}>
+            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaing()}>
               Cancelar
             </Button>
-            <Button type="filled" padding={10} onClick={() => handleClick.updateCampaing(data.id)}>
+            <Button type="filled" padding={10} onClick={() => handle.updateCampaing(data.id)}>
               Salvar
             </Button>
           </Box>
@@ -357,10 +340,10 @@ function Home() {
             Tem certeza que deseja excluir a campanha <b>{data.name}</b>?
           </Text>
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handleClick.resetCampaing()}>
+            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaing()}>
               Cancelar
             </Button>
-            <Button type="filled" color="error" padding={10} onClick={() => handleClick.deleteCampaing(data.id)}>
+            <Button type="filled" color="error" padding={10} onClick={() => handle.deleteCampaing(data.id)}>
               Excluir
             </Button>
           </Box>
@@ -381,10 +364,10 @@ function Home() {
             {data.description}
           </Text>
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handleClick.resetCharacter()}>
+            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCharacter()}>
               Voltar
             </Button>
-            <Button type="filled" padding={10} onClick={() => handleClick.startCharacter(data)}>
+            <Button type="filled" padding={10} onClick={() => handle.startCharacter(data)}>
               Jogar
             </Button>
           </Box>
@@ -425,10 +408,10 @@ function Home() {
             stateValue={[valuesCharacter, setValuesCharacter]}
           />
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handleClick.resetCharacter()}>
+            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCharacter()}>
               Cancelar
             </Button>
-            <Button type="filled" padding={10} onClick={() => handleClick.createCharacter()}>
+            <Button type="filled" padding={10} onClick={() => handle.createCharacter()}>
               Criar
             </Button>
           </Box>
@@ -451,10 +434,10 @@ function Home() {
             stateValue={[valuesCharacter, setValuesCharacter]}
           />
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handleClick.resetCharacter()}>
+            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCharacter()}>
               Cancelar
             </Button>
-            <Button type="filled" padding={10} onClick={() => handleClick.updateCharacter(data.id)}>
+            <Button type="filled" padding={10} onClick={() => handle.updateCharacter(data.id)}>
               Salvar
             </Button>
           </Box>
@@ -466,10 +449,10 @@ function Home() {
             Tem certeza que deseja excluir o personagem <b>{data.name}</b>?
           </Text>
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handleClick.resetCharacter()}>
+            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCharacter()}>
               Cancelar
             </Button>
-            <Button type="filled" color="error" padding={10} onClick={() => handleClick.deleteCharacter(data.id)}>
+            <Button type="filled" color="error" padding={10} onClick={() => handle.deleteCharacter(data.id)}>
               Excluir
             </Button>
           </Box>
@@ -484,8 +467,8 @@ function Home() {
         maxWidth={450}
         stateModal={[modal, setModal]}
         onClose={() => {
-          handleClick.resetCampaing()
-          handleClick.resetCharacter()
+          handle.resetCampaing()
+          handle.resetCharacter()
         }}
       >
         {ContentModal(modal)}
@@ -508,13 +491,13 @@ function Home() {
                 height={300}
                 rows={listCampaings}
                 columns={['ID', 'Campanha', 'Descrição']}
-                onClick={(row) => handleClick.openCampaing('campaing_start', row)}
+                onClick={(row) => handle.openCampaing('campaing_start', row)}
                 actions={(row) => [
-                  <span key="update" type="update" title="Editar" onClick={() => handleClick.openCampaing('campaing_update', row)} />,
-                  <span key="delete" type="delete" title="Deletar" onClick={() => handleClick.openCampaing('campaing_delete', row)} />,
+                  <span key="update" type="update" title="Editar" onClick={() => handle.openCampaing('campaing_update', row)} />,
+                  <span key="delete" type="delete" title="Deletar" onClick={() => handle.openCampaing('campaing_delete', row)} />,
                 ]}
               />
-              <Button type="filled" padding={10} onClick={() => handleClick.openCampaing('campaing_create')}>
+              <Button type="filled" padding={10} onClick={() => handle.openCampaing('campaing_create')}>
                 Criar campanha
               </Button>
             </Card>
@@ -535,13 +518,13 @@ function Home() {
                 height={300}
                 rows={listCharacters}
                 columns={['ID', 'Personagem', 'Descrição']}
-                onClick={(row) => handleClick.openCharacter('character_start', row)}
+                onClick={(row) => handle.openCharacter('character_start', row)}
                 actions={(row) => [
-                  <span key="update" type="update" title="Editar" onClick={() => handleClick.openCharacter('character_update', row)} />,
-                  <span key="delete" type="delete" title="Deletar" onClick={() => handleClick.openCharacter('character_delete', row)} />,
+                  <span key="update" type="update" title="Editar" onClick={() => handle.openCharacter('character_update', row)} />,
+                  <span key="delete" type="delete" title="Deletar" onClick={() => handle.openCharacter('character_delete', row)} />,
                 ]}
               />
-              <Button type="filled" padding={10} onClick={() => handleClick.openCharacter('character_create')}>
+              <Button type="filled" padding={10} onClick={() => handle.openCharacter('character_create')}>
                 Criar personagem
               </Button>
             </Card>
