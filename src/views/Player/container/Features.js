@@ -65,7 +65,6 @@ function Features({
           id, name, strength, dexterity, constitution, intelligence, wisdom, charisma,
         })))
       })
-      .finally(setRefreshCharacter)
   }, [refresh, character.id])
 
   const handle = {
