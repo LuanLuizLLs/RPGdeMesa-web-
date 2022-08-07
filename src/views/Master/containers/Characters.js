@@ -164,7 +164,7 @@ function Characters({
       }, i) => (
         <Box key={id} borderStyle="solid" borderRadius={10} marginTop={10} borderColor={theme.primary} position="relative">
           <Box position="absolute" top={15} right={20}>
-            <Link textDecoration="none" onClick={() => handle.openModal('removeCharacter_character', characters[i])}>
+            <Link textDecoration="none" onClick={() => id && handle.openModal('remove_character', characters[i])}>
               &#10006;
             </Link>
           </Box>
@@ -183,7 +183,7 @@ function Characters({
               <Grid type="column" padding={[5, 5]} minWidth={280}>
                 <Box background={theme.secondary} padding={10} borderRadius={10}>
                   <Text fontSize="medium">
-                    <Link onClick={() => handle.detailCharacter(characters[i])}>
+                    <Link onClick={() => id && handle.detailCharacter(characters[i])}>
                       {name}
                     </Link> ({race} | {caste} | {tendency})
                   </Text>
@@ -199,6 +199,7 @@ function Characters({
                         name="life"
                         type="number"
                         fontSize="medium"
+                        readOnly={!Boolean(id)}
                         stateValue={[characters, setCharacters]}
                         onEnter={() => handle.updateCharacter(i)}
                       />
@@ -210,6 +211,7 @@ function Characters({
                         name="actions"
                         type="number"
                         fontSize="medium"
+                        readOnly={!Boolean(id)}
                         stateValue={[characters, setCharacters]}
                         onEnter={() => handle.updateCharacter(i)}
                       />
@@ -221,6 +223,7 @@ function Characters({
                         name="coins"
                         type="number"
                         fontSize="medium"
+                        readOnly={!Boolean(id)}
                         stateValue={[characters, setCharacters]}
                         onEnter={() => handle.updateCharacter(i)}
                       />
@@ -272,10 +275,10 @@ function Characters({
               </Box>
             </>
           ),
-          removeCharacter_character: (
+          remove_character: (
             <>
               <Text>
-                Tem certeza que deseja removeCharacterr <b>{modal.data.name}</b> da campanha?
+                Tem certeza que deseja remover <b>{modal.data.name}</b> da campanha?
               </Text>
               <Box display="flex" justifyContent="flex-end">
                 <Button type="outline" width="fit-content" padding={10} onClick={handle.resetCharacter}>
