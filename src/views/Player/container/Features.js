@@ -19,7 +19,6 @@ const INITIAL = {
     data: {},
   },
   VALUES: {
-    player: true,
     name: '',
     strength: 0,
     dexterity: 0,
@@ -45,6 +44,7 @@ const formatAttribute = (text = '', point = 0) => {
 }
 
 function Features({
+  player,
   character,
   setRefreshCharacter,
 }) {
@@ -86,6 +86,7 @@ function Features({
     createFeature: () => {
       API.post('features/create', {
         id_character: character.id,
+        player,
         ...values,
       })
         .then(({ data }) => {

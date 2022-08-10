@@ -22,7 +22,6 @@ const INITIAL = {
     data: {},
   },
   VALUES: {
-    player: true,
     name: '',
     description: '',
     attribute: 'FOR',
@@ -36,6 +35,7 @@ const INITIAL = {
 }
 
 function Abilities({
+  player,
   character,
   setRefreshCharacter,
 }) {
@@ -77,6 +77,7 @@ function Abilities({
     createAbility: () => {
       API.post('abilities/create', {
         id_character: character.id,
+        player,
         ...values,
       })
         .then(({ data }) => {
@@ -94,7 +95,7 @@ function Abilities({
     },
     updateAbility: (updateData) => {
       API.patch(`abilities/update/${updateData.id}`, {
-        ...values,
+        player,
         ...updateData,
         level: updateData.level + 1,
       })
