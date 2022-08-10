@@ -112,39 +112,39 @@ function Features({
         {({
           add_feature: (
             <>
-              <Title type="h6">
+              <Title type="h6" color="primary">
                 Adicionar característica:
               </Title>
               <Input
                 name="name"
-                placeholder="Característica"
+                placeholder="Característica (adjetivo)"
                 stateValue={[values, setValues]}
               />
-              <Grid type="row">
+              <Grid type="row" padding={[5, 0]}>
                 <Grid type="column" margin={[0, 5]}>
                   <Input
                     icon="💪"
+                    label="FOR"
                     type="number"
                     name="strength"
-                    placeholder="FOR"
                     stateValue={[values, setValues]}
                   />
                 </Grid>
                 <Grid type="column" margin={[0, 5]}>
                   <Input
                     icon="👋"
+                    label="DES"
                     type="number"
                     name="dexterity"
-                    placeholder="DES"
                     stateValue={[values, setValues]}
                   />
                 </Grid>
                 <Grid type="column" margin={[0, 5]}>
                   <Input
                     icon="✊"
+                    label="CON"
                     type="number"
                     name="constitution"
-                    placeholder="CON"
                     stateValue={[values, setValues]}
                   />
                 </Grid>
@@ -153,27 +153,27 @@ function Features({
                 <Grid type="column" margin={[0, 5]}>
                   <Input
                     icon="📙"
+                    label="INT"
                     type="number"
                     name="intelligence"
-                    placeholder="INT"
                     stateValue={[values, setValues]}
                   />
                 </Grid>
                 <Grid type="column" margin={[0, 5]}>
                   <Input
                     icon="🙌"
+                    label="SAB"
                     type="number"
                     name="wisdom"
-                    placeholder="SAB"
                     stateValue={[values, setValues]}
                   />
                 </Grid>
                 <Grid type="column" margin={[0, 5]}>
                   <Input
                     icon="🤝"
+                    label="CAR"
                     type="number"
                     name="charisma"
-                    placeholder="CAR"
                     stateValue={[values, setValues]}
                   />
                 </Grid>
@@ -190,10 +190,10 @@ function Features({
           ),
           detail_feature: (
             <>
-              <Box backgroundColor={theme.secondary} padding="0 10px" margin={10} borderRadius={10}>
-                <Text fontWeight="bold" fontSize="larger" color="primary" >
-                  {modal.data.name}
-                </Text>
+              <Title type="h6" color="primary" >
+                {modal.data.name}
+              </Title>
+              <Box backgroundColor={theme.secondary} padding={10} margin="10px 0" borderRadius={10}>
                 <Text fontWeight="bold">
                   <Text inline display="inline">
                     {formatAttribute('💪 FOR', modal.data.strength)}

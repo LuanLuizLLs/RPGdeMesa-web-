@@ -18,7 +18,7 @@ import {
 } from '../../components'
 
 const INITIAL = {
-  TAB: 0,
+  TAB: 1,
   REFRESH: null,
 }
 
@@ -156,7 +156,7 @@ function Player() {
           {[
             <Features key="features" character={character} setRefreshCharacter={setRefreshCharacter} />,
             <Abilities key="abilities" character={character} />,
-            <Inventory key="inventory" character={character} />
+            <Inventory key="inventory" character={character} setRefreshCharacter={setRefreshCharacter} />,
           ]}
         </Tab>
       </Card>

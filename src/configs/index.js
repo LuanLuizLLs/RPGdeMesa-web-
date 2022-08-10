@@ -76,7 +76,7 @@ export const race = {
     wisdom: numberRandow(0, 2),
     charisma: numberRandow(1, 3),
   }, 
-  'Nefilin': {
+  'Nefilim': {
     strength: numberRandow(0, 2),
     dexterity: numberRandow(-1, 1),
     constitution: numberRandow(0, 2),
@@ -172,6 +172,16 @@ export const caste = {
     coins: numberRandow(8, 12),
     actions: numberRandow(3, 6),
   }
+}
+
+/** Attributes options */
+export const attribute = {
+  'FOR': 'strength',
+  'DES': 'dexterity',
+  'CON': 'constitution',
+  'INT': 'intelligence',
+  'SAB': 'wisdom',
+  'CAR': 'charisma',
 }
 
 /** Tendecy options */
