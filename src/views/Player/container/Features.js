@@ -19,6 +19,7 @@ const INITIAL = {
     data: {},
   },
   VALUES: {
+    player: true,
     name: '',
     strength: 0,
     dexterity: 0,
@@ -128,6 +129,8 @@ function Features({
               <Grid type="row" padding={[5, 0]}>
                 <Grid type="column" margin={[0, 5]}>
                   <Input
+                    max={1}
+                    min={-1}
                     icon="💪"
                     label="FOR"
                     type="number"
@@ -137,6 +140,8 @@ function Features({
                 </Grid>
                 <Grid type="column" margin={[0, 5]}>
                   <Input
+                    max={1}
+                    min={-1}
                     icon="👋"
                     label="DES"
                     type="number"
@@ -146,6 +151,8 @@ function Features({
                 </Grid>
                 <Grid type="column" margin={[0, 5]}>
                   <Input
+                    max={1}
+                    min={-1}
                     icon="✊"
                     label="CON"
                     type="number"
@@ -157,6 +164,8 @@ function Features({
               <Grid type="row">
                 <Grid type="column" margin={[0, 5]}>
                   <Input
+                    max={1}
+                    min={-1}
                     icon="📙"
                     label="INT"
                     type="number"
@@ -166,6 +175,8 @@ function Features({
                 </Grid>
                 <Grid type="column" margin={[0, 5]}>
                   <Input
+                    max={1}
+                    min={-1}
                     icon="🙌"
                     label="SAB"
                     type="number"
@@ -175,6 +186,8 @@ function Features({
                 </Grid>
                 <Grid type="column" margin={[0, 5]}>
                   <Input
+                    max={1}
+                    min={-1}
                     icon="🤝"
                     label="CAR"
                     type="number"

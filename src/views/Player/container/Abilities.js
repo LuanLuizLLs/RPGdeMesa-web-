@@ -22,6 +22,7 @@ const INITIAL = {
     data: {},
   },
   VALUES: {
+    player: true,
     name: '',
     description: '',
     attribute: 'FOR',
@@ -36,6 +37,7 @@ const INITIAL = {
 
 function Abilities({
   character,
+  setRefreshCharacter,
 }) {
 
   const setMessage = useContext(Context).message[1]
@@ -79,6 +81,7 @@ function Abilities({
       })
         .then(({ data }) => {
           setRefresh(data)
+          setRefreshCharacter(data)
           setMessage(data.message)
         })
         .catch(() => {
@@ -89,12 +92,15 @@ function Abilities({
         })
         .finally(handle.resetAbility)
     },
-    updateAbility: (data) => {
-      API.patch(`abilities/update/${data.id}`, {
-        ...data, level: data.level + 1,
+    updateAbility: (updateData) => {
+      API.patch(`abilities/update/${updateData.id}`, {
+        ...values,
+        ...updateData,
+        level: updateData.level + 1,
       })
         .then(({ data }) => {
           setRefresh(data)
+          setRefreshCharacter(data)
           setMessage(data.message)
         })
         .catch(() => {
@@ -176,7 +182,7 @@ function Abilities({
                   {modal.data.attribute}{(modal.data.level + (character[attribute[modal.data.attribute]])) > 0 && `+`}{(modal.data.level + (character[attribute[modal.data.attribute]]))}
                 </Text>
                 <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                  <Button color="error" fontSize="medium" onClick={() => handle.deleteAbility(modal.data.id)}>
+                  <Button type="filled" color="error" fontSize="medium" onClick={() => handle.deleteAbility(modal.data.id)}>
                     Remover
                   </Button>
                 </Box>

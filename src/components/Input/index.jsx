@@ -5,6 +5,8 @@ import classes from './style.module.css'
 export const Input = ({
   index = -1,
   name,
+  max,
+  min,
   type = 'text',
   label = '',
   icon = '',
@@ -61,6 +63,9 @@ export const Input = ({
               ...state, [name]: target.value
             })
           })}
+          {...({ 
+            number: { max, min },
+          })[type]}
         />
       </div>
     </div>
@@ -70,6 +75,8 @@ export const Input = ({
 Input.propTypes = {
   index: PropTypes.number,
   name: PropTypes.any.isRequired,
+  max: PropTypes.number,
+  min: PropTypes.number,
   type: PropTypes.string,
   fontSize: PropTypes.string,
   label: PropTypes.string,
