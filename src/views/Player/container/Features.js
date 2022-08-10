@@ -200,25 +200,28 @@ function Features({
               </Title>
               <Box backgroundColor={theme.secondary} padding={10} margin="10px 0" borderRadius={10}>
                 <Text fontWeight="bold">
-                  <Text inline display="inline">
-                    {formatAttribute('💪 FOR', modal.data.strength)}
+                  Modificadores:
+                </Text>
+                <Text fontWeight="bold">
+                  <Text inline display="inline" color="gray">
+                    {formatAttribute('FOR', modal.data.strength)}
                   </Text>
-                  <Text inline display="inline">
-                    {formatAttribute('👋 DES', modal.data.dexterity)}
+                  <Text inline display="inline" color="gray">
+                    {formatAttribute('DES', modal.data.dexterity)}
                   </Text>
-                  <Text inline display="inline">
-                    {formatAttribute('✊ CON', modal.data.constitution)}
+                  <Text inline display="inline" color="gray">
+                    {formatAttribute('CON', modal.data.constitution)}
                   </Text>
                 </Text>
                 <Text fontWeight="bold">
-                  <Text inline display="inline">
-                    {formatAttribute('📙 INT', modal.data.intelligence)}
+                  <Text inline display="inline" color="gray">
+                    {formatAttribute('INT', modal.data.intelligence)}
                   </Text>
-                  <Text inline display="inline">
-                    {formatAttribute('🙌 SAB', modal.data.wisdom)}
+                  <Text inline display="inline" color="gray">
+                    {formatAttribute('SAB', modal.data.wisdom)}
                   </Text>
-                  <Text inline display="inline">
-                    {formatAttribute('🤝 CAR', modal.data.charisma)}
+                  <Text inline display="inline" color="gray">
+                    {formatAttribute('CAR', modal.data.charisma)}
                   </Text>
                 </Text>
               </Box>

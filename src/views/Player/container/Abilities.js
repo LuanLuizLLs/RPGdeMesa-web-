@@ -170,13 +170,13 @@ function Abilities({
               </Title>
               <Box backgroundColor={theme.secondary} padding={10} margin="10px 0" borderRadius={10}>
                 <Text fontWeight="bold">
-                  {modal.data.description} ({modal.data.attribute}+{modal.data.level})
+                  {modal.data.description}
                 </Text>
-                <Text fontWeight="bold">
-                  Total: {(modal.data.level + (character[attribute[modal.data.attribute]])) > 0 && `+`}{(modal.data.level + (character[attribute[modal.data.attribute]]))}
+                <Text fontWeight="bold" color="gray">
+                  {modal.data.attribute}{(modal.data.level + (character[attribute[modal.data.attribute]])) > 0 && `+`}{(modal.data.level + (character[attribute[modal.data.attribute]]))}
                 </Text>
-                <Box display="flex" justifyContent="flex-end">
-                  <Button color="error" fontSize="small" onClick={() => handle.deleteAbility(modal.data.id)}>
+                <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                  <Button color="error" fontSize="medium" onClick={() => handle.deleteAbility(modal.data.id)}>
                     Remover
                   </Button>
                 </Box>
