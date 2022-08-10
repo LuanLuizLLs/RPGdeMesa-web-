@@ -200,7 +200,7 @@ function Features({
               </Title>
               <Box backgroundColor={theme.secondary} padding={10} margin="10px 0" borderRadius={10}>
                 <Text fontWeight="bold">
-                  Modificadores:
+                  Atributos:
                 </Text>
                 <Text fontWeight="bold">
                   <Text inline display="inline" color="gray">
