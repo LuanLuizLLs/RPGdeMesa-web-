@@ -35,6 +35,14 @@ const INITIAL = {
     campaing: null,
     character: null,
   },
+  LIST_CAMPAINGS: {
+    columns: ['ID', 'Campanha', 'Descrição'],
+    rows: [],
+  },
+  LIST_CHARACTERS: {
+    columns: ['ID', 'Personagem', 'Descrição'],
+    rows: [],
+  },
 }
 
 function Home() {
@@ -49,40 +57,44 @@ function Home() {
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [refresh, setRefresh] = useState(INITIAL.REFRESH)
-  const [listCampaings, setListCampaings] = useState([])
-  const [listCharacters, setListCharacters] = useState([])
   const [valuesCampaing, setValuesCampaing] = useState(INITIAL.VALUES)
   const [valuesCharacter, setValuesCharacter] = useState(INITIAL.VALUES)
+  const [listCampaings, setListCampaings] = useState(INITIAL.LIST_CAMPAINGS)
+  const [listCharacters, setListCharacters] = useState(INITIAL.LIST_CHARACTERS)
 
   useEffect(() => {
     API.get('campaings/read', {
       params: {
-        id_user: user.id
+        id_user: user.id,
       }
     })
       .then(({ data }) => {
-        setListCampaings(data.response.map((campaing) => ({
-          id: campaing.id,
-          name: campaing.name,
-          description: campaing.description,
-          data: campaing,
-        })))
+        setListCampaings((state) => ({
+          ...state, rows: data.response.map((campaing) => ({
+            id: campaing.id,
+            name: campaing.name,
+            description: campaing.description,
+            data: campaing,
+          }))
+        }))
       })
   }, [refresh.campaing, user.id])
 
   useEffect(() => {
     API.get('characters/read', {
       params: {
-        id_user: user.id
+        id_user: user.id,
       }
     })
       .then(({ data }) => {
-        setListCharacters(data.response.map((character) => ({
-          id: character.id,
-          name: character.name,
-          description: character.description,
-          data: character,
-        })))
+        setListCharacters((state) => ({
+          ...state, rows: data.response.map((character) => ({
+            id: character.id,
+            name: character.name,
+            description: character.description,
+            data: character,
+          }))
+        }))
       })
   }, [refresh.character, user.id])
 
@@ -489,8 +501,7 @@ function Home() {
               </Title>
               <List
                 height={300}
-                rows={listCampaings}
-                columns={['ID', 'Campanha', 'Descrição']}
+                {...listCampaings}
                 onClick={(row) => handle.openCampaing('campaing_start', row)}
                 actions={(row) => [
                   <span key="update" type="update" title="Editar" onClick={() => handle.openCampaing('campaing_update', row)} />,
@@ -516,8 +527,7 @@ function Home() {
               </Title>
               <List
                 height={300}
-                rows={listCharacters}
-                columns={['ID', 'Personagem', 'Descrição']}
+                {...listCharacters}
                 onClick={(row) => handle.openCharacter('character_start', row)}
                 actions={(row) => [
                   <span key="update" type="update" title="Editar" onClick={() => handle.openCharacter('character_update', row)} />,

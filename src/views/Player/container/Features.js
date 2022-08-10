@@ -28,7 +28,10 @@ const INITIAL = {
     charisma: 0,
   },
   REFRESH: null,
-  FEATURES: [],
+  FEATURES: {
+    columns: ['ID', 'Característica', 'FOR', 'DES', 'CON', 'INT', 'SAB', 'CAR'],
+    rows: []
+  },
 }
 
 const formatAttribute = (text = '', point = 0) => {
@@ -59,11 +62,13 @@ function Features({
       }
     })
       .then(({ data }) => {
-        setFeatures(data.response.map(({
-          id, name, strength, dexterity, constitution, intelligence, wisdom, charisma,
-        }) => ({
-          id, name, strength, dexterity, constitution, intelligence, wisdom, charisma,
-        })))
+        setFeatures((state) => ({
+          ...state, rows: data.response.map(({
+            id, name, strength, dexterity, constitution, intelligence, wisdom, charisma,
+          }) => ({
+            id, name, strength, dexterity, constitution, intelligence, wisdom, charisma,
+          }))
+        }))
       })
   }, [refresh, character.id])
 
@@ -218,7 +223,7 @@ function Features({
                 </Text>
               </Box>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" padding={10} onClick={handle.resetFeature}>
+                <Button type="bottomless" padding={10} onClick={handle.resetFeature}>
                   Voltar
                 </Button>
                 <Button type="filled" color="error" padding={10} onClick={() => handle.deleteFeature(modal.data.id)}>
@@ -231,9 +236,8 @@ function Features({
       </Modal>
       <List
         height={200}
-        rows={features}
         onClick={(row) => handle.openModal('detail_feature', row)}
-        columns={['ID', 'Característica', 'FOR', 'DES', 'CON', 'INT', 'SAB', 'CAR']}
+        {...features}
       />
       <Box display="flex" justifyContent="flex-end" margin={10}>
         <Button type="filled" onClick={() => handle.openModal('add_feature')}>
