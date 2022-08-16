@@ -34,6 +34,14 @@ const INITIAL = {
   },
 }
 
+const formatAttribute = (attr = '', attrCurrent = 0, attrAdditional = 0) => {
+  const some = attrCurrent + attrAdditional
+  if (some > 0) {
+    return `${attr}+${some}`
+  }
+  return `${attr}${some}`
+}
+
 function Abilities({
   player,
   character,
@@ -175,25 +183,25 @@ function Abilities({
               <Title type="h6" color="primary">
                 {modal.data.name} (Lv {modal.data.level})
               </Title>
+              <Text fontWeight="bold">
+                {modal.data.description}
+              </Text>
               <Box backgroundColor={theme.secondary} padding={10} margin="10px 0" borderRadius={10}>
-                <Text fontWeight="bold">
-                  {modal.data.description}
-                </Text>
-                <Text fontWeight="bold" color="gray">
-                  {modal.data.attribute}{(modal.data.level + (character[attribute[modal.data.attribute]])) > 0 && `+`}{(modal.data.level + (character[attribute[modal.data.attribute]]))}
-                </Text>
-                <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                  <Button type="filled" color="error" fontSize="medium" onClick={() => handle.deleteAbility(modal.data.id)}>
-                    Remover
+                <Box display="flex" justifyContent="space-between">
+                  <Text fontWeight="bold" color="gray">
+                    {formatAttribute(modal.data.attribute, modal.data.level, character[attribute[modal.data.attribute]])}
+                  </Text>
+                  <Button type="filled" color="success" fontSize="medium" onClick={() => handle.updateAbility(modal.data)}>
+                    Melhorar
                   </Button>
                 </Box>
               </Box>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="bottomless" padding={10} onClick={handle.resetAbility}>
-                  Voltar
+                <Button type="filled" color="error" padding={10} onClick={() => handle.deleteAbility(modal.data.id)}>
+                  Remover
                 </Button>
-                <Button type="filled" padding={10} onClick={() => handle.updateAbility(modal.data)}>
-                  Melhorar
+                <Button type="filled" padding={10} onClick={handle.resetAbility}>
+                  Fechar
                 </Button>
               </Box>
             </>

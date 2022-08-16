@@ -13,10 +13,10 @@
   cursor: pointer;
   padding: 10px;
   margin: 20px;
-  border-radius: 2px;
+  border-radius: 5px;
   color: var(--color-black);
   background-color: var(--color-white);
-  box-shadow: 2px 2px var(--color-secondary);
+  border: solid var(--color-secondary);
   transition: transform 0.5s;
 }
 

@@ -212,10 +212,10 @@ function Features({
               <Title type="h6" color="primary" >
                 {modal.data.name}
               </Title>
+              <Text fontWeight="bold">
+                Atributos:
+              </Text>
               <Box backgroundColor={theme.secondary} padding={10} margin="10px 0" borderRadius={10}>
-                <Text fontWeight="bold">
-                  Atributos:
-                </Text>
                 <Text fontWeight="bold">
                   <Text inline display="inline" color="gray">
                     {formatAttribute('FOR', modal.data.strength)}
@@ -226,8 +226,6 @@ function Features({
                   <Text inline display="inline" color="gray">
                     {formatAttribute('CON', modal.data.constitution)}
                   </Text>
-                </Text>
-                <Text fontWeight="bold">
                   <Text inline display="inline" color="gray">
                     {formatAttribute('INT', modal.data.intelligence)}
                   </Text>
@@ -240,11 +238,11 @@ function Features({
                 </Text>
               </Box>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="bottomless" padding={10} onClick={handle.resetFeature}>
-                  Voltar
-                </Button>
                 <Button type="filled" color="error" padding={10} onClick={() => handle.deleteFeature(modal.data.id)}>
                   Remover
+                </Button>
+                <Button type="filled" padding={10} onClick={handle.resetFeature}>
+                  Fechar
                 </Button>
               </Box>
             </>

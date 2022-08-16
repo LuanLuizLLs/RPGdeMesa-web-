@@ -184,6 +184,19 @@ export const attribute = {
   'CAR': 'charisma',
 }
 
+/** Inventory options */
+export const inventory = {
+  'ATQ': 'strength',
+  'DEF': 'dexterity',
+  'AGL': 'constitution',
+  'EST': 'intelligence',
+  'ESP': 'wisdom',
+  'APR': 'charisma',
+  'CUR': 'life',
+  'TES': 'coins',
+  'DES': 'actions',
+}
+
 /** Tendecy options */
 export const tendency = [
   'Bom', 

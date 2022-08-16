@@ -79,10 +79,12 @@ function Characters({
         content, data
       })
     },
-    resetCharacter: () => {
+    resetCharacter: (closeModal = true) => {
       setLoading({})
-      setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
+      if (closeModal) {
+        setModal(INITIAL.MODAL)
+      }
     },
     searchCharacter: () => {
       setLoading({
@@ -118,7 +120,7 @@ function Characters({
       setLoading({
         type: 'circular'
       })
-      
+
       API.patch(`/characters/update/${data.id}`, {
         ...data,
         id_campaing: null,
@@ -162,9 +164,17 @@ function Characters({
         wisdom,
         charisma,
       }, i) => (
-        <Box key={id} borderStyle="solid" borderRadius={10} marginTop={10} borderColor={theme.primary} position="relative">
+        <Box
+          key={id}
+          marginTop={10}
+          borderRadius={10}
+          borderStyle="solid"
+          opacity={Boolean(id) || '0.5'}
+          borderColor={theme.primary}
+          position="relative"
+        >
           <Box position="absolute" top={15} right={20}>
-            <Link textDecoration="none" onClick={() => id && handle.openModal('remove_character', characters[i])}>
+            <Link textDecoration="none" onClick={() => Boolean(id) && handle.openModal('remove_character', characters[i])}>
               &#10006;
             </Link>
           </Box>
@@ -183,7 +193,7 @@ function Characters({
               <Grid type="column" padding={[5, 5]} minWidth={280}>
                 <Box background={theme.secondary} padding={10} borderRadius={10}>
                   <Text fontSize="medium">
-                    <Link onClick={() => id && handle.detailCharacter(characters[i])}>
+                    <Link onClick={() => Boolean(id) && handle.detailCharacter(characters[i])}>
                       {name}
                     </Link> ({race} | {caste} | {tendency})
                   </Text>
@@ -252,25 +262,23 @@ function Characters({
         {({
           addCharacter_character: (
             <>
-              <Title type="h6">
+              <Title type="h6" color="primary">
                 Adicionar personagem
               </Title>
               <Box marginBottom={20}>
                 <Input
-                  readOnly={Boolean(values.name)}
                   name="search_character"
-                  label="Personagem"
                   placeholder="ID do personagem"
                   onEnter={handle.searchCharacter}
                   stateValue={[values, setValues]}
                 />
               </Box>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="outline" width="fit-content" padding={10} onClick={handle.resetCharacter}>
+                <Button type="filled" color="secondary" width="fit-content" padding={10} onClick={() => handle.resetCharacter(false)}>
                   Limpar
                 </Button>
-                <Button type="filled" width="fit-content" disabled={Boolean(!values.name)} padding={10} onClick={handle.addCharacter}>
-                  Confirmar
+                <Button type="filled" width="fit-content" padding={10} onClick={Boolean(values.name) ? handle.addCharacter : handle.searchCharacter}>
+                  {Boolean(values.name) ? 'Confirmar' : 'Pesquisar'}
                 </Button>
               </Box>
             </>
@@ -280,8 +288,8 @@ function Characters({
               <Text>
                 Tem certeza que deseja remover <b>{modal.data.name}</b> da campanha?
               </Text>
-              <Box display="flex" justifyContent="flex-end">
-                <Button type="outline" width="fit-content" padding={10} onClick={handle.resetCharacter}>
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="filled" width="fit-content" padding={10} onClick={handle.resetCharacter}>
                   Cancelar
                 </Button>
                 <Button type="filled" color="error" width="fit-content" padding={10} onClick={() => handle.removeCharacter(modal.data)}>

@@ -17,7 +17,7 @@ export const Input = ({
   readOnly = false,
   placeholder = '',
   stateValue = [],
-  onEnter = () => {},
+  onEnter = () => { },
 }) => {
 
   const [value, setValue] = stateValue
@@ -50,22 +50,23 @@ export const Input = ({
           value={(index > -1) ? value[index][name] : value[name]}
           className={classes.input}
           placeholder={placeholder}
-          onKeyUp={({ key }) => (key === 'Enter') && onEnter()}
-          onChange={({ target }) => setValue((state) => {
-            if (index > -1) {
+          onKeyDown={({ key }) => (key === 'Enter') && onEnter()}
+          onChange={({ target }) => {
+            if (!isNaN(min) && target.value < min) return
+            if (!isNaN(max) && target.value > max) return
+            setValue((state) => {
+              if (index > -1) {
+                return ({
+                  ...state, [index]: {
+                    ...state[index], [name]: target.value
+                  }
+                })
+              }
               return ({
-                ...state, [index]: {
-                  ...state[index], [name]: target.value
-                }
+                ...state, [name]: target.value
               })
-            }
-            return ({
-              ...state, [name]: target.value
             })
-          })}
-          {...({ 
-            number: { max, min },
-          })[type]}
+          }}
         />
       </div>
     </div>

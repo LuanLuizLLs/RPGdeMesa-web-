@@ -47,10 +47,20 @@ td.actions {
 }
 
 td.actions span {
+  display: inline-block;
+  height: 30px;
+  width: 30px;
   cursor: pointer;
   font-size: 1.2rem;
   font-weight: bold;
   margin-right: 10px;
+  border-radius: 50%;
+  background-color: var(--color-secondary);
+}
+
+td.actions span:hover {
+  color: var(--color-secondary);
+  background-color: var(--color-primary);
 }
 
 td.actions span:last-child {
