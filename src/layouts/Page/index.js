@@ -31,10 +31,10 @@ function Page({
           <figure>
             {user.imagem ? (
               <img src={user.imagem} alt="user" />
-            ) : user.user && user.user[0]}
+            ) : user.name && user.name[0]}
           </figure>
           <div>
-            <span>{user.user || '...'}</span>
+            <span>{user.name || '...'}</span>
             <span className={classes.logout} onClick={Out}>Logout</span>
           </div>
         </div>
