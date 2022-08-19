@@ -4,13 +4,13 @@ import React from 'react'
 import App from './App'
 import reducer from './global/reducer'
 import { Provider } from 'react-redux'
-import { breakpoint } from './configs'
+import { BREAKPOINT } from './configs'
 import { BrowserRouter } from 'react-router-dom'
 
 const alterDevice = () => {
   document.querySelector('html')
-    .setAttribute('device', Object.keys(breakpoint).filter((device) => {
-      return window.innerWidth <= breakpoint[device]
+    .setAttribute('device', Object.keys(BREAKPOINT).filter((device) => {
+      return window.innerWidth <= BREAKPOINT[device]
     })[0] || 'desktop')
 }
 window.onresize = alterDevice

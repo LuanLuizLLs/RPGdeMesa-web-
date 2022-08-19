@@ -1,9 +1,9 @@
-import { breakpoint } from '../configs'
+import { BREAKPOINT } from '../configs'
 
 /** Which device current */
 export const whichDevice = (device = '') => {
   let devices = {}
-  Object.entries(breakpoint).forEach(([key, value]) => {
+  Object.entries(BREAKPOINT).forEach(([key, value]) => {
     devices = {
       ...devices, [key]: (window.innerWidth <= value)
     }

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import API from '../../../services/api'
 import theme from '../../../theme'
 import Context from '../../../global/context'
-import { attribute } from '../../../configs'
+import { ATTRIBUTE } from '../../../configs'
 import {
   Box,
   Button,
@@ -154,7 +154,7 @@ function Abilities({
                   <Select
                     name="attribute"
                     label="Atributo"
-                    options={Object.keys(attribute)}
+                    options={Object.keys(ATTRIBUTE.PRIMARY)}
                     stateValue={[values, setValues]}
                   />
                 </Grid>
@@ -189,7 +189,7 @@ function Abilities({
               <Box backgroundColor={theme.secondary} padding={10} margin="10px 0" borderRadius={10}>
                 <Box display="flex" justifyContent="space-between">
                   <Text fontWeight="bold" color="gray">
-                    {formatAttribute(modal.data.attribute, modal.data.level, character[attribute[modal.data.attribute]])}
+                    {formatAttribute(modal.data.attribute, modal.data.level, character[ATTRIBUTE.PRIMARY[modal.data.attribute]])}
                   </Text>
                   <Button type="filled" color="success" fontSize="medium" onClick={() => handle.updateAbility(modal.data)}>
                     Melhorar

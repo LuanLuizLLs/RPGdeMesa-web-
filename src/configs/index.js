@@ -3,7 +3,7 @@ import {
 } from '../utils'
 
 /** Screen size breakpoint  */
-export const breakpoint = {
+export const BREAKPOINT = {
   mobile: 425,
   tablet: 768,
   laptop: 1024,
@@ -11,7 +11,7 @@ export const breakpoint = {
 }
 
 /** Race configs */
-export const race = {
+export const RACE = {
   'Anão': {
     strength: numberRandow(1, 3),
     dexterity: numberRandow(0, 2),
@@ -111,7 +111,7 @@ export const race = {
 }
 
 /** Caste configs */
-export const caste = {
+export const CASTE = {
   'Bárbaro': {
     life: numberRandow(12, 16),
     coins: numberRandow(10, 18),
@@ -174,172 +174,36 @@ export const caste = {
   }
 }
 
-/** Attributes options */
-export const attribute = {
-  'FOR': 'strength',
-  'DES': 'dexterity',
-  'CON': 'constitution',
-  'INT': 'intelligence',
-  'SAB': 'wisdom',
-  'CAR': 'charisma',
-}
-
-/** Inventory options */
-export const inventory = {
-  'ATAQ': 'strength',
-  'DEFE': 'dexterity',
-  'AGIL': 'constitution',
-  'ESTU': 'intelligence',
-  'ERUD': 'wisdom',
-  'APAR': 'charisma',
-  'CURA': 'life',
-  'VEND': 'coins',
-  'MOVI': 'actions',
-}
-
 /** Tendecy options */
-export const tendency = [
-  'Bom', 
-  'Leal', 
-  'Neutro', 
-  'Caótico',
-  'Mau',
-]
+export const TENDENCY = {
+  'Bom': 2, 
+  'Leal': 1, 
+  'Neutro': 0, 
+  'Caótico': 1,
+  'Mau': 2,
+}
 
-/** Adventures options */
-export const adventures = [
-  'Escoltar um personagem',
-  'Matar um personagem',
-  'Proteger um personagem',
-  'Prender um personagem',
-  'Investigar um personagem',
-  'Matar um monstro',
-  'Defender um monstro',
-  'Libertar um monstro',
-  'Capturar um monstro',
-  'Encontrar um monstro',
-  'Escapar de um monstro',
-  'Caçar um animal',
-  'Defender um animal',
-  'Libertar um animal',
-  'Capturar um animal',
-  'Procurar um animal',
-  'Entregar um animal',
-  'Libertar um personagem',
-  'Encontrar um objeto',
-  'Proteger um objeto',
-  'Entregar um objeto',
-  'Destruir um objeto',
-  'Recuperar um objeto',
-  'Roubar um objeto',
-  'Encontrar um local',
-  'Chegar em um local',
-  'Proteger um local',
-  'Mapear um local',
-  'Escapar de um local',
-  'Destruir um local',
-]
+/** Attributes options */
+export const ATTRIBUTE = {
+  PRIMARY: {
+    'FOR': 'strength',
+    'DES': 'dexterity',
+    'CON': 'constitution',
+    'INT': 'intelligence',
+    'SAB': 'wisdom',
+    'CAR': 'charisma',
+  },
+  SECONDARY: {
+    'VID': 'life',
+    'MOE': 'coins',
+    'ACO': 'actions',
+  }
+}
 
-/** Scenarios options */
-export const scenarios = [
-  'Floresta',
-  'Pântano',
-  'Montanha',
-  'Mar',
-  'Ártico',
-  'Deserto',
-  'Colina',
-  'Planíce',
-  'Metrópole',
-  'Reino',
-  'Cidade',
-  'Vila',
-  'Aldeia',
-  'Povoado',
-]
-
-/** Characters options */
-export const characters = [
-  'Bárbaro',
-  'Bardo',
-  'Bruxo',
-  'Clérigo',
-  'Druida',
-  'Feiticeiro',
-  'Guerreiro',
-  'Ladino',
-  'Mago',
-  'Monge',
-  'Paladino',
-  'Patrulheiro',
-  'Acólito',
-  'Artesão',
-  'Mercador',
-  'Artista',
-  'Gladiador',
-  'Charlatão',
-  'Criminoso',
-  'Espião',
-  'Eremita',
-  'Forasteiro',
-  'Andarilho',
-  'Herói do Povo',
-  'Marinheiro',
-  'Pirata',
-  'Nobre',
-  'Cavaleiro',
-  'Orfão',
-  'Sábio',
-  'Pesquisador',
-  'Soldado',
-]
-
-/** Objects options */
-export const objects = [
-  'Arma', 
-  'Armadura', 
-  'Equipamento', 
-  'Ferramenta', 
-  'Recipiente', 
-  'Utensílio', 
-  'Mobília', 
-  'Vestimenta', 
-  'Precioso', 
-  'Mágico', 
-  'Estudo', 
-  'Alimento', 
-  'Bebida', 
-  'Veículo', 
-  'Instrumento',
-]
-
-/** Places options */
-export const places = [
-  'Casa', 
-  'Cemitério', 
-  'Bibliteca', 
-  'Hospedaria', 
-  'Igreja', 
-  'Museu', 
-  'Teatro', 
-  'Escola', 
-  'Hospital', 
-  'Taverna', 
-  'Restaurante', 
-  'Armazém', 
-  'Loja', 
-  'Ponte', 
-  'Praça', 
-  'Torre', 
-  'Rio', 
-  'Lago', 
-  'Caverna', 
-  'Gruta', 
-  'Cachoeira', 
-  'Penhasco', 
-  'Ruína', 
-  'Templo',
-  'Barco',
-  'Santuário', 
-  'Covil',
-]
+/** Attributes options */
+export const items = {
+  'USO': 'usable',
+  'OBJETO': 'equip',
+  'VEICULO': 'move',
+  'LOCAL': 'property',
+}
