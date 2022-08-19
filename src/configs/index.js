@@ -186,15 +186,15 @@ export const attribute = {
 
 /** Inventory options */
 export const inventory = {
-  'ATQ': 'strength',
-  'DEF': 'dexterity',
-  'AGL': 'constitution',
-  'EST': 'intelligence',
-  'ESP': 'wisdom',
-  'APR': 'charisma',
-  'CUR': 'life',
-  'TES': 'coins',
-  'DES': 'actions',
+  'ATAQ': 'strength',
+  'DEFE': 'dexterity',
+  'AGIL': 'constitution',
+  'ESTU': 'intelligence',
+  'ERUD': 'wisdom',
+  'APAR': 'charisma',
+  'CURA': 'life',
+  'VEND': 'coins',
+  'MOVI': 'actions',
 }
 
 /** Tendecy options */
