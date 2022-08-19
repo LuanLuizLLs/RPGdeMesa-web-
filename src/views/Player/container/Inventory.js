@@ -16,30 +16,8 @@ const INITIAL = {
     id: '',
   },
   INVENTORY: {
-    columns: ['ID', 'Item', 'Descrição', 'Atributo', 'Modificador'],
-    rows: [
-      {
-        id: 1,
-        name: 'Espada',
-        description: 'Arma corpo-a-corpo',
-        attribute: 'ATAQ',
-        modifier: 1,
-      },
-      {
-        id: 2,
-        name: 'Escudo',
-        description: 'Proteção leve',
-        attribute: 'DEFE',
-        modifier: 1,
-      },
-      {
-        id: 3,
-        name: 'Botas',
-        description: 'Vestimenta simples',
-        attribute: 'AGIL',
-        modifier: 1,
-      },
-    ],
+    columns: ['ID', 'Item', 'Descrição', 'Tipo', 'Quantidade'],
+    rows: [],
   }
 }
 
