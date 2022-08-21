@@ -200,10 +200,9 @@ export const ATTRIBUTE = {
   }
 }
 
-/** Attributes options */
+/** Items options */
 export const items = {
-  'USO': 'usable',
-  'OBJETO': 'equip',
-  'VEICULO': 'move',
-  'LOCAL': 'property',
+  'LOCAL': 'places',
+  'OBJETO': 'objects',
+  'VEICULO': 'vehicles',
 }
