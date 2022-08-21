@@ -19,7 +19,7 @@ import {
 const INITIAL = {
   VIEW: 'login',
   VALUES: {
-    user: '',
+    name: '',
     password: '',
     new_password: '',
   },
@@ -156,7 +156,7 @@ function Login() {
                 Login
               </Title>
               <Input
-                name="user"
+                name="name"
                 label="Usuário"
                 placeholder="Digite seu usuário"
                 stateValue={[values, setValues]}
@@ -207,7 +207,7 @@ function Login() {
                 Preencha os dados a seguir:
               </Title>
               <Input
-                name="user"
+                name="name"
                 label="Usuário"
                 placeholder="Seu novo usuário"
                 stateValue={[values, setValues]}
@@ -263,7 +263,7 @@ function Login() {
                 Altere sua senha:
               </Title>
               <Input
-                name="user"
+                name="name"
                 label="Usuário"
                 placeholder="Digite seu usuário"
                 stateValue={[values, setValues]}
