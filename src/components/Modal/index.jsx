@@ -12,7 +12,7 @@ export const Modal = ({
   const [modal, setModal] = stateModal
 
   const style = {
-    maxWidth,
+    maxWidth: maxWidth || 'fit-content',
   }
 
   return modal.content && (
