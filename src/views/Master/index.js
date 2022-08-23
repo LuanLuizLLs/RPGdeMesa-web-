@@ -7,16 +7,34 @@ import Combat from './containers/Combat'
 import Characters from './containers/Characters'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  Box,
+  Button,
   Card,
   Divider,
   Grid,
+  List,
+  Modal,
   Tab,
   Text,
   Title,
 } from '../../components'
+import theme from '../../theme'
 
 const INITIAL = {
   TAB: 0,
+  MODAL: {
+    content: '',
+    data: {},
+  },
+  ADVENTURES: {
+    columns: ['Aventura', 'Descrição'],
+    rows: [
+      {
+        adventure: 'Aventura',
+        description: 'Descrição da aventura',
+      }
+    ],
+  }
 }
 
 function Master() {
@@ -26,7 +44,9 @@ function Master() {
   const campaing = useSelector(({ reducer }) => reducer.CAMPAING)
 
   const [tab, setTab] = useState(INITIAL.TAB)
-  
+  const [modal, setModal] = useState(INITIAL.MODAL)
+  const [adventures, ] = useState(INITIAL.ADVENTURES)
+
   useEffect(() => {
     API.get(`campaings/read/${campaing.id}`)
       .then(({ data }) => {
@@ -37,6 +57,12 @@ function Master() {
         })
       })
   }, [campaing.id, setDispatch])
+
+  const handle = {
+    openModal: (content, data = {}) => {
+      setModal({ content, data })
+    },
+  }
 
   return (
     <Page tab="Mestre" title="Escudo do Mestre" width="90vw">
@@ -56,31 +82,63 @@ function Master() {
         <Title type="h1" color="primary" textAlign="center" textDecoration="underline">
           MESA
         </Title>
+        <Grid type="row">
+          <Grid type="column" padding={[5, 0]} minWidth={300}>
+            <Title type="h6">
+              Personagens:
+            </Title>
+            <Characters campaing={campaing} />
+          </Grid>
+        </Grid>
         <Grid type="container">
           <Grid type="row">
-            <Grid type="column" padding={[5, 0]} minWidth={300}>
+            <Grid type="column" padding={[10, 10]} minWidth={300}>
               <Title type="h6">
                 Aventura:
               </Title>
-              <Text fontWeight="bold" color="gray">
-                Nenhuma aventura iniciada...
-              </Text>
+              <Box background={theme.secondary} padding={10} borderRadius={10} marginBottom={10}>
+                {false ? (
+                  <>
+                    <Text fontWeight="bold" color="primary">
+                      Teste
+                    </Text>
+                    <Text fontWeight="bold" color="gray">
+                      Teste teste teste teste
+                    </Text>
+                  </>
+                ) : (
+                  <Text fontWeight="bold" color="gray">
+                    Nenhuma aventura iniciada...
+                  </Text>
+                )}
+              </Box>
+              <Button fontSize="larger" type="filled" onClick={() => handle.openModal('add_adventure')}>
+                Aventuras
+              </Button>
             </Grid>
-            <Grid type="column" padding={[5, 0]} minWidth={300}>
+            <Grid type="column" padding={[10, 10]} minWidth={300}>
               <Title type="h6">
                 Cenário:
               </Title>
-              <Text fontWeight="bold" color="gray">
-                Nenhum cenário selecionado...
-              </Text>
-            </Grid>
-          </Grid>
-          <Grid type="row">
-            <Grid type="column" padding={[5, 0]} minWidth={300}>
-              <Title type="h6">
-                Personagens:
-              </Title>
-              <Characters campaing={campaing} />
+              <Box background={theme.secondary} padding={10} borderRadius={10} marginBottom={10}>
+                {false ? (
+                  <>
+                    <Text fontWeight="bold" color="primary">
+                      Teste
+                    </Text>
+                    <Text fontWeight="bold" color="gray">
+                      Teste teste teste teste
+                    </Text>
+                  </>
+                ) : (
+                  <Text fontWeight="bold" color="gray">
+                    Nenhum cenário selecionado...
+                  </Text>
+                )}
+              </Box>
+              <Button fontSize="larger" type="filled" onClick={() => handle.openModal('add_scenary')}>
+                Cenários
+              </Button>
             </Grid>
           </Grid>
         </Grid>
@@ -95,6 +153,28 @@ function Master() {
           ]}
         </Tab>
       </Card>
+      <Modal maxWidth={500} stateModal={[modal, setModal]}>
+        {({
+          add_adventure: (
+            <>
+              <List height={200} {...adventures} />
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="filled" color="secondary" padding={5}>
+                  Voltar
+                </Button>
+                <Button type="filled" padding={5}>
+                  Criar
+                </Button>
+              </Box>
+            </>
+          ),
+          add_scenary: (
+            <>
+              CENÁRIO
+            </>
+          )
+        })[modal.content] || null}
+      </Modal>
     </Page>
   )
 }
