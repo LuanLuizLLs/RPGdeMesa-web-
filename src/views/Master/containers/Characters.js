@@ -94,10 +94,13 @@ function Characters({
       API.get(`/characters/read/${values.search_character}`)
         .then(({ data }) => {
           const [character] = data.response
-          setValues({
-            ...character,
-            search_character: character.name
-          })
+          setMessage(data.message)
+          if (Boolean(data.response.length)) {
+            setValues({
+              ...character,
+              search_character: character.name
+            })
+          }
         })
         .finally(() => setLoading({}))
     },
@@ -263,7 +266,7 @@ function Characters({
           addCharacter_character: (
             <>
               <Title type="h6" color="primary">
-                Adicionar personagem
+                Personagem
               </Title>
               <Box marginBottom={20}>
                 <Input
@@ -271,14 +274,15 @@ function Characters({
                   placeholder="ID do personagem"
                   onEnter={handle.searchCharacter}
                   stateValue={[values, setValues]}
+                  readOnly={Boolean(values.id)}
                 />
               </Box>
               <Box display="flex" justifyContent="flex-end">
                 <Button type="filled" color="secondary" width="fit-content" padding={10} onClick={() => handle.resetCharacter(false)}>
                   Limpar
                 </Button>
-                <Button type="filled" width="fit-content" padding={10} onClick={Boolean(values.name) ? handle.addCharacter : handle.searchCharacter}>
-                  {Boolean(values.name) ? 'Confirmar' : 'Pesquisar'}
+                <Button type="filled" width="fit-content" padding={10} onClick={Boolean(values.id) ? handle.addCharacter : handle.searchCharacter}>
+                  {Boolean(values.id) ? 'Confirmar' : 'Pesquisar'}
                 </Button>
               </Box>
             </>
