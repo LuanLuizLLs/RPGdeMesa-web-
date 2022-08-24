@@ -3,6 +3,7 @@ import API from '../../../services/api'
 import theme from '../../../theme'
 import Context from '../../../global/context'
 import { ATTRIBUTE } from '../../../configs'
+import { averageAttributes } from '../../../utils'
 import {
   Box,
   Button,
@@ -209,7 +210,10 @@ function Abilities({
         })[modal.content] || null}
       </Modal>
       <List height={200} onClick={(row) => handle.openModal('update_ability', row)} {...abilities} />
-      <Box display="flex" justifyContent="flex-end" margin={10}>
+      <Box display="flex" justifyContent="space-between" margin={10}>
+        <Text fontWeight="bold">
+          <Text inline color="primary">Capacidade: </Text> {averageAttributes([character.intelligence, character.wisdom, character.charisma])}
+        </Text>
         <Button type="filled" onClick={() => handle.openModal('add_ability')}>
           Adicionar
         </Button>

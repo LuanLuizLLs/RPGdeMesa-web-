@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import API from '../../services/api'
 import Page from '../../layouts/Page'
 import Features from './container/Features'
@@ -16,33 +16,55 @@ import {
   TextArea,
   Title,
 } from '../../components'
+import { useParams } from 'react-router-dom'
+import Context from '../../global/context'
 
 const INITIAL = {
   TAB: 0,
   REFRESH: null,
+  VALUES: {},
 }
 
 function Player() {
 
+  const { id_character } = useParams()
+
   const setDispatch = useDispatch()
 
+  const setLoading = useContext(Context).loading[1]
+
   const character = useSelector(({ reducer }) => reducer.CHARACTER)
-  
+
   const [tab, setTab] = useState(INITIAL.TAB)
-  const [values, setValues] = useState(character)
+  const [values, setValues] = useState(id_character ? INITIAL.VALUES : character)
   const [refreshCharacter, setRefreshCharacter] = useState(INITIAL.REFRESH)
-  
+
   useEffect(() => {
-    API.get(`characters/read/${character.id}`)
+    id_character && setLoading({
+      type: 'circular'
+    })
+    API.get(`characters/read/${id_character || character.id}`)
       .then(({ data }) => {
         const [characterData] = data.response
         setValues(characterData)
-        setDispatch({
-          type: 'CHARACTER',
-          data: characterData
-        })
+        if (Boolean(data.response.length)) {
+          setDispatch({
+            type: 'CHARACTER',
+            data: characterData
+          })
+        }
       })
-  }, [character.id, refreshCharacter, setValues, setDispatch])
+      .finally(() => {
+        setLoading({})
+      })
+  }, [
+    character.id,
+    id_character,
+    setValues,
+    setLoading,
+    setDispatch,
+    refreshCharacter,
+  ])
 
   return (
     <Page tab="Jogador" title="Ficha do Jogador" width="80vw">

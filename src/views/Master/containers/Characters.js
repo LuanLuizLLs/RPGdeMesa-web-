@@ -146,9 +146,6 @@ function Characters({
         })
         .finally(handle.resetCharacter)
     },
-    detailCharacter: (character) => {
-      console.log(character)
-    },
   }
 
   return (
@@ -172,7 +169,6 @@ function Characters({
           marginTop={10}
           borderRadius={10}
           borderStyle="solid"
-          opacity={Boolean(id) || '0.5'}
           borderColor={theme.primary}
           position="relative"
         >
@@ -196,7 +192,7 @@ function Characters({
               <Grid type="column" padding={[5, 5]} minWidth={280}>
                 <Box background={theme.secondary} padding={10} borderRadius={10}>
                   <Text fontSize="medium">
-                    <Link onClick={() => Boolean(id) && handle.detailCharacter(characters[i])}>
+                    <Link target="_blank" {...Boolean(id) && { href: `/player/${id}` }}>
                       {name}
                     </Link> ({race} | {caste} | {tendency})
                   </Text>

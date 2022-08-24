@@ -41,3 +41,12 @@ export const numberRandow = (min = 0, max = 0) => {
   }
   return parseInt((Math.random() * ((max + 1) - min)) + min)
 }
+
+/** Average between attributes  */
+export const averageAttributes = (attributes = []) => {
+  let capacity = 0
+  attributes.forEach((attribute) => {
+    capacity += attribute
+  })
+  return Math.round(capacity / attributes.length)
+}

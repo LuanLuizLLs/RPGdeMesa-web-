@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { averageAttributes } from '../../../utils'
 import {
   Box,
   Button,
   List,
   Modal,
+  Text,
   Title,
 } from '../../../components'
 
@@ -28,7 +30,7 @@ function Inventory({
 }) {
 
   const [modal, setModal] = useState(INITIAL.MODAL)
-  const [inventory, ] = useState(INITIAL.INVENTORY)
+  const [inventory,] = useState(INITIAL.INVENTORY)
 
   return (
     <>
@@ -47,7 +49,10 @@ function Inventory({
         })[modal.content] || null}
       </Modal>
       <List height={200} {...inventory} />
-      <Box display="flex" justifyContent="flex-end" margin={10}>
+      <Box display="flex" justifyContent="space-between" margin={10}>
+        <Text fontWeight="bold">
+          <Text inline color="primary">Capacidade: </Text> {averageAttributes([character.intelligence, character.wisdom, character.charisma])}
+        </Text>
         <Button type="filled">
           Adicionar
         </Button>
