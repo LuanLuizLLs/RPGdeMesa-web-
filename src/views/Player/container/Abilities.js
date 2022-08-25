@@ -49,6 +49,8 @@ function Abilities({
   setRefreshCharacter,
 }) {
 
+  const capacity = averageAttributes([character.intelligence, character.wisdom, character.charisma], 2)
+
   const setMessage = useContext(Context).message[1]
 
   const [modal, setModal] = useState(INITIAL.MODAL)
@@ -212,7 +214,7 @@ function Abilities({
       <List height={200} onClick={(row) => handle.openModal('update_ability', row)} {...abilities} />
       <Box display="flex" justifyContent="space-between" margin={10}>
         <Text fontWeight="bold">
-          <Text inline color="primary">Capacidade: </Text> {averageAttributes([character.intelligence, character.wisdom, character.charisma])}
+          <Text inline color="primary">Capacidade: </Text> {capacity}
         </Text>
         <Button type="filled" onClick={() => handle.openModal('add_ability')}>
           Adicionar

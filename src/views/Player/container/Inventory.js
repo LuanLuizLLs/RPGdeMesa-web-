@@ -29,6 +29,8 @@ function Inventory({
   setRefreshCharacter,
 }) {
 
+  const capacity = averageAttributes([character.strength, character.dexterity, character.constitution], 2)
+
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [inventory,] = useState(INITIAL.INVENTORY)
 
@@ -51,7 +53,7 @@ function Inventory({
       <List height={200} {...inventory} />
       <Box display="flex" justifyContent="space-between" margin={10}>
         <Text fontWeight="bold">
-          <Text inline color="primary">Capacidade: </Text> {averageAttributes([character.intelligence, character.wisdom, character.charisma])}
+          <Text inline color="primary">Capacidade: </Text> {capacity}
         </Text>
         <Button type="filled">
           Adicionar

@@ -43,10 +43,10 @@ export const numberRandow = (min = 0, max = 0) => {
 }
 
 /** Average between attributes  */
-export const averageAttributes = (attributes = []) => {
+export const averageAttributes = (attributes = [], average = 0) => {
   let capacity = 0
   attributes.forEach((attribute) => {
     capacity += attribute
   })
-  return Math.round(capacity / attributes.length)
+  return Math.round(capacity / (average || attributes.length))
 }
