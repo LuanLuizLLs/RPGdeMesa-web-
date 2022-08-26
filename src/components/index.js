@@ -2,6 +2,7 @@
 export { Box } from './Box'
 export { Button } from './Button'
 export { Card } from './Card'
+export { Collapse } from './Collapse'
 export { Divider } from './Divider'
 export { Grid } from './Grid'
 export { Image } from './Image'

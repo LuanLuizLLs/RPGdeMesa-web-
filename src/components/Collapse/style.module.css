@@ -1,0 +1,6 @@
+.collapse {
+  height: 0;
+  overflow: hidden;
+  transition: all .5s;
+  padding-top: 10px;
+}
