@@ -70,7 +70,8 @@ function Home() {
     })
       .then(({ data }) => {
         setListCampaings((state) => ({
-          ...state, rows: data.response.map((campaing) => ({
+          ...state, 
+          rows: data.response.map((campaing) => ({
             id: campaing.id,
             name: campaing.name,
             description: campaing.description,
@@ -88,7 +89,8 @@ function Home() {
     })
       .then(({ data }) => {
         setListCharacters((state) => ({
-          ...state, rows: data.response.map((character) => ({
+          ...state, 
+          rows: data.response.map((character) => ({
             id: character.id,
             name: character.name,
             description: character.description,
