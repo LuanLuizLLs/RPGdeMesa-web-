@@ -17,18 +17,20 @@ export const List = ({
   return (
     <div className={classes.container} style={style}>
       <table className={classes.list}>
-        <thead>
-          <tr>
-            {columns.map((item, i) => (
-              <th key={i}>{item}</th>
-            ))}
-            {actions && (<th />)}
-          </tr>
-        </thead>
+        {Boolean(columns.length) && (
+          <thead>
+            <tr>
+              {columns.map((item, i) => (
+                <th key={i}>{item}</th>
+              ))}
+              {actions && (<th />)}
+            </tr>
+          </thead>
+        )}
         <tbody>
           {rows.map((row, i) => (
             <tr key={i}>
-              {Object.values(row).map((item, i) => (i < columns.length) && (
+              {Object.values(row).map((item, i) => (i < columns.length || !Boolean(columns.length)) && (
                 <td key={i} title={item} onClick={() => onClick(row)}>{item}</td>
               ))}
               {Boolean(actions) && (
@@ -45,7 +47,7 @@ export const List = ({
 List.propTypes = {
   height: PropTypes.number.isRequired,
   rows: PropTypes.array.isRequired,
-  columns: PropTypes.array.isRequired,
+  columns: PropTypes.array,
   actions: PropTypes.func,
   onClick: PropTypes.func,
 }
