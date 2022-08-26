@@ -61,6 +61,7 @@ function Master() {
   const setDispatch = useDispatch()
 
   const setMessage = useContext(Context).message[1]
+  const setLoading = useContext(Context).loading[1]
 
   const campaign = useSelector(({ reducer }) => reducer.CAMPAIGN)
 
@@ -68,7 +69,7 @@ function Master() {
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
   const [collapse, setCollapse] = useState(INITIAL.COLLAPSE)
-  const [adventures,] = useState(INITIAL.ADVENTURES)
+  const [adventures, setAdventures] = useState(INITIAL.ADVENTURES)
   const [scenarios,] = useState(INITIAL.SCENARIOS)
 
   useEffect(() => {
@@ -82,6 +83,22 @@ function Master() {
       })
   }, [campaign.id, setDispatch])
 
+  useEffect(() => {
+    API.get('adventures/read', {
+      id_campaign: campaign.id,
+    })
+      .then(({ data }) => {
+        const { response } = data
+        setAdventures({
+          rows: response.map((item) => ({
+            id: item.id,
+            name: item.name,
+            description: item.description,
+          }))
+        })
+      })
+  }, [])
+
   const handle = {
     openModal: (content, data = {}) => {
       setModal({ content, data })
@@ -94,8 +111,13 @@ function Master() {
     resetCreate: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
+      setLoading({})
     },
     createAdventure: () => {
+      setLoading({
+        type: 'bar'
+      })
+
       API.post('adventures/create', {
         ...values, id_campaign: campaign.id,
       })
