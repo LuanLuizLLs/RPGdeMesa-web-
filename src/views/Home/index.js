@@ -286,7 +286,7 @@ function Home() {
           <Text>
             {data.description}
           </Text>
-          <Box display="flex" justifyContent="flex-end">
+          <Box display="flex" justifyContent="flex-end" marginTop={10}>
             <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaing()}>
               Voltar
             </Button>
@@ -377,7 +377,7 @@ function Home() {
           <Text>
             {data.description}
           </Text>
-          <Box display="flex" justifyContent="flex-end">
+          <Box display="flex" justifyContent="flex-end" marginTop={10}>
             <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCharacter()}>
               Voltar
             </Button>
