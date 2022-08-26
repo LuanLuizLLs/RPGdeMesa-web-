@@ -32,10 +32,10 @@ const INITIAL = {
     description: '',
   },
   REFRESH: {
-    campaing: null,
+    campaign: null,
     character: null,
   },
-  LIST_CAMPAINGS: {
+  LIST_CAMPAIGNS: {
     columns: ['ID', 'Campanha', 'Descrição'],
     rows: [],
   },
@@ -57,29 +57,29 @@ function Home() {
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [refresh, setRefresh] = useState(INITIAL.REFRESH)
-  const [valuesCampaing, setValuesCampaing] = useState(INITIAL.VALUES)
+  const [valuesCampaign, setValuesCampaign] = useState(INITIAL.VALUES)
   const [valuesCharacter, setValuesCharacter] = useState(INITIAL.VALUES)
-  const [listCampaings, setListCampaings] = useState(INITIAL.LIST_CAMPAINGS)
+  const [listCampaigns, setListCampaigns] = useState(INITIAL.LIST_CAMPAIGNS)
   const [listCharacters, setListCharacters] = useState(INITIAL.LIST_CHARACTERS)
 
   useEffect(() => {
-    API.get('campaings/read', {
+    API.get('campaigns/read', {
       params: {
         id_user: user.id,
       }
     })
       .then(({ data }) => {
-        setListCampaings((state) => ({
+        setListCampaigns((state) => ({
           ...state, 
-          rows: data.response.map((campaing) => ({
-            id: campaing.id,
-            name: campaing.name,
-            description: campaing.description,
-            data: campaing,
+          rows: data.response.map((campaign) => ({
+            id: campaign.id,
+            name: campaign.name,
+            description: campaign.description,
+            data: campaign,
           }))
         }))
       })
-  }, [refresh.campaing, user.id])
+  }, [refresh.campaign, user.id])
 
   useEffect(() => {
     API.get('characters/read', {
@@ -101,30 +101,30 @@ function Home() {
   }, [refresh.character, user.id])
 
   const handle = {
-    openCampaing: (content, data) => {
+    openCampaign: (content, data) => {
       setModal({ content, data })
-      if (content === 'campaing_update') {
-        setValuesCampaing(data)
+      if (content === 'campaign_update') {
+        setValuesCampaign(data)
       }
     },
-    resetCampaing: () => {
+    resetCampaign: () => {
       setLoading({})
       setModal(INITIAL.MODAL)
-      setValuesCampaing(INITIAL.VALUES)
+      setValuesCampaign(INITIAL.VALUES)
     },
-    createCampaing: () => {
+    createCampaign: () => {
       setLoading({
         type: 'circular'
       })
 
-      API.post('campaings/create', {
+      API.post('campaigns/create', {
         id_user: user.id,
-        ...valuesCampaing,
+        ...valuesCampaign,
       })
         .then(({ data }) => {
           setMessage(data.message)
           setRefresh({
-            ...refresh, campaing: data
+            ...refresh, campaign: data
           })
         })
         .catch(() => {
@@ -133,19 +133,19 @@ function Home() {
             message: 'Erro ao criar a campanha',
           })
         })
-        .finally(handle.resetCampaing)
+        .finally(handle.resetCampaign)
     },
-    updateCampaing: (id) => {
+    updateCampaign: (id) => {
       setLoading({
         type: 'circular'
       })
 
-      API.patch(`campaings/update/${id}`, valuesCampaing)
+      API.patch(`campaigns/update/${id}`, valuesCampaign)
         .then(({ data }) => {
           setMessage(data.message)
           setRefresh({
             ...refresh,
-            campaing: data
+            campaign: data
           })
         })
         .catch(() => {
@@ -154,19 +154,19 @@ function Home() {
             message: 'Erro ao atualizar a campanha',
           })
         })
-        .finally(handle.resetCampaing)
+        .finally(handle.resetCampaign)
     },
-    deleteCampaing: (id) => {
+    deleteCampaign: (id) => {
       setLoading({
         type: 'bar'
       })
 
-      API.delete((`campaings/delete/${id}`))
+      API.delete((`campaigns/delete/${id}`))
         .then(({ data }) => {
           setMessage(data.message)
           setRefresh(({
             ...refresh,
-            campaing: data
+            campaign: data
           }))
         })
         .catch(() => {
@@ -175,11 +175,11 @@ function Home() {
             message: 'Erro ao deletar a campanha'
           })
         })
-        .finally(handle.resetCampaing)
+        .finally(handle.resetCampaign)
     },
-    startCampaing: ({ data }) => {
+    startCampaign: ({ data }) => {
       setDispatch({
-        type: 'CAMPAING', data,
+        type: 'CAMPAIGN', data,
       })
       setNavigate('/master')
     },
@@ -272,7 +272,7 @@ function Home() {
 
   const ContentModal = ({ content, data = {} }) => {
     return ({
-      campaing_start: (
+      campaign_start: (
         <>
           <Title type="h6">
             Campanha
@@ -287,16 +287,16 @@ function Home() {
             {data.description}
           </Text>
           <Box display="flex" justifyContent="flex-end" marginTop={10}>
-            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaing()}>
+            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaign()}>
               Voltar
             </Button>
-            <Button type="filled" padding={10} onClick={() => handle.startCampaing(data)}>
+            <Button type="filled" padding={10} onClick={() => handle.startCampaign(data)}>
               Mestrar
             </Button>
           </Box>
         </>
       ),
-      campaing_create: (
+      campaign_create: (
         <>
           <Title type="h6">
             Criar campanha:
@@ -304,25 +304,25 @@ function Home() {
           <Input
             name="name"
             placeholder="Campanha"
-            stateValue={[valuesCampaing, setValuesCampaing]}
+            stateValue={[valuesCampaign, setValuesCampaign]}
           />
           <TextArea
             rows={3}
             name="description"
             placeholder="Descreva a campanha"
-            stateValue={[valuesCampaing, setValuesCampaing]}
+            stateValue={[valuesCampaign, setValuesCampaign]}
           />
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaing()}>
+            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaign()}>
               Cancelar
             </Button>
-            <Button type="filled" color="primary" padding={10} onClick={() => handle.createCampaing()}>
+            <Button type="filled" color="primary" padding={10} onClick={() => handle.createCampaign()}>
               Criar
             </Button>
           </Box>
         </>
       ),
-      campaing_update: (
+      campaign_update: (
         <>
           <Title type="h6">
             Editar campanha:
@@ -330,34 +330,34 @@ function Home() {
           <Input
             name="name"
             placeholder="Campanha"
-            stateValue={[valuesCampaing, setValuesCampaing]}
+            stateValue={[valuesCampaign, setValuesCampaign]}
           />
           <TextArea
             rows={3}
             name="description"
             placeholder="Descreva a campanha"
-            stateValue={[valuesCampaing, setValuesCampaing]}
+            stateValue={[valuesCampaign, setValuesCampaign]}
           />
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaing()}>
+            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaign()}>
               Cancelar
             </Button>
-            <Button type="filled" padding={10} onClick={() => handle.updateCampaing(data.id)}>
+            <Button type="filled" padding={10} onClick={() => handle.updateCampaign(data.id)}>
               Salvar
             </Button>
           </Box>
         </>
       ),
-      campaing_delete: (
+      campaign_delete: (
         <>
           <Text>
             Tem certeza que deseja excluir a campanha <b>{data.name}</b>?
           </Text>
           <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" padding={10} onClick={() => handle.resetCampaing()}>
+            <Button type="filled" padding={10} onClick={() => handle.resetCampaign()}>
               Cancelar
             </Button>
-            <Button type="filled" color="error" padding={10} onClick={() => handle.deleteCampaing(data.id)}>
+            <Button type="filled" color="error" padding={10} onClick={() => handle.deleteCampaign(data.id)}>
               Excluir
             </Button>
           </Box>
@@ -481,7 +481,7 @@ function Home() {
         maxWidth={450}
         stateModal={[modal, setModal]}
         onClose={() => {
-          handle.resetCampaing()
+          handle.resetCampaign()
           handle.resetCharacter()
         }}
       >
@@ -503,14 +503,14 @@ function Home() {
               </Title>
               <List
                 height={300}
-                {...listCampaings}
-                onClick={(row) => handle.openCampaing('campaing_start', row)}
+                {...listCampaigns}
+                onClick={(row) => handle.openCampaign('campaign_start', row)}
                 actions={(row) => [
-                  <span key="update" type="update" title="Editar" onClick={() => handle.openCampaing('campaing_update', row)} />,
-                  <span key="delete" type="delete" title="Deletar" onClick={() => handle.openCampaing('campaing_delete', row)} />,
+                  <span key="update" type="update" title="Editar" onClick={() => handle.openCampaign('campaign_update', row)} />,
+                  <span key="delete" type="delete" title="Deletar" onClick={() => handle.openCampaign('campaign_delete', row)} />,
                 ]}
               />
-              <Button type="filled" padding={10} onClick={() => handle.openCampaing('campaing_create')}>
+              <Button type="filled" padding={10} onClick={() => handle.openCampaign('campaign_create')}>
                 Criar campanha
               </Button>
             </Card>

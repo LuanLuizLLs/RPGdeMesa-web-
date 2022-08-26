@@ -6,7 +6,7 @@ import { combineReducers } from 'redux'
 /** Global reducer */
 const INITIAL_REDUCER = {
   USER: {},
-  CAMPAING: {},
+  CAMPAIGN: {},
   CHARACTER: {},
 }
 

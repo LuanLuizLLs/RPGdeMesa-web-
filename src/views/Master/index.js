@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import API from '../../services/api'
 import Page from '../../layouts/Page'
 import Exploration from './containers/Exploration'
@@ -22,6 +22,7 @@ import {
   Title,
 } from '../../components'
 import theme from '../../theme'
+import Context from '../../global/context'
 
 const INITIAL = {
   TAB: 0,
@@ -29,7 +30,10 @@ const INITIAL = {
     content: '',
     data: {},
   },
-  VALUES: {},
+  VALUES: {
+    name: '',
+    description: '',
+  },
   COLLAPSE: {
     adventure: false,
     scenary: false,
@@ -56,7 +60,9 @@ function Master() {
 
   const setDispatch = useDispatch()
 
-  const campaing = useSelector(({ reducer }) => reducer.CAMPAING)
+  const setMessage = useContext(Context).message[1]
+
+  const campaign = useSelector(({ reducer }) => reducer.CAMPAIGN)
 
   const [tab, setTab] = useState(INITIAL.TAB)
   const [modal, setModal] = useState(INITIAL.MODAL)
@@ -66,15 +72,15 @@ function Master() {
   const [scenarios,] = useState(INITIAL.SCENARIOS)
 
   useEffect(() => {
-    API.get(`campaings/read/${campaing.id}`)
+    API.get(`campaigns/read/${campaign.id}`)
       .then(({ data }) => {
-        const [campaingData] = data.response
+        const [campaignData] = data.response
         setDispatch({
-          type: 'CAMPAING',
-          data: campaingData
+          type: 'CAMPAIGN',
+          data: campaignData
         })
       })
-  }, [campaing.id, setDispatch])
+  }, [campaign.id, setDispatch])
 
   const handle = {
     openModal: (content, data = {}) => {
@@ -89,19 +95,28 @@ function Master() {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
     },
+    createAdventure: () => {
+      API.post('adventures/create', {
+        ...values, id_campaign: campaign.id,
+      })
+        .then(({ data }) => {
+          setMessage(data.message)
+        })
+        .finally(handle.resetCreate)
+    }
   }
 
   return (
     <Page tab="Mestre" title="Escudo do Mestre" width="90vw">
       <Title type="h6" color="secondary">
-        #{campaing.id} - {campaing.name}
+        #{campaign.id} - {campaign.name}
       </Title>
       <Card>
         <Title type="h6" textAlign="center">
-          {campaing.name}
+          {campaign.name}
         </Title>
         <Text textAlign="center">
-          {campaing.description}
+          {campaign.description}
         </Text>
       </Card>
       <Divider borderStyle="solid" />
@@ -114,7 +129,7 @@ function Master() {
             <Title type="h6">
               Personagens:
             </Title>
-            <Characters campaing={campaing} />
+            <Characters campaign={campaign} />
           </Grid>
         </Grid>
         <Grid type="container">
@@ -190,13 +205,13 @@ function Master() {
       <Card>
         <Tab tabs={['Exploração', 'Interação', 'Combate']} stateTab={[tab, setTab]}>
           {[
-            <Exploration key="exploration" campaing={campaing} />,
-            <Interaction key="interaction" campaing={campaing} />,
-            <Combat key="combat" campaing={campaing} />,
+            <Exploration key="exploration" campaign={campaign} />,
+            <Interaction key="interaction" campaign={campaign} />,
+            <Combat key="combat" campaign={campaign} />,
           ]}
         </Tab>
       </Card>
-      <Modal maxWidth={350} stateModal={[modal, setModal]}>
+      <Modal maxWidth={500} stateModal={[modal, setModal]}>
         {({
           add_adventure: (
             <>
@@ -216,7 +231,7 @@ function Master() {
                 <Button type="filled" color="secondary" padding={5} onClick={handle.resetCreate}>
                   Cancelar
                 </Button>
-                <Button type="filled" padding={5}>
+                <Button type="filled" padding={5} onClick={handle.createAdventure}>
                   Criar
                 </Button>
               </Box>

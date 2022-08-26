@@ -47,7 +47,7 @@ const INITIAL = {
 }
 
 function Characters({
-  campaing,
+  campaign,
 }) {
 
   const setMessage = useContext(Context).message[1]
@@ -61,7 +61,7 @@ function Characters({
   useEffect(() => {
     API.get('/characters/read', {
       params: {
-        id_campaing: campaing.id
+        id_campaign: campaign.id
       }
     })
       .then(({ data }) => {
@@ -71,7 +71,7 @@ function Characters({
           setCharacters(INITIAL.CHARACTERS)
         }
       })
-  }, [refresh, campaing.id])
+  }, [refresh, campaign.id])
 
   const handle = {
     openModal: (content, data = {}) => {
@@ -111,7 +111,7 @@ function Characters({
 
       API.patch(`/characters/update/${values.id}`, {
         ...values,
-        id_campaing: campaing.id,
+        id_campaign: campaign.id,
       })
         .then(({ data }) => {
           setMessage(data.message)
@@ -126,7 +126,7 @@ function Characters({
 
       API.patch(`/characters/update/${data.id}`, {
         ...data,
-        id_campaing: null,
+        id_campaign: null,
       })
         .then(({ data }) => {
           setMessage(data.message)
