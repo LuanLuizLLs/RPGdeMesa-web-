@@ -39,20 +39,10 @@ const INITIAL = {
     scenary: false,
   },
   ADVENTURES: {
-    rows: [
-      {
-        adventure: 'Aventura',
-        description: 'Descrição da aventura',
-      }
-    ],
+    rows: [],
   },
   SCENARIOS: {
-    rows: [
-      {
-        adventure: 'Cenário',
-        description: 'Descrição do cenário',
-      }
-    ],
+    rows: [],
   },
 }
 
@@ -96,7 +86,7 @@ function Master() {
           }))
         })
       })
-  }, [])
+  }, [CAMPAIGN.id])
 
   const handle = {
     openModal: (content, data = {}) => {
