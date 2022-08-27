@@ -29,7 +29,7 @@ function Inventory({
   setRefreshCharacter,
 }) {
 
-  const capacity = averageAttributes([character.strength, character.dexterity, character.constitution], 2)
+  const capacity = averageAttributes([character.strength, character.dexterity, character.constitution], 2) || 0
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [inventory,] = useState(INITIAL.INVENTORY)

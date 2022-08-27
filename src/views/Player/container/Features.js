@@ -57,14 +57,15 @@ function Features({
   const [features, setFeatures] = useState(INITIAL.FEATURES)
 
   useEffect(() => {
-    API.get('features/read', {
+    character.id && API.get('features/read', {
       params: {
         id_character: character.id,
       }
     })
       .then(({ data }) => {
         setFeatures((state) => ({
-          ...state, rows: data.response.map(({
+          ...state,
+          rows: data.response.map(({
             id, name, strength, dexterity, constitution, intelligence, wisdom, charisma,
           }) => ({
             id, name, strength, dexterity, constitution, intelligence, wisdom, charisma,
@@ -85,9 +86,9 @@ function Features({
     },
     createFeature: () => {
       API.post('features/create', {
+        ...values,
         id_character: character.id,
         player,
-        ...values,
       })
         .then(({ data }) => {
           setRefresh(data)
@@ -255,7 +256,7 @@ function Features({
         {...features}
       />
       <Box display="flex" justifyContent="flex-end" margin={10}>
-        <Button type="filled" onClick={() => handle.openModal('add_feature')}>
+        <Button type="filled" onClick={() => Boolean(character.id) && handle.openModal('add_feature')}>
           Adicionar
         </Button>
       </Box>

@@ -49,7 +49,7 @@ function Abilities({
   setRefreshCharacter,
 }) {
 
-  const capacity = averageAttributes([character.intelligence, character.wisdom, character.charisma], 2)
+  const capacity = averageAttributes([character.intelligence, character.wisdom, character.charisma], 2) || 0
 
   const { setMessage } = useContext(Context)
 
@@ -59,7 +59,7 @@ function Abilities({
   const [abilities, setAbilities] = useState(INITIAL.ABILITIES)
 
   useEffect(() => {
-    API.get('abilities/read', {
+    character.id && API.get('abilities/read', {
       params: {
         id_character: character.id,
       }
@@ -216,7 +216,7 @@ function Abilities({
         <Text fontWeight="bold">
           <Text inline color="primary">Capacidade: </Text> {capacity}
         </Text>
-        <Button type="filled" onClick={() => handle.openModal('add_ability')}>
+        <Button type="filled" onClick={() => Boolean(character.id) && handle.openModal('add_ability')}>
           Adicionar
         </Button>
       </Box>

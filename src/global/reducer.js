@@ -13,11 +13,9 @@ const INITIAL_REDUCER = {
 const initialState = defineState(INITIAL_REDUCER)('reducer')
 
 const reducer = (state = initialState, { type, data }) => {
-  if (type === 'INITIAL')
+  if (type === 'INITIAL') 
     return { ...INITIAL_REDUCER }
-  else if (data === 'INITIAL')
-    return { ...state, [type]: INITIAL_REDUCER[type] }
-  else
+  else 
     return { ...state, [type]: data }
 }
 

@@ -4,6 +4,8 @@ import Page from '../../layouts/Page'
 import Features from './container/Features'
 import Abilities from './container/Abilities'
 import Inventory from './container/Inventory'
+import Context from '../../global/context'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Box,
@@ -16,8 +18,6 @@ import {
   TextArea,
   Title,
 } from '../../components'
-import { useParams } from 'react-router-dom'
-import Context from '../../global/context'
 
 const INITIAL = {
   TAB: 0,
@@ -27,16 +27,15 @@ const INITIAL = {
 
 function Player() {
 
-  const { id_character } = useParams()
-
   const setDispatch = useDispatch()
 
-  const { setLoading } = useContext(Context)
-  const { CHARACTER } = useSelector(({ reducer }) => reducer)
+  const { id_character } = useParams()
+  const { setLoading, setMessage } = useContext(Context)
+  const { USER, CHARACTER, CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
   const [tab, setTab] = useState(INITIAL.TAB)
   const [values, setValues] = useState(id_character ? INITIAL.VALUES : CHARACTER)
-  const [refreshCharacter, setRefreshCharacter] = useState(INITIAL.REFRESH)
+  const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 
   useEffect(() => {
     id_character && setLoading({
@@ -44,31 +43,54 @@ function Player() {
     })
     API.get(`characters/read/${id_character || CHARACTER.id}`)
       .then(({ data }) => {
-        const [characterData] = data.response
-        setValues(characterData)
-        if (Boolean(data.response.length)) {
-          setDispatch({
-            type: 'CHARACTER',
-            data: characterData
-          })
+        const [character] = data.response
+        if (character) {
+          if (id_character) {
+            const { id_user, id_campaign } = character
+            if ((USER.id === id_user) || (CAMPAIGN.id === id_campaign)) {
+              setValues(character)
+              setDispatch({
+                type: 'CHARACTER',
+                data: character,
+              })
+            } else {
+              setMessage({
+                type: 'warning',
+                message: 'Usuário não permitido',
+              })
+              setDispatch({
+                type: 'CHARACTER',
+                data: {},
+              })
+            }
+          } else {
+            setValues(character)
+            setDispatch({
+              type: 'CHARACTER',
+              data: character,
+            })
+          }
         }
       })
       .finally(() => {
         setLoading({})
       })
   }, [
-    CHARACTER.id,
+    refresh,
     id_character,
-    setValues,
+    CHARACTER.id,
+    CAMPAIGN.id,
+    USER.id,
     setLoading,
+    setMessage,
+    setValues,
     setDispatch,
-    refreshCharacter,
   ])
 
   return (
     <Page tab="Jogador" title="Ficha do Jogador" width="80vw">
       <Title type="h6" color="secondary">
-        #{CHARACTER.id} - {CHARACTER.name}
+        #{CHARACTER.id || 'ID'} - {CHARACTER.name || 'Personagem'}
       </Title>
       <Card>
         <Grid type="container">
@@ -123,10 +145,10 @@ function Player() {
           <Card>
             <Box display="flex" justifyContent="space-around" flexWrap="wrap">
               <Text fontSize="medium" textAlign="center" whiteSpace="nowrap">
-                💪 FOR {values.strength} | 👋 DES {values.dexterity} | ✊ CON {values.constitution}
+                💪 FOR {CHARACTER.strength || 0} | 👋 DES {CHARACTER.dexterity || 0} | ✊ CON {CHARACTER.constitution || 0}
               </Text>
               <Text fontSize="medium" textAlign="center" whiteSpace="nowrap">
-                📙 INT {values.intelligence} | 🙌 SAB {values.wisdom} | 🤝 CAR {values.charisma}
+                📙 INT {CHARACTER.intelligence || 0} | 🙌 SAB {CHARACTER.wisdom || 0} | 🤝 CAR {CHARACTER.charisma || 0}
               </Text>
             </Box>
           </Card>
@@ -175,9 +197,9 @@ function Player() {
       <Card>
         <Tab tabs={['Características', 'Habilidades', 'Invetário']} stateTab={[tab, setTab]}>
           {[
-            <Features key="features" player={true} character={CHARACTER} setRefreshCharacter={setRefreshCharacter} />,
-            <Abilities key="abilities" player={true} character={CHARACTER} setRefreshCharacter={setRefreshCharacter} />,
-            <Inventory key="inventory" player={true} character={CHARACTER} setRefreshCharacter={setRefreshCharacter} />,
+            <Features key="features" player={true} character={CHARACTER} setRefreshCharacter={setRefresh} />,
+            <Abilities key="abilities" player={true} character={CHARACTER} setRefreshCharacter={setRefresh} />,
+            <Inventory key="inventory" player={true} character={CHARACTER} setRefreshCharacter={setRefresh} />,
           ]}
         </Tab>
       </Card>
