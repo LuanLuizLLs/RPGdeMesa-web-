@@ -14,13 +14,10 @@ const initialState = defineState(INITIAL_REDUCER)('reducer')
 
 const reducer = (state = initialState, { type, data }) => {
   if (type === 'INITIAL')
-    /** Initial reducer */ 
     return { ...INITIAL_REDUCER }
-  else if (data === 'RESET')
-    /** Reset specific data */
+  else if (data === 'INITIAL')
     return { ...state, [type]: INITIAL_REDUCER[type] }
   else
-    /** Save data in reducer */
     return { ...state, [type]: data }
 }
 
