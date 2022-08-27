@@ -31,7 +31,7 @@ function Player() {
 
   const setDispatch = useDispatch()
 
-  const setLoading = useContext(Context).loading[1]
+  const { setLoading } = useContext(Context)
 
   const character = useSelector(({ reducer }) => reducer.CHARACTER)
 

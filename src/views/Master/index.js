@@ -60,8 +60,7 @@ function Master() {
 
   const setDispatch = useDispatch()
 
-  const setMessage = useContext(Context).message[1]
-  const setLoading = useContext(Context).loading[1]
+  const { setLoading, setMessage } = useContext(Context)
 
   const campaign = useSelector(({ reducer }) => reducer.CAMPAIGN)
 

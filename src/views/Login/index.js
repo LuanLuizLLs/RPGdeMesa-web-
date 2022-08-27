@@ -35,8 +35,7 @@ function Login() {
 
   const setNavigate = useNavigate()
 
-  const setLoading = useContext(Context).loading[1]
-  const setMessage = useContext(Context).message[1]
+  const { setLoading, setMessage } = useContext(Context)
 
   const [view, setView] = useState(INITIAL.VIEW)
   const [values, setValues] = useState(INITIAL.VALUES)

@@ -6,7 +6,7 @@ import Context from './global/context'
 import Message from './layouts/Message'
 import Loading from './layouts/Loading'
 
-const INITIAL_CONTEXT = {
+const INITIAL = {
   LOADING: {
     type: '',
   },
@@ -19,24 +19,27 @@ const INITIAL_CONTEXT = {
 function App() {
 
   const setNavigate = useNavigate()
-  
-  const context = {
-    loading: useState(INITIAL_CONTEXT.LOADING),
-    message: useState(INITIAL_CONTEXT.MESSAGE),
-  }
-  
+
   const user = useSelector(({ reducer }) => reducer.USER)
+
+  const [loagind, setLoading] = useState(INITIAL.LOADING)
+  const [message, setMessage] = useState(INITIAL.MESSAGE)
+  
+  const initialContext = {
+    setLoading,
+    setMessage,
+  }
   
   useEffect(() => {
     user.id || setNavigate('/login')
   }, [user, setNavigate])
 
   return (
-    <Context.Provider value={context}>
-      <Loading stateLoading={context.loading}>
+    <Context.Provider value={initialContext}>
+      <Loading stateLoading={[loagind, setLoading]}>
         <Routes />
       </Loading>
-      <Message stateMessage={context.message} />
+      <Message stateMessage={[message, setMessage]} />
     </Context.Provider>
   )
 }

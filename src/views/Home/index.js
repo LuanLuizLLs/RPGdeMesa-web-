@@ -52,8 +52,7 @@ function Home() {
 
   const user = useSelector(({ reducer }) => reducer.USER)
 
-  const setLoading = useContext(Context).loading[1]
-  const setMessage = useContext(Context).message[1]
+  const { setLoading, setMessage } = useContext(Context)
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [refresh, setRefresh] = useState(INITIAL.REFRESH)

@@ -50,8 +50,7 @@ function Characters({
   campaign,
 }) {
 
-  const setMessage = useContext(Context).message[1]
-  const setLoading = useContext(Context).loading[1]
+  const { setLoading, setMessage } = useContext(Context)
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)

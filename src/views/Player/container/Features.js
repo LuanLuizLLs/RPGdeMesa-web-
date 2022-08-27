@@ -49,7 +49,7 @@ function Features({
   setRefreshCharacter,
 }) {
 
-  const setMessage = useContext(Context).message[1]
+  const { setMessage } = useContext(Context)
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
