@@ -50,7 +50,7 @@ function Home() {
   const setNavigate = useNavigate()
   const setDispatch = useDispatch()
 
-  const user = useSelector(({ reducer }) => reducer.USER)
+  const { USER } = useSelector(({ reducer }) => reducer)
 
   const { setLoading, setMessage } = useContext(Context)
 
@@ -64,7 +64,7 @@ function Home() {
   useEffect(() => {
     API.get('campaigns/read', {
       params: {
-        id_user: user.id,
+        id_user: USER.id,
       }
     })
       .then(({ data }) => {
@@ -78,12 +78,12 @@ function Home() {
           }))
         }))
       })
-  }, [refresh.campaign, user.id])
+  }, [refresh.campaign, USER.id])
 
   useEffect(() => {
     API.get('characters/read', {
       params: {
-        id_user: user.id,
+        id_user: USER.id,
       }
     })
       .then(({ data }) => {
@@ -97,7 +97,7 @@ function Home() {
           }))
         }))
       })
-  }, [refresh.character, user.id])
+  }, [refresh.character, USER.id])
 
   const handle = {
     openCampaign: (content, data) => {
@@ -117,7 +117,7 @@ function Home() {
       })
 
       API.post('campaigns/create', {
-        id_user: user.id,
+        id_user: USER.id,
         ...valuesCampaign,
       })
         .then(({ data }) => {
@@ -199,7 +199,7 @@ function Home() {
       })
 
       API.post('characters/create', {
-        id_user: user.id,
+        id_user: USER.id,
         ...valuesCharacter,
         ...RACE[valuesCharacter.race],
         ...CASTE[valuesCharacter.caste],

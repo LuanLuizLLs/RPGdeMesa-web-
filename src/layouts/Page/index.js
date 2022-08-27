@@ -11,7 +11,7 @@ function Page({
   tab,
 }) {
 
-  const user = useSelector(({ reducer }) => reducer.USER)
+  const { USER } = useSelector(({ reducer }) => reducer)
 
   const { Out } = useLogin()
 
@@ -29,12 +29,12 @@ function Page({
         </div>
         <div className={classes.user}>
           <figure>
-            {user.imagem ? (
-              <img src={user.imagem} alt="user" />
-            ) : user.name && user.name[0]}
+            {USER.imagem ? (
+              <img src={USER.imagem} alt="user" />
+            ) : USER.name && USER.name[0]}
           </figure>
           <div>
-            <span>{user.name || '...'}</span>
+            <span>{USER.name || '...'}</span>
             <span className={classes.logout} onClick={Out}>Logout</span>
           </div>
         </div>

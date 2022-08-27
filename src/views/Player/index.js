@@ -32,18 +32,17 @@ function Player() {
   const setDispatch = useDispatch()
 
   const { setLoading } = useContext(Context)
-
-  const character = useSelector(({ reducer }) => reducer.CHARACTER)
+  const { CHARACTER } = useSelector(({ reducer }) => reducer)
 
   const [tab, setTab] = useState(INITIAL.TAB)
-  const [values, setValues] = useState(id_character ? INITIAL.VALUES : character)
+  const [values, setValues] = useState(id_character ? INITIAL.VALUES : CHARACTER)
   const [refreshCharacter, setRefreshCharacter] = useState(INITIAL.REFRESH)
 
   useEffect(() => {
     id_character && setLoading({
       type: 'circular'
     })
-    API.get(`characters/read/${id_character || character.id}`)
+    API.get(`characters/read/${id_character || CHARACTER.id}`)
       .then(({ data }) => {
         const [characterData] = data.response
         setValues(characterData)
@@ -58,7 +57,7 @@ function Player() {
         setLoading({})
       })
   }, [
-    character.id,
+    CHARACTER.id,
     id_character,
     setValues,
     setLoading,
@@ -69,7 +68,7 @@ function Player() {
   return (
     <Page tab="Jogador" title="Ficha do Jogador" width="80vw">
       <Title type="h6" color="secondary">
-        #{character.id} - {character.name}
+        #{CHARACTER.id} - {CHARACTER.name}
       </Title>
       <Card>
         <Grid type="container">
@@ -176,9 +175,9 @@ function Player() {
       <Card>
         <Tab tabs={['Características', 'Habilidades', 'Invetário']} stateTab={[tab, setTab]}>
           {[
-            <Features key="features" player={true} character={character} setRefreshCharacter={setRefreshCharacter} />,
-            <Abilities key="abilities" player={true} character={character} setRefreshCharacter={setRefreshCharacter} />,
-            <Inventory key="inventory" player={true} character={character} setRefreshCharacter={setRefreshCharacter} />,
+            <Features key="features" player={true} character={CHARACTER} setRefreshCharacter={setRefreshCharacter} />,
+            <Abilities key="abilities" player={true} character={CHARACTER} setRefreshCharacter={setRefreshCharacter} />,
+            <Inventory key="inventory" player={true} character={CHARACTER} setRefreshCharacter={setRefreshCharacter} />,
           ]}
         </Tab>
       </Card>

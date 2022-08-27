@@ -20,7 +20,7 @@ function App() {
 
   const setNavigate = useNavigate()
 
-  const user = useSelector(({ reducer }) => reducer.USER)
+  const { USER } = useSelector(({ reducer }) => reducer)
 
   const [loagind, setLoading] = useState(INITIAL.LOADING)
   const [message, setMessage] = useState(INITIAL.MESSAGE)
@@ -31,8 +31,8 @@ function App() {
   }
   
   useEffect(() => {
-    user.id || setNavigate('/login')
-  }, [user, setNavigate])
+    USER.id || setNavigate('/login')
+  }, [USER, setNavigate])
 
   return (
     <Context.Provider value={initialContext}>

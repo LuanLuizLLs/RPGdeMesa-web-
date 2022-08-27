@@ -62,7 +62,7 @@ function Master() {
 
   const { setLoading, setMessage } = useContext(Context)
 
-  const campaign = useSelector(({ reducer }) => reducer.CAMPAIGN)
+  const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
   const [tab, setTab] = useState(INITIAL.TAB)
   const [modal, setModal] = useState(INITIAL.MODAL)
@@ -72,7 +72,7 @@ function Master() {
   const [scenarios,] = useState(INITIAL.SCENARIOS)
 
   useEffect(() => {
-    API.get(`campaigns/read/${campaign.id}`)
+    API.get(`campaigns/read/${CAMPAIGN.id}`)
       .then(({ data }) => {
         const [campaignData] = data.response
         setDispatch({
@@ -80,11 +80,11 @@ function Master() {
           data: campaignData
         })
       })
-  }, [campaign.id, setDispatch])
+  }, [CAMPAIGN.id, setDispatch])
 
   useEffect(() => {
     API.get('adventures/read', {
-      id_campaign: campaign.id,
+      id_campaign: CAMPAIGN.id,
     })
       .then(({ data }) => {
         const { response } = data
@@ -118,7 +118,7 @@ function Master() {
       })
 
       API.post('adventures/create', {
-        ...values, id_campaign: campaign.id,
+        ...values, id_campaign: CAMPAIGN.id,
       })
         .then(({ data }) => {
           setMessage(data.message)
@@ -130,14 +130,14 @@ function Master() {
   return (
     <Page tab="Mestre" title="Escudo do Mestre" width="90vw">
       <Title type="h6" color="secondary">
-        #{campaign.id} - {campaign.name}
+        #{CAMPAIGN.id} - {CAMPAIGN.name}
       </Title>
       <Card>
         <Title type="h6" textAlign="center">
-          {campaign.name}
+          {CAMPAIGN.name}
         </Title>
         <Text textAlign="center">
-          {campaign.description}
+          {CAMPAIGN.description}
         </Text>
       </Card>
       <Divider borderStyle="solid" />
@@ -150,7 +150,7 @@ function Master() {
             <Title type="h6">
               Personagens:
             </Title>
-            <Characters campaign={campaign} />
+            <Characters campaign={CAMPAIGN} />
           </Grid>
         </Grid>
         <Grid type="container">
@@ -226,9 +226,9 @@ function Master() {
       <Card>
         <Tab tabs={['Exploração', 'Interação', 'Combate']} stateTab={[tab, setTab]}>
           {[
-            <Exploration key="exploration" campaign={campaign} />,
-            <Interaction key="interaction" campaign={campaign} />,
-            <Combat key="combat" campaign={campaign} />,
+            <Exploration key="exploration" campaign={CAMPAIGN} />,
+            <Interaction key="interaction" campaign={CAMPAIGN} />,
+            <Combat key="combat" campaign={CAMPAIGN} />,
           ]}
         </Tab>
       </Card>
