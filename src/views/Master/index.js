@@ -39,9 +39,17 @@ const INITIAL = {
     scenary: false,
   },
   ADVENTURES: {
+    columns: {
+      name: true,
+      description: true,
+    },
     rows: [],
   },
   SCENARIOS: {
+    columns: {
+      name: true,
+      description: true,
+    },
     rows: [],
   },
 }
@@ -64,10 +72,10 @@ function Master() {
   useEffect(() => {
     API.get(`campaigns/read/${CAMPAIGN.id}`)
       .then(({ data }) => {
-        const [campaignData] = data.response
+        const [campaign] = data.response
         setDispatch({
           type: 'CAMPAIGN',
-          data: campaignData
+          data: campaign
         })
       })
   }, [CAMPAIGN.id, setDispatch])
@@ -77,14 +85,9 @@ function Master() {
       id_campaign: CAMPAIGN.id,
     })
       .then(({ data }) => {
-        const { response } = data
-        setAdventures({
-          rows: response.map((item) => ({
-            id: item.id,
-            name: item.name,
-            description: item.description,
-          }))
-        })
+        setAdventures((state) => ({
+          ...state, rows: data.response,
+        }))
       })
   }, [CAMPAIGN.id])
 
@@ -174,7 +177,7 @@ function Master() {
                 Aventuras
               </Button>
               <Collapse name="adventure" stateCollapse={[collapse, setCollapse]}>
-                <List height={150} {...adventures} />
+                <List height={150} {...adventures} noColumns={true} />
               </Collapse>
             </Grid>
             <Grid type="column" padding={[10, 10]} minWidth={300}>
@@ -206,7 +209,7 @@ function Master() {
                 Cenários
               </Button>
               <Collapse name="scenary" stateCollapse={[collapse, setCollapse]}>
-                <List height={150} {...scenarios} />
+                <List height={150} {...scenarios} noColumns={true} />
               </Collapse>
             </Grid>
           </Grid>

@@ -5,9 +5,10 @@ import classes from './style.module.css'
 export const List = ({
   height = 0,
   rows = [],
-  columns = [],
+  columns = {},
   actions = () => { },
   onClick = () => { },
+  noColumns = false,
 }) => {
 
   const style = {
@@ -17,10 +18,10 @@ export const List = ({
   return (
     <div className={classes.container} style={style}>
       <table className={classes.list}>
-        {Boolean(columns.length) && (
+        {noColumns || (
           <thead>
             <tr>
-              {columns.map((item, i) => (
+              {Object.values(columns).map((item, i) => (
                 <th key={i}>{item}</th>
               ))}
               {actions && (<th />)}
@@ -30,7 +31,7 @@ export const List = ({
         <tbody>
           {rows.map((row, i) => (
             <tr key={i}>
-              {Object.values(row).map((item, i) => (i < columns.length || !Boolean(columns.length)) && (
+              {Object.entries(row).map(([key, item], i) => Boolean(columns[key]) && (
                 <td key={i} title={item} onClick={() => onClick(row)}>{item}</td>
               ))}
               {Boolean(actions) && (
@@ -47,7 +48,8 @@ export const List = ({
 List.propTypes = {
   height: PropTypes.number.isRequired,
   rows: PropTypes.array.isRequired,
-  columns: PropTypes.array,
+  columns: PropTypes.object,
   actions: PropTypes.func,
   onClick: PropTypes.func,
+  noColumns: PropTypes.bool,
 }

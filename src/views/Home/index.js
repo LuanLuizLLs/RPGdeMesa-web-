@@ -36,11 +36,19 @@ const INITIAL = {
     character: null,
   },
   LIST_CAMPAIGNS: {
-    columns: ['ID', 'Campanha', 'Descrição'],
+    columns: {
+      id: 'ID',
+      name: 'Campanha',
+      description: 'Descrição',
+    }, 
     rows: [],
   },
   LIST_CHARACTERS: {
-    columns: ['ID', 'Personagem', 'Descrição'],
+    columns: {
+      id: 'ID',
+      name: 'Personagem',
+      description: 'Descrição',
+    },
     rows: [],
   },
 }
@@ -55,11 +63,10 @@ function Home() {
   const { setLoading, setMessage } = useContext(Context)
 
   const [modal, setModal] = useState(INITIAL.MODAL)
+  const [values, setValues] = useState(INITIAL.VALUES)
   const [refresh, setRefresh] = useState(INITIAL.REFRESH)
-  const [valuesCampaign, setValuesCampaign] = useState(INITIAL.VALUES)
-  const [valuesCharacter, setValuesCharacter] = useState(INITIAL.VALUES)
-  const [listCampaigns, setListCampaigns] = useState(INITIAL.LIST_CAMPAIGNS)
-  const [listCharacters, setListCharacters] = useState(INITIAL.LIST_CHARACTERS)
+  const [campaigns, setCampaigns] = useState(INITIAL.LIST_CAMPAIGNS)
+  const [characters, setCharacters] = useState(INITIAL.LIST_CHARACTERS)
 
   useEffect(() => {
     API.get('campaigns/read', {
@@ -68,14 +75,8 @@ function Home() {
       }
     })
       .then(({ data }) => {
-        setListCampaigns((state) => ({
-          ...state, 
-          rows: data.response.map((campaign) => ({
-            id: campaign.id,
-            name: campaign.name,
-            description: campaign.description,
-            data: campaign,
-          }))
+        setCampaigns((state) => ({
+          ...state, rows: data.response,
         }))
       })
   }, [refresh.campaign, USER.id])
@@ -87,14 +88,8 @@ function Home() {
       }
     })
       .then(({ data }) => {
-        setListCharacters((state) => ({
-          ...state, 
-          rows: data.response.map((character) => ({
-            id: character.id,
-            name: character.name,
-            description: character.description,
-            data: character,
-          }))
+        setCharacters((state) => ({
+          ...state, rows: data.response,
         }))
       })
   }, [refresh.character, USER.id])
@@ -103,13 +98,13 @@ function Home() {
     openCampaign: (content, data) => {
       setModal({ content, data })
       if (content === 'campaign_update') {
-        setValuesCampaign(data)
+        setValues(data)
       }
     },
     resetCampaign: () => {
       setLoading({})
       setModal(INITIAL.MODAL)
-      setValuesCampaign(INITIAL.VALUES)
+      setValues(INITIAL.VALUES)
     },
     createCampaign: () => {
       setLoading({
@@ -118,7 +113,7 @@ function Home() {
 
       API.post('campaigns/create', {
         id_user: USER.id,
-        ...valuesCampaign,
+        ...values,
       })
         .then(({ data }) => {
           setMessage(data.message)
@@ -139,7 +134,7 @@ function Home() {
         type: 'circular'
       })
 
-      API.patch(`campaigns/update/${id}`, valuesCampaign)
+      API.patch(`campaigns/update/${id}`, values)
         .then(({ data }) => {
           setMessage(data.message)
           setRefresh({
@@ -176,7 +171,7 @@ function Home() {
         })
         .finally(handle.resetCampaign)
     },
-    startCampaign: ({ data }) => {
+    startCampaign: (data) => {
       setDispatch({
         type: 'CAMPAIGN', data,
       })
@@ -185,13 +180,13 @@ function Home() {
     openCharacter: (content, data) => {
       setModal({ content, data })
       if (content === 'character_update') {
-        setValuesCharacter(data)
+        setValues(data)
       }
     },
     resetCharacter: () => {
       setLoading({})
       setModal(INITIAL.MODAL)
-      setValuesCharacter(INITIAL.VALUES)
+      setValues(INITIAL.VALUES)
     },
     createCharacter: () => {
       setLoading({
@@ -200,9 +195,9 @@ function Home() {
 
       API.post('characters/create', {
         id_user: USER.id,
-        ...valuesCharacter,
-        ...RACE[valuesCharacter.race],
-        ...CASTE[valuesCharacter.caste],
+        ...values,
+        ...RACE[values.race],
+        ...CASTE[values.caste],
       })
         .then(({ data }) => {
           setMessage(data.message)
@@ -224,7 +219,7 @@ function Home() {
         type: 'circular'
       })
 
-      API.patch(`characters/update/${id}`, valuesCharacter)
+      API.patch(`characters/update/${id}`, values)
         .then(({ data }) => {
           setMessage(data.message)
           setRefresh({
@@ -261,7 +256,7 @@ function Home() {
         })
         .finally(handle.resetCharacter)
     },
-    startCharacter: ({ data }) => {
+    startCharacter: (data) => {
       setDispatch({
         type: 'CHARACTER', data,
       })
@@ -303,13 +298,13 @@ function Home() {
           <Input
             name="name"
             placeholder="Campanha"
-            stateValue={[valuesCampaign, setValuesCampaign]}
+            stateValue={[values, setValues]}
           />
           <TextArea
             rows={3}
             name="description"
             placeholder="Descreva a campanha"
-            stateValue={[valuesCampaign, setValuesCampaign]}
+            stateValue={[values, setValues]}
           />
           <Box display="flex" justifyContent="flex-end">
             <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaign()}>
@@ -329,13 +324,13 @@ function Home() {
           <Input
             name="name"
             placeholder="Campanha"
-            stateValue={[valuesCampaign, setValuesCampaign]}
+            stateValue={[values, setValues]}
           />
           <TextArea
             rows={3}
             name="description"
             placeholder="Descreva a campanha"
-            stateValue={[valuesCampaign, setValuesCampaign]}
+            stateValue={[values, setValues]}
           />
           <Box display="flex" justifyContent="flex-end">
             <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaign()}>
@@ -394,31 +389,31 @@ function Home() {
           <Input
             name="name"
             placeholder="Personagem"
-            stateValue={[valuesCharacter, setValuesCharacter]}
+            stateValue={[values, setValues]}
           />
           <Select
             name="race"
             placeholder="Escolha uma raça"
             options={Object.keys(RACE)}
-            stateValue={[valuesCharacter, setValuesCharacter]}
+            stateValue={[values, setValues]}
           />
           <Select
             name="caste"
             placeholder="Escolha uma classe"
             options={Object.keys(CASTE)}
-            stateValue={[valuesCharacter, setValuesCharacter]}
+            stateValue={[values, setValues]}
           />
           <Select
             name="tendency"
             placeholder="Escolha uma tendência"
             options={Object.keys(TENDENCY)}
-            stateValue={[valuesCharacter, setValuesCharacter]}
+            stateValue={[values, setValues]}
           />
           <TextArea
             rows={3}
             name="description"
             placeholder="Descreva o personagem"
-            stateValue={[valuesCharacter, setValuesCharacter]}
+            stateValue={[values, setValues]}
           />
           <Box display="flex" justifyContent="flex-end">
             <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCharacter()}>
@@ -438,13 +433,13 @@ function Home() {
           <Input
             name="name"
             placeholder="Personagem"
-            stateValue={[valuesCharacter, setValuesCharacter]}
+            stateValue={[values, setValues]}
           />
           <TextArea
             rows={3}
             name="description"
             placeholder="Descreva o personagem"
-            stateValue={[valuesCharacter, setValuesCharacter]}
+            stateValue={[values, setValues]}
           />
           <Box display="flex" justifyContent="flex-end">
             <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCharacter()}>
@@ -471,7 +466,7 @@ function Home() {
           </Box>
         </>
       ),
-    })[content] || 'Conteúdo não encontrado...'
+    })[content] || null
   }
 
   return (
@@ -502,7 +497,7 @@ function Home() {
               </Title>
               <List
                 height={300}
-                {...listCampaigns}
+                {...campaigns}
                 onClick={(row) => handle.openCampaign('campaign_start', row)}
                 actions={(row) => [
                   <span key="update" type="update" title="Editar" onClick={() => handle.openCampaign('campaign_update', row)} />,
@@ -528,7 +523,7 @@ function Home() {
               </Title>
               <List
                 height={300}
-                {...listCharacters}
+                {...characters}
                 onClick={(row) => handle.openCharacter('character_start', row)}
                 actions={(row) => [
                   <span key="update" type="update" title="Editar" onClick={() => handle.openCharacter('character_update', row)} />,
