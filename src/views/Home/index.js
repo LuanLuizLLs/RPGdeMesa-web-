@@ -499,10 +499,10 @@ function Home() {
                 height={300}
                 {...campaigns}
                 onClick={(row) => handle.openCampaign('campaign_start', row)}
-                actions={(row) => [
-                  <span key="update" type="update" title="Editar" onClick={() => handle.openCampaign('campaign_update', row)} />,
-                  <span key="delete" type="delete" title="Deletar" onClick={() => handle.openCampaign('campaign_delete', row)} />,
-                ]}
+                actions={(row) => ({
+                  update: () => handle.openCampaign('campaign_update', row),
+                  delete: () => handle.openCampaign('campaign_delete', row),
+                })}
               />
               <Button type="filled" padding={10} onClick={() => handle.openCampaign('campaign_create')}>
                 Criar campanha
@@ -525,10 +525,10 @@ function Home() {
                 height={300}
                 {...characters}
                 onClick={(row) => handle.openCharacter('character_start', row)}
-                actions={(row) => [
-                  <span key="update" type="update" title="Editar" onClick={() => handle.openCharacter('character_update', row)} />,
-                  <span key="delete" type="delete" title="Deletar" onClick={() => handle.openCharacter('character_delete', row)} />,
-                ]}
+                actions={(row) => ({
+                  update: () => handle.openCharacter('character_update', row),
+                  delete: () => handle.openCharacter('character_delete', row),
+                })}
               />
               <Button type="filled" padding={10} onClick={() => handle.openCharacter('character_create')}>
                 Criar personagem

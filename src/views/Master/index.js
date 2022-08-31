@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
+import theme from '../../theme'
 import API from '../../services/api'
+import Context from '../../global/context'
 import Page from '../../layouts/Page'
 import Exploration from './containers/Exploration'
 import Interaction from './containers/Interaction'
@@ -21,8 +23,6 @@ import {
   TextArea,
   Title,
 } from '../../components'
-import theme from '../../theme'
-import Context from '../../global/context'
 
 const INITIAL = {
   TAB: 0,
@@ -34,6 +34,7 @@ const INITIAL = {
     name: '',
     description: '',
   },
+  REFRESH: null,
   COLLAPSE: {
     adventure: false,
     scenary: false,
@@ -60,11 +61,12 @@ function Master() {
 
   const { setLoading, setMessage } = useContext(Context)
 
-  const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
+  const { CAMPAIGN, ADVENTURE } = useSelector(({ reducer }) => reducer)
 
   const [tab, setTab] = useState(INITIAL.TAB)
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
+  const [refresh, setRefresh] = useState(INITIAL.REFRESH)
   const [collapse, setCollapse] = useState(INITIAL.COLLAPSE)
   const [adventures, setAdventures] = useState(INITIAL.ADVENTURES)
   const [scenarios,] = useState(INITIAL.SCENARIOS)
@@ -78,7 +80,7 @@ function Master() {
           data: campaign
         })
       })
-  }, [CAMPAIGN.id, setDispatch])
+  }, [refresh, CAMPAIGN.id, setDispatch])
 
   useEffect(() => {
     API.get('adventures/read', {
@@ -88,19 +90,29 @@ function Master() {
         setAdventures((state) => ({
           ...state, rows: data.response,
         }))
+        setDispatch({
+          type: 'ADVENTURE',
+          data: data.response.find(({ id }) => (id === CAMPAIGN.id_adventure)) || {},
+        })
       })
-  }, [CAMPAIGN.id])
+  }, [CAMPAIGN, setDispatch])
 
   const handle = {
     openModal: (content, data = {}) => {
       setModal({ content, data })
+      switch (content) {
+        case 'edit_adventure':
+          return setValues(data)
+        default:
+          return setValues(INITIAL.VALUES)
+      }
     },
     openCollapse: (name) => {
       setCollapse({
         ...collapse, [name]: !collapse[name]
       })
     },
-    resetCreate: () => {
+    resetAdventure: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
       setLoading({})
@@ -115,9 +127,46 @@ function Master() {
       })
         .then(({ data }) => {
           setMessage(data.message)
+          setRefresh(data)
         })
-        .finally(handle.resetCreate)
-    }
+        .finally(handle.resetAdventure)
+    },
+    deleteAdventure: (id) => {
+      setLoading({
+        type: 'bar'
+      })
+
+      API.delete(`adventures/delete/${id}`)
+        .then(({ data }) => {
+          setMessage(data.message)
+          setRefresh(data)
+        })
+        .finally(handle.resetAdventure)
+    },
+    startAdventure: (id_adventure) => {
+      setLoading({
+        type: 'bar'
+      })
+
+      API.patch(`campaigns/update/${CAMPAIGN.id}`, { id_adventure })
+        .then(({ data }) => {
+          setMessage(data.message)
+          setRefresh(data)
+        })
+        .finally(handle.resetAdventure)
+    },
+    updateAdventure: () => {
+      setLoading({
+        type: 'bar'
+      })
+
+      API.patch(`adventures/update`, values)
+        .then(({ data }) => {
+          setMessage(data.message)
+          setRefresh(data)
+        })
+        .finally(handle.resetAdventure)
+    },
   }
 
   return (
@@ -150,16 +199,16 @@ function Master() {
           <Grid type="row">
             <Grid type="column" padding={[10, 10]} minWidth={300}>
               <Title type="h6">
-                Aventura:
+                Aventura atual:
               </Title>
               <Box background={theme.secondary} padding={10} borderRadius={10} marginBottom={10}>
-                {false ? (
+                {Boolean(ADVENTURE.id) ? (
                   <>
-                    <Text fontWeight="bold" color="primary">
-                      Teste
-                    </Text>
                     <Text fontWeight="bold" color="gray">
-                      Teste teste teste teste
+                      <Text inline fontWeight="bold" color="primary">
+                        {ADVENTURE.name}:&nbsp;
+                      </Text>
+                      {ADVENTURE.description}
                     </Text>
                   </>
                 ) : (
@@ -177,21 +226,29 @@ function Master() {
                 Aventuras
               </Button>
               <Collapse name="adventure" stateCollapse={[collapse, setCollapse]}>
-                <List height={150} {...adventures} noColumns={true} />
+                <List
+                  height={150}
+                  noColumns={true}
+                  {...adventures}
+                  onClick={(row) => handle.openModal('detail_adventure', row)}
+                  actions={(row) => ({
+                    update: () => handle.openModal('edit_adventure', row)
+                  })}
+                />
               </Collapse>
             </Grid>
             <Grid type="column" padding={[10, 10]} minWidth={300}>
               <Title type="h6">
-                Cenário:
+                Cenário atual:
               </Title>
               <Box background={theme.secondary} padding={10} borderRadius={10} marginBottom={10}>
                 {false ? (
                   <>
-                    <Text fontWeight="bold" color="primary">
-                      Teste
-                    </Text>
                     <Text fontWeight="bold" color="gray">
-                      Teste teste teste teste
+                      <Text inline fontWeight="bold" color="primary">
+                        {'name'}:&nbsp;
+                      </Text>
+                      {'description'}
                     </Text>
                   </>
                 ) : (
@@ -200,16 +257,16 @@ function Master() {
                   </Text>
                 )}
                 <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                  <Button fontSize="medium" type="filled" padding={5} onClick={() => handle.openModal('add_scenary')}>
+                  <Button fontSize="medium" type="filled" padding={5}>
                     Criar
                   </Button>
                 </Box>
               </Box>
-              <Button fontSize="larger" type="filled" onClick={() => handle.openCollapse('scenary')}>
+              <Button fontSize="larger" type="filled">
                 Cenários
               </Button>
               <Collapse name="scenary" stateCollapse={[collapse, setCollapse]}>
-                <List height={150} {...scenarios} noColumns={true} />
+                <List noColumns={true} height={150} {...scenarios} />
               </Collapse>
             </Grid>
           </Grid>
@@ -242,7 +299,7 @@ function Master() {
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="filled" color="secondary" padding={5} onClick={handle.resetCreate}>
+                <Button type="filled" color="secondary" padding={5} onClick={handle.resetAdventure}>
                   Cancelar
                 </Button>
                 <Button type="filled" padding={5} onClick={handle.createAdventure}>
@@ -251,30 +308,46 @@ function Master() {
               </Box>
             </>
           ),
-          add_scenary: (
+          detail_adventure: (
+            <>
+              <Title type="h6" color="primary">
+                {modal.data.name}
+              </Title>
+              <Text>
+                {modal.data.description}
+              </Text>
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="filled" color="error" padding={5} onClick={() => handle.deleteAdventure(modal.data.id)}>
+                  Remover
+                </Button>
+                <Button type="filled" padding={5} onClick={() => handle.startAdventure(modal.data.id)}>
+                  Iniciar
+                </Button>
+              </Box>
+            </>
+          ),
+          edit_adventure: (
             <>
               <Input
                 name="name"
-                label="Cenário:"
-                placeholder="Título"
+                placeholder="Aventura"
                 stateValue={[values, setValues]}
               />
               <TextArea
                 name="description"
-                label="Descreva o cenário:"
-                placeholder="Descrição"
+                placeholder="Descrição da aventura"
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="filled" color="secondary" padding={5} onClick={handle.resetCreate}>
+                <Button type="filled" color="secondary" padding={5} onClick={handle.resetAdventure}>
                   Cancelar
                 </Button>
-                <Button type="filled" padding={5}>
-                  Criar
+                <Button type="filled" padding={5} onClick={handle.updateAdventure}>
+                  Salvar
                 </Button>
               </Box>
             </>
-          )
+          ),
         })[modal.content] || null}
       </Modal>
     </Page>
