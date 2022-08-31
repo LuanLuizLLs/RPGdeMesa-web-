@@ -18,7 +18,13 @@ const INITIAL = {
     id: '',
   },
   INVENTORY: {
-    columns: ['ID', 'Item', 'Descrição', 'Tipo', 'Quantidade'],
+    columns: {
+      id: 'ID', 
+      item: 'Item', 
+      description: 'Descrição',
+      category: 'Categoria',
+      quantoty: 'Quantidade',
+    },
     rows: [],
   }
 }

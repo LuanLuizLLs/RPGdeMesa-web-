@@ -6,7 +6,7 @@ export const List = ({
   height = 0,
   rows = [],
   columns = {},
-  actions = () => { },
+  actions = () => ({ }),
   onClick = () => { },
   noColumns = false,
 }) => {
@@ -35,7 +35,11 @@ export const List = ({
                 <td key={i} title={item} onClick={() => onClick(row)}>{item}</td>
               ))}
               {Boolean(actions) && (
-                <td className={classes.actions} key={i}>{actions(row)}</td>
+                <td className={classes.actions} key={i}>
+                  {Object.entries(actions(row)).map(([key, action]) => (
+                    <span key={key} type={key} onClick={() => action()} />
+                  ))}
+                </td>
               )}
             </tr>
           ))}

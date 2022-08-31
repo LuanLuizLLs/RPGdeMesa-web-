@@ -30,7 +30,13 @@ const INITIAL = {
   },
   REFRESH: null,
   ABILITIES: {
-    columns: ['ID', 'Habilidade', 'Descrição', 'Atributo', 'Nível'],
+    columns: {
+      id: 'ID', 
+      name: 'Habilidade', 
+      description: 'Descrição', 
+      attribute: 'Atributo', 
+      level: 'Nível',
+    },
     rows: []
   },
 }

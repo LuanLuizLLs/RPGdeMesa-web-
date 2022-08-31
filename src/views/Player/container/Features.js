@@ -29,7 +29,16 @@ const INITIAL = {
   },
   REFRESH: null,
   FEATURES: {
-    columns: ['ID', 'Característica', 'FOR', 'DES', 'CON', 'INT', 'SAB', 'CAR'],
+    columns: {
+      id: 'ID',
+      name: 'Característica',
+      strength: 'FOR',
+      dexterity: 'DES',
+      constitution: 'CON',
+      intelligence: 'INT',
+      wisdom: 'SAB',
+      charisma: 'CAR',
+    },
     rows: []
   },
 }
