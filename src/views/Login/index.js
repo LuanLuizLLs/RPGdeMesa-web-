@@ -41,7 +41,7 @@ function Login() {
   const [values, setValues] = useState(INITIAL.VALUES)
 
   const handle = {
-    alterView: (view) => {
+    alterView: (view = INITIAL.VIEW) => {
       setView(view)
       setValues(INITIAL.VALUES)
     },
@@ -208,7 +208,7 @@ function Login() {
               <Grid type="container" padding={[20, 0]}>
                 <Grid type="row">
                   <Grid type="column" size={6} margin={[0, 10]}>
-                    <Button type="filled" color="secondary" onClick={() => handle.alterView(INITIAL.VIEW)}>
+                    <Button type="filled" color="secondary" onClick={() => handle.alterView()}>
                       Voltar
                     </Button>
                   </Grid>
@@ -264,7 +264,7 @@ function Login() {
               <Grid type="container" padding={[20, 0]}>
                 <Grid type="row">
                   <Grid type="column" size={6} margin={[0, 10]}>
-                    <Button type="filled" color="secondary" onClick={() => handle.alterView(INITIAL.VIEW)}>
+                    <Button type="filled" color="secondary" onClick={() => handle.alterView()}>
                       Cancelar
                     </Button>
                   </Grid>
