@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import API from '../../services/api'
+import { requestAPI } from '../../services/api'
 import Context from '../../global/context'
 import useLogin from '../../services/login'
 import Logo from '../../assets/img/logo.png'
@@ -57,28 +57,18 @@ function Login() {
         type: 'circular',
       })
 
-      API.get('users/read', {
-        params: values
+      requestAPI('users', values).read(({ data }) => {
+        const [user] = data.response
+        if (user) {
+          In(user)
+          setNavigate('/')
+        }
+        setMessage(data.message)
+      }).catch(({ response }) => {
+        setMessage(response.data.message)
+      }).finally(() => {
+        setLoading({})
       })
-        .then(({ data }) => {
-          const [user] = data.response
-          if (user) {
-            In(user)
-            setNavigate('/')
-            setMessage({
-              type: 'success',
-              message: 'Login efetuado',
-            })
-          } else {
-            setMessage({
-              type: 'error',
-              message: 'Login inválido',
-            })
-          }
-        })
-        .finally(() => {
-          setLoading({})
-        })
     },
     submitRegister: () => {
       if (isNull(values)) {
@@ -86,28 +76,20 @@ function Login() {
           type: 'warning',
           message: 'Preencha todos os dados',
         })
-      }
-
-      if (!comparativePassword(values.password, values.new_password)) {
+      } else if (!comparativePassword(values.password, values.new_password)) {
         return setMessage({
           type: 'error',
           message: 'Senha inválida',
         })
       }
 
-      API.post('users/create', values)
-        .then(({ data }) => {
-          setMessage(data.message)
-        })
-        .catch(() => {
-          setMessage({
-            type: 'error',
-            message: 'Erro ao criar o usuário',
-          })
-        })
-        .finally(() => {
-          setView(INITIAL.VIEW)
-        })
+      requestAPI('users', values).create(({ data }) => {
+        setMessage(data.message)
+      }).catch(({ response }) => {
+        setMessage(response.data.message)
+      }).finally(() => {
+        setView(INITIAL.VIEW)
+      })
     },
     submitRecover: () => {
       if (isNull(values)) {
@@ -115,26 +97,19 @@ function Login() {
           type: 'warning',
           message: 'Preencha todos os dados',
         })
-      }
-
-      if (!comparativePassword(values.password, values.new_password)) {
+      } else if (!comparativePassword(values.password, values.new_password)) {
         return setMessage({
           type: 'error',
           message: 'As senhas não coincidem',
         })
       }
 
-      API.patch(`users/update`, values)
-        .then(({ data }) => {
-          setView('login')
-          setMessage(data.message)
-        })
-        .catch(() => {
-          setMessage({
-            type: 'error',
-            message: 'Erro ao atualizar o usuário',
-          })
-        })
+      requestAPI('users', values).update(({ data }) => {
+        setView('login')
+        setMessage(data.message)
+      }).catch(({ response }) => {
+        setMessage(response.data.message)
+      })
     },
   }
 
