@@ -59,10 +59,8 @@ function Login() {
 
       requestAPI('users', values).read(({ data }) => {
         const [user] = data.response
-        if (user) {
-          In(user)
-          setNavigate('/')
-        }
+        In(user)
+        setNavigate('/')
         setMessage(data.message)
       }).catch(({ response }) => {
         setMessage(response.data.message)
