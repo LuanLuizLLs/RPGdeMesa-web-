@@ -68,12 +68,10 @@ function Home() {
   const [campaigns, setCampaigns] = useState(INITIAL.LIST_CAMPAIGNS)
   const [characters, setCharacters] = useState(INITIAL.LIST_CHARACTERS)
 
-  const params = {
-    id_user: USER.id
-  }
-
   useEffect(() => {
-    requestAPI('campaigns', params)
+    requestAPI('campaigns', {
+      id_user: USER.id
+    })
       .read(({ data }) => {
         setCampaigns((state) => ({
           ...state, rows: data.response,
@@ -82,7 +80,9 @@ function Home() {
   }, [refresh.campaign, USER.id])
 
   useEffect(() => {
-    requestAPI('characters', params)
+    requestAPI('characters', {
+      id_user: USER.id
+    })
       .read(({ data }) => {
         setCharacters((state) => ({
           ...state, rows: data.response,
@@ -105,7 +105,10 @@ function Home() {
         type: 'circular'
       })
 
-      requestAPI('campaigns', { ...params, ...values })
+      requestAPI('campaigns', {
+        id_user: USER.id,
+        ...values,
+      })
         .create(({ data }) => {
           setMessage(data.message)
           setRefresh({
@@ -162,7 +165,7 @@ function Home() {
     },
     startCampaign: () => {
       setDispatch({
-        type: 'CAMPAIGN', 
+        type: 'CAMPAIGN',
         data: values,
       })
       setNavigate('/master')
@@ -177,7 +180,12 @@ function Home() {
         type: 'circular'
       })
 
-      requestAPI('characters', { ...params, ...values, ...RACE[values.race], ...CASTE[values.caste] })
+      requestAPI('characters', {
+        id_user: USER.id,
+        ...values,
+        ...RACE[values.race],
+        ...CASTE[values.caste],
+      })
         .create(({ data }) => {
           setMessage(data.message)
           setRefresh({
@@ -234,7 +242,7 @@ function Home() {
     },
     startCharacter: () => {
       setDispatch({
-        type: 'CHARACTER', 
+        type: 'CHARACTER',
         data: values,
       })
       setNavigate('/player')
