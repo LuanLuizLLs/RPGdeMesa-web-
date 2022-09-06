@@ -3,7 +3,7 @@ import Page from '../../layouts/Page'
 import Context from '../../global/context'
 import imageMaster from '../../assets/img/master.png'
 import imagePlayer from '../../assets/img/player.png'
-import API from '../../services/api'
+import { requestAPI } from '../../services/api'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { CASTE, RACE, TENDENCY } from '../../configs'
@@ -40,7 +40,7 @@ const INITIAL = {
       id: 'ID',
       name: 'Campanha',
       description: 'Descrição',
-    }, 
+    },
     rows: [],
   },
   LIST_CHARACTERS: {
@@ -68,13 +68,13 @@ function Home() {
   const [campaigns, setCampaigns] = useState(INITIAL.LIST_CAMPAIGNS)
   const [characters, setCharacters] = useState(INITIAL.LIST_CHARACTERS)
 
+  const params = {
+    id_user: USER.id
+  }
+
   useEffect(() => {
-    API.get('campaigns/read', {
-      params: {
-        id_user: USER.id,
-      }
-    })
-      .then(({ data }) => {
+    requestAPI('campaigns', params)
+      .read(({ data }) => {
         setCampaigns((state) => ({
           ...state, rows: data.response,
         }))
@@ -82,12 +82,8 @@ function Home() {
   }, [refresh.campaign, USER.id])
 
   useEffect(() => {
-    API.get('characters/read', {
-      params: {
-        id_user: USER.id,
-      }
-    })
-      .then(({ data }) => {
+    requestAPI('characters', params)
+      .read(({ data }) => {
         setCharacters((state) => ({
           ...state, rows: data.response,
         }))
@@ -95,11 +91,9 @@ function Home() {
   }, [refresh.character, USER.id])
 
   const handle = {
-    openCampaign: (content, data) => {
+    openModal: (content, data = {}) => {
       setModal({ content, data })
-      if (content === 'campaign_update') {
-        setValues(data)
-      }
+      setValues({ ...values, ...data })
     },
     resetCampaign: () => {
       setLoading({})
@@ -111,77 +105,67 @@ function Home() {
         type: 'circular'
       })
 
-      API.post('campaigns/create', {
-        id_user: USER.id,
-        ...values,
-      })
-        .then(({ data }) => {
+      requestAPI('campaigns', { ...params, ...values })
+        .create(({ data }) => {
           setMessage(data.message)
           setRefresh({
-            ...refresh, campaign: data
+            campaign: data,
           })
         })
-        .catch(() => {
+        .catch(({ response }) => {
           setMessage({
             type: 'error',
-            message: 'Erro ao criar a campanha',
+            message: response.data.message || 'Erro ao criar a campanha',
           })
         })
         .finally(handle.resetCampaign)
     },
-    updateCampaign: (id) => {
+    updateCampaign: () => {
       setLoading({
         type: 'circular'
       })
 
-      API.patch(`campaigns/update/${id}`, values)
-        .then(({ data }) => {
+      requestAPI('campaigns', values)
+        .update(({ data }) => {
           setMessage(data.message)
           setRefresh({
-            ...refresh,
             campaign: data
           })
         })
-        .catch(() => {
+        .catch(({ response }) => {
           setMessage({
             type: 'error',
-            message: 'Erro ao atualizar a campanha',
+            message: response.data.message || 'Erro ao atualizar a campanha',
           })
         })
         .finally(handle.resetCampaign)
     },
-    deleteCampaign: (id) => {
+    deleteCampaign: () => {
       setLoading({
         type: 'bar'
       })
 
-      API.delete((`campaigns/delete/${id}`))
-        .then(({ data }) => {
+      requestAPI('campaigns', values)
+        .delete(({ data }) => {
           setMessage(data.message)
           setRefresh(({
-            ...refresh,
             campaign: data
           }))
         })
-        .catch(() => {
+        .catch(({ response }) => {
           setMessage({
             type: 'error',
-            message: 'Erro ao deletar a campanha'
+            message: response.data.message || 'Erro ao deletar a campanha'
           })
         })
         .finally(handle.resetCampaign)
     },
-    startCampaign: (data) => {
+    startCampaign: () => {
       setDispatch({
-        type: 'CAMPAIGN', data,
+        type: 'CAMPAIGN', 
+        data: values,
       })
       setNavigate('/master')
-    },
-    openCharacter: (content, data) => {
-      setModal({ content, data })
-      if (content === 'character_update') {
-        setValues(data)
-      }
     },
     resetCharacter: () => {
       setLoading({})
@@ -193,280 +177,68 @@ function Home() {
         type: 'circular'
       })
 
-      API.post('characters/create', {
-        id_user: USER.id,
-        ...values,
-        ...RACE[values.race],
-        ...CASTE[values.caste],
-      })
-        .then(({ data }) => {
+      requestAPI('characters', { ...params, ...values, ...RACE[values.race], ...CASTE[values.caste] })
+        .create(({ data }) => {
           setMessage(data.message)
           setRefresh({
-            ...refresh,
             character: data
           })
         })
-        .catch(() => {
+        .catch(({ response }) => {
           setMessage({
             type: 'error',
-            message: 'Erro ao criar o personagem',
+            message: response.data.message || 'Erro ao criar o personagem',
           })
         })
         .finally(handle.resetCharacter)
     },
-    updateCharacter: (id) => {
+    updateCharacter: () => {
       setLoading({
         type: 'circular'
       })
 
-      API.patch(`characters/update/${id}`, values)
-        .then(({ data }) => {
+      requestAPI('characters', values)
+        .update(({ data }) => {
           setMessage(data.message)
           setRefresh({
-            ...refresh,
             character: data
           })
         })
-        .catch(() => {
+        .catch(({ response }) => {
           setMessage({
             type: 'error',
-            message: 'Erro ao atualizar o personagem',
+            message: response.data.message || 'Erro ao atualizar o personagem',
           })
         })
         .finally(handle.resetCharacter)
     },
-    deleteCharacter: (id) => {
+    deleteCharacter: () => {
       setLoading({
         type: 'bar'
       })
 
-      API.delete((`characters/delete/${id}`))
-        .then(({ data }) => {
+      requestAPI('characters', values)
+        .delete(({ data }) => {
           setMessage(data.message)
           setRefresh(({
-            ...refresh,
             character: data
           }))
         })
-        .catch(() => {
+        .catch(({ response }) => {
           setMessage({
             type: 'error',
-            message: 'Erro ao deletar o personagem'
+            message: response.data.message || 'Erro ao deletar o personagem'
           })
         })
         .finally(handle.resetCharacter)
     },
-    startCharacter: (data) => {
+    startCharacter: () => {
       setDispatch({
-        type: 'CHARACTER', data,
+        type: 'CHARACTER', 
+        data: values,
       })
       setNavigate('/player')
     },
-  }
-
-  const ContentModal = ({ content, data = {} }) => {
-    return ({
-      campaign_start: (
-        <>
-          <Title type="h6">
-            Campanha
-          </Title>
-          <Text>
-            {data.name}
-          </Text>
-          <Title type="h6">
-            Descrição
-          </Title>
-          <Text>
-            {data.description}
-          </Text>
-          <Box display="flex" justifyContent="flex-end" marginTop={10}>
-            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaign()}>
-              Voltar
-            </Button>
-            <Button type="filled" padding={10} onClick={() => handle.startCampaign(data)}>
-              Mestrar
-            </Button>
-          </Box>
-        </>
-      ),
-      campaign_create: (
-        <>
-          <Title type="h6">
-            Criar campanha:
-          </Title>
-          <Input
-            name="name"
-            placeholder="Campanha"
-            stateValue={[values, setValues]}
-          />
-          <TextArea
-            rows={3}
-            name="description"
-            placeholder="Descreva a campanha"
-            stateValue={[values, setValues]}
-          />
-          <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaign()}>
-              Cancelar
-            </Button>
-            <Button type="filled" color="primary" padding={10} onClick={() => handle.createCampaign()}>
-              Criar
-            </Button>
-          </Box>
-        </>
-      ),
-      campaign_update: (
-        <>
-          <Title type="h6">
-            Editar campanha:
-          </Title>
-          <Input
-            name="name"
-            placeholder="Campanha"
-            stateValue={[values, setValues]}
-          />
-          <TextArea
-            rows={3}
-            name="description"
-            placeholder="Descreva a campanha"
-            stateValue={[values, setValues]}
-          />
-          <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCampaign()}>
-              Cancelar
-            </Button>
-            <Button type="filled" padding={10} onClick={() => handle.updateCampaign(data.id)}>
-              Salvar
-            </Button>
-          </Box>
-        </>
-      ),
-      campaign_delete: (
-        <>
-          <Text>
-            Tem certeza que deseja excluir a campanha <b>{data.name}</b>?
-          </Text>
-          <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" padding={10} onClick={() => handle.resetCampaign()}>
-              Cancelar
-            </Button>
-            <Button type="filled" color="error" padding={10} onClick={() => handle.deleteCampaign(data.id)}>
-              Excluir
-            </Button>
-          </Box>
-        </>
-      ),
-      character_start: (
-        <>
-          <Title type="h6">
-            Personagem
-          </Title>
-          <Text>
-            {data.name}
-          </Text>
-          <Title type="h6">
-            Descrição
-          </Title>
-          <Text>
-            {data.description}
-          </Text>
-          <Box display="flex" justifyContent="flex-end" marginTop={10}>
-            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCharacter()}>
-              Voltar
-            </Button>
-            <Button type="filled" padding={10} onClick={() => handle.startCharacter(data)}>
-              Jogar
-            </Button>
-          </Box>
-        </>
-      ),
-      character_create: (
-        <>
-          <Title type="h6">
-            Criar personagem:
-          </Title>
-          <Input
-            name="name"
-            placeholder="Personagem"
-            stateValue={[values, setValues]}
-          />
-          <Select
-            name="race"
-            placeholder="Escolha uma raça"
-            options={Object.keys(RACE)}
-            stateValue={[values, setValues]}
-          />
-          <Select
-            name="caste"
-            placeholder="Escolha uma classe"
-            options={Object.keys(CASTE)}
-            stateValue={[values, setValues]}
-          />
-          <Select
-            name="tendency"
-            placeholder="Escolha uma tendência"
-            options={Object.keys(TENDENCY)}
-            stateValue={[values, setValues]}
-          />
-          <TextArea
-            rows={3}
-            name="description"
-            placeholder="Descreva o personagem"
-            stateValue={[values, setValues]}
-          />
-          <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCharacter()}>
-              Cancelar
-            </Button>
-            <Button type="filled" padding={10} onClick={() => handle.createCharacter()}>
-              Criar
-            </Button>
-          </Box>
-        </>
-      ),
-      character_update: (
-        <>
-          <Title type="h6">
-            Editar personagem:
-          </Title>
-          <Input
-            name="name"
-            placeholder="Personagem"
-            stateValue={[values, setValues]}
-          />
-          <TextArea
-            rows={3}
-            name="description"
-            placeholder="Descreva o personagem"
-            stateValue={[values, setValues]}
-          />
-          <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" color="secondary" padding={10} onClick={() => handle.resetCharacter()}>
-              Cancelar
-            </Button>
-            <Button type="filled" padding={10} onClick={() => handle.updateCharacter(data.id)}>
-              Salvar
-            </Button>
-          </Box>
-        </>
-      ),
-      character_delete: (
-        <>
-          <Text>
-            Tem certeza que deseja excluir o personagem <b>{data.name}</b>?
-          </Text>
-          <Box display="flex" justifyContent="flex-end">
-            <Button type="filled" padding={10} onClick={() => handle.resetCharacter()}>
-              Cancelar
-            </Button>
-            <Button type="filled" color="error" padding={10} onClick={() => handle.deleteCharacter(data.id)}>
-              Excluir
-            </Button>
-          </Box>
-        </>
-      ),
-    })[content] || null
   }
 
   return (
@@ -479,7 +251,208 @@ function Home() {
           handle.resetCharacter()
         }}
       >
-        {ContentModal(modal)}
+        {{
+          campaign_start: (
+            <>
+              <Title type="h6">
+                Campanha
+              </Title>
+              <Text>
+                {modal.data.name}
+              </Text>
+              <Title type="h6">
+                Descrição
+              </Title>
+              <Text>
+                {modal.data.description}
+              </Text>
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="filled" color="secondary" padding={10} onClick={handle.resetCampaign}>
+                  Voltar
+                </Button>
+                <Button type="filled" padding={10} onClick={handle.startCampaign}>
+                  Mestrar
+                </Button>
+              </Box>
+            </>
+          ),
+          campaign_create: (
+            <>
+              <Title type="h6">
+                Criar campanha:
+              </Title>
+              <Input
+                name="name"
+                placeholder="Campanha"
+                stateValue={[values, setValues]}
+              />
+              <TextArea
+                rows={3}
+                name="description"
+                placeholder="Descreva a campanha"
+                stateValue={[values, setValues]}
+              />
+              <Box display="flex" justifyContent="flex-end">
+                <Button type="filled" color="secondary" padding={10} onClick={handle.resetCampaign}>
+                  Cancelar
+                </Button>
+                <Button type="filled" color="primary" padding={10} onClick={handle.createCampaign}>
+                  Criar
+                </Button>
+              </Box>
+            </>
+          ),
+          campaign_update: (
+            <>
+              <Title type="h6">
+                Editar campanha:
+              </Title>
+              <Input
+                name="name"
+                placeholder="Campanha"
+                stateValue={[values, setValues]}
+              />
+              <TextArea
+                rows={3}
+                name="description"
+                placeholder="Descreva a campanha"
+                stateValue={[values, setValues]}
+              />
+              <Box display="flex" justifyContent="flex-end">
+                <Button type="filled" color="secondary" padding={10} onClick={handle.resetCampaign}>
+                  Cancelar
+                </Button>
+                <Button type="filled" padding={10} onClick={handle.updateCampaign}>
+                  Salvar
+                </Button>
+              </Box>
+            </>
+          ),
+          campaign_delete: (
+            <>
+              <Text>
+                Tem certeza que deseja excluir a campanha <b>{modal.data.name}</b>?
+              </Text>
+              <Box display="flex" justifyContent="flex-end">
+                <Button type="filled" padding={10} onClick={handle.resetCampaign}>
+                  Cancelar
+                </Button>
+                <Button type="filled" color="error" padding={10} onClick={handle.deleteCampaign}>
+                  Excluir
+                </Button>
+              </Box>
+            </>
+          ),
+          character_start: (
+            <>
+              <Title type="h6">
+                Personagem
+              </Title>
+              <Text>
+                {modal.data.name}
+              </Text>
+              <Title type="h6">
+                Descrição
+              </Title>
+              <Text>
+                {modal.data.description}
+              </Text>
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="filled" color="secondary" padding={10} onClick={handle.resetCharacter}>
+                  Voltar
+                </Button>
+                <Button type="filled" padding={10} onClick={handle.startCharacter}>
+                  Jogar
+                </Button>
+              </Box>
+            </>
+          ),
+          character_create: (
+            <>
+              <Title type="h6">
+                Criar personagem:
+              </Title>
+              <Input
+                name="name"
+                placeholder="Personagem"
+                stateValue={[values, setValues]}
+              />
+              <Select
+                name="race"
+                placeholder="Escolha uma raça"
+                options={Object.keys(RACE)}
+                stateValue={[values, setValues]}
+              />
+              <Select
+                name="caste"
+                placeholder="Escolha uma classe"
+                options={Object.keys(CASTE)}
+                stateValue={[values, setValues]}
+              />
+              <Select
+                name="tendency"
+                placeholder="Escolha uma tendência"
+                options={Object.keys(TENDENCY)}
+                stateValue={[values, setValues]}
+              />
+              <TextArea
+                rows={3}
+                name="description"
+                placeholder="Descreva o personagem"
+                stateValue={[values, setValues]}
+              />
+              <Box display="flex" justifyContent="flex-end">
+                <Button type="filled" color="secondary" padding={10} onClick={handle.resetCharacter}>
+                  Cancelar
+                </Button>
+                <Button type="filled" padding={10} onClick={handle.createCharacter}>
+                  Criar
+                </Button>
+              </Box>
+            </>
+          ),
+          character_update: (
+            <>
+              <Title type="h6">
+                Editar personagem:
+              </Title>
+              <Input
+                name="name"
+                placeholder="Personagem"
+                stateValue={[values, setValues]}
+              />
+              <TextArea
+                rows={3}
+                name="description"
+                placeholder="Descreva o personagem"
+                stateValue={[values, setValues]}
+              />
+              <Box display="flex" justifyContent="flex-end">
+                <Button type="filled" color="secondary" padding={10} onClick={handle.resetCharacter}>
+                  Cancelar
+                </Button>
+                <Button type="filled" padding={10} onClick={handle.updateCharacter}>
+                  Salvar
+                </Button>
+              </Box>
+            </>
+          ),
+          character_delete: (
+            <>
+              <Text>
+                Tem certeza que deseja excluir o personagem <b>{modal.data.name}</b>?
+              </Text>
+              <Box display="flex" justifyContent="flex-end">
+                <Button type="filled" padding={10} onClick={handle.resetCharacter}>
+                  Cancelar
+                </Button>
+                <Button type="filled" color="error" padding={10} onClick={handle.deleteCharacter}>
+                  Excluir
+                </Button>
+              </Box>
+            </>
+          ),
+        }[modal.content] || null}
       </Modal>
       <Grid type="container" padding={[0, 20]}>
         <Grid type="row">
@@ -498,13 +471,13 @@ function Home() {
               <List
                 height={300}
                 {...campaigns}
-                onClick={(row) => handle.openCampaign('campaign_start', row)}
+                onClick={(row) => handle.openModal('campaign_start', row)}
                 actions={(row) => ({
-                  update: () => handle.openCampaign('campaign_update', row),
-                  delete: () => handle.openCampaign('campaign_delete', row),
+                  update: () => handle.openModal('campaign_update', row),
+                  delete: () => handle.openModal('campaign_delete', row),
                 })}
               />
-              <Button type="filled" padding={10} onClick={() => handle.openCampaign('campaign_create')}>
+              <Button type="filled" padding={10} onClick={() => handle.openModal('campaign_create')}>
                 Criar campanha
               </Button>
             </Card>
@@ -524,13 +497,13 @@ function Home() {
               <List
                 height={300}
                 {...characters}
-                onClick={(row) => handle.openCharacter('character_start', row)}
+                onClick={(row) => handle.openModal('character_start', row)}
                 actions={(row) => ({
-                  update: () => handle.openCharacter('character_update', row),
-                  delete: () => handle.openCharacter('character_delete', row),
+                  update: () => handle.openModal('character_update', row),
+                  delete: () => handle.openModal('character_delete', row),
                 })}
               />
-              <Button type="filled" padding={10} onClick={() => handle.openCharacter('character_create')}>
+              <Button type="filled" padding={10} onClick={() => handle.openModal('character_create')}>
                 Criar personagem
               </Button>
             </Card>
