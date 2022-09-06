@@ -43,7 +43,8 @@ function Login() {
   const handle = {
     alterView: (view = INITIAL.VIEW) => {
       setView(view)
-      setValues(INITIAL.VALUES)
+      if (view === 'register')
+        setValues(INITIAL.VALUES)
     },
     submitLogin: () => {
       if (isNull(values, ['new_password'])) {
