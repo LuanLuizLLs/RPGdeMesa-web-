@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import theme from '../../theme'
-import API from '../../services/api'
 import Context from '../../global/context'
 import Page from '../../layouts/Page'
 import Exploration from './containers/Exploration'
 import Interaction from './containers/Interaction'
 import Combat from './containers/Combat'
 import Characters from './containers/Characters'
+import { requestAPI } from '../../services/api'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Box,
@@ -72,21 +72,23 @@ function Master() {
   const [scenarios,] = useState(INITIAL.SCENARIOS)
 
   useEffect(() => {
-    API.get(`campaigns/read/${CAMPAIGN.id}`)
-      .then(({ data }) => {
-        const [campaign] = data.response
+    requestAPI('campaigns', {
+      id: CAMPAIGN.id,
+    })
+      .read(({ data }) => {
+        const [campaign = {}] = data.response
         setDispatch({
           type: 'CAMPAIGN',
-          data: campaign
+          data: campaign,
         })
       })
   }, [refresh, CAMPAIGN.id, setDispatch])
 
   useEffect(() => {
-    API.get('adventures/read', {
+    requestAPI('adventures', {
       id_campaign: CAMPAIGN.id,
     })
-      .then(({ data }) => {
+      .read(({ data }) => {
         setAdventures((state) => ({
           ...state, rows: data.response,
         }))
@@ -100,12 +102,7 @@ function Master() {
   const handle = {
     openModal: (content, data = {}) => {
       setModal({ content, data })
-      switch (content) {
-        case 'edit_adventure':
-          return setValues(data)
-        default:
-          return setValues(INITIAL.VALUES)
-      }
+      setValues({ ...values, ...data })
     },
     openCollapse: (name) => {
       setCollapse({
@@ -122,36 +119,49 @@ function Master() {
         type: 'bar'
       })
 
-      API.post('adventures/create', {
-        ...values, id_campaign: CAMPAIGN.id,
+      requestAPI('adventures', {
+        ...values, 
+        id_campaign: CAMPAIGN.id,
       })
-        .then(({ data }) => {
-          setMessage(data.message)
+        .create(({ data }) => {
           setRefresh(data)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
         })
         .finally(handle.resetAdventure)
     },
-    deleteAdventure: (id) => {
+    deleteAdventure: () => {
       setLoading({
         type: 'bar'
       })
 
-      API.delete(`adventures/delete/${id}`)
-        .then(({ data }) => {
-          setMessage(data.message)
+      requestAPI('adventures', values)
+        .delete(({ data }) => {
           setRefresh(data)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
         })
         .finally(handle.resetAdventure)
     },
-    startAdventure: (id_adventure) => {
+    startAdventure: () => {
       setLoading({
         type: 'bar'
       })
 
-      API.patch(`campaigns/update/${CAMPAIGN.id}`, { id_adventure })
-        .then(({ data }) => {
-          setMessage(data.message)
+      requestAPI('campaigns', {
+        ...CAMPAIGN,
+        id_adventure: values.id,
+      })
+        .update(({ data }) => {
           setRefresh(data)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
         })
         .finally(handle.resetAdventure)
     },
@@ -160,10 +170,13 @@ function Master() {
         type: 'bar'
       })
 
-      API.patch(`adventures/update`, values)
-        .then(({ data }) => {
-          setMessage(data.message)
+      requestAPI('adventures', values)
+        .update(({ data }) => {
           setRefresh(data)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
         })
         .finally(handle.resetAdventure)
     },
@@ -232,7 +245,7 @@ function Master() {
                   {...adventures}
                   onClick={(row) => handle.openModal('detail_adventure', row)}
                   actions={(row) => ({
-                    update: () => handle.openModal('edit_adventure', row)
+                    update: () => handle.openModal('edit_adventure', row),
                   })}
                 />
               </Collapse>
@@ -317,10 +330,10 @@ function Master() {
                 {modal.data.description}
               </Text>
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="filled" color="error" padding={5} onClick={() => handle.deleteAdventure(modal.data.id)}>
+                <Button type="filled" color="error" padding={5} onClick={handle.deleteAdventure}>
                   Remover
                 </Button>
-                <Button type="filled" padding={5} onClick={() => handle.startAdventure(modal.data.id)}>
+                <Button type="filled" padding={5} onClick={handle.startAdventure}>
                   Iniciar
                 </Button>
               </Box>
@@ -330,12 +343,12 @@ function Master() {
             <>
               <Input
                 name="name"
-                placeholder="Aventura"
+                label="Aventura:"
                 stateValue={[values, setValues]}
               />
               <TextArea
                 name="description"
-                placeholder="Descrição da aventura"
+                label="Descrição da aventura:"
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
