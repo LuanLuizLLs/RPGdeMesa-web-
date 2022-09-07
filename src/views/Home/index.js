@@ -96,50 +96,44 @@ function Home() {
       setValues({ ...values, ...data })
     },
     resetCampaign: () => {
-      setLoading({})
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
+      setLoading({})
     },
     createCampaign: () => {
       setLoading({
-        type: 'circular'
+        type: 'bar'
       })
 
       requestAPI('campaigns', {
-        id_user: USER.id,
         ...values,
+        id_user: USER.id
       })
         .create(({ data }) => {
-          setMessage(data.message)
           setRefresh({
             campaign: data,
           })
+          setMessage(data.message)
         })
         .catch(({ response }) => {
-          setMessage({
-            type: 'error',
-            message: response.data.message || 'Erro ao criar a campanha',
-          })
+          setMessage(response.data.message)
         })
         .finally(handle.resetCampaign)
     },
     updateCampaign: () => {
       setLoading({
-        type: 'circular'
+        type: 'bar'
       })
 
       requestAPI('campaigns', values)
         .update(({ data }) => {
-          setMessage(data.message)
           setRefresh({
             campaign: data
           })
+          setMessage(data.message)
         })
         .catch(({ response }) => {
-          setMessage({
-            type: 'error',
-            message: response.data.message || 'Erro ao atualizar a campanha',
-          })
+          setMessage(response.data.message)
         })
         .finally(handle.resetCampaign)
     },
@@ -156,10 +150,7 @@ function Home() {
           }))
         })
         .catch(({ response }) => {
-          setMessage({
-            type: 'error',
-            message: response.data.message || 'Erro ao deletar a campanha'
-          })
+          setMessage(response.data.message)
         })
         .finally(handle.resetCampaign)
     },
