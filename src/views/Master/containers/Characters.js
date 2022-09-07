@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import theme from '../../../theme'
-import API from '../../../services/api'
 import Context from '../../../global/context'
 import imagePlayer from '../../../assets/img/player.png'
+import { requestAPI } from '../../../services/api'
 import {
   Box,
   Button,
@@ -22,7 +22,8 @@ const INITIAL = {
     data: {}
   },
   VALUES: {
-    search_character: ''
+    id: '',
+    name: '',
   },
   REFRESH: null,
   CHARACTERS: {
@@ -58,90 +59,90 @@ function Characters({
   const [characters, setCharacters] = useState(INITIAL.CHARACTERS)
 
   useEffect(() => {
-    API.get('/characters/read', {
-      params: {
-        id_campaign: campaign.id
-      }
+    requestAPI('characters', {
+      id_campaign: campaign.id
     })
-      .then(({ data }) => {
-        if (data.response.length) {
-          setCharacters(Object.assign({}, data.response))
-        } else {
-          setCharacters(INITIAL.CHARACTERS)
-        }
+      .read(({ data }) => {
+        setCharacters(data.response.length ? Object.assign({}, data.response) : INITIAL.CHARACTERS)
       })
   }, [refresh, campaign.id])
 
   const handle = {
     openModal: (content, data = {}) => {
-      setModal({
-        content, data
-      })
+      setModal({ content, data })
+      setValues({ ...values, ...data })
     },
-    resetCharacter: (closeModal = true) => {
+    resetCharacter: () => {
       setLoading({})
       setValues(INITIAL.VALUES)
-      if (closeModal) {
-        setModal(INITIAL.MODAL)
-      }
+      setModal(INITIAL.MODAL)
     },
     searchCharacter: () => {
       setLoading({
-        type: 'circular'
+        type: 'bar'
       })
 
-      API.get(`/characters/read/${values.search_character}`)
-        .then(({ data }) => {
-          const [character] = data.response
+      requestAPI('characters', values)
+        .read(({ data }) => {
+          const [character = {}] = data.response
+          setValues({
+            ...values,
+            ...character,
+          })
           setMessage(data.message)
-          if (Boolean(data.response.length)) {
-            setValues({
-              ...character,
-              search_character: character.name
-            })
-          }
         })
-        .finally(() => setLoading({}))
+        .finally(() => {
+          setLoading({})
+        })
     },
     addCharacter: () => {
       setLoading({
-        type: 'circular'
+        type: 'bar'
       })
 
-      API.patch(`/characters/update/${values.id}`, {
+      requestAPI('characters', {
         ...values,
         id_campaign: campaign.id,
       })
-        .then(({ data }) => {
-          setMessage(data.message)
+        .update(({ data }) => {
           setRefresh(data.message)
+          setMessage(data.message)
         })
-        .finally((handle.resetCharacter))
+        .catch(({ response }) => {
+          setMessage(response.data.message)
+        })
+        .finally(handle.resetCharacter)
     },
-    removeCharacter: (data) => {
+    removeCharacter: () => {
       setLoading({
-        type: 'circular'
+        type: 'bar'
       })
 
-      API.patch(`/characters/update/${data.id}`, {
-        ...data,
+      requestAPI('characters', {
+        ...values,
         id_campaign: null,
       })
-        .then(({ data }) => {
-          setMessage(data.message)
+        .update(({ data }) => {
           setRefresh(data.message)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
         })
         .finally(handle.resetCharacter)
     },
     updateCharacter: (index) => {
       setLoading({
-        type: 'circular'
+        type: 'bar'
       })
 
-      API.patch(`/characters/update/${characters[index].id}`, characters[index])
-        .then(({ data }) => {
-          setMessage(data.message)
+      requestAPI('characters', characters[index])
+        .update(({ data }) => {
           setRefresh(data.message)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
         })
         .finally(handle.resetCharacter)
     },
@@ -256,28 +257,28 @@ function Characters({
           </Grid>
         </Box>
       ))}
-      <Modal maxWidth={300} stateModal={[modal, setModal]}>
+      <Modal maxWidth={300} stateModal={[modal, setModal]} onClose={handle.resetCharacter}>
         {({
           addCharacter_character: (
             <>
               <Title type="h6" color="primary">
-                Personagem
+                Personagem:
               </Title>
               <Box marginBottom={20}>
                 <Input
-                  name="search_character"
+                  name={Boolean(values.name) ? 'name' : 'id'}
                   placeholder="ID do personagem"
                   onEnter={handle.searchCharacter}
                   stateValue={[values, setValues]}
-                  readOnly={Boolean(values.id)}
+                  readOnly={Boolean(values.name)}
                 />
               </Box>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" color="secondary" width="fit-content" padding={10} onClick={() => handle.resetCharacter(false)}>
-                  Limpar
+                <Button type="filled" color="secondary" width="fit-content" padding={10} onClick={handle.resetCharacter}>
+                  Cancelar
                 </Button>
-                <Button type="filled" width="fit-content" padding={10} onClick={Boolean(values.id) ? handle.addCharacter : handle.searchCharacter}>
-                  {Boolean(values.id) ? 'Confirmar' : 'Pesquisar'}
+                <Button type="filled" width="fit-content" padding={10} onClick={Boolean(values.name) ? handle.addCharacter : handle.searchCharacter}>
+                  {Boolean(values.name) ? 'Confirmar' : 'Pesquisar'}
                 </Button>
               </Box>
             </>
@@ -291,7 +292,7 @@ function Characters({
                 <Button type="filled" width="fit-content" padding={10} onClick={handle.resetCharacter}>
                   Cancelar
                 </Button>
-                <Button type="filled" color="error" width="fit-content" padding={10} onClick={() => handle.removeCharacter(modal.data)}>
+                <Button type="filled" color="error" width="fit-content" padding={10} onClick={handle.removeCharacter}>
                   Remover
                 </Button>
               </Box>
