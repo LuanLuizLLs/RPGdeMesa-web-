@@ -71,12 +71,7 @@ function Features({
     })
       .read(({ data }) => {
         setFeatures((state) => ({
-          ...state,
-          rows: data.response.map(({
-            id, name, strength, dexterity, constitution, intelligence, wisdom, charisma,
-          }) => ({
-            id, name, strength, dexterity, constitution, intelligence, wisdom, charisma,
-          }))
+          ...state, rows: data.response,
         }))
       })
   }, [refresh, character.id])
@@ -89,6 +84,7 @@ function Features({
     resetFeature: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
+      setLoading({})
     },
     createFeature: () => {
       setLoading({
@@ -97,8 +93,8 @@ function Features({
 
       requestAPI('features', {
         ...values,
-        id_character: character.id,
         player,
+        id_character: character.id,
       })
         .create(({ data }) => {
           setRefresh(data)
@@ -106,14 +102,15 @@ function Features({
           setMessage(data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message || {
-            type: 'error',
-            message: 'Erro ao criar característica',
-          })
+          setMessage(response.data.message)
         })
         .finally(handle.resetFeature)
     },
     deleteFeature: () => {
+      setLoading({
+        type: 'bar',
+      })
+
       requestAPI('features', values)
         .delete(({ data }) => {
           setRefresh(data)
@@ -121,10 +118,7 @@ function Features({
           setMessage(data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message || {
-            type: 'error',
-            message: 'Erro ao deletar característica',
-          })
+          setMessage(response.data.message)
         })
         .finally(handle.resetFeature)
     }
