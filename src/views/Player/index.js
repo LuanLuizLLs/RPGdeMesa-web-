@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import API from '../../services/api'
 import Page from '../../layouts/Page'
 import Features from './container/Features'
 import Abilities from './container/Abilities'
 import Inventory from './container/Inventory'
 import Context from '../../global/context'
+import { requestAPI } from '../../services/api'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -41,36 +41,20 @@ function Player() {
     id_character && setLoading({
       type: 'circular'
     })
-    API.get(`characters/read/${id_character || CHARACTER.id}`)
-      .then(({ data }) => {
+
+    requestAPI('characters', {
+      id_character: id_character || CHARACTER.id,
+    })
+      .read(({ data }) => {
         const [character] = data.response
-        if (character) {
-          if (id_character) {
-            const { id_user, id_campaign } = character
-            if ((USER.id === id_user) || (CAMPAIGN.id === id_campaign)) {
-              setValues(character)
-              setDispatch({
-                type: 'CHARACTER',
-                data: character,
-              })
-            } else {
-              setMessage({
-                type: 'warning',
-                message: 'Usuário não permitido',
-              })
-              setDispatch({
-                type: 'CHARACTER',
-                data: {},
-              })
-            }
-          } else {
-            setValues(character)
-            setDispatch({
-              type: 'CHARACTER',
-              data: character,
-            })
-          }
-        }
+        setValues(character)
+        setDispatch({
+          type: 'CHARACTER',
+          data: character,
+        })
+      })
+      .catch(({ response }) => {
+        setMessage(response.data.message)
       })
       .finally(() => {
         setLoading({})
