@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import API from '../../../services/api'
 import Context from '../../../global/context'
 import theme from '../../../theme'
+import { requestAPI } from '../../../services/api'
 import {
   Box,
   Button,
@@ -58,7 +58,7 @@ function Features({
   setRefreshCharacter,
 }) {
 
-  const { setMessage } = useContext(Context)
+  const { setMessage, setLoading } = useContext(Context)
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
@@ -66,12 +66,10 @@ function Features({
   const [features, setFeatures] = useState(INITIAL.FEATURES)
 
   useEffect(() => {
-    character.id && API.get('features/read', {
-      params: {
-        id_character: character.id,
-      }
+    character.id && requestAPI('features', {
+      id_character: character.id,
     })
-      .then(({ data }) => {
+      .read(({ data }) => {
         setFeatures((state) => ({
           ...state,
           rows: data.response.map(({
@@ -85,39 +83,48 @@ function Features({
 
   const handle = {
     openModal: (content, data = {}) => {
-      setModal({
-        content, data,
-      })
+      setModal({ content, data })
+      setValues({ ...values, ...data })
     },
     resetFeature: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
     },
     createFeature: () => {
-      API.post('features/create', {
+      setLoading({
+        type: 'bar',
+      })
+
+      requestAPI('features', {
         ...values,
         id_character: character.id,
         player,
       })
-        .then(({ data }) => {
+        .create(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
           setMessage(data.message)
         })
-        .catch(() => {
-          setMessage({
+        .catch(({ response }) => {
+          setMessage(response.data.message || {
             type: 'error',
-            message: 'Erro ao criar a característica',
+            message: 'Erro ao criar característica',
           })
         })
         .finally(handle.resetFeature)
     },
-    deleteFeature: (id) => {
-      API.delete(`features/delete/${id}`)
-        .then(({ data }) => {
+    deleteFeature: () => {
+      requestAPI('features', values)
+        .delete(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
           setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message || {
+            type: 'error',
+            message: 'Erro ao deletar característica',
+          })
         })
         .finally(handle.resetFeature)
     }
@@ -248,7 +255,7 @@ function Features({
                 </Text>
               </Box>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" color="error" padding={10} onClick={() => handle.deleteFeature(modal.data.id)}>
+                <Button type="filled" color="error" padding={10} onClick={handle.deleteFeature}>
                   Remover
                 </Button>
                 <Button type="filled" padding={10} onClick={handle.resetFeature}>
