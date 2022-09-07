@@ -58,16 +58,19 @@ function Login() {
         type: 'circular',
       })
 
-      requestAPI('users', values).read(({ data }) => {
-        const [user] = data.response
-        In(user)
-        setNavigate('/')
-        setMessage(data.message)
-      }).catch(({ response }) => {
-        setMessage(response.data.message)
-      }).finally(() => {
-        setLoading({})
-      })
+      requestAPI('users', values)
+        .read(({ data }) => {
+          const [user] = data.response
+          In(user)
+          setNavigate('/')
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
+        })
+        .finally(() => {
+          setLoading({})
+        })
     },
     submitRegister: () => {
       if (isNull(values)) {
@@ -82,13 +85,14 @@ function Login() {
         })
       }
 
-      requestAPI('users', values).create(({ data }) => {
-        setMessage(data.message)
-      }).catch(({ response }) => {
-        setMessage(response.data.message)
-      }).finally(() => {
-        setView(INITIAL.VIEW)
-      })
+      requestAPI('users', values)
+        .create(({ data }) => {
+          setView(INITIAL.VIEW)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
+        })
     },
     submitRecover: () => {
       if (isNull(values)) {
@@ -103,12 +107,14 @@ function Login() {
         })
       }
 
-      requestAPI('users', values).update(({ data }) => {
-        setView('login')
-        setMessage(data.message)
-      }).catch(({ response }) => {
-        setMessage(response.data.message)
-      })
+      requestAPI('users', values)
+        .update(({ data }) => {
+          setView(INITIAL.VIEW)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
+        })
     },
   }
 

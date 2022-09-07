@@ -3,14 +3,14 @@ import { useDispatch } from 'react-redux'
 function useLogin() {
   const setDispatch = useDispatch()
 
-  /** Log in */
+  /** Action login */
   const In = (data) => {
     setDispatch({
       type: 'USER', data
     })
   }
 
-  /** Log out */
+  /** Action logout */
   const Out = () => {
     setDispatch({
       type: 'INITIAL'
