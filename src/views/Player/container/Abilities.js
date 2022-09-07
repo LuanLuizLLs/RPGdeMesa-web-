@@ -3,7 +3,6 @@ import theme from '../../../theme'
 import Context from '../../../global/context'
 import { ATTRIBUTE } from '../../../configs'
 import { requestAPI } from '../../../services/api'
-import { averageAttributes } from '../../../utils'
 import {
   Box,
   Button,
@@ -55,7 +54,7 @@ function Abilities({
   setRefreshCharacter,
 }) {
 
-  const capacity = averageAttributes([character.intelligence, character.wisdom, character.charisma], 2) || 0
+  const capacityAbilities = (character.intelligence + character.wisdom + character.charisma)
 
   const { setMessage, setLoading } = useContext(Context)
 
@@ -223,7 +222,7 @@ function Abilities({
       <List height={200} onClick={(row) => handle.openModal('update_ability', row)} {...abilities} />
       <Box display="flex" justifyContent="space-between" margin={10}>
         <Text fontWeight="bold">
-          <Text inline color="primary">Capacidade: </Text> {capacity}
+          <Text inline color="primary">Capacidade: </Text> {capacityAbilities || 0}
         </Text>
         <Button type="filled" onClick={() => Boolean(character.id) && handle.openModal('add_ability')}>
           Adicionar
