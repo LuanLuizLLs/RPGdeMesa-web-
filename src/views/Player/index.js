@@ -43,10 +43,14 @@ function Player() {
     })
 
     requestAPI('characters', {
-      id_character: id_character || CHARACTER.id,
+      id: id_character || CHARACTER.id,
+      ...id_character && ({
+        user: USER.id,
+        campaign: CAMPAIGN.id,
+      })
     })
       .read(({ data }) => {
-        const [character] = data.response
+        const [character = {}] = data.response
         setValues(character)
         setDispatch({
           type: 'CHARACTER',
@@ -59,17 +63,7 @@ function Player() {
       .finally(() => {
         setLoading({})
       })
-  }, [
-    refresh,
-    id_character,
-    CHARACTER.id,
-    CAMPAIGN.id,
-    USER.id,
-    setLoading,
-    setMessage,
-    setValues,
-    setDispatch,
-  ])
+  }, [refresh, id_character, CHARACTER.id, CAMPAIGN.id, USER.id, setLoading, setMessage, setValues, setDispatch])
 
   return (
     <Page tab="Jogador" title="Ficha do Jogador" width="80vw">
