@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { requestAPI } from '../../../services/api'
 import theme from '../../../theme'
 import Context from '../../../global/context'
 import { ATTRIBUTE } from '../../../configs'
+import { requestAPI } from '../../../services/api'
 import { averageAttributes } from '../../../utils'
 import {
   Box,
