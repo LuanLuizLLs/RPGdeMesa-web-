@@ -88,6 +88,10 @@ function Login() {
         })
       }
 
+      setLoading({
+        type: 'bar',
+      })
+
       requestAPI('users', values)
         .create(({ data }) => {
           setView(INITIAL.VIEW)
@@ -110,6 +114,10 @@ function Login() {
           message: 'As senhas não coincidem',
         })
       }
+
+      setLoading({
+        type: 'bar',
+      })
 
       requestAPI('users', values)
         .update(({ data }) => {
