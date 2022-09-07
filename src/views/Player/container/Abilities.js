@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import API from '../../../services/api'
+import { requestAPI } from '../../../services/api'
 import theme from '../../../theme'
 import Context from '../../../global/context'
 import { ATTRIBUTE } from '../../../configs'
@@ -57,7 +57,7 @@ function Abilities({
 
   const capacity = averageAttributes([character.intelligence, character.wisdom, character.charisma], 2) || 0
 
-  const { setMessage } = useContext(Context)
+  const { setMessage, setLoading } = useContext(Context)
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
@@ -65,75 +65,78 @@ function Abilities({
   const [abilities, setAbilities] = useState(INITIAL.ABILITIES)
 
   useEffect(() => {
-    character.id && API.get('abilities/read', {
-      params: {
-        id_character: character.id,
-      }
+    character.id && requestAPI('abilities', {
+      id_character: character.id,
     })
-      .then(({ data }) => {
+      .read(({ data }) => {
         setAbilities((state) => ({
-          ...state, rows: data.response.map(({
-            id, name, description, attribute, level,
-          }) => ({
-            id, name, description, attribute, level,
-          }))
+          ...state, rows: data.response,
         }))
       })
   }, [refresh, character.id])
 
   const handle = {
     openModal: (content, data = {}) => {
-      setModal({
-        content, data,
-      })
+      setModal({ content, data, })
+      setValues({ ...values, ...data })
     },
     resetAbility: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
+      setLoading({})
     },
     createAbility: () => {
-      API.post('abilities/create', {
-        id_character: character.id,
+      setLoading({
+        type: 'bar'
+      })
+
+      requestAPI('abilities', {
         player,
         ...values,
+        id_character: character.id,
       })
-        .then(({ data }) => {
+        .create(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
           setMessage(data.message)
         })
-        .catch(() => {
-          setMessage({
-            type: 'error',
-            message: 'Erro ao criar a habilidade',
-          })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
         })
         .finally(handle.resetAbility)
     },
-    updateAbility: (updateData) => {
-      API.patch(`abilities/update/${updateData.id}`, {
+    updateAbility: () => {
+      setLoading({
+        type: 'bar'
+      })
+
+      requestAPI('abilities', {
         player,
-        ...updateData,
-        level: updateData.level + 1,
+        ...values,
+        level: values.level + 1,
       })
-        .then(({ data }) => {
+        .update(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
           setMessage(data.message)
         })
-        .catch(() => {
-          setMessage({
-            type: 'error',
-            message: 'Erro ao atualizar a habilidade',
-          })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
         })
         .finally(handle.resetAbility)
     },
-    deleteAbility: (id) => {
-      API.delete(`abilities/delete/${id}`)
-        .then(({ data }) => {
+    deleteAbility: () => {
+      setLoading({
+        type: 'bar'
+      })
+
+      requestAPI('abilities', values)
+        .delete(({ data }) => {
           setRefresh(data)
           setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
         })
         .finally(handle.resetAbility)
     },
@@ -200,13 +203,13 @@ function Abilities({
                   <Text fontWeight="bold" color="gray">
                     {formatAttribute(modal.data.attribute, modal.data.level, character[ATTRIBUTE.PRIMARY[modal.data.attribute]])}
                   </Text>
-                  <Button type="filled" color="success" fontSize="medium" onClick={() => handle.updateAbility(modal.data)}>
+                  <Button type="filled" color="success" fontSize="medium" onClick={handle.updateAbility}>
                     Melhorar
                   </Button>
                 </Box>
               </Box>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" color="error" padding={10} onClick={() => handle.deleteAbility(modal.data.id)}>
+                <Button type="filled" color="error" padding={10} onClick={handle.deleteAbility}>
                   Remover
                 </Button>
                 <Button type="filled" padding={10} onClick={handle.resetAbility}>
