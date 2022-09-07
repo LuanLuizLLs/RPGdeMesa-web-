@@ -42,7 +42,7 @@ function Inventory({
 
   return (
     <>
-      <Modal maxWidth={500} stateModal={[modal, setModal]}>
+      <Modal maxWidth={500} stateModal={[modal, setModal]} onClose={() => setModal(INITIAL.MODAL)}>
         {({
           add_item: (
             <>

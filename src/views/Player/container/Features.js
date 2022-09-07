@@ -132,7 +132,7 @@ function Features({
 
   return (
     <>
-      <Modal maxWidth={500} stateModal={[modal, setModal]}>
+      <Modal maxWidth={500} stateModal={[modal, setModal]} onClose={handle.resetFeature}>
         {({
           add_feature: (
             <>
