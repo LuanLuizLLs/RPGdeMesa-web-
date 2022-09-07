@@ -168,46 +168,40 @@ function Home() {
     },
     createCharacter: () => {
       setLoading({
-        type: 'circular'
+        type: 'bar'
       })
 
       requestAPI('characters', {
-        id_user: USER.id,
         ...values,
         ...RACE[values.race],
         ...CASTE[values.caste],
+        id_user: USER.id,
       })
         .create(({ data }) => {
-          setMessage(data.message)
           setRefresh({
             character: data
           })
+          setMessage(data.message)
         })
         .catch(({ response }) => {
-          setMessage({
-            type: 'error',
-            message: response.data.message || 'Erro ao criar o personagem',
-          })
+          setMessage(response.data.message)
         })
         .finally(handle.resetCharacter)
     },
     updateCharacter: () => {
       setLoading({
-        type: 'circular'
+        type: 'bar'
       })
 
       requestAPI('characters', values)
         .update(({ data }) => {
-          setMessage(data.message)
           setRefresh({
             character: data
           })
+          setMessage(data.message)
         })
         .catch(({ response }) => {
-          setMessage({
-            type: 'error',
-            message: response.data.message || 'Erro ao atualizar o personagem',
-          })
+          setMessage(response.data.message)
         })
         .finally(handle.resetCharacter)
     },
@@ -218,16 +212,13 @@ function Home() {
 
       requestAPI('characters', values)
         .delete(({ data }) => {
-          setMessage(data.message)
           setRefresh(({
             character: data
           }))
+          setMessage(data.message)
         })
         .catch(({ response }) => {
-          setMessage({
-            type: 'error',
-            message: response.data.message || 'Erro ao deletar o personagem'
-          })
+          setMessage(response.data.message)
         })
         .finally(handle.resetCharacter)
     },
