@@ -26,7 +26,10 @@ const INITIAL = {
 }
 
 const comparativePassword = (first, secound) => {
-  return Boolean(secound) ? (first === secound) ? 'valid' : 'invalid' : 'default'
+  return {
+    valid: (first === secound),
+    validate: Boolean(secound) ? (first === secound) ? 'valid' : 'invalid' : 'default',
+  }
 }
 
 function Login() {
@@ -43,8 +46,13 @@ function Login() {
   const handle = {
     alterView: (view = INITIAL.VIEW) => {
       setView(view)
-      if (view === 'register')
-        setValues(INITIAL.VALUES)
+      setValues({
+        ...INITIAL.VALUES,
+        name: values.name,
+      })
+    },
+    resetLogin: () => {
+      setLoading({})
     },
     submitLogin: () => {
       if (isNull(values, ['new_password'])) {
@@ -60,17 +68,12 @@ function Login() {
 
       requestAPI('users', values)
         .read(({ data }) => {
-          const [user] = data.response
+          const [user = {}] = data.response
           In(user)
           setNavigate('/')
           setMessage(data.message)
         })
-        .catch(({ response }) => {
-          setMessage(response.data.message)
-        })
-        .finally(() => {
-          setLoading({})
-        })
+        .finally(handle.resetLogin)
     },
     submitRegister: () => {
       if (isNull(values)) {
@@ -78,10 +81,10 @@ function Login() {
           type: 'warning',
           message: 'Preencha todos os dados',
         })
-      } else if (!comparativePassword(values.password, values.new_password)) {
+      } else if (!comparativePassword(values.password, values.new_password).valid) {
         return setMessage({
           type: 'error',
-          message: 'Senha inválida',
+          message: 'As senhas não coincidem',
         })
       }
 
@@ -93,6 +96,7 @@ function Login() {
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
+        .finally(handle.resetLogin)
     },
     submitRecover: () => {
       if (isNull(values)) {
@@ -100,7 +104,7 @@ function Login() {
           type: 'warning',
           message: 'Preencha todos os dados',
         })
-      } else if (!comparativePassword(values.password, values.new_password)) {
+      } else if (!comparativePassword(values.password, values.new_password).valid) {
         return setMessage({
           type: 'error',
           message: 'As senhas não coincidem',
@@ -115,6 +119,7 @@ function Login() {
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
+        .finally(handle.resetLogin)
     },
   }
 
@@ -199,7 +204,7 @@ function Login() {
                 placeholder="Digite sua senha"
                 stateValue={[values, setValues]}
                 onEnter={handle.submitRegister}
-                validate={comparativePassword(values.password, values.new_password)}
+                {...comparativePassword(values.password, values.new_password)}
               />
               <Input
                 name="new_password"
@@ -208,7 +213,7 @@ function Login() {
                 placeholder="Confirme sua senha"
                 stateValue={[values, setValues]}
                 onEnter={handle.submitRegister}
-                validate={comparativePassword(values.password, values.new_password)}
+                {...comparativePassword(values.password, values.new_password)}
               />
               <Grid type="container" padding={[20, 0]}>
                 <Grid type="row">
@@ -255,7 +260,7 @@ function Login() {
                 placeholder="Digite sua senha"
                 stateValue={[values, setValues]}
                 onEnter={handle.submitRecover}
-                validate={comparativePassword(values.password, values.new_password)}
+                {...comparativePassword(values.password, values.new_password)}
               />
               <Input
                 name="new_password"
@@ -264,7 +269,7 @@ function Login() {
                 placeholder="Digite sua senha novamente"
                 stateValue={[values, setValues]}
                 onEnter={handle.submitRecover}
-                validate={comparativePassword(values.password, values.new_password)}
+                {...comparativePassword(values.password, values.new_password)}
               />
               <Grid type="container" padding={[20, 0]}>
                 <Grid type="row">
