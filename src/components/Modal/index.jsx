@@ -6,10 +6,10 @@ export const Modal = ({
   children,
   maxWidth = 0,
   stateModal = [],
-  onClose = () => {},
+  onClose = () => { },
 }) => {
 
-  const [modal, setModal] = stateModal
+  const [modal] = stateModal
 
   const style = {
     maxWidth: maxWidth || 'fit-content',
@@ -18,16 +18,7 @@ export const Modal = ({
   return modal.content && (
     <div className={classes.container}>
       <div className={classes.modal} style={style}>
-        <span
-          className={classes.close}
-          onClick={() => {
-            setModal({
-              content: '',
-              data: {},
-            })
-            onClose()
-          }}
-        />
+        <span className={classes.close} onClick={onClose} />
         {children}
       </div>
     </div>
@@ -38,5 +29,5 @@ Modal.propTypes = {
   children: PropTypes.any,
   maxWidth: PropTypes.number,
   stateModal: PropTypes.array.isRequired,
-  onClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
 }

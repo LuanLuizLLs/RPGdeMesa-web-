@@ -295,7 +295,7 @@ function Master() {
           ]}
         </Tab>
       </Card>
-      <Modal maxWidth={500} stateModal={[modal, setModal]}>
+      <Modal maxWidth={500} stateModal={[modal, setModal]} onClose={handle.resetAdventure}>
         {({
           add_adventure: (
             <>
