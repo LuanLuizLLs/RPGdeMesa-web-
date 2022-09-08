@@ -295,14 +295,14 @@ function Master() {
           ]}
         </Tab>
       </Card>
-      <Modal maxWidth={500} stateModal={[modal, setModal]} onClose={handle.resetAdventure}>
-        {({
+      <Modal maxWidth={450} stateModal={[modal, setModal]} onClose={handle.resetAdventure}>
+        {{
           add_adventure: (
             <>
               <Input
                 name="name"
                 label="Aventura:"
-                placeholder="Título"
+                placeholder="Nome"
                 stateValue={[values, setValues]}
               />
               <TextArea
@@ -344,11 +344,13 @@ function Master() {
               <Input
                 name="name"
                 label="Aventura:"
+                placeholder="Nome"
                 stateValue={[values, setValues]}
               />
               <TextArea
                 name="description"
                 label="Descrição da aventura:"
+                placeholder="Descrição"
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
@@ -361,7 +363,7 @@ function Master() {
               </Box>
             </>
           ),
-        })[modal.content] || null}
+        }}
       </Modal>
     </Page>
   )
