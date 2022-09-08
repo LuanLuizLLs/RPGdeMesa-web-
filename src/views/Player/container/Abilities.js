@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import theme from '../../../theme'
 import Context from '../../../global/context'
 import { ATTRIBUTE } from '../../../configs'
 import { requestAPI } from '../../../services/api'
@@ -10,6 +9,7 @@ import {
   Input,
   List,
   Modal,
+  Paper,
   Select,
   Text,
   TextArea,
@@ -30,10 +30,10 @@ const INITIAL = {
   REFRESH: null,
   ABILITIES: {
     columns: {
-      id: 'ID', 
-      name: 'Habilidade', 
-      description: 'Descrição', 
-      attribute: 'Atributo', 
+      id: 'ID',
+      name: 'Habilidade',
+      description: 'Descrição',
+      attribute: 'Atributo',
       level: 'Nível',
     },
     rows: []
@@ -42,7 +42,7 @@ const INITIAL = {
 
 const formatAttribute = (attr = '', attrCurrent = 0, attrAdditional = 0) => {
   const some = attrCurrent + attrAdditional
-  if (some > 0) {
+  if (some >= 0) {
     return `${attr}+${some}`
   }
   return `${attr}${some}`
@@ -144,20 +144,21 @@ function Abilities({
   return (
     <>
       <Modal maxWidth={500} stateModal={[modal, setModal]} onClose={handle.resetAbility}>
-        {({
+        {{
           add_ability: (
             <>
-              <Title type="h6" color="primary">
+              <Title type="h6">
                 Adicionar habilidade:
               </Title>
               <Input
                 name="name"
-                placeholder="Habilidade (verbo)"
+                label="Habilidade"
+                placeholder="Nome (verbo)"
                 stateValue={[values, setValues]}
               />
               <TextArea
                 name="description"
-                placeholder="Descreva a habilidade"
+                placeholder="Descrição"
                 stateValue={[values, setValues]}
               />
               <Grid type="row" padding={[10, 0]}>
@@ -191,33 +192,38 @@ function Abilities({
           ),
           update_ability: (
             <>
-              <Title type="h6" color="primary">
-                {modal.data.name} (Lv {modal.data.level})
+              <Title type="h6">
+                Detalhes da habilidade:
               </Title>
-              <Text fontWeight="bold">
-                {modal.data.description}
-              </Text>
-              <Box backgroundColor={theme.secondary} padding={10} margin="10px 0" borderRadius={10}>
+              <Paper backgroundColor="secondary">
+                <Text color="primary" fontWeight="bold">
+                  {modal.data.name} (Lv {modal.data.level})
+                </Text>
+                <Text>
+                  {modal.data.description}
+                </Text>
+              </Paper>
+              <Paper backgroundColor="secondary" margin="10px 0">
                 <Box display="flex" justifyContent="space-between">
                   <Text fontWeight="bold" color="gray">
                     {formatAttribute(modal.data.attribute, modal.data.level, character[ATTRIBUTE.PRIMARY[modal.data.attribute]])}
                   </Text>
                   <Button type="filled" color="success" fontSize="medium" onClick={handle.updateAbility}>
-                    Melhorar
+                    Aprimorar
                   </Button>
                 </Box>
-              </Box>
+              </Paper>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" color="error" padding={10} onClick={handle.deleteAbility}>
-                  Remover
-                </Button>
                 <Button type="filled" padding={10} onClick={handle.resetAbility}>
                   Fechar
                 </Button>
+                <Button type="filled" color="error" padding={10} onClick={handle.deleteAbility}>
+                  Remover
+                </Button>
               </Box>
             </>
-          )
-        })[modal.content] || null}
+          ),
+        }}
       </Modal>
       <List height={200} onClick={(row) => handle.openModal('update_ability', row)} {...abilities} />
       <Box display="flex" justifyContent="space-between" margin={10}>
