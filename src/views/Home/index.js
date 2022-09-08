@@ -326,8 +326,8 @@ function Home() {
               <Text>
                 Tem certeza que deseja excluir a campanha <b>{modal.data.name}</b>?
               </Text>
-              <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" padding={10} onClick={handle.resetCampaign}>
+              <Box display="flex" justifyContent="flex-end"  marginTop={10}>
+                <Button type="bottomless" padding={10} onClick={handle.resetCampaign}>
                   Cancelar
                 </Button>
                 <Button type="filled" color="error" padding={10} onClick={handle.deleteCampaign}>
@@ -437,8 +437,8 @@ function Home() {
               <Text>
                 Tem certeza que deseja excluir o personagem <b>{modal.data.name}</b>?
               </Text>
-              <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" padding={10} onClick={handle.resetCharacter}>
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="bottomless" padding={10} onClick={handle.resetCharacter}>
                   Cancelar
                 </Button>
                 <Button type="filled" color="error" padding={10} onClick={handle.deleteCharacter}>
