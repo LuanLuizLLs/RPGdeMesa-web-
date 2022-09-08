@@ -265,12 +265,13 @@ function Characters({
         {{
           add_character: (
             <>
-              <Title type="h6" color="primary">
-                Personagem:
+              <Title type="h6">
+                Adicionar personagem:
               </Title>
               <Box marginBottom={20}>
                 <Input
                   name={Boolean(values.name) ? 'name' : 'id'}
+                  label="Personagem"
                   placeholder="ID do personagem"
                   onEnter={handle.searchCharacter}
                   stateValue={[values, setValues]}
@@ -289,11 +290,14 @@ function Characters({
           ),
           remove_character: (
             <>
+              <Title type="h6">
+                Remover personagem:
+              </Title>
               <Text>
                 Tem certeza que deseja remover <b>{modal.data.name}</b> da campanha?
               </Text>
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="filled" width="fit-content" padding={10} onClick={handle.resetCharacter}>
+                <Button type="bottomless" width="fit-content" padding={10} onClick={handle.resetCharacter}>
                   Cancelar
                 </Button>
                 <Button type="filled" color="error" width="fit-content" padding={10} onClick={handle.removeCharacter}>
