@@ -33,5 +33,5 @@ Paper.propTypes = {
   padding: PropTypes.number,
   overflow: PropTypes.string,
   borderRadius: PropTypes.string,
-  backgroundColor: PropTypes.string,
+  backgroundColor: PropTypes.string.isRequired,
 }
