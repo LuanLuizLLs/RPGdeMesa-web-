@@ -8,7 +8,6 @@
   border-radius: 6px;
   border: solid transparent;
   background-color: transparent;
-  color: var(--color-black);
 }
 
 .button:hover,
