@@ -10,6 +10,7 @@ export const Text = ({
   fontSize = '',
   fontWeight = '',
   textAlign = '',
+  textTransform = '',
   whiteSpace = '',
 }) => {
 
@@ -17,6 +18,7 @@ export const Text = ({
     fontSize,
     fontWeight,
     textAlign,
+    textTransform,
     whiteSpace,
     color: theme[color]
   }
@@ -39,5 +41,6 @@ Text.propTypes = {
   color: PropTypes.string,
   fontWeight: PropTypes.string,
   textAlign: PropTypes.string,
+  textTransform: PropTypes.string,
   whiteSpace: PropTypes.string,
 }
