@@ -5,12 +5,14 @@ import classes from './style.module.css'
 
 export const Paper = ({
   children,
+  margin = 0,
   padding = 10,
   borderRadius = 10,
   backgroundColor = '',
 }) => {
 
   const style = {
+    margin,
     padding,
     borderRadius,
     backgroundColor: theme[backgroundColor],
@@ -25,4 +27,8 @@ export const Paper = ({
 
 Paper.propTypes = {
   children: PropTypes.any,
+  margin: PropTypes.any,
+  padding: PropTypes.number,
+  borderRadius: PropTypes.string,
+  backgroundColor: PropTypes.string,
 }
