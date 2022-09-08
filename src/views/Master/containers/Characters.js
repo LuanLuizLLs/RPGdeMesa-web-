@@ -12,6 +12,7 @@ import {
   Input,
   Link,
   Modal,
+  Paper,
   Text,
   Title,
 } from '../../../components'
@@ -71,6 +72,9 @@ function Characters({
     openModal: (content, data = {}) => {
       setModal({ content, data })
       setValues({ ...values, ...data })
+    },
+    clearValues: () => {
+      setValues(INITIAL.VALUES)
     },
     resetCharacter: () => {
       setLoading({})
@@ -180,17 +184,17 @@ function Characters({
           <Grid type="container">
             <Grid type="row" alignItems="center" justifyContent="center">
               <Grid type="column" flex="none" padding={[5, 5]}>
-                <Box background={theme.secondary} borderRadius="50%" overflow="hidden">
+                <Paper backgroundColor="secondary" borderRadius="50%">
                   <Image
                     maxHeight={60}
                     maxWidth={60}
                     src={imagePlayer}
-                    alt="armadura de cavaleiro"
+                    alt="Armadura de cavaleiro"
                   />
-                </Box>
+                </Paper>
               </Grid>
               <Grid type="column" padding={[5, 5]} minWidth={280}>
-                <Box background={theme.secondary} padding={10} borderRadius={10}>
+                <Paper backgroundColor="secondary">
                   <Text fontSize="medium">
                     <Link target="_blank" {...Boolean(id) && { href: `/player/${id}` }}>
                       {name}
@@ -251,15 +255,15 @@ function Characters({
                       </Text>
                     </Grid>
                   </Grid>
-                </Box>
+                </Paper>
               </Grid>
             </Grid>
           </Grid>
         </Box>
       ))}
-      <Modal maxWidth={300} stateModal={[modal, setModal]} onClose={handle.resetCharacter}>
-        {({
-          addCharacter_character: (
+      <Modal maxWidth={350} stateModal={[modal, setModal]} onClose={handle.resetCharacter}>
+        {{
+          add_character: (
             <>
               <Title type="h6" color="primary">
                 Personagem:
@@ -274,8 +278,8 @@ function Characters({
                 />
               </Box>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" color="secondary" width="fit-content" padding={10} onClick={handle.resetCharacter}>
-                  Cancelar
+                <Button type="filled" color="secondary" width="fit-content" padding={10} onClick={Boolean(values.name) ? handle.clearValues : handle.resetCharacter}>
+                  {Boolean(values.name) ? 'Limpar' : 'Cancelar'}
                 </Button>
                 <Button type="filled" width="fit-content" padding={10} onClick={Boolean(values.name) ? handle.addCharacter : handle.searchCharacter}>
                   {Boolean(values.name) ? 'Confirmar' : 'Pesquisar'}
@@ -298,10 +302,10 @@ function Characters({
               </Box>
             </>
           )
-        })[modal.content] || 'Conteúdo não encontrado...'}
+        }}
       </Modal>
       <Box display="flex" justifyContent="flex-end">
-        <Button type="filled" padding={10} onClick={() => handle.openModal('addCharacter_character')}>
+        <Button type="filled" padding={10} onClick={() => handle.openModal('add_character')}>
           Adicionar
         </Button>
       </Box>

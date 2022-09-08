@@ -7,6 +7,7 @@ export const Paper = ({
   children,
   margin = 0,
   padding = 10,
+  overflow = '',
   borderRadius = 10,
   backgroundColor = '',
 }) => {
@@ -14,6 +15,7 @@ export const Paper = ({
   const style = {
     margin,
     padding,
+    overflow,
     borderRadius,
     backgroundColor: theme[backgroundColor],
   }
@@ -29,6 +31,7 @@ Paper.propTypes = {
   children: PropTypes.any,
   margin: PropTypes.any,
   padding: PropTypes.number,
+  overflow: PropTypes.string,
   borderRadius: PropTypes.string,
   backgroundColor: PropTypes.string,
 }
