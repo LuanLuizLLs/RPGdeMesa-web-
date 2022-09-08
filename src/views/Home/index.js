@@ -257,7 +257,7 @@ function Home() {
                 </Text>
               </Paper>
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="botomless" color="secondary" padding={10} onClick={handle.resetCampaign}>
+                <Button type="bottomless" color="primary" padding={10} onClick={handle.resetCampaign}>
                   Voltar
                 </Button>
                 <Button type="filled" padding={10} onClick={handle.startCampaign}>
@@ -350,7 +350,7 @@ function Home() {
                 </Text>
               </Paper>
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="filled" color="secondary" padding={10} onClick={handle.resetCharacter}>
+                <Button type="bottomless" color="primary" padding={10} onClick={handle.resetCharacter}>
                   Voltar
                 </Button>
                 <Button type="filled" padding={10} onClick={handle.startCharacter}>
