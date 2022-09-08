@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classes from './style.module.css'
 
 export const Modal = ({
-  children,
+  children = {},
   maxWidth = 0,
   stateModal = [],
   onClose = () => { },
@@ -19,14 +19,14 @@ export const Modal = ({
     <div className={classes.container}>
       <div className={classes.modal} style={style}>
         <span className={classes.close} onClick={onClose} />
-        {children}
+        {children[modal.content]}
       </div>
     </div>
   )
 }
 
 Modal.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.object,
   maxWidth: PropTypes.number,
   stateModal: PropTypes.array.isRequired,
   onClose: PropTypes.func.isRequired,
