@@ -18,6 +18,7 @@ import {
   Input,
   List,
   Modal,
+  Paper,
   Tab,
   Text,
   TextArea,
@@ -120,7 +121,7 @@ function Master() {
       })
 
       requestAPI('adventures', {
-        ...values, 
+        ...values,
         id_campaign: CAMPAIGN.id,
       })
         .create(({ data }) => {
@@ -212,16 +213,13 @@ function Master() {
           <Grid type="row">
             <Grid type="column" padding={[10, 10]} minWidth={300}>
               <Title type="h6">
-                Aventura atual:
+                Aventura:
               </Title>
-              <Box background={theme.secondary} padding={10} borderRadius={10} marginBottom={10}>
+              <Paper backgroundColor="secondary" margin="10px 0">
                 {Boolean(ADVENTURE.id) ? (
                   <>
                     <Text fontWeight="bold" color="gray">
-                      <Text inline fontWeight="bold" color="primary">
-                        {ADVENTURE.name}:&nbsp;
-                      </Text>
-                      {ADVENTURE.description}
+                      <Text inline fontWeight="bold" color="primary">{ADVENTURE.name}:</Text> {ADVENTURE.description}
                     </Text>
                   </>
                 ) : (
@@ -234,7 +232,7 @@ function Master() {
                     Criar
                   </Button>
                 </Box>
-              </Box>
+              </Paper>
               <Button fontSize="larger" type="filled" onClick={() => handle.openCollapse('adventure')}>
                 Aventuras
               </Button>
@@ -252,9 +250,9 @@ function Master() {
             </Grid>
             <Grid type="column" padding={[10, 10]} minWidth={300}>
               <Title type="h6">
-                Cenário atual:
+                Cenário:
               </Title>
-              <Box background={theme.secondary} padding={10} borderRadius={10} marginBottom={10}>
+              <Paper backgroundColor="secondary" margin="10px 0">
                 {false ? (
                   <>
                     <Text fontWeight="bold" color="gray">
@@ -274,7 +272,7 @@ function Master() {
                     Criar
                   </Button>
                 </Box>
-              </Box>
+              </Paper>
               <Button fontSize="larger" type="filled">
                 Cenários
               </Button>
@@ -299,6 +297,9 @@ function Master() {
         {{
           add_adventure: (
             <>
+              <Title type="h6">
+                Criar aventura:
+              </Title>
               <Input
                 name="name"
                 label="Aventura:"
@@ -323,15 +324,20 @@ function Master() {
           ),
           detail_adventure: (
             <>
-              <Title type="h6" color="primary">
-                {modal.data.name}
+              <Title type="h6">
+                Detalhes da aventura:
               </Title>
-              <Text>
-                {modal.data.description}
-              </Text>
+              <Paper backgroundColor="secondary">
+                <Text color="primary" fontWeight="bold">
+                  {modal.data.name}
+                </Text>
+                <Text>
+                  {modal.data.description}
+                </Text>
+              </Paper>
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
                 <Button type="filled" color="error" padding={5} onClick={handle.deleteAdventure}>
-                  Remover
+                  Excluir
                 </Button>
                 <Button type="filled" padding={5} onClick={handle.startAdventure}>
                   Iniciar
@@ -341,6 +347,9 @@ function Master() {
           ),
           edit_adventure: (
             <>
+              <Title type="h6">
+                Editar aventura:
+              </Title>
               <Input
                 name="name"
                 label="Aventura:"
