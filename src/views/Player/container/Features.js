@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Context from '../../../global/context'
-import theme from '../../../theme'
 import { requestAPI } from '../../../services/api'
 import {
   Box,

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import theme from '../../theme'
 import Context from '../../global/context'
 import Page from '../../layouts/Page'
 import Exploration from './containers/Exploration'
