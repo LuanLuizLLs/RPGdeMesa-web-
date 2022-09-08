@@ -217,8 +217,8 @@ function Master() {
               <Paper backgroundColor="secondary" margin="10px 0">
                 {Boolean(ADVENTURE.id) ? (
                   <>
-                    <Text fontWeight="bold" color="gray">
-                      <Text inline fontWeight="bold" color="primary">{ADVENTURE.name}:</Text> {ADVENTURE.description}
+                    <Text fontWeight="bold" color="gray" textTransform="lowercase">
+                      <Text inline fontWeight="bold" color="primary" textTransform="capitalize">{ADVENTURE.name}:</Text> {ADVENTURE.description}
                     </Text>
                   </>
                 ) : (
@@ -254,11 +254,8 @@ function Master() {
               <Paper backgroundColor="secondary" margin="10px 0">
                 {false ? (
                   <>
-                    <Text fontWeight="bold" color="gray">
-                      <Text inline fontWeight="bold" color="primary">
-                        {'name'}:&nbsp;
-                      </Text>
-                      {'description'}
+                    <Text fontWeight="bold" color="gray" textTransform="lowercase">
+                      <Text inline fontWeight="bold" color="primary" textTransform="capitalize">{'name'}</Text> {'description'}
                     </Text>
                   </>
                 ) : (
