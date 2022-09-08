@@ -180,7 +180,7 @@ function Abilities({
                   />
                 </Grid>
               </Grid>
-              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+              <Box display="flex" justifyContent="flex-end">
                 <Button type="filled" color="secondary" padding={10} onClick={handle.resetAbility}>
                   Cancelar
                 </Button>
@@ -213,7 +213,7 @@ function Abilities({
                   </Button>
                 </Box>
               </Paper>
-              <Box display="flex" justifyContent="flex-end">
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
                 <Button type="filled" padding={10} onClick={handle.resetAbility}>
                   Fechar
                 </Button>

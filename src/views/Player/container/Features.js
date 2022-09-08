@@ -250,7 +250,7 @@ function Features({
                   </Text>
                 </Text>
               </Paper>
-              <Box display="flex" justifyContent="flex-end">
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
                 <Button type="filled" padding={10} onClick={handle.resetFeature}>
                   Fechar
                 </Button>
