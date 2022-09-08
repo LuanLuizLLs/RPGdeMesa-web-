@@ -9,6 +9,7 @@ import {
   Input,
   List,
   Modal,
+  Paper,
   Text,
   Title,
 } from '../../../components'
@@ -46,7 +47,7 @@ const INITIAL = {
 const formatAttribute = (text = '', point = 0) => {
   const attribute = { text, point }
   if (attribute.point) {
-    attribute.point = attribute.point > 0 ? `+${attribute.point}` : `${attribute.point}`
+    attribute.point = attribute.point >= 0 ? `+${attribute.point}` : `${attribute.point}`
     return `${attribute.text}${attribute.point} `
   }
   return ''
@@ -127,15 +128,16 @@ function Features({
   return (
     <>
       <Modal maxWidth={500} stateModal={[modal, setModal]} onClose={handle.resetFeature}>
-        {({
+        {{
           add_feature: (
             <>
-              <Title type="h6" color="primary">
+              <Title type="h6">
                 Adicionar característica:
               </Title>
               <Input
                 name="name"
-                placeholder="Característica (adjetivo)"
+                label="Característica"
+                placeholder="Nome (adjetivo)"
                 stateValue={[values, setValues]}
               />
               <Grid type="row" padding={[5, 0]}>
@@ -220,13 +222,13 @@ function Features({
           ),
           detail_feature: (
             <>
-              <Title type="h6" color="primary" >
-                {modal.data.name}
+              <Title type="h6">
+                Detalhes da característica:
               </Title>
-              <Text fontWeight="bold">
-                Atributos:
-              </Text>
-              <Box backgroundColor={theme.secondary} padding={10} margin="10px 0" borderRadius={10}>
+              <Paper backgroundColor="secondary">
+                <Text fontWeight="bold" color="primary">
+                  {modal.data.name}
+                </Text>
                 <Text fontWeight="bold">
                   <Text inline display="inline" color="gray">
                     {formatAttribute('FOR', modal.data.strength)}
@@ -247,18 +249,18 @@ function Features({
                     {formatAttribute('CAR', modal.data.charisma)}
                   </Text>
                 </Text>
-              </Box>
+              </Paper>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" color="error" padding={10} onClick={handle.deleteFeature}>
-                  Remover
-                </Button>
                 <Button type="filled" padding={10} onClick={handle.resetFeature}>
                   Fechar
+                </Button>
+                <Button type="filled" color="error" padding={10} onClick={handle.deleteFeature}>
+                  Remover
                 </Button>
               </Box>
             </>
           ),
-        })[modal.content] || 'Conteúdo não encontrado...'}
+        }}
       </Modal>
       <List
         height={200}
