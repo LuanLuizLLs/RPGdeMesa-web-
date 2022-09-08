@@ -20,6 +20,7 @@ import {
   Modal,
   Text,
   Select,
+  Paper,
 } from '../../components'
 
 const INITIAL = {
@@ -245,19 +246,18 @@ function Home() {
           campaign_start: (
             <>
               <Title type="h6">
-                Campanha
+                Detalhes da campanha:
               </Title>
-              <Text>
-                {modal.data.name}
-              </Text>
-              <Title type="h6">
-                Descrição
-              </Title>
-              <Text>
-                {modal.data.description}
-              </Text>
+              <Paper backgroundColor="secondary">
+                <Text color="primary" fontWeight="bold">
+                  {modal.data.name}
+                </Text>
+                <Text>
+                  {modal.data.description}
+                </Text>
+              </Paper>
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="filled" color="secondary" padding={10} onClick={handle.resetCampaign}>
+                <Button type="botomless" color="secondary" padding={10} onClick={handle.resetCampaign}>
                   Voltar
                 </Button>
                 <Button type="filled" padding={10} onClick={handle.startCampaign}>
@@ -273,13 +273,13 @@ function Home() {
               </Title>
               <Input
                 name="name"
-                placeholder="Campanha"
+                placeholder="Nome"
                 stateValue={[values, setValues]}
               />
               <TextArea
                 rows={3}
                 name="description"
-                placeholder="Descreva a campanha"
+                placeholder="Descrição"
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end">
@@ -299,13 +299,13 @@ function Home() {
               </Title>
               <Input
                 name="name"
-                placeholder="Campanha"
+                placeholder="Nome"
                 stateValue={[values, setValues]}
               />
               <TextArea
                 rows={3}
                 name="description"
-                placeholder="Descreva a campanha"
+                placeholder="Descrição"
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end">
@@ -320,6 +320,9 @@ function Home() {
           ),
           campaign_delete: (
             <>
+              <Title type="h6">
+                Deletar campanha:
+              </Title>
               <Text>
                 Tem certeza que deseja excluir a campanha <b>{modal.data.name}</b>?
               </Text>
@@ -336,17 +339,16 @@ function Home() {
           character_start: (
             <>
               <Title type="h6">
-                Personagem
+                Detalhes do personagem:
               </Title>
-              <Text>
-                {modal.data.name}
-              </Text>
-              <Title type="h6">
-                Descrição
-              </Title>
-              <Text>
-                {modal.data.description}
-              </Text>
+              <Paper backgroundColor="secondary">
+                <Text color="primary" fontWeight="bold">
+                  {modal.data.name}
+                </Text>
+                <Text>
+                  {modal.data.description}
+                </Text>
+              </Paper>
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
                 <Button type="filled" color="secondary" padding={10} onClick={handle.resetCharacter}>
                   Voltar
@@ -364,7 +366,7 @@ function Home() {
               </Title>
               <Input
                 name="name"
-                placeholder="Personagem"
+                placeholder="Nome"
                 stateValue={[values, setValues]}
               />
               <Select
@@ -388,7 +390,7 @@ function Home() {
               <TextArea
                 rows={3}
                 name="description"
-                placeholder="Descreva o personagem"
+                placeholder="Descrição"
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end">
@@ -408,13 +410,13 @@ function Home() {
               </Title>
               <Input
                 name="name"
-                placeholder="Personagem"
+                placeholder="Nome"
                 stateValue={[values, setValues]}
               />
               <TextArea
                 rows={3}
                 name="description"
-                placeholder="Descreva o personagem"
+                placeholder="Descrição"
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end">
@@ -429,6 +431,9 @@ function Home() {
           ),
           character_delete: (
             <>
+              <Title type="h6">
+                Deletar personagem:
+              </Title>
               <Text>
                 Tem certeza que deseja excluir o personagem <b>{modal.data.name}</b>?
               </Text>
@@ -441,8 +446,8 @@ function Home() {
                 </Button>
               </Box>
             </>
-          ),
-        }[modal.content] || null}
+          )
+        }}
       </Modal>
       <Grid type="container" padding={[0, 20]}>
         <Grid type="row">
