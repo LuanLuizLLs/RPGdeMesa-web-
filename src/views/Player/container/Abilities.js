@@ -48,7 +48,7 @@ const formatAttribute = (attr = '', attrCurrent = 0, attrAdditional = 0) => {
   return `${attr}${some}`
 }
 
-const capacityMental = (character = {}) => {
+const mentalCapacity = (character = {}) => {
   let capacity = 0
   Object.entries(character).forEach(([key, value]) => {
     if (ATTRIBUTE.MENTAL.includes(key)) {
@@ -236,7 +236,7 @@ function Abilities({
       <List height={200} onClick={(row) => handle.openModal('update_ability', row)} {...abilities} />
       <Box display="flex" justifyContent="space-between" margin={10}>
         <Text fontWeight="bold">
-          <Text inline color="primary">Capacidade: </Text> {capacityMental(character)}
+          <Text inline color="primary">Capacidade: </Text> {mentalCapacity(character)}
         </Text>
         <Button type="filled" onClick={() => Boolean(character.id) && handle.openModal('add_ability')}>
           Adicionar

@@ -29,7 +29,7 @@ const INITIAL = {
   }
 }
 
-const capacityPhisical = (character = {}) => {
+const phisicalCapacity = (character = {}) => {
   let capacity = 0
   Object.entries(character).forEach(([key, value]) => {
     if (ATTRIBUTE.PHISICAL.includes(key)) {
@@ -67,7 +67,7 @@ function Inventory({
       <List height={200} {...inventory} />
       <Box display="flex" justifyContent="space-between" margin={10}>
         <Text fontWeight="bold">
-          <Text inline color="primary">Capacidade: </Text> {capacityPhisical(character)}
+          <Text inline color="primary">Capacidade: </Text> {phisicalCapacity(character)}
         </Text>
         <Button type="filled">
           Adicionar
