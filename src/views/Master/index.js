@@ -281,10 +281,10 @@ function Master() {
       </Card>
       <Divider borderStyle="solid" />
       <Card>
-        <Tab tabs={['Exploração', 'Interação', 'Combate']} stateTab={[tab, setTab]}>
+        <Tab tabs={['Interação', 'Exploração', 'Combate']} stateTab={[tab, setTab]}>
           {[
-            <Exploration key="exploration" campaign={CAMPAIGN} />,
             <Interaction key="interaction" campaign={CAMPAIGN} />,
+            <Exploration key="exploration" campaign={CAMPAIGN} />,
             <Combat key="combat" campaign={CAMPAIGN} />,
           ]}
         </Tab>
