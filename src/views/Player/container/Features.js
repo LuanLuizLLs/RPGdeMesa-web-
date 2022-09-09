@@ -144,7 +144,7 @@ function Features({
                   <Input
                     max={1}
                     min={-1}
-                    icon="💪"
+                    start="💪"
                     label="FOR"
                     type="number"
                     name="strength"
@@ -155,7 +155,7 @@ function Features({
                   <Input
                     max={1}
                     min={-1}
-                    icon="👋"
+                    start="👋"
                     label="DES"
                     type="number"
                     name="dexterity"
@@ -166,7 +166,7 @@ function Features({
                   <Input
                     max={1}
                     min={-1}
-                    icon="✊"
+                    start="✊"
                     label="CON"
                     type="number"
                     name="constitution"
@@ -179,7 +179,7 @@ function Features({
                   <Input
                     max={1}
                     min={-1}
-                    icon="📙"
+                    start="📙"
                     label="INT"
                     type="number"
                     name="intelligence"
@@ -190,7 +190,7 @@ function Features({
                   <Input
                     max={1}
                     min={-1}
-                    icon="🙌"
+                    start="🙌"
                     label="SAB"
                     type="number"
                     name="wisdom"
@@ -201,7 +201,7 @@ function Features({
                   <Input
                     max={1}
                     min={-1}
-                    icon="🤝"
+                    start="🤝"
                     label="CAR"
                     type="number"
                     name="charisma"

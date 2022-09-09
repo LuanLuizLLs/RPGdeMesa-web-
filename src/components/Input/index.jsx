@@ -9,7 +9,8 @@ export const Input = ({
   min,
   type = 'text',
   label = '',
-  icon = '',
+  start = '',
+  end = '',
   width = '',
   fontSize = '',
   validate = 'default',
@@ -38,9 +39,9 @@ export const Input = ({
         {label}
       </label>
       <div className={classes.component} style={style.component} validate={validate}>
-        {icon && (
-          <span className={classes.icon}>
-            {icon}
+        {start && (
+          <span className={classes.start}>
+            {start}
           </span>
         )}
         <input
@@ -68,6 +69,11 @@ export const Input = ({
             })
           }}
         />
+        {end && (
+          <span className={classes.end}>
+            {end}
+          </span>
+        )}
       </div>
     </div>
   )
@@ -81,7 +87,8 @@ Input.propTypes = {
   type: PropTypes.string,
   fontSize: PropTypes.string,
   label: PropTypes.string,
-  icon: PropTypes.string,
+  start: PropTypes.string,
+  end: PropTypes.string,
   disabled: PropTypes.bool,
   readOnly: PropTypes.bool,
   validate: PropTypes.string,

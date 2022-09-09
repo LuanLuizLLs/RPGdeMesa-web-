@@ -42,8 +42,18 @@
   box-shadow: 0 0 4px var(--color-error);
 }
 
-.icon {
+.start,
+.end {
+  font-size: inherit;
+  color: var(--color-gray);
+}
+
+.start {
   padding-left: 6px;
+}
+
+.end {
+  padding-right: 6px;
 }
 
 .input {

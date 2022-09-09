@@ -208,7 +208,7 @@ function Characters({
                     <Grid type="column" flex="none" minWidth={100}>
                       <Input
                         index={i}
-                        icon="❤️"
+                        start="❤️"
                         name="life"
                         type="number"
                         fontSize="medium"
@@ -220,7 +220,7 @@ function Characters({
                     <Grid type="column" flex="none" minWidth={100}>
                       <Input
                         index={i}
-                        icon="👣"
+                        start="👣"
                         name="actions"
                         type="number"
                         fontSize="medium"
@@ -232,7 +232,7 @@ function Characters({
                     <Grid type="column" flex="none" minWidth={100}>
                       <Input
                         index={i}
-                        icon="💰"
+                        start="💰"
                         name="coins"
                         type="number"
                         fontSize="medium"
