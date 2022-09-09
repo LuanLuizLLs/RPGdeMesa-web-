@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { CASTE, RACE, TENDENCY } from '../../configs'
 import {
-  Box,
+  Box, 
   Button,
   Card,
   Grid,
@@ -175,7 +175,7 @@ function Home() {
       requestAPI('characters', {
         ...values,
         ...RACE[values.race],
-        ...CASTE[values.caste],
+        riches: CASTE[values.caste],
         id_user: USER.id,
       })
         .create(({ data }) => {
