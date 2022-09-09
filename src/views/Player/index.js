@@ -4,7 +4,7 @@ import Features from './container/Features'
 import Abilities from './container/Abilities'
 import Inventory from './container/Inventory'
 import Context from '../../global/context'
-import { ATTRIBUTE } from '../../configs'
+import { maxLife } from '../../utils'
 import { requestAPI } from '../../services/api'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,16 +24,6 @@ const INITIAL = {
   TAB: 0,
   REFRESH: null,
   VALUES: {},
-}
-
-const maxLife = (character = {}) => {
-  let life = 0
-  Object.entries(character).forEach(([key, value]) => {
-    if (Object.values(ATTRIBUTE.PRIMARY).includes(key)) {
-      life += value
-    }
-  })
-  return life
 }
 
 function Player() {

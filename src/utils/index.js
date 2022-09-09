@@ -1,4 +1,4 @@
-import { BREAKPOINT } from '../configs'
+import { BREAKPOINT, ATTRIBUTE } from '../configs'
 
 /** Which device current */
 export const whichDevice = (device = '') => {
@@ -42,11 +42,13 @@ export const numberRandow = (min = 0, max = 0) => {
   return parseInt((Math.random() * ((max + 1) - min)) + min)
 }
 
-/** Average between attributes  */
-export const averageAttributes = (attributes = [], average = 0) => {
-  let capacity = 0
-  attributes.forEach((attribute) => {
-    capacity += attribute
+/** Maximum life capacity  */
+export const maxLife = (character = {}) => {
+  let life = 0
+  Object.entries(character).forEach(([key, value]) => {
+    if (Object.values(ATTRIBUTE.PRIMARY).includes(key)) {
+      life += value
+    }
   })
-  return Math.round(capacity / (average || attributes.length))
+  return life
 }

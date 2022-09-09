@@ -16,6 +16,7 @@ import {
   Text,
   Title,
 } from '../../../components'
+import { maxLife } from '../../../utils'
 
 const INITIAL = {
   MODAL: {
@@ -154,22 +155,9 @@ function Characters({
 
   return (
     <>
-      {Object.values(characters).map(({
-        id,
-        name,
-        race,
-        caste,
-        tendency,
-        description,
-        strength,
-        dexterity,
-        constitution,
-        intelligence,
-        wisdom,
-        charisma,
-      }, i) => (
+      {Object.values(characters).map((character, i) => (
         <Box
-          key={id}
+          key={character.id}
           marginTop={10}
           borderRadius={10}
           borderStyle="solid"
@@ -177,7 +165,7 @@ function Characters({
           position="relative"
         >
           <Box position="absolute" top={15} right={20}>
-            <Link textDecoration="none" onClick={() => Boolean(id) && handle.openModal('remove_character', characters[i])}>
+            <Link textDecoration="none" onClick={() => Boolean(character.id) && handle.openModal('remove_character', characters[i])}>
               &#10006;
             </Link>
           </Box>
@@ -196,12 +184,12 @@ function Characters({
               <Grid type="column" padding={[5, 5]} minWidth={280}>
                 <Paper backgroundColor="secondary">
                   <Text fontSize="medium">
-                    <Link target="_blank" {...Boolean(id) && { href: `/player/${id}` }}>
-                      {name}
-                    </Link> ({race} | {caste} | {tendency})
+                    <Link target="_blank" {...Boolean(character.id) && { href: `/player/${character.id}` }}>
+                      {character.name}
+                    </Link> ({character.race} | {character.caste} | {character.tendency})
                   </Text>
                   <Text fontSize="small" color="gray">
-                    {description}
+                    {character.description}
                   </Text>
                   <Divider borderStyle="solid" margin="0" />
                   <Grid type="row">
@@ -212,7 +200,9 @@ function Characters({
                         name="life"
                         type="number"
                         fontSize="medium"
-                        readOnly={!Boolean(id)}
+                        min={0}
+                        max={maxLife(character)}
+                        readOnly={!Boolean(character.id)}
                         stateValue={[characters, setCharacters]}
                         onEnter={() => handle.updateCharacter(i)}
                       />
@@ -224,7 +214,7 @@ function Characters({
                         name="actions"
                         type="number"
                         fontSize="medium"
-                        readOnly={!Boolean(id)}
+                        readOnly={!Boolean(character.id)}
                         stateValue={[characters, setCharacters]}
                         onEnter={() => handle.updateCharacter(i)}
                       />
@@ -236,7 +226,7 @@ function Characters({
                         name="coins"
                         type="number"
                         fontSize="medium"
-                        readOnly={!Boolean(id)}
+                        readOnly={!Boolean(character.id)}
                         stateValue={[characters, setCharacters]}
                         onEnter={() => handle.updateCharacter(i)}
                       />
@@ -246,12 +236,12 @@ function Characters({
                   <Grid type="row">
                     <Grid type="column" flex="none" padding={[5, 10]}>
                       <Text fontSize="medium">
-                        💪 FOR {strength} | 👋 DES {dexterity} | ✊ CON {constitution}
+                        💪 FOR {character.strength} | 👋 DES {character.dexterity} | ✊ CON {character.constitution}
                       </Text>
                     </Grid>
                     <Grid type="column" flex="none" padding={[5, 10]}>
                       <Text fontSize="medium">
-                        📙 INT {intelligence} | 🙌 SAB {wisdom} | 🤝 CAR {charisma}
+                        📙 INT {character.intelligence} | 🙌 SAB {character.wisdom} | 🤝 CAR {character.charisma}
                       </Text>
                     </Grid>
                   </Grid>
