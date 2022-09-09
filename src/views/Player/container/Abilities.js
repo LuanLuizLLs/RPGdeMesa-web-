@@ -48,13 +48,21 @@ const formatAttribute = (attr = '', attrCurrent = 0, attrAdditional = 0) => {
   return `${attr}${some}`
 }
 
+const capacityMental = (character = {}) => {
+  let capacity = 0
+  Object.entries(character).forEach(([key, value]) => {
+    if (ATTRIBUTE.MENTAL.includes(key)) {
+      capacity += value
+    }
+  })
+  return capacity
+}
+
 function Abilities({
   player,
   character,
   setRefreshCharacter,
 }) {
-
-  const capacityAbilities = (character.intelligence + character.wisdom + character.charisma)
 
   const { setMessage, setLoading } = useContext(Context)
 
@@ -228,7 +236,7 @@ function Abilities({
       <List height={200} onClick={(row) => handle.openModal('update_ability', row)} {...abilities} />
       <Box display="flex" justifyContent="space-between" margin={10}>
         <Text fontWeight="bold">
-          <Text inline color="primary">Capacidade: </Text> {capacityAbilities || 0}
+          <Text inline color="primary">Capacidade: </Text> {capacityMental(character)}
         </Text>
         <Button type="filled" onClick={() => Boolean(character.id) && handle.openModal('add_ability')}>
           Adicionar

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { averageAttributes } from '../../../utils'
+import { ATTRIBUTE } from '../../../configs'
 import {
   Box,
   Button,
@@ -29,13 +29,21 @@ const INITIAL = {
   }
 }
 
+const capacityPhisical = (character = {}) => {
+  let capacity = 0
+  Object.entries(character).forEach(([key, value]) => {
+    if (ATTRIBUTE.PHISICAL.includes(key)) {
+      capacity += value
+    }
+  })
+  return capacity
+}
+
 function Inventory({
   player,
   character,
   setRefreshCharacter,
 }) {
-
-  const capacity = averageAttributes([character.strength, character.dexterity, character.constitution], 2) || 0
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [inventory,] = useState(INITIAL.INVENTORY)
@@ -59,7 +67,7 @@ function Inventory({
       <List height={200} {...inventory} />
       <Box display="flex" justifyContent="space-between" margin={10}>
         <Text fontWeight="bold">
-          <Text inline color="primary">Capacidade: </Text> {capacity}
+          <Text inline color="primary">Capacidade: </Text> {capacityPhisical(character)}
         </Text>
         <Button type="filled">
           Adicionar

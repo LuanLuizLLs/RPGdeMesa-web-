@@ -4,6 +4,7 @@ import Features from './container/Features'
 import Abilities from './container/Abilities'
 import Inventory from './container/Inventory'
 import Context from '../../global/context'
+import { ATTRIBUTE } from '../../configs'
 import { requestAPI } from '../../services/api'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,6 +24,16 @@ const INITIAL = {
   TAB: 0,
   REFRESH: null,
   VALUES: {},
+}
+
+const maxLife = (character = {}) => {
+  let life = 0
+  Object.entries(character).forEach(([key, value]) => {
+    if (Object.values(ATTRIBUTE.PRIMARY).includes(key)) {
+      life += value
+    }
+  })
+  return life
 }
 
 function Player() {
@@ -137,7 +148,8 @@ function Player() {
               <Grid type="column" padding={[0, 5]} minWidth={150}>
                 <Input
                   readOnly
-                  icon="❤️"
+                  start="❤️"
+                  end={`+${maxLife(CHARACTER)}`}
                   name="life"
                   type="number"
                   label="Vida"
@@ -148,7 +160,7 @@ function Player() {
               <Grid type="column" padding={[0, 5]} minWidth={150}>
                 <Input
                   readOnly
-                  icon="👣"
+                  start="👣"
                   name="actions"
                   type="number"
                   label="Ações"
@@ -159,7 +171,7 @@ function Player() {
               <Grid type="column" padding={[0, 5]} minWidth={150}>
                 <Input
                   readOnly
-                  icon="💰"
+                  start="💰"
                   name="coins"
                   type="number"
                   label="Moedas"

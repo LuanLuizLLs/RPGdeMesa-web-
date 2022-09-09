@@ -137,6 +137,8 @@ export const TENDENCY = {
 
 /** Attributes options */
 export const ATTRIBUTE = {
+  PHISICAL: ['strength', 'dexterity', 'constitution'],
+  MENTAL: ['intelligence', 'wisdom', 'charisma'],
   PRIMARY: {
     'FOR': 'strength',
     'DES': 'dexterity',
