@@ -9,6 +9,7 @@ const INITIAL_REDUCER = {
   CAMPAIGN: {},
   CHARACTER: {},
   ADVENTURE: {},
+  SCENERY: {},
 }
 
 const initialState = defineState(INITIAL_REDUCER)('reducer')

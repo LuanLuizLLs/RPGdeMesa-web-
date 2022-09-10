@@ -61,7 +61,7 @@ function Master() {
 
   const { setLoading, setMessage } = useContext(Context)
 
-  const { CAMPAIGN, ADVENTURE } = useSelector(({ reducer }) => reducer)
+  const { CAMPAIGN, ADVENTURE, SCENERY } = useSelector(({ reducer }) => reducer)
 
   const [tab, setTab] = useState(INITIAL.TAB)
   const [modal, setModal] = useState(INITIAL.MODAL)
@@ -69,7 +69,7 @@ function Master() {
   const [refresh, setRefresh] = useState(INITIAL.REFRESH)
   const [collapse, setCollapse] = useState(INITIAL.COLLAPSE)
   const [adventures, setAdventures] = useState(INITIAL.ADVENTURES)
-  const [scenarios,] = useState(INITIAL.SCENARIOS)
+  const [scenarios, setScenarios] = useState(INITIAL.SCENARIOS)
 
   useEffect(() => {
     requestAPI('campaigns', {
@@ -89,12 +89,29 @@ function Master() {
       id_campaign: CAMPAIGN.id,
     })
       .read(({ data }) => {
+        const adventureStarted = data.response.find(({ id }) => (id === CAMPAIGN.id_adventure))
         setAdventures((state) => ({
           ...state, rows: data.response,
         }))
-        setDispatch({
+        adventureStarted && setDispatch({
           type: 'ADVENTURE',
-          data: data.response.find(({ id }) => (id === CAMPAIGN.id_adventure)) || {},
+          data: adventureStarted,
+        })
+      })
+  }, [CAMPAIGN, setDispatch])
+
+  useEffect(() => {
+    requestAPI('scenarios', {
+      id_campaign: CAMPAIGN.id,
+    })
+      .read(({ data }) => {
+        const scenerySelected = data.response.find(({ id }) => (id === CAMPAIGN.id_scenery))
+        setScenarios((state) => ({
+          ...state, rows: data.response,
+        }))
+        scenerySelected && setDispatch({
+          type: 'SCENERY',
+          data: scenerySelected,
         })
       })
   }, [CAMPAIGN, setDispatch])
@@ -109,7 +126,7 @@ function Master() {
         ...collapse, [name]: !collapse[name]
       })
     },
-    resetAdventure: () => {
+    resetValues: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
       setLoading({})
@@ -130,7 +147,7 @@ function Master() {
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
-        .finally(handle.resetAdventure)
+        .finally(handle.resetValues)
     },
     deleteAdventure: () => {
       setLoading({
@@ -145,7 +162,7 @@ function Master() {
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
-        .finally(handle.resetAdventure)
+        .finally(handle.resetValues)
     },
     startAdventure: () => {
       setLoading({
@@ -163,7 +180,7 @@ function Master() {
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
-        .finally(handle.resetAdventure)
+        .finally(handle.resetValues)
     },
     updateAdventure: () => {
       setLoading({
@@ -178,7 +195,73 @@ function Master() {
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
-        .finally(handle.resetAdventure)
+        .finally(handle.resetValues)
+    },
+    createScenery: () => {
+      setLoading({
+        type: 'bar'
+      })
+
+      requestAPI('scenarios', {
+        ...values,
+        id_campaign: CAMPAIGN.id, 
+      })
+        .create(({ data }) => {
+          setRefresh(data)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
+        })
+        .finally(handle.resetValues)
+    },
+    deleteScenery: () => {
+      setLoading({
+        type: 'bar'
+      })
+
+      requestAPI('scenarios', values)
+        .delete(({ data }) => {
+          setRefresh(data)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
+        })
+        .finally(handle.resetValues)
+    },
+    startScenery: () => {
+      setLoading({
+        type: 'bar'
+      })
+
+      requestAPI('scenarios', {
+        ...CAMPAIGN,
+        id_adventure: values.id,
+      })
+        .update(({ data }) => {
+          setRefresh(data)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
+        })
+        .finally(handle.resetValues)
+    },
+    updateScenery: () => {
+      setLoading({
+        type: 'bar'
+      })
+
+      requestAPI('scenarios', values)
+        .update(({ data }) => {
+          setRefresh(data)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
+        })
+        .finally(handle.resetValues)
     },
   }
 
@@ -252,10 +335,10 @@ function Master() {
                 Cenário:
               </Title>
               <Paper backgroundColor="secondary" margin="10px 0">
-                {false ? (
+                {Boolean(SCENERY.id) ? (
                   <>
                     <Text fontWeight="bold" color="gray" textTransform="lowercase">
-                      <Text inline fontWeight="bold" color="primary" textTransform="capitalize">{'name'}</Text> {'description'}
+                      <Text inline fontWeight="bold" color="primary" textTransform="capitalize">{SCENERY.name}</Text>: {SCENERY.description}
                     </Text>
                   </>
                 ) : (
@@ -264,16 +347,24 @@ function Master() {
                   </Text>
                 )}
                 <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                  <Button fontSize="medium" type="filled" padding={5}>
+                  <Button fontSize="medium" type="filled" padding={5} onClick={() => handle.openModal('add_scenery')}> 
                     Criar
                   </Button>
                 </Box>
               </Paper>
-              <Button fontSize="larger" type="filled">
+              <Button fontSize="larger" type="filled" onClick={() => handle.openCollapse('scenery')}>
                 Cenários
               </Button>
-              <Collapse name="scenary" stateCollapse={[collapse, setCollapse]}>
-                <List noColumns={true} height={150} {...scenarios} />
+              <Collapse name="scenery" stateCollapse={[collapse, setCollapse]}>
+                <List 
+                  height={150} 
+                  noColumns={true} 
+                  {...scenarios} 
+                  onClick={(row) => handle.openModal('detail_scenery', row)}
+                  actions={(row) => ({
+                    update: () => handle.openModal('edit_scenery', row),
+                  })}
+                />
               </Collapse>
             </Grid>
           </Grid>
@@ -289,7 +380,7 @@ function Master() {
           ]}
         </Tab>
       </Card>
-      <Modal maxWidth={450} stateModal={[modal, setModal]} onClose={handle.resetAdventure}>
+      <Modal maxWidth={450} stateModal={[modal, setModal]} onClose={handle.resetValues}>
         {{
           add_adventure: (
             <>
@@ -309,7 +400,7 @@ function Master() {
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="filled" color="secondary" padding={5} onClick={handle.resetAdventure}>
+                <Button type="filled" color="secondary" padding={5} onClick={handle.resetValues}>
                   Cancelar
                 </Button>
                 <Button type="filled" padding={5} onClick={handle.createAdventure}>
@@ -359,10 +450,87 @@ function Master() {
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="filled" color="secondary" padding={5} onClick={handle.resetAdventure}>
+                <Button type="filled" color="secondary" padding={5} onClick={handle.resetValues}>
                   Cancelar
                 </Button>
                 <Button type="filled" padding={5} onClick={handle.updateAdventure}>
+                  Salvar
+                </Button>
+              </Box>
+            </>
+          ),
+          add_scenery: (
+            <>
+              <Title type="h6">
+                Criar cenário:
+              </Title>
+              <Input
+                name="name"
+                label="Cenário:"
+                placeholder="Nome"
+                stateValue={[values, setValues]}
+              />
+              <TextArea
+                name="description"
+                label="Descreva o cenário:"
+                placeholder="Descrição"
+                stateValue={[values, setValues]}
+              />
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="filled" color="secondary" padding={5} onClick={handle.resetValues}>
+                  Cancelar
+                </Button>
+                <Button type="filled" padding={5} onClick={handle.createScenery}>
+                  Criar
+                </Button>
+              </Box>
+            </>
+          ),
+          detail_scenery: (
+            <>
+              <Title type="h6">
+                Detalhes do cenário:
+              </Title>
+              <Paper backgroundColor="secondary">
+                <Text color="primary" fontWeight="bold">
+                  {modal.data.name}
+                </Text>
+                <Text>
+                  {modal.data.description}
+                </Text>
+              </Paper>
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="filled" color="error" padding={5} onClick={handle.deleteScenery}>
+                  Excluir
+                </Button>
+                <Button type="filled" padding={5} onClick={handle.startScenery}>
+                  Selecionar
+                </Button>
+              </Box>
+            </>
+          ),
+          edit_scenery: (
+            <>
+              <Title type="h6">
+                Editar cenário:
+              </Title>
+              <Input
+                name="name"
+                label="Cenário:"
+                placeholder="Nome"
+                stateValue={[values, setValues]}
+              />
+              <TextArea
+                name="description"
+                label="Descrição da cenário:"
+                placeholder="Descrição"
+                stateValue={[values, setValues]}
+              />
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="filled" color="secondary" padding={5} onClick={handle.resetValues}>
+                  Cancelar
+                </Button>
+                <Button type="filled" padding={5} onClick={handle.updateScenery}>
                   Salvar
                 </Button>
               </Box>
