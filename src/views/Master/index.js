@@ -371,6 +371,11 @@ function Master() {
           </Grid>
         </Grid>
       </Card>
+      <Card margin="20px 0">
+        <Text color="primary" fontWeight="bold">
+          Terreno | Recursos | Iluminação | Temperatura | Vento | Precipitação
+        </Text>
+      </Card>
       <Divider borderStyle="solid" />
       <Card>
         <Tab tabs={['Interação', 'Exploração', 'Combate']} stateTab={[tab, setTab]}>
