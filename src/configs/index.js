@@ -112,18 +112,18 @@ export const RACE = {
 
 /** Caste configs */
 export const CASTE = {
-  'Bárbaro': 2,
-  'Bardo': 5,
-  'Bruxo': 4,
-  'Clérigo': 5,
-  'Druida': 2,
-  'Feiticeiro': 3,
-  'Guerreiro': 5,
-  'Ladino': 4,
-  'Mago': 4,
-  'Monge': 1,
-  'Paladino': 5,
-  'Patrulheiro': 5,
+  'Bárbaro': 20,
+  'Bardo': 50,
+  'Bruxo': 40,
+  'Clérigo': 50,
+  'Druida': 20,
+  'Feiticeiro': 30,
+  'Guerreiro': 50,
+  'Ladino': 40,
+  'Mago': 40,
+  'Monge': 10,
+  'Paladino': 50,
+  'Patrulheiro': 50,
 }
 
 /** Tendecy options */
