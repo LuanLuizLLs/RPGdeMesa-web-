@@ -93,9 +93,9 @@ function Master() {
         setAdventures((state) => ({
           ...state, rows: data.response,
         }))
-        adventureStarted && setDispatch({
+        setDispatch({
           type: 'ADVENTURE',
-          data: adventureStarted,
+          data: adventureStarted || {},
         })
       })
   }, [CAMPAIGN, setDispatch])
@@ -109,9 +109,9 @@ function Master() {
         setScenarios((state) => ({
           ...state, rows: data.response,
         }))
-        scenerySelected && setDispatch({
+        setDispatch({
           type: 'SCENERY',
-          data: scenerySelected,
+          data: scenerySelected || {},
         })
       })
   }, [CAMPAIGN, setDispatch])
@@ -204,7 +204,7 @@ function Master() {
 
       requestAPI('scenarios', {
         ...values,
-        id_campaign: CAMPAIGN.id, 
+        id_campaign: CAMPAIGN.id,
       })
         .create(({ data }) => {
           setRefresh(data)
@@ -280,17 +280,6 @@ function Master() {
       </Card>
       <Divider borderStyle="solid" />
       <Card>
-        <Title type="h1" color="primary" textAlign="center" textDecoration="underline">
-          MESA
-        </Title>
-        <Grid type="row">
-          <Grid type="column" padding={[5, 0]} minWidth={300}>
-            <Title type="h6">
-              Personagens:
-            </Title>
-            <Characters campaign={CAMPAIGN} />
-          </Grid>
-        </Grid>
         <Grid type="container">
           <Grid type="row">
             <Grid type="column" padding={[10, 10]} minWidth={300}>
@@ -319,15 +308,17 @@ function Master() {
                 Aventuras
               </Button>
               <Collapse name="adventure" stateCollapse={[collapse, setCollapse]}>
-                <List
-                  height={150}
-                  noColumns={true}
-                  {...adventures}
-                  onClick={(row) => handle.openModal('detail_adventure', row)}
-                  actions={(row) => ({
-                    update: () => handle.openModal('edit_adventure', row),
-                  })}
-                />
+                {Boolean(adventures.rows.length) && (
+                  <List
+                    height={150}
+                    noColumns={true}
+                    {...adventures}
+                    onClick={(row) => handle.openModal('detail_adventure', row)}
+                    actions={(row) => ({
+                      update: () => handle.openModal('edit_adventure', row),
+                    })}
+                  />
+                )}
               </Collapse>
             </Grid>
             <Grid type="column" padding={[10, 10]} minWidth={300}>
@@ -347,7 +338,7 @@ function Master() {
                   </Text>
                 )}
                 <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                  <Button fontSize="medium" type="filled" padding={5} onClick={() => handle.openModal('add_scenery')}> 
+                  <Button fontSize="medium" type="filled" padding={5} onClick={() => handle.openModal('add_scenery')}>
                     Criar
                   </Button>
                 </Box>
@@ -356,16 +347,26 @@ function Master() {
                 Cenários
               </Button>
               <Collapse name="scenery" stateCollapse={[collapse, setCollapse]}>
-                <List 
-                  height={150} 
-                  noColumns={true} 
-                  {...scenarios} 
-                  onClick={(row) => handle.openModal('detail_scenery', row)}
-                  actions={(row) => ({
-                    update: () => handle.openModal('edit_scenery', row),
-                  })}
-                />
+                {Boolean(scenarios.rows.length) && (
+                  <List
+                    height={150}
+                    noColumns={true}
+                    {...scenarios}
+                    onClick={(row) => handle.openModal('detail_scenery', row)}
+                    actions={(row) => ({
+                      update: () => handle.openModal('edit_scenery', row),
+                    })}
+                  />
+                )}
               </Collapse>
+            </Grid>
+          </Grid>
+          <Grid type="row">
+            <Grid type="column" padding={[5, 0]} minWidth={300}>
+              <Title type="h6">
+                Personagens:
+              </Title>
+              <Characters campaign={CAMPAIGN} />
             </Grid>
           </Grid>
         </Grid>
