@@ -53,7 +53,7 @@ const formatAttribute = (text = '', point = 0) => {
 }
 
 function Features({
-  player,
+  user,
   character,
   setRefreshCharacter,
 }) {
@@ -93,7 +93,7 @@ function Features({
 
       requestAPI('features', {
         ...values,
-        player,
+        user: user.id,
         id_character: character.id,
       })
         .create(({ data }) => {

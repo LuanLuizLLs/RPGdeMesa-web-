@@ -177,9 +177,9 @@ function Player() {
       <Card>
         <Tab tabs={['Características', 'Habilidades', 'Invetário']} stateTab={[tab, setTab]}>
           {[
-            <Features key="features" player={true} character={CHARACTER} setRefreshCharacter={setRefresh} />,
-            <Abilities key="abilities" player={true} character={CHARACTER} setRefreshCharacter={setRefresh} />,
-            <Inventory key="inventory" player={true} character={CHARACTER} setRefreshCharacter={setRefresh} />,
+            <Features key="features" user={USER} character={CHARACTER} setRefreshCharacter={setRefresh} />,
+            <Abilities key="abilities" user={USER} character={CHARACTER} setRefreshCharacter={setRefresh} />,
+            <Inventory key="inventory" user={USER} character={CHARACTER} setRefreshCharacter={setRefresh} />,
           ]}
         </Tab>
       </Card>

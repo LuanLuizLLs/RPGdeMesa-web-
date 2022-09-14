@@ -59,7 +59,7 @@ const mentalCapacity = (character = {}) => {
 }
 
 function Abilities({
-  player,
+  user,
   character,
   setRefreshCharacter,
 }) {
@@ -98,8 +98,8 @@ function Abilities({
       })
 
       requestAPI('abilities', {
-        player,
         ...values,
+        user: user.id,
         id_character: character.id,
       })
         .create(({ data }) => {
@@ -118,8 +118,8 @@ function Abilities({
       })
 
       requestAPI('abilities', {
-        player,
         ...values,
+        user: user.id,
         level: values.level + 1,
       })
         .update(({ data }) => {

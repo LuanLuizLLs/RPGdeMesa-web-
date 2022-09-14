@@ -40,7 +40,7 @@ const phisicalCapacity = (character = {}) => {
 }
 
 function Inventory({
-  player,
+  user,
   character,
   setRefreshCharacter,
 }) {
