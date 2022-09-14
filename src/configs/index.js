@@ -153,10 +153,3 @@ export const ATTRIBUTE = {
     'ACO': 'actions',
   }
 }
-
-/** Items options */
-export const items = {
-  'LOCAL': 'places',
-  'OBJETO': 'objects',
-  'VEICULO': 'vehicles',
-}
