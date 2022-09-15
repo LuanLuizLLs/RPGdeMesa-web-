@@ -6,7 +6,7 @@ import imagePlayer from '../../assets/img/player.png'
 import { requestAPI } from '../../services/api'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { CASTE, RACE, TENDENCY } from '../../configs'
+import { CASTE, PERIODS, RACE, SEASONS, TENDENCY } from '../../configs'
 import {
   Box, 
   Button,
@@ -22,6 +22,7 @@ import {
   Select,
   Paper,
 } from '../../components'
+import { optionRandow } from '../../utils'
 
 const INITIAL = {
   MODAL: {
@@ -106,9 +107,17 @@ function Home() {
         type: 'bar'
       })
 
+      const conditions = {
+        period: optionRandow(Object.keys(PERIODS)),
+        season: optionRandow(Object.keys(SEASONS)),
+      }
+
       requestAPI('campaigns', {
         ...values,
-        id_user: USER.id
+        ...conditions,
+        ...PERIODS[conditions.period],
+        ...SEASONS[conditions.season],
+        id_user: USER.id,
       })
         .create(({ data }) => {
           setRefresh({

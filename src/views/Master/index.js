@@ -5,7 +5,9 @@ import Exploration from './containers/Exploration'
 import Interaction from './containers/Interaction'
 import Combat from './containers/Combat'
 import Characters from './containers/Characters'
+import { optionRandow } from '../../utils'
 import { requestAPI } from '../../services/api'
+import { ADVENTURES, SCENARIOS } from '../../configs'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Box,
@@ -131,6 +133,12 @@ function Master() {
       setValues(INITIAL.VALUES)
       setLoading({})
     },
+    generateAdventure: () => {
+      setValues({
+        ...values,
+        name: optionRandow(ADVENTURES),
+      })
+    },
     createAdventure: () => {
       setLoading({
         type: 'bar'
@@ -196,6 +204,12 @@ function Master() {
           setMessage(response.data.message)
         })
         .finally(handle.resetValues)
+    },
+    generateSecenery: () => {
+      setValues({
+        ...values,
+        name: optionRandow(SCENARIOS),
+      })
     },
     createScenery: () => {
       setLoading({
@@ -406,8 +420,8 @@ function Master() {
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="filled" color="secondary" padding={5} onClick={handle.resetValues}>
-                  Cancelar
+                <Button type="filled" color="secondary" padding={5} onClick={handle.generateAdventure}>
+                  Gerar
                 </Button>
                 <Button type="filled" padding={5} onClick={handle.createAdventure}>
                   Criar
@@ -483,8 +497,8 @@ function Master() {
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="filled" color="secondary" padding={5} onClick={handle.resetValues}>
-                  Cancelar
+                <Button type="filled" color="secondary" padding={5} onClick={handle.generateSecenery}>
+                  Gerar
                 </Button>
                 <Button type="filled" padding={5} onClick={handle.createScenery}>
                   Criar
