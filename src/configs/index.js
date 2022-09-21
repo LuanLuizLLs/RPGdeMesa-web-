@@ -1,5 +1,5 @@
 import {
-  numberRandow,
+  numberRandow, optionRandow,
 } from '../utils'
 
 /** Screen size breakpoint  */
@@ -38,7 +38,7 @@ export const RACE = {
     intelligence: numberRandow(0, 1),
     wisdom: numberRandow(1, 2),
     charisma: numberRandow(0, 1),
-  }, 
+  },
   'Elfo': {
     strength: numberRandow(0, 1),
     dexterity: numberRandow(2, 3),
@@ -46,7 +46,7 @@ export const RACE = {
     intelligence: numberRandow(2, 3),
     wisdom: numberRandow(1, 2),
     charisma: numberRandow(1, 2),
-  }, 
+  },
   'Halfling': {
     strength: numberRandow(0, 1),
     dexterity: numberRandow(2, 3),
@@ -54,7 +54,7 @@ export const RACE = {
     intelligence: numberRandow(1, 2),
     wisdom: numberRandow(1, 2),
     charisma: numberRandow(2, 3),
-  }, 
+  },
   'Humano': {
     strength: numberRandow(0, 1),
     dexterity: numberRandow(2, 3),
@@ -62,7 +62,7 @@ export const RACE = {
     intelligence: numberRandow(2, 3),
     wisdom: numberRandow(1, 2),
     charisma: numberRandow(1, 2),
-  }, 
+  },
   'Gnomo': {
     strength: numberRandow(0, 1),
     dexterity: numberRandow(1, 2),
@@ -70,7 +70,7 @@ export const RACE = {
     intelligence: numberRandow(2, 3),
     wisdom: numberRandow(0, 1),
     charisma: numberRandow(2, 3),
-  }, 
+  },
   'Orc': {
     strength: numberRandow(2, 3),
     dexterity: numberRandow(1, 2),
@@ -78,7 +78,7 @@ export const RACE = {
     intelligence: numberRandow(1, 2),
     wisdom: numberRandow(0, 1),
     charisma: numberRandow(0, 1),
-  }, 
+  },
   'Goblinoide': {
     strength: numberRandow(1, 2),
     dexterity: numberRandow(2, 3),
@@ -86,7 +86,7 @@ export const RACE = {
     intelligence: numberRandow(0, 1),
     wisdom: numberRandow(0, 1),
     charisma: numberRandow(1, 2),
-  }, 
+  },
   'Tiefling': {
     strength: numberRandow(0, 1),
     dexterity: numberRandow(1, 2),
@@ -94,7 +94,7 @@ export const RACE = {
     intelligence: numberRandow(2, 3),
     wisdom: numberRandow(1, 2),
     charisma: numberRandow(2, 3),
-  }, 
+  },
   'Nefilim': {
     strength: numberRandow(1, 2),
     dexterity: numberRandow(0, 1),
@@ -102,7 +102,7 @@ export const RACE = {
     intelligence: numberRandow(2, 3),
     wisdom: numberRandow(2, 3),
     charisma: numberRandow(0, 1),
-  }, 
+  },
   'Licantropo': {
     strength: numberRandow(2, 3),
     dexterity: numberRandow(1, 2),
@@ -110,7 +110,7 @@ export const RACE = {
     intelligence: numberRandow(0, 1),
     wisdom: numberRandow(1, 2),
     charisma: numberRandow(0, 1),
-  }, 
+  },
   'Gigante': {
     strength: numberRandow(2, 3),
     dexterity: numberRandow(0, 1),
@@ -118,7 +118,7 @@ export const RACE = {
     intelligence: numberRandow(1, 2),
     wisdom: numberRandow(1, 2),
     charisma: numberRandow(0, 1),
-  }, 
+  },
   'Fada': {
     strength: numberRandow(0, 1),
     dexterity: numberRandow(2, 3),
@@ -131,79 +131,96 @@ export const RACE = {
 
 /** Caste configs */
 export const CASTE = {
-  'Bárbaro': 20,
-  'Bardo': 50,
-  'Bruxo': 40,
-  'Clérigo': 50,
-  'Druida': 20,
-  'Feiticeiro': 30,
-  'Guerreiro': 50,
-  'Ladino': 40,
-  'Mago': 40,
-  'Monge': 10,
-  'Paladino': 50,
-  'Patrulheiro': 50,
+  'Bárbaro': 2,
+  'Bardo': 5,
+  'Bruxo': 4,
+  'Clérigo': 5,
+  'Druida': 2,
+  'Feiticeiro': 3,
+  'Guerreiro': 5,
+  'Ladino': 4,
+  'Mago': 4,
+  'Monge': 1,
+  'Paladino': 5,
+  'Patrulheiro': 5,
 }
 
 /** Tendecy configs */
 export const TENDENCY = {
-  'Bom': 2, 
-  'Leal': 1, 
-  'Neutro': 0, 
-  'Caótico': 1,
-  'Mau': 2,
+  'Bom': 6,
+  'Leal': 3,
+  'Neutro': 0,
+  'Caótico': 3,
+  'Mau': 6,
 }
 
 /** Conditions configs */
 export const CONDITIONS = {
-  'TER': 'ground',
-  'REC': 'resources',
-  'ILU': 'lighting',
-  'TEM': 'temperature',
-  'VEN': 'wind',
-  'PRE': 'precipitation',
+  GROUND: [
+    'Fácil',
+    'Médio',
+    'Dificíl',
+  ],
+  RESOURCES: [
+    'Escasso',
+    'Comum',
+    'Abundante',
+  ],
+  LIGHTING: [
+    'Escuro',
+    'Normal',
+    'Claro', 
+  ],
+  TEMPERATURE: [
+    'Frio',
+    'Normal',
+    'Quente',
+  ],
+  WIND: [
+    'Fraco',
+    'Nenhum',
+    'Forte',
+  ],
+  PRECIPITATION: [
+    'Fraca',
+    'Nenhuma',
+    'Forte',
+  ],
 }
 
-/** Periods configs */
-export const PERIODS = {
-  'Dia': {
-    ground: numberRandow(3, 6),
-    resources: numberRandow(2, 5),
-    lighting: numberRandow(1, 4),
-  },
-  'Tarde': {
-    ground: numberRandow(1, 4),
-    resources: numberRandow(3, 6),
-    lighting: numberRandow(2, 5),
-  },
-  'Noite': {
-    ground: numberRandow(2, 5),
-    resources: numberRandow(1, 4),
-    lighting: numberRandow(3, 6),
-  },
-}
 
-/** Seasons configs */
 export const SEASONS = {
   'Outono': {
-    temperature: numberRandow(1, 4),
-    wind: numberRandow(2, 5),
-    precipitation: numberRandow(3, 6),
-  }, 
+    ground: optionRandow(CONDITIONS.GROUND),
+    resources: optionRandow(CONDITIONS.RESOURCES),
+    lighting: optionRandow(CONDITIONS.LIGHTING),
+    temperature: optionRandow(CONDITIONS.TEMPERATURE),
+    wind: optionRandow(CONDITIONS.WIND),
+    precipitation: optionRandow(CONDITIONS.PRECIPITATION),
+  },
   'Inverno': {
-    temperature: numberRandow(3, 6),
-    wind: numberRandow(2, 5),
-    precipitation: numberRandow(1, 4),
-  }, 
+    ground: optionRandow(CONDITIONS.GROUND),
+    resources: optionRandow(CONDITIONS.RESOURCES),
+    lighting: optionRandow(CONDITIONS.LIGHTING),
+    temperature: optionRandow(CONDITIONS.TEMPERATURE),
+    wind: optionRandow(CONDITIONS.WIND),
+    precipitation: optionRandow(CONDITIONS.PRECIPITATION),
+  },
   'Primavera': {
-    temperature: numberRandow(1, 4),
-    wind: numberRandow(3, 6),
-    precipitation: numberRandow(2, 5),
-  }, 
+    ground: optionRandow(CONDITIONS.GROUND),
+    resources: optionRandow(CONDITIONS.RESOURCES),
+    lighting: optionRandow(CONDITIONS.LIGHTING),
+    temperature: optionRandow(CONDITIONS.TEMPERATURE),
+    wind: optionRandow(CONDITIONS.WIND),
+    precipitation: optionRandow(CONDITIONS.PRECIPITATION),
+  },
   'Verão': {
-    temperature: numberRandow(3, 6),
-    wind: numberRandow(1, 4),
-    precipitation: numberRandow(2, 5),
+    ground: optionRandow(CONDITIONS.GROUND),
+    resources: optionRandow(CONDITIONS.RESOURCES),
+    lighting: optionRandow(CONDITIONS.LIGHTING),
+    temperature: optionRandow(CONDITIONS.TEMPERATURE),
+    wind: optionRandow(CONDITIONS.WIND),
+    precipitation: optionRandow(CONDITIONS.PRECIPITATION),
   },
 }
 
@@ -249,17 +266,18 @@ export const ADVENTURES = [
 /** Adventures options */
 export const SCENARIOS = [
   'Floresta',
+  'Selva',
   'Pântano',
+  'Colina',
+  'Planíce',
   'Montanha',
   'Mar',
   'Ártico',
   'Deserto',
-  'Colina',
-  'Planíce',
+  'Povoado',
+  'Aldeia',
+  'Vila',
+  'Cidade',
   'Metrópole',
   'Reino',
-  'Cidade',
-  'Vila',
-  'Aldeia',
-  'Povoado',
 ]
