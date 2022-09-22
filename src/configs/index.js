@@ -162,19 +162,19 @@ export const CONDITIONS = {
     'Dificíl',
   ],
   RESOURCES: [
-    'Escasso',
-    'Comum',
-    'Abundante',
+    'Fácil',
+    'Médio',
+    'Dificíl',
   ],
   LIGHTING: [
-    'Escuro',
+    'Baixa',
     'Normal',
-    'Claro', 
+    'Alta',
   ],
   TEMPERATURE: [
-    'Frio',
+    'Baixa',
     'Normal',
-    'Quente',
+    'Alta',
   ],
   WIND: [
     'Fraco',
@@ -188,39 +188,30 @@ export const CONDITIONS = {
   ],
 }
 
-
-export const SEASONS = {
-  'Outono': {
-    ground: optionRandow(CONDITIONS.GROUND),
-    resources: optionRandow(CONDITIONS.RESOURCES),
-    lighting: optionRandow(CONDITIONS.LIGHTING),
-    temperature: optionRandow(CONDITIONS.TEMPERATURE),
-    wind: optionRandow(CONDITIONS.WIND),
-    precipitation: optionRandow(CONDITIONS.PRECIPITATION),
+export const PERIODS = {
+  'Dia': {
+    ground: numberRandow(0, 3),
+    resources: numberRandow(0, 3),
+    lighting: numberRandow(0, 3),
+    temperature: numberRandow(0, 3),
+    wind: numberRandow(0, 3),
+    precipitation: numberRandow(0, 3),
   },
-  'Inverno': {
-    ground: optionRandow(CONDITIONS.GROUND),
-    resources: optionRandow(CONDITIONS.RESOURCES),
-    lighting: optionRandow(CONDITIONS.LIGHTING),
-    temperature: optionRandow(CONDITIONS.TEMPERATURE),
-    wind: optionRandow(CONDITIONS.WIND),
-    precipitation: optionRandow(CONDITIONS.PRECIPITATION),
+  'Tarde': {
+    ground: numberRandow(0, 3),
+    resources: numberRandow(0, 3),
+    lighting: numberRandow(0, 3),
+    temperature: numberRandow(0, 3),
+    wind: numberRandow(0, 3),
+    precipitation: numberRandow(0, 3),
   },
-  'Primavera': {
-    ground: optionRandow(CONDITIONS.GROUND),
-    resources: optionRandow(CONDITIONS.RESOURCES),
-    lighting: optionRandow(CONDITIONS.LIGHTING),
-    temperature: optionRandow(CONDITIONS.TEMPERATURE),
-    wind: optionRandow(CONDITIONS.WIND),
-    precipitation: optionRandow(CONDITIONS.PRECIPITATION),
-  },
-  'Verão': {
-    ground: optionRandow(CONDITIONS.GROUND),
-    resources: optionRandow(CONDITIONS.RESOURCES),
-    lighting: optionRandow(CONDITIONS.LIGHTING),
-    temperature: optionRandow(CONDITIONS.TEMPERATURE),
-    wind: optionRandow(CONDITIONS.WIND),
-    precipitation: optionRandow(CONDITIONS.PRECIPITATION),
+  'Noite': {
+    ground: numberRandow(0, 3),
+    resources: numberRandow(0, 3),
+    lighting: numberRandow(0, 3),
+    temperature: numberRandow(0, 3),
+    wind: numberRandow(0, 3),
+    precipitation: numberRandow(0, 3),
   },
 }
 
