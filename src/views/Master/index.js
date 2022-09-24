@@ -302,7 +302,7 @@ function Master() {
       <Card>
         <Grid type="container">
           <Grid type="row">
-            <Grid type="column" padding={[10, 10]} minWidth={300}>
+            <Grid type="column" padding={[10, 10]} minWidth={250}>
               <Title type="h6">
                 Aventura:
               </Title>
@@ -341,7 +341,7 @@ function Master() {
                 )}
               </Collapse>
             </Grid>
-            <Grid type="column" padding={[10, 10]} minWidth={300}>
+            <Grid type="column" padding={[10, 10]} minWidth={250}>
               <Title type="h6">
                 Cenário:
               </Title>
@@ -382,7 +382,7 @@ function Master() {
             </Grid>
           </Grid>
           <Grid type="row">
-            <Grid type="column" padding={[5, 0]} minWidth={300}>
+            <Grid type="column" padding={[5, 0]} minWidth={250}>
               <Title type="h6">
                 Personagens:
               </Title>
@@ -404,7 +404,7 @@ function Master() {
         <Grid type="column" padding={[0, 10]} minWidth={250}>
           <Card margin="20px 0">
             <Grid type="row">
-              <Grid type="column" padding={[0, 10]}>
+              <Grid type="column" padding={[0, 10]} minWidth={200}>
                 <Select
                   name="period"
                   label="Período"
@@ -412,7 +412,7 @@ function Master() {
                   stateValue={[campaign, setCampaign]}
                 />
               </Grid>
-              <Grid type="column" padding={[0, 10]}>
+              <Grid type="column" padding={[0, 10]} minWidth={200}>
                 <Select
                   name="season"
                   label="Estação do ano"
