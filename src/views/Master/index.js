@@ -7,7 +7,7 @@ import Combat from './containers/Combat'
 import Characters from './containers/Characters'
 import { optionRandow } from '../../utils'
 import { requestAPI } from '../../services/api'
-import { ADVENTURES, SCENARIOS } from '../../configs'
+import { ADVENTURES, PERIOD, SCENARIOS, SEASON } from '../../configs'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Box,
@@ -20,6 +20,7 @@ import {
   List,
   Modal,
   Paper,
+  Select,
   Tab,
   Text,
   TextArea,
@@ -57,6 +58,10 @@ const INITIAL = {
   },
 }
 
+const colorConditions = (condition = 0) => {
+  return condition ? (condition > 0 ? 'error' : 'success') : 'black'
+}
+
 function Master() {
 
   const setDispatch = useDispatch()
@@ -67,6 +72,7 @@ function Master() {
 
   const [tab, setTab] = useState(INITIAL.TAB)
   const [modal, setModal] = useState(INITIAL.MODAL)
+  const [campaign, setCampaign] = useState(CAMPAIGN)
   const [values, setValues] = useState(INITIAL.VALUES)
   const [refresh, setRefresh] = useState(INITIAL.REFRESH)
   const [collapse, setCollapse] = useState(INITIAL.COLLAPSE)
@@ -385,11 +391,39 @@ function Master() {
           </Grid>
         </Grid>
       </Card>
-      <Card margin="20px 0">
-        <Text color="primary" fontWeight="bold">
-          Terreno | Recursos | Iluminação | Temperatura | Vento | Precipitação
-        </Text>
-      </Card>
+      <Grid type="row" alignItems="center">
+        <Grid type="column" padding={[0, 10]} minWidth={250}>
+          <Card margin="20px 0">
+            <Text color="primary" fontWeight="bold" textAlign="center">
+              Terreno: <Text inline color={colorConditions(CAMPAIGN.ground)}>{CAMPAIGN.ground}</Text> |
+              Recursos: <Text inline color={colorConditions(CAMPAIGN.resources)}>{CAMPAIGN.resources}</Text> |
+              Clima: <Text inline color={colorConditions(CAMPAIGN.climate)}>{CAMPAIGN.climate}</Text>
+            </Text>
+          </Card>
+        </Grid>
+        <Grid type="column" padding={[0, 10]} minWidth={250}>
+          <Card margin="20px 0">
+            <Grid type="row">
+              <Grid type="column" padding={[0, 10]}>
+                <Select
+                  name="period"
+                  label="Período"
+                  options={Object.keys(PERIOD)}
+                  stateValue={[campaign, setCampaign]}
+                />
+              </Grid>
+              <Grid type="column" padding={[0, 10]}>
+                <Select
+                  name="season"
+                  label="Estação do ano"
+                  options={Object.keys(SEASON)}
+                  stateValue={[campaign, setCampaign]}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+      </Grid>
       <Divider borderStyle="solid" />
       <Card>
         <Tab tabs={['Interação', 'Exploração', 'Combate']} stateTab={[tab, setTab]}>
