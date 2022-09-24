@@ -6,9 +6,9 @@ import imagePlayer from '../../assets/img/player.png'
 import { requestAPI } from '../../services/api'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { CASTE, RACE, TENDENCY } from '../../configs'
+import { CASTE, CONDITIONS, PERIOD, RACE, SEASON, TENDENCY } from '../../configs'
 import {
-  Box, 
+  Box,
   Button,
   Card,
   Grid,
@@ -107,6 +107,7 @@ function Home() {
 
       requestAPI('campaigns', {
         ...values,
+        ...CONDITIONS[values.season][values.period],
         id_user: USER.id,
       })
         .create(({ data }) => {
@@ -174,7 +175,7 @@ function Home() {
       requestAPI('characters', {
         ...values,
         ...RACE[values.race],
-        riches: CASTE[values.caste],
+        currency: CASTE[values.caste],
         id_user: USER.id,
       })
         .create(({ data }) => {
@@ -275,6 +276,18 @@ function Home() {
                 placeholder="Nome"
                 stateValue={[values, setValues]}
               />
+              <Select
+                name="period"
+                placeholder="Periodo inicial"
+                options={Object.keys(PERIOD)}
+                stateValue={[values, setValues]}
+              />
+              <Select
+                name="season"
+                placeholder="Estação do ano"
+                options={Object.keys(SEASON)}
+                stateValue={[values, setValues]}
+              />
               <TextArea
                 rows={3}
                 name="description"
@@ -325,7 +338,7 @@ function Home() {
               <Text>
                 Tem certeza que deseja excluir a campanha <b>{modal.data.name}</b>?
               </Text>
-              <Box display="flex" justifyContent="flex-end"  marginTop={10}>
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
                 <Button type="bottomless" padding={10} onClick={handle.resetCampaign}>
                   Cancelar
                 </Button>

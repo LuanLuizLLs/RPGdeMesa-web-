@@ -1,5 +1,5 @@
 import {
-  numberRandow, optionRandow,
+  numberRandow,
 } from '../utils'
 
 /** Screen size breakpoint  */
@@ -154,64 +154,90 @@ export const TENDENCY = {
   'Mau': 6,
 }
 
-/** Conditions configs */
-export const CONDITIONS = {
-  GROUND: [
-    'Fácil',
-    'Médio',
-    'Dificíl',
-  ],
-  RESOURCES: [
-    'Fácil',
-    'Médio',
-    'Dificíl',
-  ],
-  LIGHTING: [
-    'Baixa',
-    'Normal',
-    'Alta',
-  ],
-  TEMPERATURE: [
-    'Baixa',
-    'Normal',
-    'Alta',
-  ],
-  WIND: [
-    'Fraco',
-    'Nenhum',
-    'Forte',
-  ],
-  PRECIPITATION: [
-    'Fraca',
-    'Nenhuma',
-    'Forte',
-  ],
+/** Periods options */
+export const PERIOD = {
+  'Dia': -6,
+  'Tarde': -4,
+  'Noite': -2,
 }
 
-export const PERIODS = {
-  'Dia': {
-    ground: numberRandow(0, 3),
-    resources: numberRandow(0, 3),
-    lighting: numberRandow(0, 3),
-    temperature: numberRandow(0, 3),
-    wind: numberRandow(0, 3),
-    precipitation: numberRandow(0, 3),
+/** Seasons options */
+export const SEASON = {
+  'Outono': 4,
+  'Inverno': 6,
+  'Primavera': 3,
+  'Verão': 5,
+}
+
+/** Conditions configs */
+export const CONDITIONS = {
+  'Outono': {
+    'Dia': {
+      ground: numberRandow(PERIOD['Dia'], SEASON['Outono']),
+      resources: numberRandow(PERIOD['Dia'], SEASON['Outono']),
+      climate: numberRandow(PERIOD['Dia'], SEASON['Outono']),
+    },
+    'Tarde': {
+      ground: numberRandow(PERIOD['Tarde'], SEASON['Outono']),
+      resources: numberRandow(PERIOD['Tarde'], SEASON['Outono']),
+      climate: numberRandow(PERIOD['Tarde'], SEASON['Outono']),
+    },
+    'Noite': {
+      ground: numberRandow(PERIOD['Noite'], SEASON['Outono']),
+      resources: numberRandow(PERIOD['Noite'], SEASON['Outono']),
+      climate: numberRandow(PERIOD['Noite'], SEASON['Outono']),
+    },
   },
-  'Tarde': {
-    ground: numberRandow(0, 3),
-    resources: numberRandow(0, 3),
-    lighting: numberRandow(0, 3),
-    temperature: numberRandow(0, 3),
-    wind: numberRandow(0, 3),
-    precipitation: numberRandow(0, 3),
+  'Inverno': {
+    'Dia': {
+      ground: numberRandow(PERIOD['Dia'], SEASON['Inverno']),
+      resources: numberRandow(PERIOD['Dia'], SEASON['Inverno']),
+      climate: numberRandow(PERIOD['Dia'], SEASON['Inverno']),
+    },
+    'Tarde': {
+      ground: numberRandow(PERIOD['Tarde'], SEASON['Inverno']),
+      resources: numberRandow(PERIOD['Tarde'], SEASON['Inverno']),
+      climate: numberRandow(PERIOD['Tarde'], SEASON['Inverno']),
+    },
+    'Noite': {
+      ground: numberRandow(PERIOD['Noite'], SEASON['Inverno']),
+      resources: numberRandow(PERIOD['Noite'], SEASON['Inverno']),
+      climate: numberRandow(PERIOD['Noite'], SEASON['Inverno']),
+    },
   },
-  'Noite': {
-    ground: numberRandow(0, 3),
-    resources: numberRandow(0, 3),
-    lighting: numberRandow(0, 3),
-    temperature: numberRandow(0, 3),
-    wind: numberRandow(0, 3),
-    precipitation: numberRandow(0, 3),
+  'Primavera': {
+    'Dia': {
+      ground: numberRandow(PERIOD['Dia'], SEASON['Primavera']),
+      resources: numberRandow(PERIOD['Dia'], SEASON['Primavera']),
+      climate: numberRandow(PERIOD['Dia'], SEASON['Primavera']),
+    },
+    'Tarde': {
+      ground: numberRandow(PERIOD['Tarde'], SEASON['Primavera']),
+      resources: numberRandow(PERIOD['Tarde'], SEASON['Primavera']),
+      climate: numberRandow(PERIOD['Tarde'], SEASON['Primavera']),
+    },
+    'Noite': {
+      ground: numberRandow(PERIOD['Noite'], SEASON['Primavera']),
+      resources: numberRandow(PERIOD['Noite'], SEASON['Primavera']),
+      climate: numberRandow(PERIOD['Noite'], SEASON['Primavera']),
+    },
+  },
+  'Verão': {
+    'Dia': {
+      ground: numberRandow(PERIOD['Dia'], SEASON['Verão']),
+      resources: numberRandow(PERIOD['Dia'], SEASON['Verão']),
+      climate: numberRandow(PERIOD['Dia'], SEASON['Verão']),
+    },
+    'Tarde': {
+      ground: numberRandow(PERIOD['Tarde'], SEASON['Verão']),
+      resources: numberRandow(PERIOD['Tarde'], SEASON['Verão']),
+      climate: numberRandow(PERIOD['Tarde'], SEASON['Verão']),
+    },
+    'Noite': {
+      ground: numberRandow(PERIOD['Noite'], SEASON['Verão']),
+      resources: numberRandow(PERIOD['Noite'], SEASON['Verão']),
+      climate: numberRandow(PERIOD['Noite'], SEASON['Verão']),
+    },
   },
 }
 
