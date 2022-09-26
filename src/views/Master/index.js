@@ -7,7 +7,7 @@ import Combat from './containers/Combat'
 import Characters from './containers/Characters'
 import { optionRandow } from '../../utils'
 import { requestAPI } from '../../services/api'
-import { ADVENTURES, PERIOD, SCENARIOS, SEASON } from '../../configs'
+import { ADVENTURES, CONDITIONS, PERIOD, SCENARIOS, SEASON } from '../../configs'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Box,
@@ -274,6 +274,24 @@ function Master() {
       })
 
       requestAPI('scenarios', values)
+        .update(({ data }) => {
+          setRefresh(data)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
+        })
+        .finally(handle.resetValues)
+    },
+    updateCampaign: () => {
+      setLoading({
+        type: 'bar'
+      })
+
+      requestAPI('campaign', {
+        ...campaign,
+        ...CONDITIONS[campaign.season][campaign.period],
+      })
         .update(({ data }) => {
           setRefresh(data)
           setMessage(data.message)
