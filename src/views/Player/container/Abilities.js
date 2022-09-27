@@ -48,8 +48,7 @@ const formatAttribute = (attr = '', attrCurrent = 0, attrAdditional = 0) => {
   return `${attr}${some}`
 }
 
-const mentalCapacity = (character = {}) => {
-  let capacity = 0
+const mentalCapacity = (character = {}, capacity = 0) => {
   Object.entries(character).forEach(([key, value]) => {
     if (ATTRIBUTE.MENTAL.includes(key)) {
       capacity += value
@@ -169,7 +168,7 @@ function Abilities({
                 placeholder="Descrição"
                 stateValue={[values, setValues]}
               />
-              <Grid type="row" padding={[10, 0]}>
+              <Grid type="row">
                 <Grid type="column" padding={[0, 5]}>
                   <Select
                     name="attribute"
@@ -188,7 +187,7 @@ function Abilities({
                   />
                 </Grid>
               </Grid>
-              <Box display="flex" justifyContent="flex-end">
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
                 <Button type="filled" color="secondary" padding={10} onClick={handle.resetAbility}>
                   Cancelar
                 </Button>
