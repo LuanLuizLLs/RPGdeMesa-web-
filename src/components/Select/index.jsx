@@ -9,9 +9,15 @@ export const Select = ({
   disabled = false,
   options = [],
   stateValue = [],
+  onSelect = () => { }
 }) => {
 
   const [value, setValue] = stateValue
+
+  const changeValue = async (currentValue) => {
+    setValue(currentValue)
+    return currentValue
+  }
 
   return (
     <div className={classes.container}>
@@ -21,9 +27,9 @@ export const Select = ({
         className={classes.select}
         value={value[name]}
         data-selected={Boolean(value[name])}
-        onChange={({ target }) => setValue({
+        onChange={({ target }) => changeValue({
           ...value, [name]: target.value
-        })}
+        }).then(onSelect)}
       >
         {placeholder && (
           <option value="" label={placeholder} />
@@ -43,4 +49,5 @@ Select.propTypes = {
   placeholder: PropTypes.string,
   options: PropTypes.array.isRequired,
   stateValue: PropTypes.array.isRequired,
+  onSelect: PropTypes.func,
 }
