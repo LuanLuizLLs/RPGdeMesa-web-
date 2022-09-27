@@ -298,3 +298,16 @@ export const SCENARIOS = [
   'Metrópole',
   'Reino',
 ]
+
+/** Inventory configs */
+export const INVENTORY = {
+  CATEGORY: {
+    'Objeto': 'object',
+    'Veículo': 'vehicle',
+    'Local': 'place',
+  },
+  USABLE: [
+    'Não',
+    'Sim',
+  ],
+}
