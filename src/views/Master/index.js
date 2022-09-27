@@ -283,14 +283,14 @@ function Master() {
         })
         .finally(handle.resetValues)
     },
-    updateCampaign: () => {
+    updateCampaign: (update) => {
       setLoading({
         type: 'bar'
       })
-
-      requestAPI('campaign', {
-        ...campaign,
-        ...CONDITIONS[campaign.season][campaign.period],
+      
+      requestAPI('campaigns', {
+        ...update,
+        ...CONDITIONS[update.season][update.period],
       })
         .update(({ data }) => {
           setRefresh(data)
@@ -427,6 +427,7 @@ function Master() {
                   name="period"
                   label="Período"
                   options={Object.keys(PERIOD)}
+                  onSelect={handle.updateCampaign}
                   stateValue={[campaign, setCampaign]}
                 />
               </Grid>
@@ -435,6 +436,7 @@ function Master() {
                   name="season"
                   label="Estação do ano"
                   options={Object.keys(SEASON)}
+                  onSelect={handle.updateCampaign}
                   stateValue={[campaign, setCampaign]}
                 />
               </Grid>
