@@ -213,7 +213,7 @@ function Abilities({
               <Paper backgroundColor="secondary" margin="10px 0">
                 <Box display="flex" justifyContent="space-between">
                   <Text fontWeight="bold" color="gray">
-                    {formatAttribute(modal.data.attribute, modal.data.level, character[ATTRIBUTE.PRIMARY[modal.data.attribute]])}
+                    {formatAttribute(modal.data.attribute, modal.data.level, character[ATTRIBUTE.PRIMARY[modal.data.attribute]])} | 1d6+{modal.data.level}
                   </Text>
                   <Button type="filled" color="success" fontSize="medium" onClick={handle.updateAbility}>
                     Aprimorar
