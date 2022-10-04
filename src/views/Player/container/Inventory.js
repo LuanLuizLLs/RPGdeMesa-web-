@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import Context from '../../../global/context'
+import { requestAPI } from '../../../services/api'
 import { ATTRIBUTE, INVENTORY } from '../../../configs'
 import {
   Box,
@@ -21,17 +23,17 @@ const INITIAL = {
   VALUES: {
     name: '',
     description: '',
-    category: '',
     attribute: 'FOR',
     usable: 'Não',
     level: 1,
   },
+  REFRESH: null,
   INVENTORY: {
     columns: {
       id: 'ID',
-      item: 'Item',
+      name: 'Item',
       description: 'Descrição',
-      category: 'Categoria',
+      attribute: 'Atributo',
       level: 'Nível',
     },
     rows: [],
@@ -47,15 +49,33 @@ const phisicalCapacity = (character = {}, capacity = 0) => {
   return capacity
 }
 
+const identifyUsable = (value = '') => {
+  return INVENTORY.USABLE.indexOf(value)
+}
+
 function Inventory({
   user,
   character,
   setRefreshCharacter,
 }) {
 
+  const { setLoading, setMessage } = useContext(Context)
+
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
-  const [inventory,] = useState(INITIAL.INVENTORY)
+  const [refresh, setRefresh] = useState(INITIAL.REFRESH)
+  const [inventory, setInventory] = useState(INITIAL.INVENTORY)
+
+  useEffect(() => {
+    character.id && requestAPI('inventory', {
+      id_character: character.id,
+    })
+      .read(({ data }) => {
+        setInventory((state) => ({
+          ...state, rows: data.response,
+        }))
+      })
+  }, [refresh, character.id])
 
   const handle = {
     openModal: (content, data = {}) => {
@@ -64,6 +84,28 @@ function Inventory({
     resetInventory: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
+      setLoading({})
+    },
+    createInventory: () => {
+      setLoading({
+        type: 'bar'
+      })
+
+      requestAPI('inventory', {
+        ...values,
+        user: user.id,
+        id_character: character.id,
+        usable: identifyUsable(values.usable),
+      })
+        .create(({ data }) => {
+          setRefresh(data)
+          setRefreshCharacter(data)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
+        })
+        .finally(handle.resetInventory)
     },
   }
 
@@ -83,9 +125,9 @@ function Inventory({
                 stateValue={[values, setValues]}
               />
               <Select
-                name="category"
-                placeholder="Categoria"
-                options={Object.keys(INVENTORY.CATEGORY)}
+                name="usable"
+                label="Usável"
+                options={INVENTORY.USABLE}
                 stateValue={[values, setValues]}
               />
               <TextArea
@@ -98,7 +140,7 @@ function Inventory({
                   <Select
                     name="attribute"
                     label="Atributo"
-                    options={Object.keys(ATTRIBUTE.PRIMARY)}
+                    options={INVENTORY.ATTRIBUTES[identifyUsable(values.usable)]}
                     stateValue={[values, setValues]}
                   />
                 </Grid>
@@ -116,7 +158,7 @@ function Inventory({
                 <Button type="filled" color="secondary" padding={10} onClick={handle.resetInventory}>
                   Cancelar
                 </Button>
-                <Button type="filled" padding={10}>
+                <Button type="filled" padding={10} onClick={handle.createInventory}>
                   Criar
                 </Button>
               </Box>

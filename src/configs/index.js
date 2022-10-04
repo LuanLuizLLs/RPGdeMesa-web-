@@ -274,7 +274,7 @@ export const ADVENTURES = [
   'Escapar de um local',
   'Destruir um veículo',
   'Encontrar um veículo',
-  'Chegar em um veículo',
+  'Perseguir um veículo',
   'Proteger um veículo',
   'Investigar um veículo',
   'Escapar de um veículo',
@@ -301,11 +301,10 @@ export const SCENARIOS = [
 
 /** Inventory configs */
 export const INVENTORY = {
-  CATEGORY: {
-    'Objeto': 'object',
-    'Veículo': 'vehicle',
-    'Local': 'place',
-  },
+  ATTRIBUTES: [
+    Object.keys(ATTRIBUTE.PRIMARY),
+    Object.keys(ATTRIBUTE.SECONDARY),
+  ],
   USABLE: [
     'Não',
     'Sim',
