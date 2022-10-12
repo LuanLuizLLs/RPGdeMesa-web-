@@ -15,6 +15,7 @@ import {
   TextArea,
   Title,
 } from '../../../components'
+import { formatAttribute, mentalCapacity } from '../../../utils'
 
 const INITIAL = {
   MODAL: {
@@ -40,23 +41,6 @@ const INITIAL = {
   },
 }
 
-const formatAttribute = (attr = '', attrCurrent = 0, attrAdditional = 0) => {
-  const some = attrCurrent + attrAdditional
-  if (some >= 0) {
-    return `${attr}+${some}`
-  }
-  return `${attr}${some}`
-}
-
-const mentalCapacity = (character = {}, capacity = 0) => {
-  Object.entries(character).forEach(([key, value]) => {
-    if (ATTRIBUTE.MENTAL.includes(key)) {
-      capacity += value
-    }
-  })
-  return capacity
-}
-
 function Abilities({
   user,
   character,
@@ -71,15 +55,17 @@ function Abilities({
   const [abilities, setAbilities] = useState(INITIAL.ABILITIES)
 
   useEffect(() => {
-    character.id && requestAPI('abilities', {
-      id_character: character.id,
-    })
-      .read(({ data }) => {
-        setAbilities((state) => ({
-          ...state, rows: data.response,
-        }))
+    if (character) {
+      requestAPI('abilities', {
+        id_character: character.id,
       })
-  }, [refresh, character.id])
+        .read(({ data }) => {
+          setAbilities((state) => ({
+            ...state, rows: data.response,
+          }))
+        })
+    }
+  }, [refresh, character])
 
   const handle = {
     openModal: (content, data = {}) => {
@@ -197,7 +183,7 @@ function Abilities({
               </Box>
             </>
           ),
-          update_ability: (
+          detail_ability: (
             <>
               <Title type="h6">
                 Detalhes da habilidade:
@@ -213,7 +199,7 @@ function Abilities({
               <Paper backgroundColor="secondary" margin="10px 0">
                 <Box display="flex" justifyContent="space-between">
                   <Text fontWeight="bold" color="gray">
-                    {formatAttribute(modal.data.attribute, modal.data.level, character[ATTRIBUTE.PRIMARY[modal.data.attribute]])} | 1d6+{modal.data.level}
+                    {formatAttribute(modal.data.attribute, modal.data.level+character[ATTRIBUTE.PRIMARY[modal.data.attribute]])}
                   </Text>
                   <Button type="filled" color="success" fontSize="medium" onClick={handle.updateAbility}>
                     Aprimorar
@@ -232,7 +218,7 @@ function Abilities({
           ),
         }}
       </Modal>
-      <List height={200} onClick={(row) => handle.openModal('update_ability', row)} {...abilities} />
+      <List height={200} onClick={(row) => handle.openModal('detail_ability', row)} {...abilities} />
       <Box display="flex" justifyContent="space-between" margin={10}>
         <Text fontWeight="bold">
           <Text inline color="primary">Capacidade: </Text> {mentalCapacity(character)}

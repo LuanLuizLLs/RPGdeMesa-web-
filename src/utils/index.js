@@ -43,12 +43,41 @@ export const numberRandow = (min = 0, max = 0) => {
 }
 
 /** Maximum life capacity  */
-export const maxLife = (character = {}) => {
-  let life = 0
+export const maxLife = (character = {}, capacity = 0) => {
   Object.entries(character).forEach(([key, value]) => {
     if (Object.values(ATTRIBUTE.PRIMARY).includes(key)) {
-      life += value
+      capacity += value
     }
   })
-  return life
+  return capacity
+}
+
+/** Maximum mental capacity */
+export const mentalCapacity = (character = {}, capacity = 0) => {
+  Object.entries(character).forEach(([key, value]) => {
+    if (ATTRIBUTE.MENTAL.includes(key)) {
+      capacity += value
+    }
+  })
+  return capacity
+}
+
+/** Maximum phisical capacity */
+export const phisicalCapacity = (character = {}, capacity = 0) => {
+  Object.entries(character).forEach(([key, value]) => {
+    if (ATTRIBUTE.PHISICAL.includes(key)) {
+      capacity += value
+    }
+  })
+  return capacity
+}
+
+/** Format attributes */
+export const formatAttribute = (text = '', point = 0) => {
+  const attribute = { text, point }
+  if (attribute.point) {
+    attribute.point = attribute.point >= 0 ? `+${attribute.point}` : `${attribute.point}`
+    return `${attribute.text}${attribute.point} `
+  }
+  return ''
 }

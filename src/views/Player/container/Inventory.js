@@ -9,11 +9,13 @@ import {
   Input,
   List,
   Modal,
+  Paper,
   Select,
   Text,
   TextArea,
   Title,
 } from '../../../components'
+import { formatAttribute, phisicalCapacity } from '../../../utils'
 
 const INITIAL = {
   MODAL: {
@@ -40,15 +42,6 @@ const INITIAL = {
   }
 }
 
-const phisicalCapacity = (character = {}, capacity = 0) => {
-  Object.entries(character).forEach(([key, value]) => {
-    if (ATTRIBUTE.PHISICAL.includes(key)) {
-      capacity += value
-    }
-  })
-  return capacity
-}
-
 const identifyUsable = (value = '') => {
   return INVENTORY.USABLE.indexOf(value)
 }
@@ -67,15 +60,17 @@ function Inventory({
   const [inventory, setInventory] = useState(INITIAL.INVENTORY)
 
   useEffect(() => {
-    character.id && requestAPI('inventory', {
-      id_character: character.id,
-    })
-      .read(({ data }) => {
-        setInventory((state) => ({
-          ...state, rows: data.response,
-        }))
+    if (character) {
+      requestAPI('inventory', {
+        id_character: character.id,
       })
-  }, [refresh, character.id])
+        .read(({ data }) => {
+          setInventory((state) => ({
+            ...state, rows: data.response,
+          }))
+        })
+    }
+  }, [refresh, character])
 
   const handle = {
     openModal: (content, data = {}) => {
@@ -107,6 +102,27 @@ function Inventory({
         })
         .finally(handle.resetInventory)
     },
+    updateInventory: () => {
+      setLoading({
+        type: 'bar'
+      })
+
+      requestAPI('inventory', {
+        ...values,
+        user: user.id,
+        id_character: character.id,
+        level: values.level + 1,
+      })
+        .update(({ data }) => {
+          setRefresh(data)
+          setRefreshCharacter(data)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
+        })
+        .finally(handle.resetInventory)
+    }
   }
 
   return (
@@ -164,12 +180,46 @@ function Inventory({
               </Box>
             </>
           ),
-          use_item: (
-            <></>
+          detail_item: modal.data.usable ? (
+            <>
+              USÁVEL
+            </>
+          ) : (
+            <>
+              <Title type="h6">
+                Detalhes da habilidade:
+              </Title>
+              <Paper backgroundColor="secondary">
+                <Text color="primary" fontWeight="bold">
+                  {modal.data.name} (Lv {modal.data.level})
+                </Text>
+                <Text>
+                  {modal.data.description}
+                </Text>
+              </Paper>
+              <Paper backgroundColor="secondary" margin="10px 0">
+                <Box display="flex" justifyContent="space-between">
+                  <Text fontWeight="bold" color="gray">
+                    {formatAttribute(modal.data.attribute, modal.data.level+character[ATTRIBUTE.PRIMARY[modal.data.attribute]])}
+                  </Text>
+                  <Button type="filled" color="success" fontSize="medium" onClick={handle.updateInventory}>
+                    Aprimorar
+                  </Button>
+                </Box>
+              </Paper>
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="filled" padding={10} onClick={handle.resetInventory}>
+                  Fechar
+                </Button>
+                <Button type="filled" color="error" padding={10} onClick={() => null}>
+                  Remover
+                </Button>
+              </Box>
+            </>
           )
         }}
       </Modal>
-      <List height={200} {...inventory} />
+      <List height={200} onClick={(row) => handle.openModal('detail_item', row)} {...inventory} />
       <Box display="flex" justifyContent="space-between" margin={10}>
         <Text fontWeight="bold">
           <Text inline color="primary">Capacidade: </Text> {phisicalCapacity(character)}

@@ -12,6 +12,7 @@ import {
   Text,
   Title,
 } from '../../../components'
+import { formatAttribute } from '../../../utils'
 
 const INITIAL = {
   MODAL: {
@@ -43,15 +44,6 @@ const INITIAL = {
   },
 }
 
-const formatAttribute = (text = '', point = 0) => {
-  const attribute = { text, point }
-  if (attribute.point) {
-    attribute.point = attribute.point >= 0 ? `+${attribute.point}` : `${attribute.point}`
-    return `${attribute.text}${attribute.point} `
-  }
-  return ''
-}
-
 function Features({
   user,
   character,
@@ -66,15 +58,17 @@ function Features({
   const [features, setFeatures] = useState(INITIAL.FEATURES)
 
   useEffect(() => {
-    character.id && requestAPI('features', {
-      id_character: character.id,
-    })
-      .read(({ data }) => {
-        setFeatures((state) => ({
-          ...state, rows: data.response,
-        }))
+    if (character) {
+      requestAPI('features', {
+        id_character: character.id,
       })
-  }, [refresh, character.id])
+        .read(({ data }) => {
+          setFeatures((state) => ({
+            ...state, rows: data.response,
+          }))
+        })
+    }
+  }, [refresh, character])
 
   const handle = {
     openModal: (content, data = {}) => {
