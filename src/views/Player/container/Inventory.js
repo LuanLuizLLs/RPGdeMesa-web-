@@ -75,6 +75,7 @@ function Inventory({
   const handle = {
     openModal: (content, data = {}) => {
       setModal({ content, data })
+      setValues({ ...values, ...data })
     },
     resetInventory: () => {
       setModal(INITIAL.MODAL)
