@@ -73,11 +73,11 @@ export const phisicalCapacity = (character = {}, capacity = 0) => {
 }
 
 /** Format attributes */
-export const formatAttribute = (text = '', point = 0) => {
-  const attribute = { text, point }
-  if (attribute.point) {
-    attribute.point = attribute.point >= 0 ? `+${attribute.point}` : `${attribute.point}`
-    return `${attribute.text}${attribute.point} `
+export const formatAttribute = (attribute = '', point = 0, modifier = 0) => {
+  const format = { attribute, point: point + modifier }
+  if (format.point) {
+    format.point = format.point >= 0 ? `+${format.point}` : `${format.point}`
+    return `${format.attribute} 1d20${format.point} | 1d6+${modifier}`
   }
   return ''
 }
