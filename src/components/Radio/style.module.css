@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.label {
+  width: 100%;
+  padding: 6px;
+  font-weight: bolder;
+  color: var(--color-primary);
+}
+
+.radio {
+  padding: 2px;
+}
+
+.radio>input {
+  margin: 5px;
+  accent-color: var(--color-primary);
+}
