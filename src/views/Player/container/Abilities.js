@@ -125,6 +125,7 @@ function Abilities({
       requestAPI('abilities', values)
         .delete(({ data }) => {
           setRefresh(data)
+          setRefreshCharacter(data)
           setMessage(data.message)
         })
         .catch(({ response }) => {

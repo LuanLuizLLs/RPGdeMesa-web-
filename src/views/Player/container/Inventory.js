@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Context from '../../../global/context'
 import { requestAPI } from '../../../services/api'
 import { ATTRIBUTE, INVENTORY } from '../../../configs'
+import { formatAttribute, phisicalCapacity } from '../../../utils'
 import {
   Box,
   Button,
@@ -10,12 +11,12 @@ import {
   List,
   Modal,
   Paper,
+  Radio,
   Select,
   Text,
   TextArea,
   Title,
 } from '../../../components'
-import { formatAttribute, phisicalCapacity } from '../../../utils'
 
 const INITIAL = {
   MODAL: {
@@ -26,7 +27,7 @@ const INITIAL = {
     name: '',
     description: '',
     attribute: 'FOR',
-    usable: 'Não',
+    usable: false,
     level: 1,
   },
   REFRESH: null,
@@ -42,8 +43,8 @@ const INITIAL = {
   }
 }
 
-const identifyUsable = (value = '') => {
-  return INVENTORY.USABLE.indexOf(value)
+const optionsUsable = (usable = false) => {
+  return usable ? Object.keys(ATTRIBUTE.SECONDARY) : Object.keys(ATTRIBUTE.PRIMARY)
 }
 
 function Inventory({
@@ -91,7 +92,6 @@ function Inventory({
         ...values,
         user: user.id,
         id_character: character.id,
-        usable: identifyUsable(values.usable),
       })
         .create(({ data }) => {
           setRefresh(data)
@@ -110,8 +110,6 @@ function Inventory({
 
       requestAPI('inventory', {
         ...values,
-        user: user.id,
-        id_character: character.id,
         level: values.level + 1,
       })
         .update(({ data }) => {
@@ -123,7 +121,25 @@ function Inventory({
           setMessage(response.data.message)
         })
         .finally(handle.resetInventory)
-    }
+    },
+    deleteInventory: (usage = false) => {
+      setLoading({
+        type: 'bar'
+      })
+      
+      requestAPI('inventory', {
+        ...values, usage,
+      })
+        .delete(({ data }) => {
+          setRefresh(data)
+          setRefreshCharacter(data)
+          setMessage(data.message)
+        })
+        .catch(({ response }) => {
+          setMessage(response.data.message)
+        })
+        .finally(handle.resetAbility)
+    },
   }
 
   return (
@@ -141,7 +157,7 @@ function Inventory({
                 placeholder="Nome"
                 stateValue={[values, setValues]}
               />
-              <Select
+              <Radio
                 name="usable"
                 label="Usável"
                 options={INVENTORY.USABLE}
@@ -157,7 +173,7 @@ function Inventory({
                   <Select
                     name="attribute"
                     label="Atributo"
-                    options={INVENTORY.ATTRIBUTES[identifyUsable(values.usable)]}
+                    options={optionsUsable(values.usable)}
                     stateValue={[values, setValues]}
                   />
                 </Grid>
@@ -183,7 +199,35 @@ function Inventory({
           ),
           detail_item: modal.data.usable ? (
             <>
-              USÁVEL
+              <Title type="h6">
+                Detalhes do item:
+              </Title>
+              <Paper backgroundColor="secondary">
+                <Text color="primary" fontWeight="bold">
+                  {modal.data.name} (Lv {modal.data.level})
+                </Text>
+                <Text>
+                  {modal.data.description}
+                </Text>
+              </Paper>
+              <Paper backgroundColor="secondary" margin="10px 0">
+                <Box display="flex" justifyContent="space-between" alignItems="center">
+                  <Text fontWeight="bold" color="gray">
+                    {modal.data.attribute} 1d6+{modal.data.level}
+                  </Text>
+                  <Button type="filled" color="success" fontSize="medium" onClick={() => handle.deleteInventory(true)}>
+                    USAR
+                  </Button>
+                </Box>
+              </Paper>
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="filled" padding={10} onClick={handle.resetInventory}>
+                  Fechar
+                </Button>
+                <Button type="filled" color="error" padding={10} onClick={() => handle.deleteInventory()}>
+                  Remover
+                </Button>
+              </Box>
             </>
           ) : (
             <>
@@ -212,7 +256,7 @@ function Inventory({
                 <Button type="filled" padding={10} onClick={handle.resetInventory}>
                   Fechar
                 </Button>
-                <Button type="filled" color="error" padding={10} onClick={() => null}>
+                <Button type="filled" color="error" padding={10} onClick={handle.deleteInventory}>
                   Remover
                 </Button>
               </Box>

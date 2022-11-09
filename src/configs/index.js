@@ -301,12 +301,8 @@ export const SCENARIOS = [
 
 /** Inventory configs */
 export const INVENTORY = {
-  ATTRIBUTES: [
-    Object.keys(ATTRIBUTE.PRIMARY),
-    Object.keys(ATTRIBUTE.SECONDARY),
-  ],
-  USABLE: [
-    'Não',
-    'Sim',
-  ],
+  USABLE: {
+    'Não': false,
+    'Sim': true,
+  },
 }
