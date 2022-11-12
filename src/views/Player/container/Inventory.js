@@ -26,7 +26,7 @@ const INITIAL = {
   VALUES: {
     name: '',
     description: '',
-    attribute: 'FOR',
+    attribute: '',
     usable: false,
     level: 1,
   },
@@ -72,6 +72,13 @@ function Inventory({
         })
     }
   }, [refresh, character])
+
+  useEffect(() => {
+    setValues((state) => ({
+      ...state,
+      attribute: optionsUsable(values.usable)[0]
+    }))
+  }, [values.usable])
 
   const handle = {
     openModal: (content, data = {}) => {
@@ -126,9 +133,10 @@ function Inventory({
       setLoading({
         type: 'bar'
       })
-      
+
       requestAPI('inventory', {
-        ...values, usage,
+        ...values, 
+        ...usage && { usage },
       })
         .delete(({ data }) => {
           setRefresh(data)
@@ -138,9 +146,11 @@ function Inventory({
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
-        .finally(handle.resetAbility)
+        .finally(handle.resetInventory)
     },
   }
+
+  console.log(values)
 
   return (
     <>
@@ -256,7 +266,7 @@ function Inventory({
                 <Button type="filled" padding={10} onClick={handle.resetInventory}>
                   Fechar
                 </Button>
-                <Button type="filled" color="error" padding={10} onClick={handle.deleteInventory}>
+                <Button type="filled" color="error" padding={10} onClick={() => handle.deleteInventory()}>
                   Remover
                 </Button>
               </Box>
