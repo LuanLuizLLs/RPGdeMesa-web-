@@ -129,14 +129,13 @@ function Inventory({
         })
         .finally(handle.resetInventory)
     },
-    deleteInventory: (usage = false) => {
+    deleteInventory: () => {
       setLoading({
         type: 'bar'
       })
 
       requestAPI('inventory', {
-        ...values, 
-        ...usage && { usage },
+        ...values,
       })
         .delete(({ data }) => {
           setRefresh(data)
@@ -225,7 +224,7 @@ function Inventory({
                   <Text fontWeight="bold" color="gray">
                     {modal.data.attribute} 1d6+{modal.data.level}
                   </Text>
-                  <Button type="filled" color="success" fontSize="medium" onClick={() => handle.deleteInventory(true)}>
+                  <Button type="filled" color="success" fontSize="medium" onClick={handle.deleteInventory}>
                     USAR
                   </Button>
                 </Box>
@@ -234,7 +233,7 @@ function Inventory({
                 <Button type="filled" padding={10} onClick={handle.resetInventory}>
                   Fechar
                 </Button>
-                <Button type="filled" color="error" padding={10} onClick={() => handle.deleteInventory()}>
+                <Button type="filled" color="error" padding={10} onClick={handle.deleteInventory}>
                   Remover
                 </Button>
               </Box>
@@ -266,7 +265,7 @@ function Inventory({
                 <Button type="filled" padding={10} onClick={handle.resetInventory}>
                   Fechar
                 </Button>
-                <Button type="filled" color="error" padding={10} onClick={() => handle.deleteInventory()}>
+                <Button type="filled" color="error" padding={10} onClick={handle.deleteInventory}>
                   Remover
                 </Button>
               </Box>
