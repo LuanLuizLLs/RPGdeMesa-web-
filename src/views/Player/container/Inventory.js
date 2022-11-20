@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Context from '../../../global/context'
 import { requestAPI } from '../../../services/api'
 import { ATTRIBUTE, INVENTORY } from '../../../configs'
-import { formatAttribute, phisicalCapacity } from '../../../utils'
+import { pointAttribute, phisicalCapacity } from '../../../utils'
 import {
   Box,
   Button,
@@ -254,7 +254,7 @@ function Inventory({
               <Paper backgroundColor="secondary" margin="10px 0">
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                   <Text fontWeight="bold" color="gray">
-                    {formatAttribute(modal.data.attribute, character[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
+                    {pointAttribute(modal.data.attribute, character[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
                   </Text>
                   <Button type="filled" color="success" fontSize="medium" onClick={handle.updateInventory}>
                     Aprimorar
