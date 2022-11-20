@@ -21,7 +21,7 @@ import {
 } from '../../components'
 
 const INITIAL = {
-  TAB: 2,
+  TAB: 0,
   REFRESH: null,
   VALUES: {},
 }
