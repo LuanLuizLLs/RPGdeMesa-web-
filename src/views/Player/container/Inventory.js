@@ -117,6 +117,7 @@ function Inventory({
 
       requestAPI('inventory', {
         ...values,
+        user: user.id,
         level: values.level + 1,
       })
         .update(({ data }) => {
@@ -148,8 +149,6 @@ function Inventory({
         .finally(handle.resetInventory)
     },
   }
-
-  console.log(values)
 
   return (
     <>
