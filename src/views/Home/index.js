@@ -95,7 +95,7 @@ function Home() {
       setModal({ content, data })
       setValues({ ...values, ...data })
     },
-    resetCampaign: () => {
+    resetValues: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
       setLoading({})
@@ -119,7 +119,7 @@ function Home() {
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
-        .finally(handle.resetCampaign)
+        .finally(handle.resetValues)
     },
     updateCampaign: () => {
       setLoading({
@@ -136,7 +136,7 @@ function Home() {
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
-        .finally(handle.resetCampaign)
+        .finally(handle.resetValues)
     },
     deleteCampaign: () => {
       setLoading({
@@ -153,7 +153,7 @@ function Home() {
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
-        .finally(handle.resetCampaign)
+        .finally(handle.resetValues)
     },
     startCampaign: () => {
       setDispatch({
@@ -161,11 +161,6 @@ function Home() {
         data: values,
       })
       setNavigate('/master')
-    },
-    resetCharacter: () => {
-      setLoading({})
-      setModal(INITIAL.MODAL)
-      setValues(INITIAL.VALUES)
     },
     createCharacter: () => {
       setLoading({
@@ -175,7 +170,7 @@ function Home() {
       requestAPI('characters', {
         ...values,
         ...RACE[values.race],
-        currency: CASTE[values.caste],
+        riches: CASTE[values.caste],
         id_user: USER.id,
       })
         .create(({ data }) => {
@@ -187,7 +182,7 @@ function Home() {
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
-        .finally(handle.resetCharacter)
+        .finally(handle.resetValues)
     },
     updateCharacter: () => {
       setLoading({
@@ -204,7 +199,7 @@ function Home() {
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
-        .finally(handle.resetCharacter)
+        .finally(handle.resetValues)
     },
     deleteCharacter: () => {
       setLoading({
@@ -221,7 +216,7 @@ function Home() {
         .catch(({ response }) => {
           setMessage(response.data.message)
         })
-        .finally(handle.resetCharacter)
+        .finally(handle.resetValues)
     },
     startCharacter: () => {
       setDispatch({
@@ -237,10 +232,7 @@ function Home() {
       <Modal
         maxWidth={450}
         stateModal={[modal, setModal]}
-        onClose={() => {
-          handle.resetCampaign()
-          handle.resetCharacter()
-        }}
+        onClose={handle.resetValues}
       >
         {{
           campaign_start: (
@@ -257,7 +249,7 @@ function Home() {
                 </Text>
               </Paper>
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="bottomless" color="primary" padding={10} onClick={handle.resetCampaign}>
+                <Button type="bottomless" color="primary" padding={10} onClick={handle.resetValues}>
                   Voltar
                 </Button>
                 <Button type="filled" padding={10} onClick={handle.startCampaign}>
@@ -295,7 +287,7 @@ function Home() {
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" color="secondary" padding={10} onClick={handle.resetCampaign}>
+                <Button type="filled" color="secondary" padding={10} onClick={handle.resetValues}>
                   Cancelar
                 </Button>
                 <Button type="filled" color="primary" padding={10} onClick={handle.createCampaign}>
@@ -321,7 +313,7 @@ function Home() {
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" color="secondary" padding={10} onClick={handle.resetCampaign}>
+                <Button type="filled" color="secondary" padding={10} onClick={handle.resetValues}>
                   Cancelar
                 </Button>
                 <Button type="filled" padding={10} onClick={handle.updateCampaign}>
@@ -339,7 +331,7 @@ function Home() {
                 Tem certeza que deseja excluir a campanha <b>{modal.data.name}</b>?
               </Text>
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="bottomless" padding={10} onClick={handle.resetCampaign}>
+                <Button type="bottomless" padding={10} onClick={handle.resetValues}>
                   Cancelar
                 </Button>
                 <Button type="filled" color="error" padding={10} onClick={handle.deleteCampaign}>
@@ -362,7 +354,7 @@ function Home() {
                 </Text>
               </Paper>
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="bottomless" color="primary" padding={10} onClick={handle.resetCharacter}>
+                <Button type="bottomless" color="primary" padding={10} onClick={handle.resetValues}>
                   Voltar
                 </Button>
                 <Button type="filled" padding={10} onClick={handle.startCharacter}>
@@ -406,7 +398,7 @@ function Home() {
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" color="secondary" padding={10} onClick={handle.resetCharacter}>
+                <Button type="filled" color="secondary" padding={10} onClick={handle.resetValues}>
                   Cancelar
                 </Button>
                 <Button type="filled" padding={10} onClick={handle.createCharacter}>
@@ -432,7 +424,7 @@ function Home() {
                 stateValue={[values, setValues]}
               />
               <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" color="secondary" padding={10} onClick={handle.resetCharacter}>
+                <Button type="filled" color="secondary" padding={10} onClick={handle.resetValues}>
                   Cancelar
                 </Button>
                 <Button type="filled" padding={10} onClick={handle.updateCharacter}>
@@ -450,7 +442,7 @@ function Home() {
                 Tem certeza que deseja excluir o personagem <b>{modal.data.name}</b>?
               </Text>
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="bottomless" padding={10} onClick={handle.resetCharacter}>
+                <Button type="bottomless" padding={10} onClick={handle.resetValues}>
                   Cancelar
                 </Button>
                 <Button type="filled" color="error" padding={10} onClick={handle.deleteCharacter}>
