@@ -131,27 +131,27 @@ export const RACE = {
 
 /** Caste configs */
 export const CASTE = {
-  'Bárbaro': 2,
-  'Bardo': 5,
+  'Bárbaro': 1,
+  'Bardo': 6,
   'Bruxo': 4,
   'Clérigo': 5,
   'Druida': 2,
   'Feiticeiro': 3,
   'Guerreiro': 5,
-  'Ladino': 4,
+  'Ladino': 3,
   'Mago': 4,
   'Monge': 1,
-  'Paladino': 5,
-  'Patrulheiro': 5,
+  'Paladino': 6,
+  'Patrulheiro': 2,
 }
 
 /** Tendecy configs */
 export const TENDENCY = {
-  'Bom': 6,
-  'Leal': 3,
-  'Neutro': 0,
-  'Caótico': 3,
-  'Mau': 6,
+  'Bom': 3,
+  'Leal': 2,
+  'Neutro': 1,
+  'Caótico': 2,
+  'Mau': 3,
 }
 
 /** Periods options */
@@ -163,10 +163,10 @@ export const PERIOD = {
 
 /** Seasons options */
 export const SEASON = {
-  'Outono': 4,
   'Inverno': 6,
-  'Primavera': 3,
   'Verão': 5,
+  'Outono': 4,
+  'Primavera': 3,
 }
 
 /** Conditions configs */
