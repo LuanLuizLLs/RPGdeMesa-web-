@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react'
-import { requestAPI } from '../../services/api'
-import Context from '../../global/context'
-import useLogin from '../../services/login'
+import React, { useState } from 'react'
 import Logo from '../../assets/img/logo.png'
+import useLogin from '../../services/login'
+import useLoading from '../../hooks/loading'
+import useMessage from '../../hooks/message'
 import { isNull } from '../../utils'
+import { requestAPI } from '../../services/api'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -38,7 +39,8 @@ function Login() {
 
   const setNavigate = useNavigate()
 
-  const { setLoading, setMessage } = useContext(Context)
+  const { openMessage } = useMessage()
+  const { startLoading, stopLoaging } = useLoading()
 
   const [view, setView] = useState(INITIAL.VIEW)
   const [values, setValues] = useState(INITIAL.VALUES)
@@ -52,80 +54,62 @@ function Login() {
       })
     },
     resetLogin: () => {
-      setLoading({})
+      stopLoaging()
     },
     submitLogin: () => {
       if (isNull(values, ['new_password'])) {
-        return setMessage({
-          type: 'warning',
-          message: 'Preencha todos os dados',
-        })
+        return openMessage('warning', 'Preencha todos os dados')
       }
-
-      setLoading({
-        type: 'circular',
-      })
+      
+      startLoading('circular')
 
       requestAPI('users', values)
         .read(({ data }) => {
           const [user = {}] = data.response
           In(user)
           setNavigate('/')
-          setMessage(data.message)
+          openMessage('success', data.message)
+        })
+        .catch(({ response }) => {
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetLogin)
     },
     submitRegister: () => {
       if (isNull(values)) {
-        return setMessage({
-          type: 'warning',
-          message: 'Preencha todos os dados',
-        })
+        return openMessage('warning', 'Preencha todos os dados')
       } else if (!comparativePassword(values.password, values.new_password).valid) {
-        return setMessage({
-          type: 'error',
-          message: 'As senhas não coincidem',
-        })
+        return openMessage('warning', 'As senhas não coincidem')
       }
 
-      setLoading({
-        type: 'bar',
-      })
+      startLoading('bar')
 
       requestAPI('users', values)
         .create(({ data }) => {
           setView(INITIAL.VIEW)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetLogin)
     },
     submitRecover: () => {
       if (isNull(values)) {
-        return setMessage({
-          type: 'warning',
-          message: 'Preencha todos os dados',
-        })
+        return openMessage('warning', 'Preencha todos os dados')
       } else if (!comparativePassword(values.password, values.new_password).valid) {
-        return setMessage({
-          type: 'error',
-          message: 'As senhas não coincidem',
-        })
+        return openMessage('warning', 'As senhas não coincidem')
       }
 
-      setLoading({
-        type: 'bar',
-      })
+      startLoading('bar')
 
       requestAPI('users', values)
         .update(({ data }) => {
           setView(INITIAL.VIEW)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetLogin)
     },

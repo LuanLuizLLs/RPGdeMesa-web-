@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { INITIAL_LOADING } from './hooks/loading'
+import { INITIAL_MESSAGE } from './hooks/message'
 import Routes from './routes'
 import Context from './global/context'
 import Message from './layouts/Message'
 import Loading from './layouts/Loading'
-
-const INITIAL = {
-  LOADING: {
-    type: '',
-  },
-  MESSAGE: {
-    type: '',
-    message: '',
-  },
-}
 
 function App() {
 
@@ -22,8 +14,8 @@ function App() {
 
   const { USER } = useSelector(({ reducer }) => reducer)
 
-  const [loagind, setLoading] = useState(INITIAL.LOADING)
-  const [message, setMessage] = useState(INITIAL.MESSAGE)
+  const [loagind, setLoading] = useState(INITIAL_LOADING)
+  const [message, setMessage] = useState(INITIAL_MESSAGE)
   
   const initialContext = {
     setLoading,
