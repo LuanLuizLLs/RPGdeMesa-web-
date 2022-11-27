@@ -1,17 +1,29 @@
 import axios from 'axios'
 
 /** Service API */
-const API = axios.create({
+const base = axios.create({
   baseURL: `http://${window.location.hostname}:8080`,
 })
 
-/** Request to API */
-export const requestAPI = (prefix = '', data = {}) => {
+/**
+ * Request to API
+ * @param {string} prefix 
+ * @param {object} params 
+ * @returns
+ */
+const API = (prefix = '', params = {}) => {
+  const routes = {
+    create: `${prefix}/create`,
+    read: `${prefix}/read`,
+    update: `${prefix}/update`,
+    delete: `${prefix}/delete`,
+  }
+
   return {
-    create: (callback) => API.post(`${prefix}/create`, data).then(callback),
-    read: (callback) => API.get(`${prefix}/read`, { params: data }).then(callback),
-    update: (callback) => API.patch(`${prefix}/update`, data).then(callback),
-    delete: (callback) => API.delete(`${prefix}/delete`, { params: data }).then(callback),
+    create: (callback) => base.post(routes.create, params).then(callback),
+    read: (callback) => base.get(routes.read, { params }).then(callback),
+    update: (callback) => base.patch(routes.update, params).then(callback),
+    delete: (callback) => base.delete(routes.delete, { params }).then(callback),
   }
 }
 
