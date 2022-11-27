@@ -39,7 +39,7 @@ function Login() {
 
   const { submitLogin } = useLogin()
   const { openMessage } = useMessage()
-  const { startLoading, stopLoaging } = useLoading()
+  const { startLoading, stopLoading } = useLoading()
 
   const [view, setView] = useState(INITIAL.VIEW)
   const [values, setValues] = useState(INITIAL.VALUES)
@@ -53,7 +53,7 @@ function Login() {
       })
     },
     resetLogin: () => {
-      stopLoaging()
+      stopLoading()
     },
     submitLogin: () => {
       if (isNull(values, ['new_password'])) {

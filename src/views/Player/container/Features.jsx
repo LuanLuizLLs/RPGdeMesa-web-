@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Context from '../../../global/context'
+import React, { useEffect, useState } from 'react'
+import useMessage from '../../../hooks/message'
+import useLoading from '../../../hooks/loading'
 import { requestAPI } from '../../../services/api'
 import {
   Box,
@@ -50,7 +51,8 @@ function Features({
   setRefreshCharacter,
 }) {
 
-  const { setMessage, setLoading } = useContext(Context)
+  const { openMessage } = useMessage()
+  const { startLoading, stopLoading } = useLoading()
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
@@ -78,12 +80,10 @@ function Features({
     resetFeature: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
-      setLoading({})
+      stopLoading({})
     },
     createFeature: () => {
-      setLoading({
-        type: 'bar',
-      })
+      startLoading('bar')
 
       requestAPI('features', {
         ...values,
@@ -93,26 +93,24 @@ function Features({
         .create(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetFeature)
     },
     deleteFeature: () => {
-      setLoading({
-        type: 'bar',
-      })
+      startLoading('bar')
 
       requestAPI('features', values)
         .delete(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetFeature)
     }

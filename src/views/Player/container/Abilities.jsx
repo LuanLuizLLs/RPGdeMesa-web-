@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Context from '../../../global/context'
+import React, { useEffect, useState } from 'react'
+import useMessage from '../../../hooks/message'
+import useLoading from '../../../hooks/loading'
 import { ATTRIBUTE } from '../../../configs'
 import { requestAPI } from '../../../services/api'
 import {
@@ -47,7 +48,8 @@ function Abilities({
   setRefreshCharacter,
 }) {
 
-  const { setMessage, setLoading } = useContext(Context)
+  const { openMessage } = useMessage()
+  const { startLoading, stopLoading } = useLoading()
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
@@ -75,12 +77,10 @@ function Abilities({
     resetAbility: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
-      setLoading({})
+      stopLoading()
     },
     createAbility: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('abilities', {
         ...values,
@@ -90,17 +90,15 @@ function Abilities({
         .create(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetAbility)
     },
     updateAbility: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('abilities', {
         ...values,
@@ -110,26 +108,24 @@ function Abilities({
         .update(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetAbility)
     },
     deleteAbility: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('abilities', values)
         .delete(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetAbility)
     },

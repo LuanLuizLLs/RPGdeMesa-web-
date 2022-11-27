@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import theme from '../../../theme'
-import Context from '../../../global/context'
+import useMessage from '../../../hooks/message'
+import useLoading from '../../../hooks/loading'
 import imagePlayer from '../../../assets/img/player.png'
+import { maxLife } from '../../../utils'
 import { requestAPI } from '../../../services/api'
 import {
   Box,
@@ -16,7 +18,6 @@ import {
   Text,
   Title,
 } from '../../../components'
-import { maxLife } from '../../../utils'
 
 const INITIAL = {
   MODAL: {
@@ -53,7 +54,8 @@ function Characters({
   campaign,
 }) {
 
-  const { setLoading, setMessage } = useContext(Context)
+  const { openMessage } = useMessage()
+  const { startLoading, stopLoading } = useLoading()
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
@@ -65,7 +67,7 @@ function Characters({
       id_campaign: campaign.id
     })
       .read(({ data }) => {
-        setCharacters(data.response.length ? Object.assign({}, data.response) : INITIAL.CHARACTERS)
+        setCharacters(Object.assign(INITIAL.CHARACTERS, data.response))
       })
   }, [refresh, campaign.id])
 
@@ -78,14 +80,12 @@ function Characters({
       setValues(INITIAL.VALUES)
     },
     resetCharacter: () => {
-      setLoading({})
       setValues(INITIAL.VALUES)
       setModal(INITIAL.MODAL)
+      stopLoading()
     },
     searchCharacter: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('characters', values)
         .read(({ data }) => {
@@ -94,16 +94,12 @@ function Characters({
             ...values,
             ...character,
           })
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
-        .finally(() => {
-          setLoading({})
-        })
+        .finally(stopLoading)
     },
     addCharacter: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('characters', {
         ...values,
@@ -111,17 +107,15 @@ function Characters({
       })
         .update(({ data }) => {
           setRefresh(data.message)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetCharacter)
     },
     removeCharacter: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('characters', {
         ...values,
@@ -129,25 +123,23 @@ function Characters({
       })
         .update(({ data }) => {
           setRefresh(data.message)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetCharacter)
     },
     updateCharacter: (index) => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('characters', characters[index])
         .update(({ data }) => {
           setRefresh(data.message)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetCharacter)
     },

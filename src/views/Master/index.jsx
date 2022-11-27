@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Context from '../../global/context'
+import React, { useEffect, useState } from 'react'
 import Page from '../../layouts/Page'
+import Combat from './containers/Combat'
 import Exploration from './containers/Exploration'
 import Interaction from './containers/Interaction'
-import Combat from './containers/Combat'
 import Characters from './containers/Characters'
+import useMessage from '../../hooks/message'
+import useLoading from '../../hooks/loading'
 import { optionRandow } from '../../utils'
 import { requestAPI } from '../../services/api'
 import { ADVENTURES, CONDITIONS, PERIOD, SCENARIOS, SEASON } from '../../configs'
@@ -66,8 +67,8 @@ function Master() {
 
   const setDispatch = useDispatch()
 
-  const { setLoading, setMessage } = useContext(Context)
-
+  const { openMessage } = useMessage()
+  const { startLoading, stopLoading } = useLoading()
   const { CAMPAIGN, ADVENTURE, SCENERY } = useSelector(({ reducer }) => reducer)
 
   const [tab, setTab] = useState(INITIAL.TAB)
@@ -137,7 +138,7 @@ function Master() {
     resetValues: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
-      setLoading({})
+      stopLoading()
     },
     generateAdventure: () => {
       setValues({
@@ -146,9 +147,7 @@ function Master() {
       })
     },
     createAdventure: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('adventures', {
         ...values,
@@ -156,32 +155,28 @@ function Master() {
       })
         .create(({ data }) => {
           setRefresh(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
     deleteAdventure: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('adventures', values)
         .delete(({ data }) => {
           setRefresh(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
     startAdventure: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('campaigns', {
         ...CAMPAIGN,
@@ -189,25 +184,23 @@ function Master() {
       })
         .update(({ data }) => {
           setRefresh(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
     updateAdventure: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('adventures', values)
         .update(({ data }) => {
           setRefresh(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
@@ -218,9 +211,7 @@ function Master() {
       })
     },
     createScenery: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('scenarios', {
         ...values,
@@ -228,32 +219,28 @@ function Master() {
       })
         .create(({ data }) => {
           setRefresh(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
     deleteScenery: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('scenarios', values)
         .delete(({ data }) => {
           setRefresh(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
     startScenery: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('scenarios', {
         ...CAMPAIGN,
@@ -261,43 +248,39 @@ function Master() {
       })
         .update(({ data }) => {
           setRefresh(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
     updateScenery: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('scenarios', values)
         .update(({ data }) => {
           setRefresh(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
     updateCampaign: (update) => {
-      setLoading({
-        type: 'bar'
-      })
-      
+      startLoading('bar')
+
       requestAPI('campaigns', {
         ...update,
         ...CONDITIONS[update.season][update.period],
       })
         .update(({ data }) => {
           setRefresh(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },

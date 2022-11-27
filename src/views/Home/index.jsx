@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Page from '../../layouts/Page'
-import Context from '../../global/context'
+import useLoading from '../../hooks/loading'
+import useMessage from '../../hooks/message'
 import imageMaster from '../../assets/img/master.png'
 import imagePlayer from '../../assets/img/player.png'
 import { requestAPI } from '../../services/api'
@@ -60,7 +61,9 @@ function Home() {
   const setDispatch = useDispatch()
 
   const { USER } = useSelector(({ reducer }) => reducer)
-  const { setLoading, setMessage } = useContext(Context)
+
+  const { openMessage } = useMessage()
+  const { startLoading, stopLoading } = useLoading()
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
@@ -98,12 +101,10 @@ function Home() {
     resetValues: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
-      setLoading({})
+      stopLoading()
     },
     createCampaign: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('campaigns', {
         ...values,
@@ -114,44 +115,40 @@ function Home() {
           setRefresh({
             campaign: data,
           })
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
     updateCampaign: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('campaigns', values)
         .update(({ data }) => {
           setRefresh({
             campaign: data
           })
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
     deleteCampaign: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('campaigns', values)
         .delete(({ data }) => {
-          setMessage(data.message)
+          openMessage('success', data.message)
           setRefresh(({
             campaign: data
           }))
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
@@ -163,9 +160,7 @@ function Home() {
       setNavigate('/master')
     },
     createCharacter: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('characters', {
         ...values,
@@ -177,44 +172,40 @@ function Home() {
           setRefresh({
             character: data
           })
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
     updateCharacter: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('characters', values)
         .update(({ data }) => {
           setRefresh({
             character: data
           })
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },
     deleteCharacter: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('characters', values)
         .delete(({ data }) => {
           setRefresh(({
             character: data
           }))
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetValues)
     },

@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Context from '../../../global/context'
+import React, { useEffect, useState } from 'react'
+import useLoading from '../../../hooks/loading'
+import useMessage from '../../../hooks/message'
 import { requestAPI } from '../../../services/api'
 import { ATTRIBUTE, INVENTORY } from '../../../configs'
 import { pointAttribute, phisicalCapacity } from '../../../utils'
@@ -53,7 +54,8 @@ function Inventory({
   setRefreshCharacter,
 }) {
 
-  const { setLoading, setMessage } = useContext(Context)
+  const { openMessage } = useMessage()
+  const { startLoading, stopLoading } = useLoading()
 
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
@@ -88,12 +90,10 @@ function Inventory({
     resetInventory: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
-      setLoading({})
+      stopLoading()
     },
     createInventory: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('inventory', {
         ...values,
@@ -103,17 +103,15 @@ function Inventory({
         .create(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetInventory)
     },
     updateInventory: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('inventory', {
         ...values,
@@ -123,17 +121,15 @@ function Inventory({
         .update(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetInventory)
     },
     deleteInventory: () => {
-      setLoading({
-        type: 'bar'
-      })
+      startLoading('bar')
 
       requestAPI('inventory', {
         ...values,
@@ -141,10 +137,10 @@ function Inventory({
         .delete(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          setMessage(data.message)
+          openMessage('success', data.message)
         })
         .catch(({ response }) => {
-          setMessage(response.data.message)
+          openMessage('error', response.data.message)
         })
         .finally(handle.resetInventory)
     },

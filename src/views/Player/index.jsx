@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Page from '../../layouts/Page'
 import Features from './container/Features'
 import Abilities from './container/Abilities'
 import Inventory from './container/Inventory'
-import Context from '../../global/context'
+import useMessage from '../../hooks/message'
+import useLoading from '../../hooks/loading'
 import { maxLife } from '../../utils'
 import { requestAPI } from '../../services/api'
 import { useParams } from 'react-router-dom'
@@ -31,7 +32,8 @@ function Player() {
   const setDispatch = useDispatch()
 
   const { id_character } = useParams()
-  const { setLoading, setMessage } = useContext(Context)
+  const { openMessage } = useMessage()
+  const { startLoading, stopLoading } = useLoading()
   const { USER, CHARACTER, CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
   const [tab, setTab] = useState(INITIAL.TAB)
@@ -39,9 +41,7 @@ function Player() {
   const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 
   useEffect(() => {
-    id_character && setLoading({
-      type: 'circular'
-    })
+    id_character && startLoading('circular')
 
     requestAPI('characters', {
       id: id_character || CHARACTER.id,
@@ -59,12 +59,21 @@ function Player() {
         })
       })
       .catch(({ response }) => {
-        setMessage(response.data.message)
+        openMessage('error', response.data.message)
       })
-      .finally(() => {
-        setLoading({})
-      })
-  }, [refresh, id_character, CHARACTER.id, CAMPAIGN.id, USER.id, setLoading, setMessage, setValues, setDispatch])
+      .finally(stopLoading)
+  }, [
+    refresh, 
+    id_character, 
+    USER.id, 
+    CAMPAIGN.id, 
+    CHARACTER.id, 
+    setValues, 
+    setDispatch,
+    startLoading, 
+    stopLoading, 
+    openMessage 
+  ])
 
   return (
     <Page tab="Jogador" title="Ficha do Jogador" width="80vw">
