@@ -1,32 +1,27 @@
 import React, { useEffect } from 'react'
 import classes from './style.module.css'
-
-const openMessage = (open) => {
-  return Boolean(open) ? 'translateX(0)' : 'translateX(200%)'
-}
+import useMessage from '../../hooks/message'
 
 function Message({
-  stateMessage = [{
-    type: '',
-    message: '',
-    time: 0
-  }],
+  stateMessage = [],
 }) {
 
-  const [state, setState] = stateMessage
+  const [state = {}] = stateMessage
+
+  const { closeMessage } = useMessage()
 
   const style = {
-    transform: openMessage(state.type),
+    transform: state.open ? 'translateX(0)' : 'translateX(200%)',
   }
 
   useEffect(() => {
     const { time = 15000 } = state
-    setTimeout(() => setState({}), time)
-  }, [state, setState])
+    setTimeout(closeMessage, time)
+  }, [state, closeMessage])
 
   return (
     <div className={classes.container}>
-      <div className={classes.message} style={style} type={state.type} onClick={() => setState({})}>
+      <div className={classes.message} style={style} type={state.type} onClick={closeMessage}>
         {state.message}
       </div>
     </div>
