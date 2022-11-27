@@ -11,9 +11,9 @@ function Page({
   tab,
 }) {
 
-  const { USER } = useSelector(({ reducer }) => reducer)
+  const { submitLogout } = useLogin()
 
-  const { Out } = useLogin()
+  const { USER } = useSelector(({ reducer }) => reducer)
 
   useLayoutEffect(() => {
     document.title = `RPG | ${tab}`
@@ -35,7 +35,7 @@ function Page({
           </figure>
           <div>
             <span>{USER.name || '...'}</span>
-            <span className={classes.logout} onClick={Out}>Logout</span>
+            <span className={classes.logout} onClick={submitLogout}>Logout</span>
           </div>
         </div>
       </header>

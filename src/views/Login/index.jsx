@@ -34,11 +34,10 @@ const comparativePassword = (first, secound) => {
 }
 
 function Login() {
-
-  const { In } = useLogin()
-
+  
   const setNavigate = useNavigate()
 
+  const { submitLogin } = useLogin()
   const { openMessage } = useMessage()
   const { startLoading, stopLoaging } = useLoading()
 
@@ -66,7 +65,7 @@ function Login() {
       requestAPI('users', values)
         .read(({ data }) => {
           const [user = {}] = data.response
-          In(user)
+          submitLogin(user)
           setNavigate('/')
           openMessage('success', data.message)
         })

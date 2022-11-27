@@ -3,23 +3,22 @@ import { useDispatch } from 'react-redux'
 function useLogin() {
   const setDispatch = useDispatch()
 
-  /** Action login */
-  const In = (data) => {
+  const submitLogin = (data = {}) => {
     setDispatch({
-      type: 'USER', data
+      type: 'USER',
+      data,
     })
   }
 
-  /** Action logout */
-  const Out = () => {
+  const submitLogout = () => {
     setDispatch({
       type: 'INITIAL'
     })
   }
 
   return {
-    In,
-    Out,
+    submitLogin,
+    submitLogout,
   }
 }
 
