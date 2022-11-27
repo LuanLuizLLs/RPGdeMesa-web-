@@ -6,9 +6,9 @@ import useLogin from '../../hooks/login'
 
 function Page({
   children,
-  width,
-  title,
-  tab,
+  tab = '',
+  title = '',
+  width = 'initial',
 }) {
 
   const { submitLogout } = useLogin()
