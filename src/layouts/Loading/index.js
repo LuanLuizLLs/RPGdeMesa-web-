@@ -3,10 +3,10 @@ import classes from './style.module.css'
 
 function Loading({
   children,
-  stateLoading = [{ type: '' }],
+  stateLoading = [],
 }) {
 
-  const [loading] = stateLoading
+  const [loading = {}] = stateLoading
 
   return (
     <div className={classes.loading} loading={loading.type}>
