@@ -14,13 +14,13 @@ const useLoading = () => {
     })
   }
 
-  const stopLoaging = () => {
+  const stopLoading = () => {
     setLoading(INITIAL_LOADING)
   }
 
   return {
     startLoading,
-    stopLoaging,
+    stopLoading,
   }
 }
 
