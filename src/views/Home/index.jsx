@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import API from '../../services/api'
 import Page from '../../layouts/Page'
 import useLoading from '../../hooks/loading'
 import useMessage from '../../hooks/message'
 import imageMaster from '../../assets/img/master.png'
 import imagePlayer from '../../assets/img/player.png'
-import { requestAPI } from '../../services/api'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { CASTE, CONDITIONS, PERIOD, RACE, SEASON, TENDENCY } from '../../configs'
@@ -72,7 +72,7 @@ function Home() {
   const [characters, setCharacters] = useState(INITIAL.LIST_CHARACTERS)
 
   useEffect(() => {
-    requestAPI('campaigns', {
+    API('campaigns', {
       id_user: USER.id
     })
       .read(({ data }) => {
@@ -83,7 +83,7 @@ function Home() {
   }, [refresh.campaign, USER.id])
 
   useEffect(() => {
-    requestAPI('characters', {
+    API('characters', {
       id_user: USER.id
     })
       .read(({ data }) => {
@@ -106,7 +106,7 @@ function Home() {
     createCampaign: () => {
       startLoading('bar')
 
-      requestAPI('campaigns', {
+      API('campaigns', {
         ...values,
         ...CONDITIONS[values.season][values.period],
         id_user: USER.id,
@@ -115,7 +115,7 @@ function Home() {
           setRefresh({
             campaign: data,
           })
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -125,12 +125,12 @@ function Home() {
     updateCampaign: () => {
       startLoading('bar')
 
-      requestAPI('campaigns', values)
+      API('campaigns', values)
         .update(({ data }) => {
           setRefresh({
             campaign: data
           })
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -140,9 +140,9 @@ function Home() {
     deleteCampaign: () => {
       startLoading('bar')
 
-      requestAPI('campaigns', values)
+      API('campaigns', values)
         .delete(({ data }) => {
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
           setRefresh(({
             campaign: data
           }))
@@ -162,7 +162,7 @@ function Home() {
     createCharacter: () => {
       startLoading('bar')
 
-      requestAPI('characters', {
+      API('characters', {
         ...values,
         ...RACE[values.race],
         riches: CASTE[values.caste],
@@ -172,7 +172,7 @@ function Home() {
           setRefresh({
             character: data
           })
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -182,12 +182,12 @@ function Home() {
     updateCharacter: () => {
       startLoading('bar')
 
-      requestAPI('characters', values)
+      API('characters', values)
         .update(({ data }) => {
           setRefresh({
             character: data
           })
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -197,12 +197,12 @@ function Home() {
     deleteCharacter: () => {
       startLoading('bar')
 
-      requestAPI('characters', values)
+      API('characters', values)
         .delete(({ data }) => {
           setRefresh(({
             character: data
           }))
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)

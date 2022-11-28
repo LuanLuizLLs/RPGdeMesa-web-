@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import API from '../../../services/api'
 import useLoading from '../../../hooks/loading'
 import useMessage from '../../../hooks/message'
-import { requestAPI } from '../../../services/api'
 import { ATTRIBUTE, INVENTORY } from '../../../configs'
 import { pointAttribute, phisicalCapacity } from '../../../utils'
 import {
@@ -64,7 +64,7 @@ function Inventory({
 
   useEffect(() => {
     if (character) {
-      requestAPI('inventory', {
+      API('inventory', {
         id_character: character.id,
       })
         .read(({ data }) => {
@@ -95,7 +95,7 @@ function Inventory({
     createInventory: () => {
       startLoading('bar')
 
-      requestAPI('inventory', {
+      API('inventory', {
         ...values,
         user: user.id,
         id_character: character.id,
@@ -103,7 +103,7 @@ function Inventory({
         .create(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -113,7 +113,7 @@ function Inventory({
     updateInventory: () => {
       startLoading('bar')
 
-      requestAPI('inventory', {
+      API('inventory', {
         ...values,
         user: user.id,
         level: values.level + 1,
@@ -121,7 +121,7 @@ function Inventory({
         .update(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -131,13 +131,13 @@ function Inventory({
     deleteInventory: () => {
       startLoading('bar')
 
-      requestAPI('inventory', {
+      API('inventory', {
         ...values,
       })
         .delete(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)

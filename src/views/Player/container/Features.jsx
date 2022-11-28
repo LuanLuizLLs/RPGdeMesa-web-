@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import API from '../../../services/api'
 import useMessage from '../../../hooks/message'
 import useLoading from '../../../hooks/loading'
-import { requestAPI } from '../../../services/api'
 import {
   Box,
   Button,
@@ -61,7 +61,7 @@ function Features({
 
   useEffect(() => {
     if (character) {
-      requestAPI('features', {
+      API('features', {
         id_character: character.id,
       })
         .read(({ data }) => {
@@ -85,7 +85,7 @@ function Features({
     createFeature: () => {
       startLoading('bar')
 
-      requestAPI('features', {
+      API('features', {
         ...values,
         user: user.id,
         id_character: character.id,
@@ -93,7 +93,7 @@ function Features({
         .create(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -103,11 +103,11 @@ function Features({
     deleteFeature: () => {
       startLoading('bar')
 
-      requestAPI('features', values)
+      API('features', values)
         .delete(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)

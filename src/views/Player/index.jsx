@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import API from '../../services/api'
 import Page from '../../layouts/Page'
 import Features from './container/Features'
 import Abilities from './container/Abilities'
@@ -6,7 +7,6 @@ import Inventory from './container/Inventory'
 import useMessage from '../../hooks/message'
 import useLoading from '../../hooks/loading'
 import { maxLife } from '../../utils'
-import { requestAPI } from '../../services/api'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -43,7 +43,7 @@ function Player() {
   useEffect(() => {
     id_character && startLoading('circular')
 
-    requestAPI('characters', {
+    API('characters', {
       id: id_character || CHARACTER.id,
       ...id_character && ({
         user: USER.id,

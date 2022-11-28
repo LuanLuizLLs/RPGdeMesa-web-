@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import API from '../../services/api'
 import Page from '../../layouts/Page'
 import Combat from './containers/Combat'
 import Exploration from './containers/Exploration'
@@ -7,7 +8,6 @@ import Characters from './containers/Characters'
 import useMessage from '../../hooks/message'
 import useLoading from '../../hooks/loading'
 import { optionRandow } from '../../utils'
-import { requestAPI } from '../../services/api'
 import { ADVENTURES, CONDITIONS, PERIOD, SCENARIOS, SEASON } from '../../configs'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -81,7 +81,7 @@ function Master() {
   const [scenarios, setScenarios] = useState(INITIAL.SCENARIOS)
 
   useEffect(() => {
-    requestAPI('campaigns', {
+    API('campaigns', {
       id: CAMPAIGN.id,
     })
       .read(({ data }) => {
@@ -94,7 +94,7 @@ function Master() {
   }, [refresh, CAMPAIGN.id, setDispatch])
 
   useEffect(() => {
-    requestAPI('adventures', {
+    API('adventures', {
       id_campaign: CAMPAIGN.id,
     })
       .read(({ data }) => {
@@ -110,7 +110,7 @@ function Master() {
   }, [CAMPAIGN, setDispatch])
 
   useEffect(() => {
-    requestAPI('scenarios', {
+    API('scenarios', {
       id_campaign: CAMPAIGN.id,
     })
       .read(({ data }) => {
@@ -149,13 +149,13 @@ function Master() {
     createAdventure: () => {
       startLoading('bar')
 
-      requestAPI('adventures', {
+      API('adventures', {
         ...values,
         id_campaign: CAMPAIGN.id,
       })
         .create(({ data }) => {
           setRefresh(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -165,10 +165,10 @@ function Master() {
     deleteAdventure: () => {
       startLoading('bar')
 
-      requestAPI('adventures', values)
+      API('adventures', values)
         .delete(({ data }) => {
           setRefresh(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -178,13 +178,13 @@ function Master() {
     startAdventure: () => {
       startLoading('bar')
 
-      requestAPI('campaigns', {
+      API('campaigns', {
         ...CAMPAIGN,
         id_adventure: values.id,
       })
         .update(({ data }) => {
           setRefresh(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -194,10 +194,10 @@ function Master() {
     updateAdventure: () => {
       startLoading('bar')
 
-      requestAPI('adventures', values)
+      API('adventures', values)
         .update(({ data }) => {
           setRefresh(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -213,13 +213,13 @@ function Master() {
     createScenery: () => {
       startLoading('bar')
 
-      requestAPI('scenarios', {
+      API('scenarios', {
         ...values,
         id_campaign: CAMPAIGN.id,
       })
         .create(({ data }) => {
           setRefresh(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -229,10 +229,10 @@ function Master() {
     deleteScenery: () => {
       startLoading('bar')
 
-      requestAPI('scenarios', values)
+      API('scenarios', values)
         .delete(({ data }) => {
           setRefresh(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -242,13 +242,13 @@ function Master() {
     startScenery: () => {
       startLoading('bar')
 
-      requestAPI('scenarios', {
+      API('scenarios', {
         ...CAMPAIGN,
         id_adventure: values.id,
       })
         .update(({ data }) => {
           setRefresh(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -258,10 +258,10 @@ function Master() {
     updateScenery: () => {
       startLoading('bar')
 
-      requestAPI('scenarios', values)
+      API('scenarios', values)
         .update(({ data }) => {
           setRefresh(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -271,13 +271,13 @@ function Master() {
     updateCampaign: (update) => {
       startLoading('bar')
 
-      requestAPI('campaigns', {
+      API('campaigns', {
         ...update,
         ...CONDITIONS[update.season][update.period],
       })
         .update(({ data }) => {
           setRefresh(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)

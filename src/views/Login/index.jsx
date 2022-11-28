@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
+import API from '../../services/api'
 import Logo from '../../assets/img/logo.png'
 import useLogin from '../../hooks/login'
 import useLoading from '../../hooks/loading'
 import useMessage from '../../hooks/message'
 import { isNull } from '../../utils'
-import { requestAPI } from '../../services/api'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -62,12 +62,12 @@ function Login() {
       
       startLoading('circular')
 
-      requestAPI('users', values)
+      API('users', values)
         .read(({ data }) => {
           const [user = {}] = data.response
           submitLogin(user)
           setNavigate('/')
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -83,10 +83,10 @@ function Login() {
 
       startLoading('bar')
 
-      requestAPI('users', values)
+      API('users', values)
         .create(({ data }) => {
           setView(INITIAL.VIEW)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -102,10 +102,10 @@ function Login() {
 
       startLoading('bar')
 
-      requestAPI('users', values)
+      API('users', values)
         .update(({ data }) => {
           setView(INITIAL.VIEW)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)

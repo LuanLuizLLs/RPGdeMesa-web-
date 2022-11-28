@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import theme from '../../../theme'
+import API from '../../../services/api'
 import useMessage from '../../../hooks/message'
 import useLoading from '../../../hooks/loading'
 import imagePlayer from '../../../assets/img/player.png'
 import { maxLife } from '../../../utils'
-import { requestAPI } from '../../../services/api'
 import {
   Box,
   Button,
@@ -63,7 +63,7 @@ function Characters({
   const [characters, setCharacters] = useState(INITIAL.CHARACTERS)
 
   useEffect(() => {
-    requestAPI('characters', {
+    API('characters', {
       id_campaign: campaign.id
     })
       .read(({ data }) => {
@@ -87,27 +87,27 @@ function Characters({
     searchCharacter: () => {
       startLoading('bar')
 
-      requestAPI('characters', values)
+      API('characters', values)
         .read(({ data }) => {
           const [character = {}] = data.response
           setValues({
             ...values,
             ...character,
           })
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .finally(stopLoading)
     },
     addCharacter: () => {
       startLoading('bar')
 
-      requestAPI('characters', {
+      API('characters', {
         ...values,
         id_campaign: campaign.id,
       })
         .update(({ data }) => {
           setRefresh(data.message)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -117,13 +117,13 @@ function Characters({
     removeCharacter: () => {
       startLoading('bar')
 
-      requestAPI('characters', {
+      API('characters', {
         ...values,
         id_campaign: null,
       })
         .update(({ data }) => {
           setRefresh(data.message)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -133,10 +133,10 @@ function Characters({
     updateCharacter: (index) => {
       startLoading('bar')
 
-      requestAPI('characters', characters[index])
+      API('characters', characters[index])
         .update(({ data }) => {
           setRefresh(data.message)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)

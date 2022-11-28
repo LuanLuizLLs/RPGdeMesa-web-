@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import API from '../../../services/api'
 import useMessage from '../../../hooks/message'
 import useLoading from '../../../hooks/loading'
 import { ATTRIBUTE } from '../../../configs'
-import { requestAPI } from '../../../services/api'
 import {
   Box,
   Button,
@@ -58,7 +58,7 @@ function Abilities({
 
   useEffect(() => {
     if (character) {
-      requestAPI('abilities', {
+      API('abilities', {
         id_character: character.id,
       })
         .read(({ data }) => {
@@ -82,7 +82,7 @@ function Abilities({
     createAbility: () => {
       startLoading('bar')
 
-      requestAPI('abilities', {
+      API('abilities', {
         ...values,
         user: user.id,
         id_character: character.id,
@@ -90,7 +90,7 @@ function Abilities({
         .create(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -100,7 +100,7 @@ function Abilities({
     updateAbility: () => {
       startLoading('bar')
 
-      requestAPI('abilities', {
+      API('abilities', {
         ...values,
         user: user.id,
         level: values.level + 1,
@@ -108,7 +108,7 @@ function Abilities({
         .update(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
@@ -118,11 +118,11 @@ function Abilities({
     deleteAbility: () => {
       startLoading('bar')
 
-      requestAPI('abilities', values)
+      API('abilities', values)
         .delete(({ data }) => {
           setRefresh(data)
           setRefreshCharacter(data)
-          openMessage('success', data.message)
+          openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
           openMessage('error', response.data.message)
