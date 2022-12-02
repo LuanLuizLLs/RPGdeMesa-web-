@@ -14,6 +14,7 @@ export const Input = ({
   width = '',
   fontSize = '',
   validate = 'default',
+  noLabel = false,
   disabled = false,
   readOnly = false,
   placeholder = '',
@@ -35,9 +36,11 @@ export const Input = ({
 
   return (
     <div className={classes.container} style={style.container}>
-      <label className={classes.label}>
-        {label}
-      </label>
+      {noLabel || (
+        <label className={classes.label}>
+          {label}
+        </label>
+      )}
       <div className={classes.component} style={style.component} validate={validate}>
         {start && (
           <span className={classes.start}>
@@ -89,6 +92,7 @@ Input.propTypes = {
   label: PropTypes.string,
   start: PropTypes.string,
   end: PropTypes.string,
+  noLabel: PropTypes.bool,
   disabled: PropTypes.bool,
   readOnly: PropTypes.bool,
   validate: PropTypes.string,
