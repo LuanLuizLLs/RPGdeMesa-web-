@@ -7,10 +7,10 @@ import Interaction from './containers/Interaction'
 import Characters from './containers/Characters'
 import useMessage from '../../hooks/message'
 import useLoading from '../../hooks/loading'
+import { CONDITIONS } from '../../configs'
 import { CAMPAINGS } from '../../constants'
 import { optionRandow } from '../../utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { ADVENTURES, CONDITIONS, SCENARIOS } from '../../configs'
 import {
   Box,
   Button,
@@ -144,7 +144,7 @@ function Master() {
     generateAdventure: () => {
       setValues({
         ...values,
-        name: optionRandow(ADVENTURES),
+        name: optionRandow(CAMPAINGS.ADVENTURES),
       })
     },
     createAdventure: () => {
@@ -208,7 +208,7 @@ function Master() {
     generateSecenery: () => {
       setValues({
         ...values,
-        name: optionRandow(SCENARIOS),
+        name: optionRandow(CAMPAINGS.SCENARIOS),
       })
     },
     createScenery: () => {
