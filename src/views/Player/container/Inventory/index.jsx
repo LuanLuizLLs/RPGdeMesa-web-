@@ -193,7 +193,7 @@ function Inventory({
                     {modal.data.attribute} 1d6+{modal.data.level}
                   </Text>
                   <Button type="filled" color="success" fontSize="medium" onClick={handle.deleteInventory}>
-                    USAR
+                    Usar
                   </Button>
                 </Box>
               </Paper>
