@@ -7,7 +7,7 @@ import { INITIAL } from './initial'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { CONDITIONS } from '../../../../configs'
-import { CAMPAINGS } from '../../../../constants'
+import { CAMPAIGNS } from '../../../../constants'
 import {
   Box,
   Button,
@@ -153,13 +153,13 @@ function Campaigns({ user }) {
               <Select
                 name="period"
                 placeholder="Periodo inicial"
-                options={CAMPAINGS.PERIOD}
+                options={CAMPAIGNS.PERIOD}
                 stateValue={[values, setValues]}
               />
               <Select
                 name="season"
                 placeholder="Estação do ano"
-                options={CAMPAINGS.SEASON}
+                options={CAMPAIGNS.SEASON}
                 stateValue={[values, setValues]}
               />
               <TextArea

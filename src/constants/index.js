@@ -54,8 +54,8 @@ export const CHARACTERS = {
   ]
 }
 
-/** Campaings options */
-export const CAMPAINGS = {
+/** Campaigns options */
+export const CAMPAIGNS = {
   PERIOD: [
     'Dia',
     'Tarde',
