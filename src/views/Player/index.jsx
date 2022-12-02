@@ -4,6 +4,7 @@ import Page from '../../layouts/Page'
 import Features from './container/Features'
 import Abilities from './container/Abilities'
 import Inventory from './container/Inventory'
+import { INITIAL } from './initial'
 import { maxLife } from '../../utils'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,12 +19,6 @@ import {
   TextArea,
   Title,
 } from '../../components'
-
-const INITIAL = {
-  TAB: 0,
-  REFRESH: null,
-  VALUES: {},
-}
 
 function Player() {
 
@@ -50,7 +45,7 @@ function Player() {
           data: character,
         })
       })
-  }, [refresh, id_character, USER.id, CAMPAIGN.id, CHARACTER.id, setValues, setDispatch])
+  }, [refresh, id_character, setValues, setDispatch, USER.id, CAMPAIGN.id, CHARACTER.id])
 
   return (
     <Page tab="Jogador" title="Ficha do Jogador" width="80vw">
