@@ -122,11 +122,3 @@ export const CAMPAIGNS = {
     'Reino',
   ]
 }
-
-/** Inventory options */
-export const INVENTORY = {
-  USABLE: {
-    'Não': false,
-    'Sim': true,
-  },
-}
