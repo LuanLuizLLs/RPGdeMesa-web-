@@ -6,7 +6,8 @@ import imageMaster from '../../../../assets/img/master.png'
 import { INITIAL } from './initial'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { CONDITIONS, PERIOD, SEASON } from '../../../../configs'
+import { CONDITIONS } from '../../../../configs'
+import { CAMPAINGS } from '../../../../constants'
 import {
   Box,
   Button,
@@ -152,13 +153,13 @@ function Campaigns({ user }) {
               <Select
                 name="period"
                 placeholder="Periodo inicial"
-                options={Object.keys(PERIOD)}
+                options={CAMPAINGS.PERIOD}
                 stateValue={[values, setValues]}
               />
               <Select
                 name="season"
                 placeholder="Estação do ano"
-                options={Object.keys(SEASON)}
+                options={CAMPAINGS.SEASON}
                 stateValue={[values, setValues]}
               />
               <TextArea

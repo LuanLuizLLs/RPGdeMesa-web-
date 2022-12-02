@@ -7,9 +7,10 @@ import Interaction from './containers/Interaction'
 import Characters from './containers/Characters'
 import useMessage from '../../hooks/message'
 import useLoading from '../../hooks/loading'
+import { CAMPAINGS } from '../../constants'
 import { optionRandow } from '../../utils'
-import { ADVENTURES, CONDITIONS, PERIOD, SCENARIOS, SEASON } from '../../configs'
 import { useDispatch, useSelector } from 'react-redux'
+import { ADVENTURES, CONDITIONS, SCENARIOS } from '../../configs'
 import {
   Box,
   Button,
@@ -409,7 +410,7 @@ function Master() {
                 <Select
                   name="period"
                   label="Período"
-                  options={Object.keys(PERIOD)}
+                  options={CAMPAINGS.PERIOD}
                   onSelect={handle.updateCampaign}
                   stateValue={[campaign, setCampaign]}
                 />
@@ -418,7 +419,7 @@ function Master() {
                 <Select
                   name="season"
                   label="Estação do ano"
-                  options={Object.keys(SEASON)}
+                  options={CAMPAINGS.SEASON}
                   onSelect={handle.updateCampaign}
                   stateValue={[campaign, setCampaign]}
                 />

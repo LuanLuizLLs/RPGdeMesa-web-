@@ -6,7 +6,8 @@ import imagePlayer from '../../../../assets/img/player.png'
 import { INITIAL } from './initial'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { CASTE, RACE, TENDENCY } from '../../../../configs'
+import { CHARACTERS } from '../../../../constants'
+import { CASTE, RACE } from '../../../../configs'
 import {
   Box,
   Button,
@@ -62,7 +63,7 @@ function Characters({ user }) {
       API('characters', {
         ...values,
         ...RACE[values.race],
-        riches: CASTE[values.caste],
+        ...CASTE[values.caste],
         id_user: user.id,
       })
         .create(({ data }) => {
@@ -153,19 +154,19 @@ function Characters({ user }) {
               <Select
                 name="race"
                 placeholder="Escolha uma raça"
-                options={Object.keys(RACE)}
+                options={CHARACTERS.RACE}
                 stateValue={[values, setValues]}
               />
               <Select
                 name="caste"
                 placeholder="Escolha uma classe"
-                options={Object.keys(CASTE)}
+                options={CHARACTERS.CASTE}
                 stateValue={[values, setValues]}
               />
               <Select
                 name="tendency"
                 placeholder="Escolha uma tendência"
-                options={Object.keys(TENDENCY)}
+                options={CHARACTERS.TENDENCY}
                 stateValue={[values, setValues]}
               />
               <TextArea
