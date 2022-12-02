@@ -33,8 +33,8 @@ function Master() {
   const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
   const [tab, setTab] = useState(INITIAL.TAB)
+  const [values, setValues] = useState(CAMPAIGN)
   const [refresh, setRefresh] = useState(INITIAL.REFRESH)
-  const [campaign, setCampaign] = useState(CAMPAIGN)
 
   useEffect(() => {
     API('campaigns', {
@@ -121,7 +121,7 @@ function Master() {
                   label="Período"
                   options={CAMPAIGNS.PERIOD}
                   onSelect={handle.updateCampaign}
-                  stateValue={[campaign, setCampaign]}
+                  stateValue={[values, setValues]}
                 />
               </Grid>
               <Grid type="column" padding={[0, 10]} minWidth={200}>
@@ -130,7 +130,7 @@ function Master() {
                   label="Estação do ano"
                   options={CAMPAIGNS.SEASON}
                   onSelect={handle.updateCampaign}
-                  stateValue={[campaign, setCampaign]}
+                  stateValue={[values, setValues]}
                 />
               </Grid>
             </Grid>

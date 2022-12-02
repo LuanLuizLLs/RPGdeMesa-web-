@@ -104,9 +104,9 @@ function Scenarios({
     startScenery: () => {
       startLoading('bar')
 
-      API('scenarios', {
+      API('campaigns', {
         ...campaign,
-        id_adventure: values.id,
+        id_scenery: values.id,
       })
         .update(({ data }) => {
           setRefreshCampaign(data)
