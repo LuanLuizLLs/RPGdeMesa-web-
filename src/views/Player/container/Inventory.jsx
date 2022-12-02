@@ -63,7 +63,7 @@ function Inventory({
   const [inventory, setInventory] = useState(INITIAL.INVENTORY)
 
   useEffect(() => {
-    if (character) {
+    if (character.id) {
       API('inventory', {
         id_character: character.id,
       })
@@ -73,7 +73,7 @@ function Inventory({
           }))
         })
     }
-  }, [refresh, character])
+  }, [refresh, character.id])
 
   useEffect(() => {
     setValues((state) => ({

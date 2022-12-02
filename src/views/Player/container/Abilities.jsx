@@ -57,7 +57,7 @@ function Abilities({
   const [abilities, setAbilities] = useState(INITIAL.ABILITIES)
 
   useEffect(() => {
-    if (character) {
+    if (character.id) {
       API('abilities', {
         id_character: character.id,
       })
@@ -67,7 +67,7 @@ function Abilities({
           }))
         })
     }
-  }, [refresh, character])
+  }, [refresh, character.id])
 
   const handle = {
     openModal: (content, data = {}) => {

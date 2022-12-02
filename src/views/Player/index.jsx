@@ -4,8 +4,6 @@ import Page from '../../layouts/Page'
 import Features from './container/Features'
 import Abilities from './container/Abilities'
 import Inventory from './container/Inventory'
-import useMessage from '../../hooks/message'
-import useLoading from '../../hooks/loading'
 import { maxLife } from '../../utils'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -32,8 +30,6 @@ function Player() {
   const setDispatch = useDispatch()
 
   const { id_character } = useParams()
-  const { openMessage } = useMessage()
-  const { startLoading, stopLoading } = useLoading()
   const { USER, CHARACTER, CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
   const [tab, setTab] = useState(INITIAL.TAB)
@@ -41,39 +37,20 @@ function Player() {
   const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 
   useEffect(() => {
-    id_character && startLoading('circular')
-
     API('characters', {
       id: id_character || CHARACTER.id,
-      ...id_character && ({
-        user: USER.id,
-        campaign: CAMPAIGN.id,
-      })
+      user: USER.id,
+      campaign: CAMPAIGN.id,
     })
       .read(({ data }) => {
-        const [character = {}] = data.response
+        const [character = INITIAL.VALUES] = data.response
         setValues(character)
         setDispatch({
           type: 'CHARACTER',
           data: character,
         })
       })
-      .catch(({ response }) => {
-        openMessage('error', response.data.message)
-      })
-      .finally(stopLoading)
-  }, [
-    refresh, 
-    id_character, 
-    USER.id, 
-    CAMPAIGN.id, 
-    CHARACTER.id, 
-    setValues, 
-    setDispatch,
-    startLoading, 
-    stopLoading, 
-    openMessage 
-  ])
+  }, [refresh, id_character, USER.id, CAMPAIGN.id, CHARACTER.id, setValues, setDispatch])
 
   return (
     <Page tab="Jogador" title="Ficha do Jogador" width="80vw">

@@ -60,7 +60,7 @@ function Features({
   const [features, setFeatures] = useState(INITIAL.FEATURES)
 
   useEffect(() => {
-    if (character) {
+    if (character.id) {
       API('features', {
         id_character: character.id,
       })
@@ -70,7 +70,7 @@ function Features({
           }))
         })
     }
-  }, [refresh, character])
+  }, [refresh, character.id])
 
   const handle = {
     openModal: (content, data = {}) => {
