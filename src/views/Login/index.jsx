@@ -5,6 +5,8 @@ import useLogin from '../../hooks/login'
 import useLoading from '../../hooks/loading'
 import useMessage from '../../hooks/message'
 import { isNull } from '../../utils'
+import { INITIAL } from './initial'
+import { comparativePassword } from './utils'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -16,22 +18,6 @@ import {
   Link,
   Grid,
 } from '../../components'
-
-const INITIAL = {
-  VIEW: 'login',
-  VALUES: {
-    name: '',
-    password: '',
-    new_password: '',
-  },
-}
-
-const comparativePassword = (first, secound) => {
-  return {
-    valid: (first === secound),
-    validate: Boolean(secound) ? (first === secound) ? 'valid' : 'invalid' : 'default',
-  }
-}
 
 function Login() {
   

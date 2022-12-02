@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import API from '../../../services/api'
-import useMessage from '../../../hooks/message'
-import useLoading from '../../../hooks/loading'
-import { ATTRIBUTE } from '../../../configs'
+import API from '../../../../services/api'
+import useMessage from '../../../../hooks/message'
+import useLoading from '../../../../hooks/loading'
+import { INITIAL } from './initial'
+import { ATTRIBUTE } from '../../../../configs'
+import { pointAttribute, mentalCapacity } from '../../../../utils'
 import {
   Box,
   Button,
@@ -15,32 +17,7 @@ import {
   Text,
   TextArea,
   Title,
-} from '../../../components'
-import { pointAttribute, mentalCapacity } from '../../../utils'
-
-const INITIAL = {
-  MODAL: {
-    content: '',
-    data: {},
-  },
-  VALUES: {
-    name: '',
-    description: '',
-    attribute: 'FOR',
-    level: 1,
-  },
-  REFRESH: null,
-  ABILITIES: {
-    columns: {
-      id: 'ID',
-      name: 'Habilidade',
-      description: 'Descrição',
-      attribute: 'Atributo',
-      level: 'Nível',
-    },
-    rows: []
-  },
-}
+} from '../../../../components'
 
 function Abilities({
   user,

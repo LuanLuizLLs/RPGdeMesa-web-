@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import API from '../../../services/api'
-import useLoading from '../../../hooks/loading'
-import useMessage from '../../../hooks/message'
-import { ATTRIBUTE, INVENTORY } from '../../../configs'
-import { pointAttribute, phisicalCapacity } from '../../../utils'
+import API from '../../../../services/api'
+import useLoading from '../../../../hooks/loading'
+import useMessage from '../../../../hooks/message'
+import { INITIAL } from './initial'
+import { optionsUsable } from './utils'
+import { ATTRIBUTE, INVENTORY } from '../../../../configs'
+import { pointAttribute, phisicalCapacity } from '../../../../utils'
 import {
   Box,
   Button,
@@ -17,36 +19,7 @@ import {
   Text,
   TextArea,
   Title,
-} from '../../../components'
-
-const INITIAL = {
-  MODAL: {
-    content: '',
-    data: {},
-  },
-  VALUES: {
-    name: '',
-    description: '',
-    attribute: '',
-    usable: false,
-    level: 1,
-  },
-  REFRESH: null,
-  INVENTORY: {
-    columns: {
-      id: 'ID',
-      name: 'Item',
-      description: 'Descrição',
-      attribute: 'Atributo',
-      level: 'Nível',
-    },
-    rows: [],
-  }
-}
-
-const optionsUsable = (usable = false) => {
-  return usable ? Object.keys(ATTRIBUTE.SECONDARY) : Object.keys(ATTRIBUTE.PRIMARY)
-}
+} from '../../../../components'
 
 function Inventory({
   user,

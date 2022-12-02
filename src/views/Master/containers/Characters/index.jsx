@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import theme from '../../../theme'
-import API from '../../../services/api'
-import useMessage from '../../../hooks/message'
-import useLoading from '../../../hooks/loading'
-import imagePlayer from '../../../assets/img/player.png'
-import { maxLife } from '../../../utils'
+import theme from '../../../../theme'
+import API from '../../../../services/api'
+import useMessage from '../../../../hooks/message'
+import useLoading from '../../../../hooks/loading'
+import imagePlayer from '../../../../assets/img/player.png'
+import { maxLife } from '../../../../utils'
 import {
   Box,
   Button,
@@ -17,38 +17,8 @@ import {
   Paper,
   Text,
   Title,
-} from '../../../components'
-
-const INITIAL = {
-  MODAL: {
-    content: '',
-    data: {}
-  },
-  VALUES: {
-    id: '',
-    name: '',
-  },
-  REFRESH: null,
-  CHARACTERS: {
-    0: {
-      id: 0,
-      name: 'Nome',
-      race: 'Raça',
-      caste: 'Classe',
-      tendency: 'Tendência',
-      description: 'Descrição do personagem',
-      life: 0,
-      coins: 0,
-      actions: 0,
-      strength: 0,
-      dexterity: 0,
-      constitution: 0,
-      intelligence: 0,
-      wisdom: 0,
-      charisma: 0,
-    }
-  }
-}
+} from '../../../../components'
+import { INITIAL } from './initial'
 
 function Characters({
   campaign,

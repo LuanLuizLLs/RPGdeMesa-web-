@@ -1,20 +1,6 @@
 import React, { useState } from 'react'
-import { Box, Button, List, Select } from '../../../components'
-
-const INITIAL = {
-  VALUES: {
-    filter: 'Humanoides',
-  },
-  INTERACTION: {
-    columns: {
-      id: 'ID',
-      name: 'Interação',
-      description: 'Descrição',
-      level: 'Nível',
-    },
-    rows: [],
-  } 
-}
+import { INITIAL } from './initial'
+import { Box, Button, List, Select } from '../../../../components'
 
 function Interaction() {
 

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import API from '../../../services/api'
-import useMessage from '../../../hooks/message'
-import useLoading from '../../../hooks/loading'
+import API from '../../../../services/api'
+import useMessage from '../../../../hooks/message'
+import useLoading from '../../../../hooks/loading'
+import { INITIAL } from './initial'
+import { formatAttribute } from '../../../../utils'
 import {
   Box,
   Button,
@@ -12,38 +14,7 @@ import {
   Paper,
   Text,
   Title,
-} from '../../../components'
-import { formatAttribute } from '../../../utils'
-
-const INITIAL = {
-  MODAL: {
-    content: '',
-    data: {},
-  },
-  VALUES: {
-    name: '',
-    strength: 0,
-    dexterity: 0,
-    constitution: 0,
-    intelligence: 0,
-    wisdom: 0,
-    charisma: 0,
-  },
-  REFRESH: null,
-  FEATURES: {
-    columns: {
-      id: 'ID',
-      name: 'Característica',
-      strength: 'FOR',
-      dexterity: 'DES',
-      constitution: 'CON',
-      intelligence: 'INT',
-      wisdom: 'SAB',
-      charisma: 'CAR',
-    },
-    rows: []
-  },
-}
+} from '../../../../components'
 
 function Features({
   user,

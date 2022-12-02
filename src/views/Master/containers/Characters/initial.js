@@ -1,0 +1,30 @@
+export const INITIAL = {
+  MODAL: {
+    content: '',
+    data: {}
+  },
+  VALUES: {
+    id: '',
+    name: '',
+  },
+  REFRESH: null,
+  CHARACTERS: {
+    0: {
+      id: 0,
+      name: 'Nome',
+      race: 'Raça',
+      caste: 'Classe',
+      tendency: 'Tendência',
+      description: 'Descrição do personagem',
+      life: 0,
+      coins: 0,
+      actions: 0,
+      strength: 0,
+      dexterity: 0,
+      constitution: 0,
+      intelligence: 0,
+      wisdom: 0,
+      charisma: 0,
+    }
+  }
+}
