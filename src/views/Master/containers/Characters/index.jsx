@@ -4,6 +4,7 @@ import API from '../../../../services/api'
 import useMessage from '../../../../hooks/message'
 import useLoading from '../../../../hooks/loading'
 import imagePlayer from '../../../../assets/img/player.png'
+import { INITIAL } from './initial'
 import { maxLife } from '../../../../utils'
 import {
   Box,
@@ -18,11 +19,8 @@ import {
   Text,
   Title,
 } from '../../../../components'
-import { INITIAL } from './initial'
 
-function Characters({
-  campaign,
-}) {
+function Characters({ campaign }) {
 
   const { openMessage } = useMessage()
   const { startLoading, stopLoading } = useLoading()
@@ -37,7 +35,7 @@ function Characters({
       id_campaign: campaign.id
     })
       .read(({ data }) => {
-        setCharacters(Object.assign(INITIAL.CHARACTERS, data.response))
+        setCharacters(Object.assign({ ...INITIAL.CHARACTERS }, data.response))
       })
   }, [refresh, campaign.id])
 
@@ -76,7 +74,7 @@ function Characters({
         id_campaign: campaign.id,
       })
         .update(({ data }) => {
-          setRefresh(data.message)
+          setRefresh(data)
           openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
@@ -92,7 +90,7 @@ function Characters({
         id_campaign: null,
       })
         .update(({ data }) => {
-          setRefresh(data.message)
+          setRefresh(data)
           openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
@@ -105,7 +103,7 @@ function Characters({
 
       API('characters', characters[index])
         .update(({ data }) => {
-          setRefresh(data.message)
+          setRefresh(data)
           openMessage(data.status, data.message)
         })
         .catch(({ response }) => {
