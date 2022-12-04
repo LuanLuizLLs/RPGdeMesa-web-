@@ -20,8 +20,8 @@ function Message({
   }, [state, closeMessage])
 
   return (
-    <div className={classes.container}>
-      <div className={classes.message} style={style} type={state.type} onClick={closeMessage}>
+    <div className={classes.container} style={style}>
+      <div className={classes.message} type={state.type} onClick={closeMessage}>
         {state.message}
       </div>
     </div>

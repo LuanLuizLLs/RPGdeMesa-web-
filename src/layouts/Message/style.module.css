@@ -1,12 +1,12 @@
 .container {
+  right: 0;
+  bottom: 0;
+  z-index: 3;
   width: fit-content;
   display: flex;
   justify-content: flex-end;
   position: absolute;
-  overflow: hidden;
-  z-index: 3;
-  bottom: 0;
-  right: 0;
+  transition: transform 0.5s;
 }
 
 .message {
@@ -17,7 +17,6 @@
   color: var(--color-black);
   background-color: var(--color-white);
   border: solid var(--color-secondary);
-  transition: transform 0.5s;
 }
 
 .message::before {
