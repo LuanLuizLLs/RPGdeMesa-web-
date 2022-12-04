@@ -82,17 +82,20 @@ function Master() {
           {CAMPAIGN.description}
         </Text>
       </Card>
+      <Card margin="20px 0">
+        <Grid type="row">
+          <Grid type="column" padding={[10, 10]} minWidth={250}>
+            <Adventures campaign={CAMPAIGN} setRefreshCampaign={setRefresh} />
+          </Grid>
+          <Grid type="column" padding={[10, 10]} minWidth={250}>
+            <Scenarios campaign={CAMPAIGN} setRefreshCampaign={setRefresh} />
+          </Grid>
+        </Grid>
+      </Card>
       <Divider borderStyle="solid" />
+      
       <Card>
         <Grid type="container">
-          <Grid type="row">
-            <Grid type="column" padding={[10, 10]} minWidth={250}>
-              <Adventures campaign={CAMPAIGN} setRefreshCampaign={setRefresh} />
-            </Grid>
-            <Grid type="column" padding={[10, 10]} minWidth={250}>
-              <Scenarios campaign={CAMPAIGN} setRefreshCampaign={setRefresh} />
-            </Grid>
-          </Grid>
           <Grid type="row">
             <Grid type="column" padding={[5, 0]} minWidth={250}>
               <Title type="h6">
@@ -104,15 +107,6 @@ function Master() {
         </Grid>
       </Card>
       <Grid type="row" alignItems="center">
-        <Grid type="column" padding={[0, 10]} minWidth={250}>
-          <Card margin="20px 0">
-            <Text color="primary" fontWeight="bold" textAlign="center">
-              Terreno: <Text inline color={colorConditions(CAMPAIGN.ground)}>{addSignal(CAMPAIGN.ground)}</Text> |
-              Recursos: <Text inline color={colorConditions(CAMPAIGN.resources)}>{addSignal(CAMPAIGN.resources)}</Text> |
-              Clima: <Text inline color={colorConditions(CAMPAIGN.climate)}>{addSignal(CAMPAIGN.climate)}</Text>
-            </Text>
-          </Card>
-        </Grid>
         <Grid type="column" padding={[0, 10]} minWidth={250}>
           <Card margin="20px 0">
             <Grid type="row">
@@ -135,6 +129,15 @@ function Master() {
                 />
               </Grid>
             </Grid>
+          </Card>
+        </Grid>
+        <Grid type="column" padding={[0, 10]} minWidth={250}>
+          <Card margin="20px 0">
+            <Text color="primary" fontWeight="bold" textAlign="center">
+              Terreno: <Text inline color={colorConditions(CAMPAIGN.ground)}>{addSignal(CAMPAIGN.ground)}</Text> |
+              Recursos: <Text inline color={colorConditions(CAMPAIGN.resources)}>{addSignal(CAMPAIGN.resources)}</Text> |
+              Clima: <Text inline color={colorConditions(CAMPAIGN.climate)}>{addSignal(CAMPAIGN.climate)}</Text>
+            </Text>
           </Card>
         </Grid>
       </Grid>
