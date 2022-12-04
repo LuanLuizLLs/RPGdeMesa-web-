@@ -5,17 +5,19 @@ export const INITIAL_MESSAGE = {
   type: '',
   message: '',
   open: false,
+  time: 5000,
 }
 
 const useMessage = () => {
   const { setMessage } = useContext(Context)
 
   const openMessage = (type = '', message = '') => {
-    setMessage({
+    setMessage((state) => ({
+      ...state,
       type,
       message,
       open: true,
-    })
+    }))
   }
 
   const closeMessage = () => {

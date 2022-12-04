@@ -15,8 +15,9 @@ function Message({
   }
 
   useEffect(() => {
-    const { time = 15000 } = state
-    setTimeout(closeMessage, time)
+    if (state.open) {
+      setTimeout(closeMessage, state.time)
+    }
   }, [state, closeMessage])
 
   return (
