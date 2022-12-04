@@ -122,3 +122,12 @@ export const CAMPAIGNS = {
     'Reino',
   ]
 }
+
+/** Interactions options */
+export const INTERACTIONS = {
+  FILTERS: [
+    'Personagens',
+    'Monstros',
+    'Animais',
+  ]
+}

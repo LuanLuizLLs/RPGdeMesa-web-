@@ -1,8 +1,8 @@
 export const INITIAL = {
   VALUES: {
-    filter: 'Humanoides',
+    filter: '',
   },
-  INTERACTION: {
+  LIST: {
     columns: {
       id: 'ID',
       name: 'Interação',
