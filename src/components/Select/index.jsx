@@ -6,6 +6,7 @@ export const Select = ({
   name,
   label = '',
   placeholder = '',
+  noLabel = false,
   disabled = false,
   options = [],
   stateValue = [],
@@ -21,7 +22,9 @@ export const Select = ({
 
   return (
     <div className={classes.container}>
-      <label className={classes.label}>{label}</label>
+      {noLabel || (
+        <label className={classes.label}>{label}</label>
+      )}
       <select
         disabled={disabled}
         className={classes.select}
@@ -45,6 +48,7 @@ export const Select = ({
 Select.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
+  noLabel: PropTypes.bool,
   disabled: PropTypes.bool,
   placeholder: PropTypes.string,
   options: PropTypes.array.isRequired,
