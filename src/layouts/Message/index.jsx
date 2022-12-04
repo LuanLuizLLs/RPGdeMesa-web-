@@ -11,7 +11,7 @@ function Message({
   const { closeMessage } = useMessage()
 
   const style = {
-    transform: state.open ? 'translateX(0)' : 'translateX(200%)',
+    width: state.open ? '100%' : '0',
   }
 
   useEffect(() => {
@@ -21,9 +21,11 @@ function Message({
   }, [state, closeMessage])
 
   return (
-    <div className={classes.container} style={style}>
-      <div className={classes.message} type={state.type} onClick={closeMessage}>
-        {state.message}
+    <div className={classes.container}>
+      <div className={classes.hidden} style={style}>
+        <div className={classes.message} type={state.type} onClick={closeMessage}>
+          {state.message || 'Teste de mensagem'}
+        </div>
       </div>
     </div>
   )

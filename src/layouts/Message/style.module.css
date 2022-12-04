@@ -2,11 +2,14 @@
   right: 0;
   bottom: 0;
   z-index: 3;
-  width: fit-content;
   display: flex;
-  justify-content: flex-end;
   position: absolute;
-  transition: transform 0.5s;
+  justify-content: flex-end;
+}
+
+.hidden {
+  overflow: hidden;
+  transition: width 0.5s;
 }
 
 .message {
@@ -17,6 +20,8 @@
   color: var(--color-black);
   background-color: var(--color-white);
   border: solid var(--color-secondary);
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .message::before {

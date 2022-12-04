@@ -1,6 +1,6 @@
 export const INITIAL = {
   MODAL: {
-    content: 'add_interaction',
+    content: '',
     data: {},
   },
   FILTER: {
