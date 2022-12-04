@@ -93,7 +93,6 @@ function Master() {
         </Grid>
       </Card>
       <Divider borderStyle="solid" />
-      
       <Card>
         <Grid type="container">
           <Grid type="row">

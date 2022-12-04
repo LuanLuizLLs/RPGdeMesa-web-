@@ -120,14 +120,14 @@ export const CAMPAIGNS = {
     'Cidade',
     'Metrópole',
     'Reino',
-  ]
+  ],
 }
 
-/** Interactions options */
-export const INTERACTIONS = {
-  FILTERS: [
-    'Personagens',
-    'Monstros',
-    'Animais',
-  ]
+/** Interaction options */
+export const INTERACTION = {
+  CATEGORY: [
+    'Personagem',
+    'Monstro',
+    'Animal',
+  ],
 }
