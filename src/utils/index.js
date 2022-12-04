@@ -111,6 +111,18 @@ export const phisicalCapacity = (character = {}, capacity = 0) => {
 }
 
 /**
+ * Add arithmetic sign
+ * @param {Number} number 
+ * @returns 
+ */
+export const addSignal = (number = 0) => {
+  if (number > 0) {
+    return `+${number}`
+  }
+  return number
+}
+
+/**
  * Format attributes 
  * @param {String} attribute 
  * @param {Number} modifier 

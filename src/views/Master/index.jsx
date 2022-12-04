@@ -10,9 +10,10 @@ import Characters from './containers/Characters'
 import useMessage from '../../hooks/message'
 import useLoading from '../../hooks/loading'
 import { INITIAL } from './initial'
+import { addSignal } from '../../utils'
+import { colorConditions } from './utils'
 import { CONDITIONS } from '../../configs'
 import { CAMPAIGNS } from '../../constants'
-import { colorConditions } from './utils'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Card,
@@ -106,9 +107,9 @@ function Master() {
         <Grid type="column" padding={[0, 10]} minWidth={250}>
           <Card margin="20px 0">
             <Text color="primary" fontWeight="bold" textAlign="center">
-              Terreno: <Text inline color={colorConditions(CAMPAIGN.ground)}>{CAMPAIGN.ground}</Text> |
-              Recursos: <Text inline color={colorConditions(CAMPAIGN.resources)}>{CAMPAIGN.resources}</Text> |
-              Clima: <Text inline color={colorConditions(CAMPAIGN.climate)}>{CAMPAIGN.climate}</Text>
+              Terreno: <Text inline color={colorConditions(CAMPAIGN.ground)}>{addSignal(CAMPAIGN.ground)}</Text> |
+              Recursos: <Text inline color={colorConditions(CAMPAIGN.resources)}>{addSignal(CAMPAIGN.resources)}</Text> |
+              Clima: <Text inline color={colorConditions(CAMPAIGN.climate)}>{addSignal(CAMPAIGN.climate)}</Text>
             </Text>
           </Card>
         </Grid>
