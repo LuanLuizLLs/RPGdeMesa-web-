@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from 'react'
 import { useSelector } from 'react-redux'
 import classes from './style.module.css'
 import logo from '../../assets/img/logo.png'
-import useLogin from '../../hooks/login'
+import useLogin from '../../hooks/useLogin'
 
 function Page({
   children,

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import classes from './style.module.css'
-import useMessage from '../../hooks/message'
+import useMessage from '../../hooks/useMessage'
 
 function Message({
   stateMessage = [],

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { INITIAL_LOADING } from './hooks/loading'
-import { INITIAL_MESSAGE } from './hooks/message'
+import { INITIAL_LOADING } from './hooks/useLoading'
+import { INITIAL_MESSAGE } from './hooks/useMessage'
 import Routes from './routes'
 import Context from './global/context'
 import Message from './layouts/Message'
@@ -23,7 +23,7 @@ function App() {
   }
   
   useEffect(() => {
-    USER.id || setNavigate('/login')
+    USER.id || setNavigate('/useLogin')
   }, [USER, setNavigate])
 
   return (

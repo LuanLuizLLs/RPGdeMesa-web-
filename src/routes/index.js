@@ -13,7 +13,7 @@ function routes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/useLogin" element={<Login />} />
       <Route path="/master" element={<Master />} />
       <Route path="/player" element={<Player />} />
       <Route path="/player/:id_character" element={<Player />} />
