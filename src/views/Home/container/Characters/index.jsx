@@ -153,19 +153,19 @@ function Characters({ user }) {
               />
               <Select
                 name="race"
-                placeholder="Escolha uma raça"
+                placeholder="Raça"
                 options={CHARACTERS.RACE}
                 stateValue={[values, setValues]}
               />
               <Select
                 name="caste"
-                placeholder="Escolha uma classe"
+                placeholder="Classe"
                 options={CHARACTERS.CASTE}
                 stateValue={[values, setValues]}
               />
               <Select
                 name="tendency"
-                placeholder="Escolha uma tendência"
+                placeholder="Tendência"
                 options={CHARACTERS.TENDENCY}
                 stateValue={[values, setValues]}
               />

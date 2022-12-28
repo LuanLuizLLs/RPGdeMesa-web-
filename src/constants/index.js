@@ -61,11 +61,10 @@ export const CAMPAIGNS = {
     'Tarde',
     'Noite',
   ],
-  SEASON: [
-    'Inverno',
-    'Verão',
-    'Outono',
-    'Primavera',
+  CLIMATE: [
+    'Frio',
+    'Normal',
+    'Calor',
   ],
   ADVENTURES: [
     'Matar um personagem',

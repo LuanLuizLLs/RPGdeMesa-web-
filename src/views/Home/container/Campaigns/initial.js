@@ -6,6 +6,8 @@ export const INITIAL = {
   VALUES: {
     name: '',
     description: '',
+    climate: '',
+    period: '',
   },
   REFRESH: null,
   LIST: {

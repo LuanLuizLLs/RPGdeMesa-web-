@@ -62,7 +62,7 @@ function Campaigns({ user }) {
 
       API('campaigns', {
         ...values,
-        ...CONDITIONS[values.season][values.period],
+        ...CONDITIONS[values.climate][values.period],
         id_user: user.id,
       })
         .create(({ data }) => {
@@ -152,14 +152,14 @@ function Campaigns({ user }) {
               />
               <Select
                 name="period"
-                placeholder="Periodo inicial"
+                placeholder="Período"
                 options={CAMPAIGNS.PERIOD}
                 stateValue={[values, setValues]}
               />
               <Select
-                name="season"
-                placeholder="Estação do ano"
-                options={CAMPAIGNS.SEASON}
+                name="climate"
+                placeholder="Clima"
+                options={CAMPAIGNS.CLIMATE}
                 stateValue={[values, setValues]}
               />
               <TextArea

@@ -51,12 +51,12 @@ function Master() {
   }, [refresh, setDispatch, CAMPAIGN.id])
 
   const handle = {
-    updateCampaign: (update) => {
+    updateCampaign: (update = values) => {
       startLoading('bar')
 
       API('campaigns', {
         ...update,
-        ...CONDITIONS[update.season][update.period],
+        ...CONDITIONS[update.climate][update.period],
       })
         .update(({ data }) => {
           setRefresh(data)
@@ -120,9 +120,9 @@ function Master() {
               </Grid>
               <Grid type="column" padding={[0, 10]} minWidth={200}>
                 <Select
-                  name="season"
-                  label="Estação do ano"
-                  options={CAMPAIGNS.SEASON}
+                  name="climate"
+                  label="Clima"
+                  options={CAMPAIGNS.CLIMATE}
                   onSelect={handle.updateCampaign}
                   stateValue={[values, setValues]}
                 />
@@ -134,8 +134,7 @@ function Master() {
           <Card margin="20px 0">
             <Text color="primary" fontWeight="bold" textAlign="center">
               Terreno: <Text inline color={colorConditions(CAMPAIGN.ground)}>{addSignal(CAMPAIGN.ground)}</Text> |
-              Recursos: <Text inline color={colorConditions(CAMPAIGN.resources)}>{addSignal(CAMPAIGN.resources)}</Text> |
-              Clima: <Text inline color={colorConditions(CAMPAIGN.climate)}>{addSignal(CAMPAIGN.climate)}</Text>
+              Recursos: <Text inline color={colorConditions(CAMPAIGN.resources)}>{addSignal(CAMPAIGN.resources)}</Text>
             </Text>
           </Card>
         </Grid>

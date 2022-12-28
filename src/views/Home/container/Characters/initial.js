@@ -6,6 +6,9 @@ export const INITIAL = {
   VALUES: {
     name: '',
     description: '',
+    race: '',
+    caste: '',
+    tendency: '',
   },
   REFRESH: null,
   LIST: {

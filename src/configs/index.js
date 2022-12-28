@@ -165,72 +165,46 @@ export const CASTE = {
 
 /** Conditions configs */
 export const CONDITIONS = {
-  'Outono': {
+  'Frio': {
     'Dia': {
-      ground: numberRandow(-6, 4),
-      resources: numberRandow(-6, 4),
-      climate: numberRandow(-6, 4),
+      ground: numberRandow(-2, 2),
+      resources: numberRandow(-2, 2),
     },
     'Tarde': {
-      ground: numberRandow(-4, 4),
-      resources: numberRandow(-4, 4),
-      climate: numberRandow(-4, 4),
+      ground: numberRandow(-3, 1),
+      resources: numberRandow(-3, 1),
     },
     'Noite': {
-      ground: numberRandow(-2, 4),
-      resources: numberRandow(-2, 4),
-      climate: numberRandow(-2, 4),
+      ground: numberRandow(-1, 3),
+      resources: numberRandow(-1, 3),
     },
   },
-  'Inverno': {
+  'Normal': {
     'Dia': {
-      ground: numberRandow(-6, 6),
-      resources: numberRandow(-6, 6),
-      climate: numberRandow(-6, 6),
+      ground: numberRandow(-3, 1),
+      resources: numberRandow(-3, 1),
     },
     'Tarde': {
-      ground: numberRandow(-4, 6),
-      resources: numberRandow(-4, 6),
-      climate: numberRandow(-4, 6),
+      ground: numberRandow(-2, 2),
+      resources: numberRandow(-2, 2),
     },
     'Noite': {
-      ground: numberRandow(-2, 6),
-      resources: numberRandow(-2, 6),
-      climate: numberRandow(-2, 6),
+      ground: numberRandow(-1, 3),
+      resources: numberRandow(-1, 3),
     },
   },
-  'Primavera': {
+  'Calor': {
     'Dia': {
-      ground: numberRandow(-6, 3),
-      resources: numberRandow(-6, 3),
-      climate: numberRandow(-6, 3),
+      ground: numberRandow(-3, 1),
+      resources: numberRandow(-3, 1),
     },
     'Tarde': {
-      ground: numberRandow(-4, 3),
-      resources: numberRandow(-4, 3),
-      climate: numberRandow(-4, 3),
+      ground: numberRandow(-1, 3),
+      resources: numberRandow(-1, 3),
     },
     'Noite': {
-      ground: numberRandow(-2, 3),
-      resources: numberRandow(-2, 3),
-      climate: numberRandow(-2, 3),
-    },
-  },
-  'Verão': {
-    'Dia': {
-      ground: numberRandow(-6, 5),
-      resources: numberRandow(-6, 5),
-      climate: numberRandow(-6, 5),
-    },
-    'Tarde': {
-      ground: numberRandow(-4, 5),
-      resources: numberRandow(-4, 5),
-      climate: numberRandow(-4, 5),
-    },
-    'Noite': {
-      ground: numberRandow(-2, 5),
-      resources: numberRandow(-2, 5),
-      climate: numberRandow(-2, 5),
+      ground: numberRandow(-2, 2),
+      resources: numberRandow(-2, 2),
     },
   },
 }
