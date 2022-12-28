@@ -3,13 +3,9 @@ export const INITIAL = {
     content: '',
     data: {},
   },
-  FILTER: {
-    category: '',
-  },
   VALUES: {
     name: '',
     description: '',
-    category: 'Personagem',
     life: 0,
     damage: 0,
     strength: 0,

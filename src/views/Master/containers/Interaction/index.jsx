@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { INITIAL } from './initial'
-import { INTERACTION } from '../../../../constants'
 import {
   Box,
   Button,
@@ -8,7 +7,6 @@ import {
   Input,
   List,
   Modal,
-  Select,
   TextArea,
   Title,
 } from '../../../../components'
@@ -18,7 +16,6 @@ function Interaction() {
   const [list, setList] = useState(INITIAL.LIST)
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
-  const [filter, setFilter] = useState(INITIAL.FILTER)
 
   useEffect(() => {
     setList((state) => ({
@@ -33,6 +30,17 @@ function Interaction() {
     }))
   }, [])
 
+  const handle = {
+    openModal: (content, data = {}) => {
+      setModal({ content, data })
+      setValues({ ...values, ...data })
+    },
+    resetInteraction: () => {
+      setModal(INITIAL.MODAL)
+      setValues(INITIAL.VALUES)
+    },
+  }
+
   return (
     <>
       <List
@@ -40,41 +48,28 @@ function Interaction() {
         height={200}
         onClick={(row) => console.log(row)}
       />
-      <Box display="flex" justifyContent="space-between" margin={10}>
-        <Select
-          noLabel
-          name="category"
-          placeholder="Todos"
-          options={INTERACTION.CATEGORY}
-          stateValue={[filter, setFilter]}
-        />
-        <Button type="filled" onClick={() => { }}>
+      <Box display="flex" justifyContent="end" margin={10}>
+        <Button type="filled" onClick={() => handle.openModal('add_interaction')}>
           Adicionar
         </Button>
       </Box>
-      <Modal maxWidth={500} stateModal={[modal, setModal]} onClose={() => null}>
+      <Modal maxWidth={500} stateModal={[modal, setModal]} onClose={handle.resetInteraction}>
         {{
           add_interaction: (
             <>
               <Title type="h6">
                 Adicionar interação:
               </Title>
-              <Select
-                label="Categoria"
-                name="category"
-                options={INTERACTION.CATEGORY}
-                stateValue={[values, setValues]}
-              />
               <Input
                 label="Nome"
                 name="name"
-                placeholder="Nome da interação"
+                placeholder="Nome"
                 stateValue={[values, setValues]}
               />
               <TextArea
                 label="Descrição"
                 name="description"
-                placeholder="Descrição da interação"
+                placeholder="Descrição"
                 stateValue={[values, setValues]}
               />
               <Grid type="container">

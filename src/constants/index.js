@@ -121,12 +121,3 @@ export const CAMPAIGNS = {
     'Reino',
   ],
 }
-
-/** Interaction options */
-export const INTERACTION = {
-  CATEGORY: [
-    'Personagem',
-    'Monstro',
-    'Animal',
-  ],
-}
