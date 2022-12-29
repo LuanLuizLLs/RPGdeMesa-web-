@@ -6,7 +6,7 @@ export const INITIAL = {
   VALUES: {
     name: '',
     description: '',
-    attribute: '',
+    attribute: 'FOR',
     usable: false,
     level: 1,
   },
