@@ -156,7 +156,7 @@ function Player() {
       </Grid>
       <Divider borderStyle="solid" />
       <Card>
-        <Tab tabs={['Características', 'Habilidades', 'Invetário']} stateTab={[tab, setTab]}>
+        <Tab tabs={['Características', 'Habilidades', 'Inventário']} stateTab={[tab, setTab]}>
           {[
             <Features key="features" user={USER} character={CHARACTER} setRefreshCharacter={setRefresh} />,
             <Abilities key="abilities" user={USER} character={CHARACTER} setRefreshCharacter={setRefresh} />,
