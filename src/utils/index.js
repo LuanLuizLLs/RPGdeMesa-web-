@@ -138,14 +138,15 @@ export const formatAttribute = (attribute = '', modifier = 0) => {
 /**
  * Format point attributes
  * @param {String} attribute 
- * @param {Number} modifier 
- * @param {Number} level 
+ * @param {Number} modifier
+ * @param {Number} level
  * @returns 
  */
 export const pointAttribute = (attribute = '', modifier = 0, level = 0) => {
-  const format = { attribute, modifier: modifier + level }
-  if (format.modifier >= 0) {
-    return `${format.attribute} 1d20+${format.modifier} | 1d6+${level}`
+  const format = {
+    attribute,
+    damage: level ? addSignal(level) : '',
+    modifier: modifier ? addSignal(modifier) : '',
   }
-  return `${format.attribute} 1d20${format.modifier} | 1d6+${level}`
+  return `${format.attribute} 1d20${format.modifier} | 1d6${format.damage}`
 }
