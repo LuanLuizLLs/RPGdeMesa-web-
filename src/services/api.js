@@ -7,8 +7,8 @@ const base = axios.create({
 
 /**
  * Request to API
- * @param {string} prefix 
- * @param {object} params 
+ * @param {String} prefix route name
+ * @param {Object} params parameters for sending
  * @returns
  */
 const API = (prefix = '', params = {}) => {
