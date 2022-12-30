@@ -155,7 +155,7 @@ export const modifierPoints = (character = {}, item = {}) => {
     modifier: character[ATTRIBUTE.PRIMARY[item.attribute]],
     damage: item.level,
   }
-  return `${icon} ${RANK[modifier - damage] || 'X'} ${ATTRIBUTE.ICONS.DAN} ${damage}`
+  return `${icon} ${RANK[modifier - damage] || '⨉'} ${ATTRIBUTE.ICONS.DAN} ${damage}`
 }
 
 /**
