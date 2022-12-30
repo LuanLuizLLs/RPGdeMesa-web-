@@ -48,130 +48,34 @@ export const ATTRIBUTE = {
 
 /** Race configs */
 export const RACE = {
-  'Anão': {
-    strength: [1, 2],
-    dexterity: [0, 1],
-    constitution: [2, 3],
-  },
-  'Elfo': {
-    strength: [1, 2],
-    dexterity: [2, 3],
-    constitution: [0, 1],
-  },
-  'Halfling': {
-    strength: [1, 2],
-    dexterity: [2, 3],
-    constitution: [0, 1],
-  },
-  'Humano': {
-    strength: [0, 1],
-    dexterity: [2, 3],
-    constitution: [0, 1],
-  },
-  'Gnomo': {
-    strength: [0, 1],
-    dexterity: [2, 3],
-    constitution: [1, 2],
-  },
-  'Orc': {
-    strength: [2, 3],
-    dexterity: [0, 1],
-    constitution: [1, 2],
-  },
-  'Goblinoide': {
-    strength: [2, 3],
-    dexterity: [1, 2],
-    constitution: [0, 1],
-  },
-  'Tiefling': {
-    strength: [1, 2],
-    dexterity: [2, 3],
-    constitution: [0, 1],
-  },
-  'Nefilim': {
-    strength: [0, 1],
-    dexterity: [2, 3],
-    constitution: [1, 2],
-  },
-  'Licantropo': {
-    strength: [2, 3],
-    dexterity: [1, 2],
-    constitution: [0, 1],
-  },
-  'Gigante': {
-    strength: [2, 3],
-    dexterity: [0, 1],
-    constitution: [1, 2],
-  },
-  'Fada': {
-    strength: [1, 2],
-    dexterity: [2, 3],
-    constitution: [0, 1],
-  },
+  'Anão': [3, 1, 2],
+  'Elfo': [2, 3, 1],
+  'Halfling': [1, 3, 2],
+  'Humano': [3, 2, 1],
+  'Gnomo': [1, 3, 2],
+  'Orc': [2, 1, 3],
+  'Goblinoide': [2, 3, 1],
+  'Tiefling': [1, 3, 2],
+  'Nefilim': [2, 3, 1],
+  'Licantropo': [1, 2, 3],
+  'Gigante': [2, 1, 3],
+  'Fada': [2, 3, 1],
 }
 
 /** Caste configs */
 export const CASTE = {
-  'Bárbaro': {
-    intelligence: [0, 1],
-    wisdom: [2, 3],
-    charisma: [1, 2],
-  },
-  'Bardo': {
-    intelligence: [1, 2],
-    wisdom: [0, 1],
-    charisma: [2, 3],
-  },
-  'Bruxo': {
-    intelligence: [1, 2],
-    wisdom: [2, 3],
-    charisma: [0, 1],
-  },
-  'Clérigo': {
-    intelligence: [1, 2],
-    wisdom: [2, 3],
-    charisma: [0, 1],
-  },
-  'Druida': {
-    intelligence: [1, 2],
-    wisdom: [2, 3],
-    charisma: [0, 1],
-  },
-  'Feiticeiro': {
-    intelligence: [2, 3],
-    wisdom: [1, 2],
-    charisma: [0, 1],
-  },
-  'Guerreiro': {
-    intelligence: [2, 3],
-    wisdom: [1, 2],
-    charisma: [0, 1],
-  },
-  'Ladino': {
-    intelligence: [2, 3],
-    wisdom: [0, 1],
-    charisma: [1, 2],
-  },
-  'Mago': {
-    intelligence: [1, 2],
-    wisdom: [0, 1],
-    charisma: [2, 3],
-  },
-  'Monge': {
-    intelligence: [1, 2],
-    wisdom: [2, 3],
-    charisma: [0, 1],
-  },
-  'Paladino': {
-    intelligence: [1, 2],
-    wisdom: [2, 3],
-    charisma: [0, 1],
-  },
-  'Patrulheiro': {
-    intelligence: [1, 2],
-    wisdom: [2, 3],
-    charisma: [0, 1],
-  },
+  'Bárbaro': [1, 3, 2],
+  'Bardo': [2, 1, 3],
+  'Bruxo': [2, 1, 3],
+  'Clérigo': [2, 3, 1],
+  'Druida': [1, 3, 2],
+  'Feiticeiro': [2, 3, 1],
+  'Guerreiro': [1, 3, 2],
+  'Ladino': [3, 1, 2],
+  'Mago': [3, 2, 1],
+  'Monge': [2, 3, 1],
+  'Paladino': [2, 1, 3],
+  'Patrulheiro': [2, 3, 1],
 }
 
 /** Conditions configs */

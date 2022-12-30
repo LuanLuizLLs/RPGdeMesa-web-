@@ -9,6 +9,7 @@ import Interaction from './containers/Interaction'
 import Characters from './containers/Characters'
 import useMessage from '../../hooks/useMessage'
 import useLoading from '../../hooks/useLoading'
+import useCampaign from '../../hooks/useCampaign'
 import { INITIAL } from './initial'
 import { addSignal } from '../../utils'
 import { colorConditions } from './utils'
@@ -23,7 +24,6 @@ import {
   Text,
   Title,
 } from '../../components'
-import useCampaign from '../../hooks/useCampaign'
 
 function Master() {
 

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import API from '../../../../services/api'
 import useLoading from '../../../../hooks/useLoading'
 import useMessage from '../../../../hooks/useMessage'
+import useCharacter from '../../../../hooks/useCharacter'
 import imagePlayer from '../../../../assets/img/player.png'
 import { INITIAL } from './initial'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { CHARACTERS } from '../../../../constants'
-import { CASTE, RACE } from '../../../../configs'
 import {
   Box,
   Button,
@@ -29,6 +29,7 @@ function Characters({ user }) {
   const setDispatch = useDispatch()
 
   const { openMessage } = useMessage()
+  const { additionalAttributes } = useCharacter()
   const { startLoading, stopLoading } = useLoading()
 
   const [list, setList] = useState(INITIAL.LIST)
@@ -62,8 +63,7 @@ function Characters({ user }) {
 
       API('characters', {
         ...values,
-        ...RACE[values.race],
-        ...CASTE[values.caste],
+        ...additionalAttributes(values.race, values.caste),
         id_user: user.id,
       })
         .create(({ data }) => {
