@@ -162,7 +162,6 @@ function Inventory({
                     type="number"
                     name="level"
                     label="Nível"
-                    readOnly={!values.usable}
                     end={ATTRIBUTE.ICONS[values.attribute]}
                     stateValue={[values, setValues]}
                   />

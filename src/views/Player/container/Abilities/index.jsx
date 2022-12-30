@@ -138,7 +138,8 @@ function Abilities({
                 </Grid>
                 <Grid type="column" padding={[0, 5]}>
                   <Input
-                    readOnly
+                    min={1}
+                    max={6}
                     type="number"
                     name="level"
                     label="Nível"
