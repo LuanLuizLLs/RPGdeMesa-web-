@@ -142,6 +142,7 @@ function Abilities({
                     type="number"
                     name="level"
                     label="Nível"
+                    end={ATTRIBUTE.ICONS[values.attribute]}
                     stateValue={[values, setValues]}
                   />
                 </Grid>

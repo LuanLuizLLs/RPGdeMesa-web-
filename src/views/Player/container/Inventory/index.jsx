@@ -163,6 +163,7 @@ function Inventory({
                     name="level"
                     label="Nível"
                     readOnly={!values.usable}
+                    end={ATTRIBUTE.ICONS[values.attribute]}
                     stateValue={[values, setValues]}
                   />
                 </Grid>
