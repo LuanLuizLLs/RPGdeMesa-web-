@@ -37,7 +37,7 @@ function Inventory({
 
   useEffect(() => {
     if (character.id) {
-      API('inventory', {
+      API('items', {
         id_character: character.id,
       })
         .read(({ data }) => {
@@ -68,7 +68,7 @@ function Inventory({
     createInventory: () => {
       startLoading('bar')
 
-      API('inventory', {
+      API('items', {
         ...values,
         user: user.id,
         id_character: character.id,
@@ -86,7 +86,7 @@ function Inventory({
     updateInventory: () => {
       startLoading('bar')
 
-      API('inventory', {
+      API('items', {
         ...values,
         user: user.id,
         level: values.level + 1,
@@ -104,7 +104,7 @@ function Inventory({
     deleteInventory: () => {
       startLoading('bar')
 
-      API('inventory', {
+      API('items', {
         ...values,
       })
         .delete(({ data }) => {
