@@ -74,7 +74,7 @@ export const CAMPAIGNS = {
   CLIMATE: [
     'Frio',
     'Normal',
-    'Calor',
+    'Quente',
   ],
   ADVENTURES: [
     'Matar um personagem',

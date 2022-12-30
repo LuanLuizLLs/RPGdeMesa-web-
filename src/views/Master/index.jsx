@@ -12,7 +12,6 @@ import useLoading from '../../hooks/useLoading'
 import { INITIAL } from './initial'
 import { addSignal } from '../../utils'
 import { colorConditions } from './utils'
-import { CONDITIONS } from '../../configs'
 import { CAMPAIGNS } from '../../constants'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -24,14 +23,17 @@ import {
   Text,
   Title,
 } from '../../components'
+import useCampaign from '../../hooks/useCampaign'
 
 function Master() {
 
   const setDispatch = useDispatch()
 
-  const { openMessage } = useMessage()
-  const { startLoading, stopLoading } = useLoading()
   const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
+
+  const { openMessage } = useMessage()
+  const { additionalAttributes } = useCampaign()
+  const { startLoading, stopLoading } = useLoading()
 
   const [tab, setTab] = useState(INITIAL.TAB)
   const [values, setValues] = useState(CAMPAIGN)
@@ -56,7 +58,7 @@ function Master() {
 
       API('campaigns', {
         ...update,
-        ...CONDITIONS[update.climate][update.period],
+        ...additionalAttributes(update.period, update.climate),
       })
         .update(({ data }) => {
           setRefresh(data)
