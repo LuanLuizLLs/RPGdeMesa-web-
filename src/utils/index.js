@@ -1,4 +1,5 @@
 import { BREAKPOINT, ATTRIBUTE } from '../configs'
+import { RANK } from '../constants'
 
 /**
  * Which device current
@@ -154,7 +155,7 @@ export const modifierPoints = (character = {}, item = {}) => {
     modifier: character[ATTRIBUTE.PRIMARY[item.attribute]],
     damage: item.level,
   }
-  return `${icon} ${modifier} ${ATTRIBUTE.ICONS.DAN} ${damage}`
+  return `${icon} ${RANK[modifier - damage] || 'X'} ${ATTRIBUTE.ICONS.DAN} ${damage}`
 }
 
 /**
