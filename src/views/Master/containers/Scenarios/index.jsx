@@ -140,7 +140,7 @@ function Scenarios({
       <Paper backgroundColor="secondary" margin="10px 0">
         {Boolean(SCENERY.id) ? (
           <>
-            <Text fontWeight="bold" color="gray" textTransform="lowercase">
+            <Text fontWeight="bold" color="gray">
               <Text inline fontWeight="bold" color="primary" textTransform="capitalize">{SCENERY.name}</Text>: {SCENERY.description}
             </Text>
           </>

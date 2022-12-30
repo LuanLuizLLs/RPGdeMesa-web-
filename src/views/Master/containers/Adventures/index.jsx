@@ -141,7 +141,7 @@ function Adventures({
       <Paper backgroundColor="secondary" margin="10px 0">
         {Boolean(ADVENTURE.id) ? (
           <>
-            <Text fontWeight="bold" color="gray" textTransform="lowercase">
+            <Text fontWeight="bold" color="gray">
               <Text inline fontWeight="bold" color="primary" textTransform="capitalize">{ADVENTURE.name}:</Text> {ADVENTURE.description}
             </Text>
           </>
