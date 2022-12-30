@@ -4,7 +4,7 @@ import useMessage from '../../../../hooks/useMessage'
 import useLoading from '../../../../hooks/useLoading'
 import { INITIAL } from './initial'
 import { ATTRIBUTE } from '../../../../configs'
-import { pointAttribute, mentalCapacity } from '../../../../utils'
+import { mentalCapacity, scrollPoints, modifierPoints } from '../../../../utils'
 import {
   Box,
   Button,
@@ -166,14 +166,17 @@ function Abilities({
                 <Text color="primary" fontWeight="bold">
                   {modal.data.name} (Lv {modal.data.level})
                 </Text>
-                <Text>
+                <Text color="gray" fontWeight="bold">
                   {modal.data.description}
+                </Text>
+                <Text>
+                  {modifierPoints(character, modal.data)}
                 </Text>
               </Paper>
               <Paper backgroundColor="secondary" margin="10px 0">
                 <Box display="flex" justifyContent="space-between" alignItems="center">
-                  <Text fontWeight="bold" color="gray">
-                    {pointAttribute(modal.data.attribute, character[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
+                  <Text color="gray" fontWeight="bold">
+                    {scrollPoints(character[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
                   </Text>
                   <Button type="filled" color="success" fontSize="medium" onClick={handle.updateAbility}>
                     Aprimorar

@@ -32,6 +32,19 @@ export const ATTRIBUTE = {
     'VID': 'life',
     'MOE': 'coins',
     'ACO': 'actions',
+    'DAN': 'damage',
+  },
+  ICONS: {
+    'FOR': '💪',
+    'DES': '👋',
+    'CON': '✊',
+    'INT': '📙',
+    'SAB': '🙌',
+    'CAR': '🤝',
+    'VID': '❤️',
+    'MOE': '👣',
+    'ACO': '💰',
+    'DAN': '🩸',
   }
 }
 

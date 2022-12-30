@@ -5,6 +5,7 @@ export const INITIAL = {
   },
   VALUES: {
     name: '',
+    description: '',
     strength: 0,
     dexterity: 0,
     constitution: 0,

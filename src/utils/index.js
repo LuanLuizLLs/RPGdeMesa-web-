@@ -123,20 +123,7 @@ export const addSignal = (number = 0) => {
 }
 
 /**
- * Format attributes 
- * @param {String} attribute 
- * @param {Number} modifier 
- * @returns 
- */
-export const formatAttribute = (attribute = '', modifier = 0) => {
-  if (modifier !== 0) {
-    return modifier > 0 ? `${attribute}+${modifier}` : `${attribute}${modifier}`
-  }
-  return ''
-}
-
-/**
- * Format point attributes
+ * Point attributes
  * @param {String} attribute 
  * @param {Number} modifier
  * @param {Number} level
@@ -148,5 +135,41 @@ export const pointAttribute = (attribute = '', modifier = 0, level = 0) => {
     damage: level ? addSignal(level) : '',
     modifier: modifier ? addSignal(modifier) : '',
   }
-  return `${format.attribute} 1d20${format.modifier} | 1d6${format.damage}`
+  return `${format.attribute} 1d20${format.modifier} 1d6${format.damage}`
+}
+
+/**
+ * Modifier information
+ * @param {Object} character 
+ * @param {Object} item 
+ * @returns 
+ */
+export const modifierPoints = (character = {}, item = {}) => {
+  const {
+    icon,
+    modifier,
+    damage,
+  } = {
+    icon: ATTRIBUTE.ICONS[item.attribute],
+    modifier: character[ATTRIBUTE.PRIMARY[item.attribute]],
+    damage: item.level,
+  }
+  return `${icon} ${modifier} ${ATTRIBUTE.ICONS.DAN} ${damage}`
+}
+
+/**
+ * Scroll points
+ * @param {Number} modifier
+ * @param {Number} level
+ * @returns 
+ */
+export const scrollPoints = (attribute = 0, level = 0) => {
+  const {
+    modifier,
+    damage,
+  } = {
+    modifier: attribute >= level ? attribute : attribute - level,
+    damage: attribute >= level ? level : level - (level - attribute),
+  }
+  return `1d20${modifier ? addSignal(modifier) : ''} | 1d6${damage ? addSignal(damage) : ''}`
 }

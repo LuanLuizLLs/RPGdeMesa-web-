@@ -3,7 +3,7 @@ import API from '../../../../services/api'
 import useMessage from '../../../../hooks/useMessage'
 import useLoading from '../../../../hooks/useLoading'
 import { INITIAL } from './initial'
-import { formatAttribute } from '../../../../utils'
+import { ATTRIBUTE } from '../../../../configs'
 import {
   Box,
   Button,
@@ -13,6 +13,7 @@ import {
   Modal,
   Paper,
   Text,
+  TextArea,
   Title,
 } from '../../../../components'
 
@@ -100,6 +101,11 @@ function Features({
                 name="name"
                 label="Característica"
                 placeholder="Nome (adjetivo)"
+                stateValue={[values, setValues]}
+              />
+              <TextArea
+                name="description"
+                placeholder="Descrição"
                 stateValue={[values, setValues]}
               />
               <Grid type="row" padding={[5, 0]}>
@@ -191,28 +197,31 @@ function Features({
                 <Text fontWeight="bold" color="primary">
                   {modal.data.name}
                 </Text>
-                <Text fontWeight="bold">
-                  <Text inline display="inline" color="gray">
-                    {formatAttribute('FOR', modal.data.strength)}
-                  </Text>
-                  <Text inline display="inline" color="gray">
-                    {formatAttribute('DES', modal.data.dexterity)}
-                  </Text>
-                  <Text inline display="inline" color="gray">
-                    {formatAttribute('CON', modal.data.constitution)}
-                  </Text>
-                  <Text inline display="inline" color="gray">
-                    {formatAttribute('INT', modal.data.intelligence)}
-                  </Text>
-                  <Text inline display="inline" color="gray">
-                    {formatAttribute('SAB', modal.data.wisdom)}
-                  </Text>
-                  <Text inline display="inline" color="gray">
-                    {formatAttribute('CAR', modal.data.charisma)}
-                  </Text>
+                <Text fontWeight="bold" color="gray">
+                  {modal.data.description}
                 </Text>
               </Paper>
-              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+              <Paper backgroundColor="secondary" margin="10px 0">
+                <Text inline display="inline">
+                  {ATTRIBUTE.ICONS.FOR} {modal.data.strength} &nbsp;
+                </Text>
+                <Text inline display="inline">
+                  {ATTRIBUTE.ICONS.DES} {modal.data.dexterity} &nbsp;
+                </Text>
+                <Text inline display="inline">
+                  {ATTRIBUTE.ICONS.CON} {modal.data.constitution} &nbsp;
+                </Text>
+                <Text inline display="inline">
+                  {ATTRIBUTE.ICONS.INT} {modal.data.intelligence} &nbsp;
+                </Text>
+                <Text inline display="inline">
+                  {ATTRIBUTE.ICONS.SAB} {modal.data.wisdom} &nbsp;
+                </Text>
+                <Text inline display="inline">
+                  {ATTRIBUTE.ICONS.CAR} {modal.data.charisma}
+                </Text>
+              </Paper>
+              <Box display="flex" justifyContent="flex-end">
                 <Button type="filled" padding={10} onClick={handle.resetFeature}>
                   Fechar
                 </Button>
