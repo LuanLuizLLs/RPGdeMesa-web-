@@ -127,19 +127,18 @@ function Inventory({
         {{
           add_item: (
             <>
-              <Title type="h6">
+              <Title type="h6" color="primary">
                 Adicionar item:
               </Title>
-              <Input
-                name="name"
-                label="Item"
-                placeholder="Nome"
-                stateValue={[values, setValues]}
-              />
               <Radio
                 name="usable"
                 label="Usável"
                 options={INVENTORY.USABLE}
+                stateValue={[values, setValues]}
+              />
+              <Input
+                name="name"
+                placeholder="Nome"
                 stateValue={[values, setValues]}
               />
               <TextArea
@@ -158,10 +157,12 @@ function Inventory({
                 </Grid>
                 <Grid type="column" padding={[0, 5]}>
                   <Input
-                    readOnly
+                    min={1}
+                    max={6}
                     type="number"
                     name="level"
                     label="Nível"
+                    readOnly={!values.usable}
                     stateValue={[values, setValues]}
                   />
                 </Grid>
@@ -185,14 +186,14 @@ function Inventory({
                 <Text color="primary" fontWeight="bold">
                   {modal.data.name} (Lv {modal.data.level})
                 </Text>
-                <Text>
+                <Text color="gray" fontWeight="bold">
                   {modal.data.description}
                 </Text>
               </Paper>
               <Paper backgroundColor="secondary" margin="10px 0">
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                   <Text fontWeight="bold" color="gray">
-                    {modal.data.attribute} 1d6+{modal.data.level}
+                    {ATTRIBUTE.ICONS[modal.data.attribute]} 1d6+{modal.data.level}
                   </Text>
                   <Button type="filled" color="success" fontSize="medium" onClick={handle.deleteInventory}>
                     Usar

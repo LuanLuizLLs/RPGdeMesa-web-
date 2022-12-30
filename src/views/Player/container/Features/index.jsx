@@ -94,12 +94,11 @@ function Features({
         {{
           add_feature: (
             <>
-              <Title type="h6">
+              <Title type="h6" color="primary">
                 Adicionar característica:
               </Title>
               <Input
                 name="name"
-                label="Característica"
                 placeholder="Nome (adjetivo)"
                 stateValue={[values, setValues]}
               />

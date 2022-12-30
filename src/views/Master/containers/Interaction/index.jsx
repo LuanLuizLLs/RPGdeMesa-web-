@@ -61,13 +61,11 @@ function Interaction() {
                 Adicionar interação:
               </Title>
               <Input
-                label="Nome"
                 name="name"
                 placeholder="Nome"
                 stateValue={[values, setValues]}
               />
               <TextArea
-                label="Descrição"
                 name="description"
                 placeholder="Descrição"
                 stateValue={[values, setValues]}

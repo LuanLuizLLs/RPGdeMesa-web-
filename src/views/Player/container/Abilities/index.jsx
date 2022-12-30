@@ -114,12 +114,11 @@ function Abilities({
         {{
           add_ability: (
             <>
-              <Title type="h6">
+              <Title type="h6" color="primary">
                 Adicionar habilidade:
               </Title>
               <Input
                 name="name"
-                label="Habilidade"
                 placeholder="Nome (verbo)"
                 stateValue={[values, setValues]}
               />
