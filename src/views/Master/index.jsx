@@ -77,7 +77,7 @@ function Master() {
         #{CAMPAIGN.id} - {CAMPAIGN.name}
       </Title>
       <Card>
-        <Title type="h6" textAlign="center">
+        <Title type="h6" textAlign="center" textTransform="capitalize">
           {CAMPAIGN.name}
         </Title>
         <Text textAlign="center">
