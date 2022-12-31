@@ -20,8 +20,8 @@ export const INITIAL = {
       id: 'ID',
       name: 'Interação',
       description: 'Descrição',
-      category: 'Categoria',
-      level: 'Nível',
+      life: 'Vida',
+      damage: 'Dano',
     },
     rows: [],
   } 

@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import API from '../../../../services/api'
+import useLoading from '../../../../hooks/useLoading'
+import useMessage from '../../../../hooks/useMessage'
 import { INITIAL } from './initial'
 import {
   Box,
@@ -11,24 +14,27 @@ import {
   Title,
 } from '../../../../components'
 
-function Interaction() {
+function Interaction({ campaign }) {
+
+  const { openMessage } = useMessage()
+  const { startLoading, stopLoading } = useLoading()
 
   const [list, setList] = useState(INITIAL.LIST)
   const [modal, setModal] = useState(INITIAL.MODAL)
   const [values, setValues] = useState(INITIAL.VALUES)
+  const [refresh, setRefresh] = useState(null)
 
   useEffect(() => {
-    setList((state) => ({
-      ...state,
-      rows: [{
-        id: 'ID',
-        name: 'Interação',
-        description: 'Descrição',
-        category: 'Personagem',
-        level: 'Nível',
-      }],
-    }))
-  }, [])
+    API('interactions', {
+      id_adventure: campaign.id_adventure,
+    })
+      .read(({ data }) => {
+        setList((state) => ({
+          ...state,
+          rows: data.response,
+        }))
+      })
+  }, [refresh, campaign.id_adventure])
 
   const handle = {
     openModal: (content, data = {}) => {
@@ -38,6 +44,23 @@ function Interaction() {
     resetInteraction: () => {
       setModal(INITIAL.MODAL)
       setValues(INITIAL.VALUES)
+      stopLoading()
+    },
+    createInteraction: () => {
+      startLoading('bar')
+
+      API('interactions', {
+        ...values,
+        id_adventure: campaign.id_adventure,
+      })
+        .create(({ data }) => {
+          setRefresh(data)
+          openMessage(data.status, data.message)
+        })
+        .catch(({ response }) => {
+          openMessage('error', response.data.message)
+        })
+        .finally(handle.resetInteraction)
     },
   }
 
@@ -145,10 +168,10 @@ function Interaction() {
                 </Grid>
               </Grid>
               <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="filled" color="secondary" padding={10} onClick={() => null}>
+                <Button type="filled" color="secondary" padding={10} onClick={handle.resetInteraction}>
                   Cancelar
                 </Button>
-                <Button type="filled" padding={10} onClick={() => null}>
+                <Button type="filled" padding={10} onClick={handle.createInteraction}>
                   Criar
                 </Button>
               </Box>
