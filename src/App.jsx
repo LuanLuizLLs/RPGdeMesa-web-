@@ -23,7 +23,7 @@ function App() {
   }
   
   useEffect(() => {
-    USER.id || setNavigate('/useLogin')
+    USER.id || setNavigate('/login')
   }, [USER, setNavigate])
 
   return (
