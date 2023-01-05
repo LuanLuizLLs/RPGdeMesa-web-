@@ -67,51 +67,6 @@ export const numberRandow = (min = 0, max = 0) => {
 }
 
 /**
- * Maximum life capacity
- * @param {Object} character 
- * @param {Number} capacity 
- * @returns 
- */
-export const maxLife = (character = {}, capacity = 0) => {
-  Object.entries(character).forEach(([key, value]) => {
-    if (Object.values(ATTRIBUTE.PRIMARY).includes(key)) {
-      capacity += value
-    }
-  })
-  return capacity
-}
-
-/**
- * Maximum mental capacity 
- * @param {Object} character 
- * @param {Number} capacity 
- * @returns 
- */
-export const mentalCapacity = (character = {}, capacity = 0) => {
-  Object.entries(character).forEach(([key, value]) => {
-    if (ATTRIBUTE.MENTAL.includes(key)) {
-      capacity += value
-    }
-  })
-  return capacity
-}
-
-/**
- * Maximum phisical capacity
- * @param {Object} character 
- * @param {Number} capacity 
- * @returns 
- */
-export const phisicalCapacity = (character = {}, capacity = 0) => {
-  Object.entries(character).forEach(([key, value]) => {
-    if (ATTRIBUTE.PHISICAL.includes(key)) {
-      capacity += value
-    }
-  })
-  return capacity
-}
-
-/**
  * Add arithmetic sign
  * @param {Number} number 
  * @returns 
@@ -164,7 +119,7 @@ export const modifierPoints = (character = {}, item = {}) => {
  * @param {Number} level
  * @returns 
  */
-export const scrollPoints = (attribute = 0, level = 0) => {
+export const scrollingPoints = (attribute = 0, level = 0) => {
   const {
     modifier,
     damage,

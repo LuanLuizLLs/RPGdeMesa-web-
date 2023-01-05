@@ -4,7 +4,7 @@ import useMessage from '../../../../hooks/useMessage'
 import useLoading from '../../../../hooks/useLoading'
 import { INITIAL } from './initial'
 import { ATTRIBUTE } from '../../../../configs'
-import { mentalCapacity, scrollPoints, modifierPoints } from '../../../../utils'
+import { scrollingPoints, modifierPoints } from '../../../../utils'
 import {
   Box,
   Button,
@@ -177,7 +177,7 @@ function Abilities({
               <Paper backgroundColor="secondary" margin="10px 0">
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                   <Text color="gray" fontWeight="bold">
-                    {scrollPoints(character[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
+                    {scrollingPoints(character[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
                   </Text>
                   <Button type="filled" color="success" fontSize="medium" onClick={handle.updateAbility}>
                     Aprimorar
@@ -199,7 +199,7 @@ function Abilities({
       <List height={200} onClick={(row) => handle.openModal('detail_ability', row)} {...abilities} />
       <Box display="flex" justifyContent="space-between" margin={10}>
         <Text fontWeight="bold">
-          <Text inline color="primary">Capacidade: </Text> {mentalCapacity(character)}
+          <Text inline color="primary">Capacidade: </Text> {character.mental_capacity}
         </Text>
         <Button type="filled" onClick={() => Boolean(character.id) && handle.openModal('add_ability')}>
           Adicionar

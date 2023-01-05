@@ -5,7 +5,6 @@ import Features from './container/Features'
 import Abilities from './container/Abilities'
 import Inventory from './container/Inventory'
 import { INITIAL } from './initial'
-import { maxLife } from '../../utils'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -120,7 +119,7 @@ function Player() {
                 <Input
                   readOnly
                   start="❤️"
-                  end={`+${maxLife(CHARACTER)}`}
+                  end={`+${CHARACTER.life_capacity}`}
                   name="life"
                   type="number"
                   label="Vida"

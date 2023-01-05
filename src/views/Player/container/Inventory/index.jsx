@@ -5,7 +5,7 @@ import useMessage from '../../../../hooks/useMessage'
 import { INITIAL } from './initial'
 import { optionsUsable } from './utils'
 import { ATTRIBUTE, INVENTORY } from '../../../../configs'
-import { phisicalCapacity, scrollPoints, modifierPoints } from '../../../../utils'
+import { scrollingPoints, modifierPoints } from '../../../../utils'
 import {
   Box,
   Button,
@@ -228,7 +228,7 @@ function Inventory({
               <Paper backgroundColor="secondary" margin="10px 0">
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                   <Text color="gray" fontWeight="bold">
-                    {scrollPoints(character[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
+                    {scrollingPoints(character[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
                   </Text>
                   <Button type="filled" color="success" fontSize="medium" onClick={handle.updateInventory}>
                     Aprimorar
@@ -250,7 +250,7 @@ function Inventory({
       <List height={200} onClick={(row) => handle.openModal('detail_item', row)} {...inventory} />
       <Box display="flex" justifyContent="space-between" margin={10}>
         <Text fontWeight="bold">
-          <Text inline color="primary">Capacidade: </Text> {phisicalCapacity(character)}
+          <Text inline color="primary">Capacidade: </Text> {character.physical_capacity}
         </Text>
         <Button type="filled" onClick={() => Boolean(character.id) && handle.openModal('add_item')}>
           Adicionar

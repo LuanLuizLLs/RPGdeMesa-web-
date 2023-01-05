@@ -5,7 +5,6 @@ import useMessage from '../../../../hooks/useMessage'
 import useLoading from '../../../../hooks/useLoading'
 import imagePlayer from '../../../../assets/img/player.png'
 import { INITIAL } from './initial'
-import { maxLife } from '../../../../utils'
 import {
   Box,
   Button,
@@ -161,7 +160,7 @@ function Characters({ campaign }) {
                         type="number"
                         fontSize="medium"
                         min={0}
-                        max={maxLife(character)}
+                        max={character.life_capacity}
                         readOnly={!Boolean(character.id)}
                         stateValue={[characters, setCharacters]}
                         onEnter={() => handle.updateCharacter(i)}
