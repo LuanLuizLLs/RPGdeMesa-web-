@@ -10,9 +10,12 @@ import {
   Input,
   List,
   Modal,
+  Paper,
+  Text,
   TextArea,
   Title,
 } from '../../../../components'
+import { ATTRIBUTE } from '../../../../configs'
 
 function Interaction({ campaign }) {
 
@@ -26,7 +29,7 @@ function Interaction({ campaign }) {
 
   useEffect(() => {
     API('interactions', {
-      id_adventure: campaign.id_adventure,
+      id_campaign: campaign.id,
     })
       .read(({ data }) => {
         setList((state) => ({
@@ -34,7 +37,7 @@ function Interaction({ campaign }) {
           rows: data.response,
         }))
       })
-  }, [refresh, campaign.id_adventure])
+  }, [refresh, campaign.id])
 
   const handle = {
     openModal: (content, data = {}) => {
@@ -51,7 +54,7 @@ function Interaction({ campaign }) {
 
       API('interactions', {
         ...values,
-        id_adventure: campaign.id_adventure,
+        id_campaign: campaign.id,
       })
         .create(({ data }) => {
           setRefresh(data)
@@ -62,20 +65,23 @@ function Interaction({ campaign }) {
         })
         .finally(handle.resetInteraction)
     },
+    deleteInteraction: () => {
+      startLoading('bar')
+
+      API('interactions', values)
+        .delete(({ data }) => {
+          setRefresh(data)
+          openMessage(data.status, data.message)
+        })
+        .catch(({ response }) => {
+          openMessage('error', response.data.message)
+        })
+        .finally(handle.resetInteraction)
+    }
   }
 
   return (
     <>
-      <List
-        {...list}
-        height={200}
-        onClick={(row) => console.log(row)}
-      />
-      <Box display="flex" justifyContent="end" margin={10}>
-        <Button type="filled" onClick={() => handle.openModal('add_interaction')}>
-          Adicionar
-        </Button>
-      </Box>
       <Modal maxWidth={500} stateModal={[modal, setModal]} onClose={handle.resetInteraction}>
         {{
           add_interaction: (
@@ -176,9 +182,66 @@ function Interaction({ campaign }) {
                 </Button>
               </Box>
             </>
+          ),
+          detail_interaction: (
+            <>
+              <Title type="h6">
+                Detalhes da interação:
+              </Title>
+              <Paper backgroundColor="secondary">
+                <Text fontWeight="bold" color="primary">
+                  {modal.data.name} (Lv {modal.data.level})
+                </Text>
+                <Text fontWeight="bold" color="gray">
+                  {modal.data.description}
+                </Text>
+                <Text>
+                  {ATTRIBUTE.ICONS.VID} {modal.data.life} &nbsp;
+                  {ATTRIBUTE.ICONS.DAN} {modal.data.damage}
+                </Text>
+              </Paper>
+              <Paper backgroundColor="secondary" margin="10px 0">
+                <Text inline display="inline">
+                  {ATTRIBUTE.ICONS.FOR} {modal.data.strength} &nbsp;
+                </Text>
+                <Text inline display="inline">
+                  {ATTRIBUTE.ICONS.DES} {modal.data.dexterity} &nbsp;
+                </Text>
+                <Text inline display="inline">
+                  {ATTRIBUTE.ICONS.CON} {modal.data.constitution} &nbsp;
+                </Text>
+                <Text inline display="inline">
+                  {ATTRIBUTE.ICONS.INT} {modal.data.intelligence} &nbsp;
+                </Text>
+                <Text inline display="inline">
+                  {ATTRIBUTE.ICONS.SAB} {modal.data.wisdom} &nbsp;
+                </Text>
+                <Text inline display="inline">
+                  {ATTRIBUTE.ICONS.CAR} {modal.data.charisma}
+                </Text>
+              </Paper>
+              <Box display="flex" justifyContent="flex-end">
+                <Button type="filled" padding={10} onClick={handle.resetInteraction}>
+                  Fechar
+                </Button>
+                <Button type="filled" color="error" padding={10} onClick={handle.deleteInteraction}>
+                  Remover
+                </Button>
+              </Box>
+            </>
           )
         }}
       </Modal>
+      <List
+        {...list}
+        height={200}
+        onClick={(row) => handle.openModal('detail_interaction', row)}
+      />
+      <Box display="flex" justifyContent="end" margin={10}>
+        <Button type="filled" onClick={() => handle.openModal('add_interaction')}>
+          Adicionar
+        </Button>
+      </Box>
     </>
   )
 }
