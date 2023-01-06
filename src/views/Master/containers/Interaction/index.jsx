@@ -40,7 +40,7 @@ function Interaction({ campaign }) {
   }, [refresh, campaign.id])
 
   const handle = {
-    openModal: (content, data = {}) => {
+    openModal: (content, data = modal.data) => {
       setModal({ content, data })
       setValues({ ...values, ...data })
     },
@@ -84,7 +84,7 @@ function Interaction({ campaign }) {
     <>
       <Modal maxWidth={500} stateModal={[modal, setModal]} onClose={handle.resetInteraction}>
         {{
-          add_interaction: (
+          create_interaction: (
             <>
               <Title type="h6">
                 Adicionar interação:
@@ -221,15 +221,16 @@ function Interaction({ campaign }) {
                 </Text>
               </Paper>
               <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" padding={10} onClick={handle.resetInteraction}>
-                  Fechar
+                <Button type="bottomless" padding={10} onClick={handle.resetInteraction}>
+                  Cancelar
                 </Button>
-                <Button type="filled" color="error" padding={10} onClick={handle.deleteInteraction}>
-                  Remover
+                <Button type="filled" padding={10} onClick={() => handle.openModal('add_interaction')}>
+                  Adicionar
                 </Button>
               </Box>
             </>
-          )
+          ),
+          add_interaction: 'TESTE'
         }}
       </Modal>
       <List
@@ -238,7 +239,7 @@ function Interaction({ campaign }) {
         onClick={(row) => handle.openModal('detail_interaction', row)}
       />
       <Box display="flex" justifyContent="end" margin={10}>
-        <Button type="filled" onClick={() => handle.openModal('add_interaction')}>
+        <Button type="filled" onClick={() => handle.openModal('create_interaction')}>
           Adicionar
         </Button>
       </Box>
