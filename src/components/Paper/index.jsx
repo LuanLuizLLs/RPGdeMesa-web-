@@ -8,6 +8,7 @@ export const Paper = ({
   margin = 0,
   padding = 10,
   overflow = '',
+  textAlign = '',
   borderRadius = 10,
   backgroundColor = '',
 }) => {
@@ -16,6 +17,7 @@ export const Paper = ({
     margin,
     padding,
     overflow,
+    textAlign,
     borderRadius,
     backgroundColor: theme[backgroundColor],
   }
@@ -32,6 +34,7 @@ Paper.propTypes = {
   margin: PropTypes.any,
   padding: PropTypes.number,
   overflow: PropTypes.string,
+  textAlign: PropTypes.string,
   borderRadius: PropTypes.string,
   backgroundColor: PropTypes.string.isRequired,
 }
