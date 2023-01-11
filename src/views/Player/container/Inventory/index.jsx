@@ -50,7 +50,6 @@ function Inventory({
 
   useEffect(() => {
     const [attribute] = optionsUsable(values.usable)
-    console.log(attribute)
     setValues((state) => ({
       ...state,
       attribute,
