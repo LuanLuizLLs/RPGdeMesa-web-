@@ -11,8 +11,8 @@ const theme = {
   white: '#EBEFD4',
 }
 
-/** Colors clarity  */
-export const clarity = (color) => {
+/** Colors contrast  */
+export const contrast = (color) => {
   return [
     'secondary',
     'white',
