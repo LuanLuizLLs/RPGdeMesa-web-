@@ -246,10 +246,10 @@ function Characters({ user }) {
           height={300}
           {...list}
           onClick={(row) => handle.openModal('character_start', row)}
-          actions={(row) => ({
-            update: () => handle.openModal('character_update', row),
-            delete: () => handle.openModal('character_delete', row),
-          })}
+          actions={{
+            update: (row) => handle.openModal('character_update', row),
+            delete: (row) => handle.openModal('character_delete', row),
+          }}
         />
         <Button type="filled" padding={10} onClick={() => handle.openModal('character_create')}>
           Criar personagem

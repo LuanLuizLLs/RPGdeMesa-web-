@@ -240,10 +240,10 @@ function Campaigns({ user }) {
           height={300}
           {...list}
           onClick={(row) => handle.openModal('campaign_start', row)}
-          actions={(row) => ({
-            update: () => handle.openModal('campaign_update', row),
-            delete: () => handle.openModal('campaign_delete', row),
-          })}
+          actions={{
+            update: (row) => handle.openModal('campaign_update', row),
+            delete: (row) => handle.openModal('campaign_delete', row),
+          }}
         />
         <Button type="filled" padding={10} onClick={() => handle.openModal('campaign_create')}>
           Criar campanha

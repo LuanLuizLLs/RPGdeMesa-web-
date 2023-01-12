@@ -6,7 +6,7 @@ export const List = ({
   height = 0,
   rows = [],
   columns = {},
-  actions = () => ({ }),
+  actions = {},
   onClick = () => { },
   noColumns = false,
 }) => {
@@ -24,7 +24,7 @@ export const List = ({
               {Object.values(columns).map((item, i) => (
                 <th key={i}>{item}</th>
               ))}
-              {actions && (<th />)}
+              <th />
             </tr>
           </thead>
         )}
@@ -34,13 +34,11 @@ export const List = ({
               {Object.entries(row).map(([key, item], i) => Boolean(columns[key]) && (
                 <td key={i} title={item} onClick={() => onClick(row)}>{item}</td>
               ))}
-              {Boolean(actions) && (
-                <td className={classes.actions} key={i}>
-                  {Object.entries(actions(row)).map(([key, action]) => (
-                    <span key={key} type={key} onClick={() => action()} />
-                  ))}
-                </td>
-              )}
+              <td className={classes.actions} key={i}>
+                {Object.entries(actions).map(([key, action]) => (
+                  <span key={key} type={key} onClick={() => action(row)} />
+                ))}
+              </td>
             </tr>
           ))}
         </tbody>
