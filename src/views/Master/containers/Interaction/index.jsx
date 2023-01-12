@@ -65,6 +65,19 @@ function Interaction({ campaign }) {
         })
         .finally(handle.resetInteraction)
     },
+    updateInteraction: () => {
+      startLoading('bar')
+
+      API('interactions', values)
+        .update(({ data }) => {
+          setRefresh(data)
+          openMessage(data.status, data.message)
+        })
+        .catch(({ response }) => {
+          openMessage('error', response.data.message)
+        })
+        .finally(handle.resetInteraction)
+    },
     deleteInteraction: () => {
       startLoading('bar')
 
@@ -77,7 +90,7 @@ function Interaction({ campaign }) {
           openMessage('error', response.data.message)
         })
         .finally(handle.resetInteraction)
-    }
+    },
   }
 
   return (
@@ -183,7 +196,7 @@ function Interaction({ campaign }) {
               </Box>
             </>
           ),
-          detail_interaction: (
+          read_interaction: (
             <>
               <Title type="h6">
                 Detalhes da interação:
@@ -222,21 +235,141 @@ function Interaction({ campaign }) {
               </Paper>
               <Box display="flex" justifyContent="flex-end">
                 <Button type="bottomless" padding={10} onClick={handle.resetInteraction}>
-                  Cancelar
+                  Fechar
                 </Button>
-                <Button type="filled" padding={10} onClick={() => handle.openModal('add_interaction')}>
-                  Adicionar
+                <Button type="filled" padding={10} onClick={handle.resetInteraction}>
+                  Interagir
                 </Button>
               </Box>
             </>
           ),
-          add_interaction: 'TESTE'
+          update_interaction: (
+            <>
+              <Title type="h6">
+                Editar interação:
+              </Title>
+              <Input
+                name="name"
+                placeholder="Nome"
+                stateValue={[values, setValues]}
+              />
+              <TextArea
+                name="description"
+                placeholder="Descrição"
+                stateValue={[values, setValues]}
+              />
+              <Grid type="container">
+                <Grid type="row" padding={[5, 0]}>
+                  <Grid type="column" margin={[0, 5]}>
+                    <Input
+                      start="❤️"
+                      name="life"
+                      label="Vida"
+                      type="number"
+                      stateValue={[values, setValues]}
+                    />
+                  </Grid>
+                  <Grid type="column" margin={[0, 5]}>
+                    <Input
+                      start="🩸"
+                      type="number"
+                      label="Dano"
+                      name="damage"
+                      stateValue={[values, setValues]}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid type="row" padding={[5, 0]}>
+                  <Grid type="column" margin={[0, 5]}>
+                    <Input
+                      start="💪"
+                      type="number"
+                      name="strength"
+                      stateValue={[values, setValues]}
+                    />
+                  </Grid>
+                  <Grid type="column" margin={[0, 5]}>
+                    <Input
+                      start="👋"
+                      type="number"
+                      name="dexterity"
+                      stateValue={[values, setValues]}
+                    />
+                  </Grid>
+                  <Grid type="column" margin={[0, 5]}>
+                    <Input
+                      start="✊"
+                      type="number"
+                      name="constitution"
+                      stateValue={[values, setValues]}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid type="row">
+                  <Grid type="column" margin={[0, 5]}>
+                    <Input
+                      start="📙"
+                      type="number"
+                      name="intelligence"
+                      stateValue={[values, setValues]}
+                    />
+                  </Grid>
+                  <Grid type="column" margin={[0, 5]}>
+                    <Input
+                      start="🙌"
+                      type="number"
+                      name="wisdom"
+                      stateValue={[values, setValues]}
+                    />
+                  </Grid>
+                  <Grid type="column" margin={[0, 5]}>
+                    <Input
+                      start="🤝"
+                      type="number"
+                      name="charisma"
+                      stateValue={[values, setValues]}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="filled" color="secondary" padding={10} onClick={handle.resetInteraction}>
+                  Cancelar
+                </Button>
+                <Button type="filled" padding={10} onClick={handle.updateInteraction}>
+                  Salvar
+                </Button>
+              </Box>
+            </>
+          ),
+          delete_interaction: (
+            <>
+              <Title type="h6">
+                Deletar interação:
+              </Title>
+              <Text>
+                Tem certeza que deseja excluir a interação <b>{modal.data.name}</b>?
+              </Text>
+              <Box display="flex" justifyContent="flex-end" marginTop={10}>
+                <Button type="bottomless" padding={10} onClick={handle.resetInteraction}>
+                  Cancelar
+                </Button>
+                <Button type="filled" color="error" padding={10} onClick={handle.deleteInteraction}>
+                  Excluir
+                </Button>
+              </Box>
+            </>
+          )
         }}
       </Modal>
       <List
         {...list}
         height={200}
-        onClick={(row) => handle.openModal('detail_interaction', row)}
+        onClick={(row) => handle.openModal('read_interaction', row)}
+        actions={{
+          update: (row) => handle.openModal('update_interaction', row),
+          delete: (row) => handle.openModal('delete_interaction', row),
+        }}
       />
       <Box display="flex" justifyContent="end" margin={10}>
         <Button type="filled" onClick={() => handle.openModal('create_interaction')}>

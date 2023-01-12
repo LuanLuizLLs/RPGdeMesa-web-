@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import API from '../../services/api'
 import Page from '../../layouts/Page'
-import Combat from './containers/Combat'
 import Scenarios from './containers/Scenarios'
 import Adventures from './containers/Adventures'
 import Exploration from './containers/Exploration'
@@ -24,6 +23,7 @@ import {
   Text,
   Title,
 } from '../../components'
+import Board from './containers/Board'
 
 function Master() {
 
@@ -142,12 +142,14 @@ function Master() {
         </Grid>
       </Grid>
       <Divider borderStyle="solid" />
+      <Card margin="20px 0">
+        <Board current={tab} />
+      </Card>
       <Card>
-        <Tab tabs={['Interação', 'Exploração', 'Combate']} stateTab={[tab, setTab]}>
+        <Tab tabs={['Interação', 'Exploração']} stateTab={[tab, setTab]}>
           {[
             <Interaction key="interaction" campaign={CAMPAIGN} />,
             <Exploration key="exploration" campaign={CAMPAIGN} />,
-            <Combat key="combat" campaign={CAMPAIGN} />,
           ]}
         </Tab>
       </Card>
