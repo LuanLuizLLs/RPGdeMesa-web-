@@ -51,7 +51,7 @@ List.propTypes = {
   height: PropTypes.number.isRequired,
   rows: PropTypes.array.isRequired,
   columns: PropTypes.object,
-  actions: PropTypes.func,
+  actions: PropTypes.object,
   onClick: PropTypes.func,
   noColumns: PropTypes.bool,
 }
