@@ -1,10 +1,6 @@
 import { CONDITIONS } from '../configs'
 import { numberRandow } from '../utils'
 
-/**
- * Hook campaign
- * @returns
- */
 const useCampaign = () => {
   const additionalAttributes = (period = '', climate = '') => {
     const [min, max] = CONDITIONS[period][climate]

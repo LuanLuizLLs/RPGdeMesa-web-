@@ -1,10 +1,6 @@
 import { CASTE, RACE } from '../configs'
 import { numberRandow } from '../utils'
 
-/**
- * Hooh character
- * @returns
- */
 const useCharacter = () => {
   const additionalAttributes = (race = '', caste = '') => {
     const {
