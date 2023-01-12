@@ -177,19 +177,19 @@ export const CASTE = {
 /** Conditions configs */
 export const CONDITIONS = {
   'Dia': {
-    'Frio': [-1, 3],
-    'Normal': [-2, 2],
-    'Quente': [-3, 1],
+    'Frio': [-2, 6],
+    'Normal': [-4, 4],
+    'Quente': [-6, 2],
   },
   'Tarde': {
-    'Frio': [-2, 2],
-    'Normal': [-3, 1],
-    'Quente': [-1, 3],
+    'Frio': [-4, 4],
+    'Normal': [-6, 2],
+    'Quente': [-2, 6],
   },
   'Noite': {
-    'Frio': [-1, 3],
-    'Normal': [-2, 2],
-    'Quente': [-3, 1],
+    'Frio': [-2, 6],
+    'Normal': [-4, 4],
+    'Quente': [-6, 2],
   },
 }
 
