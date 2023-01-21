@@ -159,7 +159,6 @@ function Characters({ campaign }) {
                         name="life"
                         type="number"
                         fontSize="medium"
-                        min={0}
                         max={character.life_capacity}
                         readOnly={!Boolean(character.id)}
                         stateValue={[characters, setCharacters]}
