@@ -25,7 +25,7 @@ export const Link = ({
 }
 
 Link.propTypes = {
-  children: PropTypes.string,
+  children: PropTypes.any,
   color: PropTypes.string,
   href: PropTypes.string,
   target: PropTypes.string,
