@@ -161,13 +161,13 @@ function Scenarios({
       <Collapse name="scenery" stateCollapse={[collapse, setCollapse]}>
         {Boolean(list.rows.length) && (
           <List
+            {...list}
             height={150}
             noColumns={true}
-            {...list}
             onClick={(row) => handle.openModal('detail_scenery', row)}
-            actions={(row) => ({
-              update: () => handle.openModal('edit_scenery', row),
-            })}
+            actions={{
+              update: (row) => handle.openModal('edit_scenery', row),
+            }}
           />
         )}
       </Collapse>

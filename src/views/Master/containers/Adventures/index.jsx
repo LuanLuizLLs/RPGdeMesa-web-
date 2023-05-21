@@ -162,13 +162,13 @@ function Adventures({
       <Collapse name="adventure" stateCollapse={[collapse, setCollapse]}>
         {Boolean(list.rows.length) && (
           <List
+            {...list}
             height={150}
             noColumns={true}
-            {...list}
             onClick={(row) => handle.openModal('detail_adventure', row)}
-            actions={(row) => ({
-              update: () => handle.openModal('edit_adventure', row),
-            })}
+            actions={{
+              update: (row) => handle.openModal('edit_adventure', row),
+            }}
           />
         )}
       </Collapse>
