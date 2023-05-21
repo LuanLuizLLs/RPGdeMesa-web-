@@ -5,8 +5,8 @@
  * @returns 
  */
 export const comparativePassword = (first = '', secound = '') => {
-  return {
-    valid: (first === secound),
-    validate: Boolean(secound) ? (first === secound) ? 'valid' : 'invalid' : 'default',
-  }
+	return {
+		valid: (first === secound),
+		validate: secound ? (first === secound) ? 'valid' : 'invalid' : 'default',
+	}
 }

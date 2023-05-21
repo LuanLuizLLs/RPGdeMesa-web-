@@ -7,13 +7,13 @@ import { RANK } from '../constants'
  * @returns 
  */
 export const whichDevice = (device = '') => {
-  let devices = {}
-  Object.entries(BREAKPOINT).forEach(([key, value]) => {
-    devices = {
-      ...devices, [key]: (window.innerWidth <= value)
-    }
-  })
-  return devices[device]
+	let devices = {}
+	Object.entries(BREAKPOINT).forEach(([key, value]) => {
+		devices = {
+			...devices, [key]: (window.innerWidth <= value)
+		}
+	})
+	return devices[device]
 }
 
 /**
@@ -23,11 +23,11 @@ export const whichDevice = (device = '') => {
  * @returns 
  */
 export const isNull = (values = {}, optionals = []) => {
-  const nulls = []
-  Object.entries(values).forEach(([key, value]) => {
-    (!value && !optionals.includes(key)) && nulls.push(key)
-  })
-  return nulls.length > 0 && nulls
+	const nulls = []
+	Object.entries(values).forEach(([key, value]) => {
+		(!value && !optionals.includes(key)) && nulls.push(key)
+	})
+	return nulls.length > 0 && nulls
 }
 
 /**
@@ -37,11 +37,11 @@ export const isNull = (values = {}, optionals = []) => {
  * @returns 
  */
 export const separateData = (initial = {}, current = {}) => {
-  const separate = {}
-  Object.keys(initial).forEach((key) => {
-    separate[key] = current[key]
-  })
-  return separate
+	const separate = {}
+	Object.keys(initial).forEach((key) => {
+		separate[key] = current[key]
+	})
+	return separate
 }
 
 /**
@@ -50,7 +50,7 @@ export const separateData = (initial = {}, current = {}) => {
  * @returns 
  */
 export const optionRandow = (options = []) => {
-  return options[Math.floor(Math.random() * options.length)]
+	return options[Math.floor(Math.random() * options.length)]
 }
 
 /**
@@ -60,10 +60,10 @@ export const optionRandow = (options = []) => {
  * @returns 
  */
 export const numberRandow = (min = 0, max = 0) => {
-  if (min < 0) {
-    return parseInt((Math.random() * (min - 1))) + parseInt((Math.random() * (max + 1)))
-  }
-  return parseInt((Math.random() * ((max + 1) - min)) + min)
+	if (min < 0) {
+		return parseInt((Math.random() * (min - 1))) + parseInt((Math.random() * (max + 1)))
+	}
+	return parseInt((Math.random() * ((max + 1) - min)) + min)
 }
 
 /**
@@ -72,10 +72,10 @@ export const numberRandow = (min = 0, max = 0) => {
  * @returns 
  */
 export const addSignal = (number = 0) => {
-  if (number > 0) {
-    return `+${number}`
-  }
-  return number
+	if (number > 0) {
+		return `+${number}`
+	}
+	return number
 }
 
 /**
@@ -86,12 +86,12 @@ export const addSignal = (number = 0) => {
  * @returns 
  */
 export const pointAttribute = (attribute = '', modifier = 0, level = 0) => {
-  const format = {
-    attribute,
-    damage: level ? addSignal(level) : '',
-    modifier: modifier ? addSignal(modifier) : '',
-  }
-  return `${format.attribute} 1d20${format.modifier} 1d6${format.damage}`
+	const format = {
+		attribute,
+		damage: level ? addSignal(level) : '',
+		modifier: modifier ? addSignal(modifier) : '',
+	}
+	return `${format.attribute} 1d20${format.modifier} 1d6${format.damage}`
 }
 
 /**
@@ -101,16 +101,16 @@ export const pointAttribute = (attribute = '', modifier = 0, level = 0) => {
  * @returns 
  */
 export const modifierPoints = (character = {}, item = {}) => {
-  const {
-    icon,
-    modifier,
-    damage,
-  } = {
-    icon: ATTRIBUTE.ICONS[item.attribute],
-    modifier: character[ATTRIBUTE.PRIMARY[item.attribute]],
-    damage: item.level,
-  }
-  return `${icon} ${RANK[modifier - damage] || '⨉'} ${ATTRIBUTE.ICONS.DAN} ${damage}`
+	const {
+		icon,
+		modifier,
+		damage,
+	} = {
+		icon: ATTRIBUTE.ICONS[item.attribute],
+		modifier: character[ATTRIBUTE.PRIMARY[item.attribute]],
+		damage: item.level,
+	}
+	return `${icon} ${RANK[modifier - damage] || '⨉'} ${ATTRIBUTE.ICONS.DAN} ${damage}`
 }
 
 /**
@@ -120,12 +120,12 @@ export const modifierPoints = (character = {}, item = {}) => {
  * @returns 
  */
 export const scrollingPoints = (attribute = 0, level = 0) => {
-  const {
-    modifier,
-    damage,
-  } = {
-    modifier: attribute >= level ? attribute : attribute - level,
-    damage: attribute >= level ? level : level - (level - attribute),
-  }
-  return `1d20${modifier ? addSignal(modifier) : ''} | 1d6${damage ? addSignal(damage) : ''}`
+	const {
+		modifier,
+		damage,
+	} = {
+		modifier: attribute >= level ? attribute : attribute - level,
+		damage: attribute >= level ? level : level - (level - attribute),
+	}
+	return `1d20${modifier ? addSignal(modifier) : ''} | 1d6${damage ? addSignal(damage) : ''}`
 }

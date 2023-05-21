@@ -4,43 +4,43 @@ import classes from './style.module.css'
 import theme from '../../theme'
 
 export const Text = ({
-  children,
-  inline,
-  color = 'black',
-  fontSize = '',
-  fontWeight = '',
-  textAlign = '',
-  textTransform = '',
-  whiteSpace = '',
+	children,
+	inline,
+	color = 'black',
+	fontSize = '',
+	fontWeight = '',
+	textAlign = '',
+	textTransform = '',
+	whiteSpace = '',
 }) => {
 
-  const style = {
-    fontSize,
-    fontWeight,
-    textAlign,
-    textTransform,
-    whiteSpace,
-    color: theme[color]
-  }
+	const style = {
+		fontSize,
+		fontWeight,
+		textAlign,
+		textTransform,
+		whiteSpace,
+		color: theme[color]
+	}
 
-  return inline ? (
-    <span style={style}>
-      {children}
-    </span>
-  ) : (
-    <p className={classes.text} style={style}>
-      {children}
-    </p>
-  )
+	return inline ? (
+		<span style={style}>
+			{children}
+		</span>
+	) : (
+		<p className={classes.text} style={style}>
+			{children}
+		</p>
+	)
 }
 
 Text.propTypes = {
-  children: PropTypes.any,
-  inline: PropTypes.any,
-  display: PropTypes.string,
-  color: PropTypes.string,
-  fontWeight: PropTypes.string,
-  textAlign: PropTypes.string,
-  textTransform: PropTypes.string,
-  whiteSpace: PropTypes.string,
+	children: PropTypes.any,
+	inline: PropTypes.any,
+	display: PropTypes.string,
+	color: PropTypes.string,
+	fontWeight: PropTypes.string,
+	textAlign: PropTypes.string,
+	textTransform: PropTypes.string,
+	whiteSpace: PropTypes.string,
 }

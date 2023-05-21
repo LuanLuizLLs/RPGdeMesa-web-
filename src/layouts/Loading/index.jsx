@@ -2,17 +2,17 @@ import React from 'react'
 import classes from './style.module.css'
 
 function Loading({
-  children,
-  stateLoading = [],
+	children,
+	stateLoading = [],
 }) {
 
-  const [loading = {}] = stateLoading
+	const [loading = {}] = stateLoading
 
-  return (
-    <div className={classes.loading} loading={loading.type}>
-      {children}
-    </div>
-  )
+	return (
+		<div className={classes.loading} loading={loading.type}>
+			{children}
+		</div>
+	)
 }
 
 export default Loading

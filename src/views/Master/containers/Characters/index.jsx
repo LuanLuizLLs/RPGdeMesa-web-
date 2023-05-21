@@ -6,263 +6,263 @@ import useLoading from '../../../../hooks/useLoading'
 import imagePlayer from '../../../../assets/img/player.png'
 import { INITIAL } from './initial'
 import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  Image,
-  Input,
-  Link,
-  Modal,
-  Paper,
-  Text,
-  Title,
+	Box,
+	Button,
+	Divider,
+	Grid,
+	Image,
+	Input,
+	Link,
+	Modal,
+	Paper,
+	Text,
+	Title,
 } from '../../../../components'
 
 function Characters({ campaign }) {
 
-  const { openMessage } = useMessage()
-  const { startLoading, stopLoading } = useLoading()
+	const { openMessage } = useMessage()
+	const { startLoading, stopLoading } = useLoading()
 
-  const [modal, setModal] = useState(INITIAL.MODAL)
-  const [values, setValues] = useState(INITIAL.VALUES)
-  const [refresh, setRefresh] = useState(INITIAL.REFRESH)
-  const [characters, setCharacters] = useState(INITIAL.CHARACTERS)
+	const [modal, setModal] = useState(INITIAL.MODAL)
+	const [values, setValues] = useState(INITIAL.VALUES)
+	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
+	const [characters, setCharacters] = useState(INITIAL.CHARACTERS)
 
-  useEffect(() => {
-    API('characters', {
-      id_campaign: campaign.id
-    })
-      .read(({ data }) => {
-        setCharacters(Object.assign({ ...INITIAL.CHARACTERS }, data.response))
-      })
-  }, [refresh, campaign.id])
+	useEffect(() => {
+		API('characters', {
+			id_campaign: campaign.id
+		})
+			.read(({ data }) => {
+				setCharacters(Object.assign({ ...INITIAL.CHARACTERS }, data.response))
+			})
+	}, [refresh, campaign.id])
 
-  const handle = {
-    openModal: (content, data = {}) => {
-      setModal({ content, data })
-      setValues({ ...values, ...data })
-    },
-    clearValues: () => {
-      setValues(INITIAL.VALUES)
-    },
-    resetCharacter: () => {
-      setValues(INITIAL.VALUES)
-      setModal(INITIAL.MODAL)
-      stopLoading()
-    },
-    searchCharacter: () => {
-      startLoading('bar')
+	const handle = {
+		openModal: (content, data = {}) => {
+			setModal({ content, data })
+			setValues({ ...values, ...data })
+		},
+		clearValues: () => {
+			setValues(INITIAL.VALUES)
+		},
+		resetCharacter: () => {
+			setValues(INITIAL.VALUES)
+			setModal(INITIAL.MODAL)
+			stopLoading()
+		},
+		searchCharacter: () => {
+			startLoading('bar')
 
-      API('characters', values)
-        .read(({ data }) => {
-          const [character = {}] = data.response
-          setValues({
-            ...values,
-            ...character,
-          })
-          openMessage(data.status, data.message)
-        })
-        .finally(stopLoading)
-    },
-    addCharacter: () => {
-      startLoading('bar')
+			API('characters', values)
+				.read(({ data }) => {
+					const [character = {}] = data.response
+					setValues({
+						...values,
+						...character,
+					})
+					openMessage(data.status, data.message)
+				})
+				.finally(stopLoading)
+		},
+		addCharacter: () => {
+			startLoading('bar')
 
-      API('characters', {
-        ...values,
-        id_campaign: campaign.id,
-      })
-        .update(({ data }) => {
-          setRefresh(data)
-          openMessage(data.status, data.message)
-        })
-        .catch(({ response }) => {
-          openMessage('error', response.data.message)
-        })
-        .finally(handle.resetCharacter)
-    },
-    removeCharacter: () => {
-      startLoading('bar')
+			API('characters', {
+				...values,
+				id_campaign: campaign.id,
+			})
+				.update(({ data }) => {
+					setRefresh(data)
+					openMessage(data.status, data.message)
+				})
+				.catch(({ response }) => {
+					openMessage('error', response.data.message)
+				})
+				.finally(handle.resetCharacter)
+		},
+		removeCharacter: () => {
+			startLoading('bar')
 
-      API('characters', {
-        ...values,
-        id_campaign: null,
-      })
-        .update(({ data }) => {
-          setRefresh(data)
-          openMessage(data.status, data.message)
-        })
-        .catch(({ response }) => {
-          openMessage('error', response.data.message)
-        })
-        .finally(handle.resetCharacter)
-    },
-    updateCharacter: (index) => {
-      startLoading('bar')
+			API('characters', {
+				...values,
+				id_campaign: null,
+			})
+				.update(({ data }) => {
+					setRefresh(data)
+					openMessage(data.status, data.message)
+				})
+				.catch(({ response }) => {
+					openMessage('error', response.data.message)
+				})
+				.finally(handle.resetCharacter)
+		},
+		updateCharacter: (index) => {
+			startLoading('bar')
 
-      API('characters', characters[index])
-        .update(({ data }) => {
-          setRefresh(data)
-          openMessage(data.status, data.message)
-        })
-        .catch(({ response }) => {
-          openMessage('error', response.data.message)
-        })
-        .finally(handle.resetCharacter)
-    },
-  }
+			API('characters', characters[index])
+				.update(({ data }) => {
+					setRefresh(data)
+					openMessage(data.status, data.message)
+				})
+				.catch(({ response }) => {
+					openMessage('error', response.data.message)
+				})
+				.finally(handle.resetCharacter)
+		},
+	}
 
-  return (
-    <>
-      {Object.values(characters).map((character, i) => (
-        <Box
-          key={character.id}
-          marginTop={10}
-          borderRadius={10}
-          borderStyle="solid"
-          borderColor={theme.primary}
-          position="relative"
-        >
-          <Box position="absolute" top={15} right={20}>
-            <Link textDecoration="none" onClick={() => Boolean(character.id) && handle.openModal('remove_character', characters[i])}>
+	return (
+		<>
+			{Object.values(characters).map((character, i) => (
+				<Box
+					key={character.id}
+					marginTop={10}
+					borderRadius={10}
+					borderStyle="solid"
+					borderColor={theme.primary}
+					position="relative"
+				>
+					<Box position="absolute" top={15} right={20}>
+						<Link textDecoration="none" onClick={() => Boolean(character.id) && handle.openModal('remove_character', characters[i])}>
               &#10006;
-            </Link>
-          </Box>
-          <Grid type="container">
-            <Grid type="row" alignItems="center" justifyContent="center">
-              <Grid type="column" flex="none" padding={[5, 5]}>
-                <Paper backgroundColor="secondary" borderRadius="50%">
-                  <Image
-                    maxHeight={60}
-                    maxWidth={60}
-                    src={imagePlayer}
-                    alt="Armadura de cavaleiro"
-                  />
-                </Paper>
-              </Grid>
-              <Grid type="column" padding={[5, 5]} minWidth={280}>
-                <Paper backgroundColor="secondary">
-                  <Text fontSize="medium">
-                    <Link target="_blank" {...Boolean(character.id) && { href: `/player/${character.id}` }}>
-                      {character.name}
-                    </Link> ({character.race} | {character.caste} | {character.tendency})
-                  </Text>
-                  <Text fontSize="small" color="gray">
-                    {character.description}
-                  </Text>
-                  <Divider borderStyle="solid" margin="0" />
-                  <Grid type="row">
-                    <Grid type="column" flex="none" minWidth={100}>
-                      <Input
-                        index={i}
-                        start="❤️"
-                        name="life"
-                        type="number"
-                        fontSize="medium"
-                        max={character.life_capacity}
-                        readOnly={!Boolean(character.id)}
-                        stateValue={[characters, setCharacters]}
-                        onEnter={() => handle.updateCharacter(i)}
-                      />
-                    </Grid>
-                    <Grid type="column" flex="none" minWidth={100}>
-                      <Input
-                        index={i}
-                        start="👣"
-                        name="actions"
-                        type="number"
-                        fontSize="medium"
-                        readOnly={!Boolean(character.id)}
-                        stateValue={[characters, setCharacters]}
-                        onEnter={() => handle.updateCharacter(i)}
-                      />
-                    </Grid>
-                    <Grid type="column" flex="none" minWidth={100}>
-                      <Input
-                        index={i}
-                        start="💰"
-                        name="coins"
-                        type="number"
-                        fontSize="medium"
-                        readOnly={!Boolean(character.id)}
-                        stateValue={[characters, setCharacters]}
-                        onEnter={() => handle.updateCharacter(i)}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Divider borderStyle="solid" margin="10px 0 0" />
-                  <Grid type="row">
-                    <Grid type="column" flex="none" padding={[5, 10]}>
-                      <Text fontSize="medium">
+						</Link>
+					</Box>
+					<Grid type="container">
+						<Grid type="row" alignItems="center" justifyContent="center">
+							<Grid type="column" flex="none" padding={[5, 5]}>
+								<Paper backgroundColor="secondary" borderRadius="50%">
+									<Image
+										maxHeight={60}
+										maxWidth={60}
+										src={imagePlayer}
+										alt="Armadura de cavaleiro"
+									/>
+								</Paper>
+							</Grid>
+							<Grid type="column" padding={[5, 5]} minWidth={280}>
+								<Paper backgroundColor="secondary">
+									<Text fontSize="medium">
+										<Link target="_blank" {...Boolean(character.id) && { href: `/player/${character.id}` }}>
+											{character.name}
+										</Link> ({character.race} | {character.caste} | {character.tendency})
+									</Text>
+									<Text fontSize="small" color="gray">
+										{character.description}
+									</Text>
+									<Divider borderStyle="solid" margin="0" />
+									<Grid type="row">
+										<Grid type="column" flex="none" minWidth={100}>
+											<Input
+												index={i}
+												start="❤️"
+												name="life"
+												type="number"
+												fontSize="medium"
+												max={character.life_capacity}
+												readOnly={!character.id}
+												stateValue={[characters, setCharacters]}
+												onEnter={() => handle.updateCharacter(i)}
+											/>
+										</Grid>
+										<Grid type="column" flex="none" minWidth={100}>
+											<Input
+												index={i}
+												start="👣"
+												name="actions"
+												type="number"
+												fontSize="medium"
+												readOnly={!character.id}
+												stateValue={[characters, setCharacters]}
+												onEnter={() => handle.updateCharacter(i)}
+											/>
+										</Grid>
+										<Grid type="column" flex="none" minWidth={100}>
+											<Input
+												index={i}
+												start="💰"
+												name="coins"
+												type="number"
+												fontSize="medium"
+												readOnly={!character.id}
+												stateValue={[characters, setCharacters]}
+												onEnter={() => handle.updateCharacter(i)}
+											/>
+										</Grid>
+									</Grid>
+									<Divider borderStyle="solid" margin="10px 0 0" />
+									<Grid type="row">
+										<Grid type="column" flex="none" padding={[5, 10]}>
+											<Text fontSize="medium">
                         💪 FOR {character.strength} | 👋 DES {character.dexterity} | ✊ CON {character.constitution}
-                      </Text>
-                    </Grid>
-                    <Grid type="column" flex="none" padding={[5, 10]}>
-                      <Text fontSize="medium">
+											</Text>
+										</Grid>
+										<Grid type="column" flex="none" padding={[5, 10]}>
+											<Text fontSize="medium">
                         📙 INT {character.intelligence} | 🙌 SAB {character.wisdom} | 🤝 CAR {character.charisma}
-                      </Text>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Box>
-      ))}
-      <Modal maxWidth={350} stateModal={[modal, setModal]} onClose={handle.resetCharacter}>
-        {{
-          add_character: (
-            <>
-              <Title type="h6">
+											</Text>
+										</Grid>
+									</Grid>
+								</Paper>
+							</Grid>
+						</Grid>
+					</Grid>
+				</Box>
+			))}
+			<Modal maxWidth={350} stateModal={[modal, setModal]} onClose={handle.resetCharacter}>
+				{{
+					add_character: (
+						<>
+							<Title type="h6">
                 Adicionar personagem:
-              </Title>
-              <Box marginBottom={20}>
-                <Input
-                  name={Boolean(values.name) ? 'name' : 'id'}
-                  label="Personagem"
-                  placeholder="ID do personagem"
-                  onEnter={handle.searchCharacter}
-                  stateValue={[values, setValues]}
-                  readOnly={Boolean(values.name)}
-                />
-              </Box>
-              <Box display="flex" justifyContent="flex-end">
-                <Button type="filled" color="secondary" width="fit-content" padding={10} onClick={Boolean(values.name) ? handle.clearValues : handle.resetCharacter}>
-                  {Boolean(values.name) ? 'Limpar' : 'Cancelar'}
-                </Button>
-                <Button type="filled" width="fit-content" padding={10} onClick={Boolean(values.name) ? handle.addCharacter : handle.searchCharacter}>
-                  {Boolean(values.name) ? 'Confirmar' : 'Pesquisar'}
-                </Button>
-              </Box>
-            </>
-          ),
-          remove_character: (
-            <>
-              <Title type="h6">
+							</Title>
+							<Box marginBottom={20}>
+								<Input
+									name={values.name ? 'name' : 'id'}
+									label="Personagem"
+									placeholder="ID do personagem"
+									onEnter={handle.searchCharacter}
+									stateValue={[values, setValues]}
+									readOnly={Boolean(values.name)}
+								/>
+							</Box>
+							<Box display="flex" justifyContent="flex-end">
+								<Button type="filled" color="secondary" width="fit-content" padding={10} onClick={values.name ? handle.clearValues : handle.resetCharacter}>
+									{values.name ? 'Limpar' : 'Cancelar'}
+								</Button>
+								<Button type="filled" width="fit-content" padding={10} onClick={values.name ? handle.addCharacter : handle.searchCharacter}>
+									{values.name ? 'Confirmar' : 'Pesquisar'}
+								</Button>
+							</Box>
+						</>
+					),
+					remove_character: (
+						<>
+							<Title type="h6">
                 Remover personagem:
-              </Title>
-              <Text>
+							</Title>
+							<Text>
                 Tem certeza que deseja remover <b>{modal.data.name}</b> da campanha?
-              </Text>
-              <Box display="flex" justifyContent="flex-end" marginTop={10}>
-                <Button type="bottomless" width="fit-content" padding={10} onClick={handle.resetCharacter}>
+							</Text>
+							<Box display="flex" justifyContent="flex-end" marginTop={10}>
+								<Button type="bottomless" width="fit-content" padding={10} onClick={handle.resetCharacter}>
                   Cancelar
-                </Button>
-                <Button type="filled" color="error" width="fit-content" padding={10} onClick={handle.removeCharacter}>
+								</Button>
+								<Button type="filled" color="error" width="fit-content" padding={10} onClick={handle.removeCharacter}>
                   Remover
-                </Button>
-              </Box>
-            </>
-          )
-        }}
-      </Modal>
-      <Box display="flex" justifyContent="flex-end">
-        <Button type="filled" padding={10} onClick={() => handle.openModal('add_character')}>
+								</Button>
+							</Box>
+						</>
+					)
+				}}
+			</Modal>
+			<Box display="flex" justifyContent="flex-end">
+				<Button type="filled" padding={10} onClick={() => handle.openModal('add_character')}>
           Adicionar
-        </Button>
-      </Box>
-    </>
-  )
+				</Button>
+			</Box>
+		</>
+	)
 }
 
 export default Characters

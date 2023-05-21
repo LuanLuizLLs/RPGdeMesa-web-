@@ -1,11 +1,11 @@
 import React from 'react'
 
 function Exploration() {
-  return (
-    <>
+	return (
+		<>
       EXPLORAÇÃO
-    </>
-  )
+		</>
+	)
 }
 
 export default Exploration

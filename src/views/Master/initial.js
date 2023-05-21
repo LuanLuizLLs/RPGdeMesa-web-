@@ -1,4 +1,4 @@
 export const INITIAL = {
-  TAB: 0,
-  REFRESH: null,
+	TAB: 0,
+	REFRESH: null,
 }

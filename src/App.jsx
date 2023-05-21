@@ -10,30 +10,30 @@ import Loading from './layouts/Loading'
 
 function App() {
 
-  const setNavigate = useNavigate()
+	const setNavigate = useNavigate()
 
-  const { USER } = useSelector(({ reducer }) => reducer)
+	const { USER } = useSelector(({ reducer }) => reducer)
 
-  const [loagind, setLoading] = useState(INITIAL_LOADING)
-  const [message, setMessage] = useState(INITIAL_MESSAGE)
+	const [loagind, setLoading] = useState(INITIAL_LOADING)
+	const [message, setMessage] = useState(INITIAL_MESSAGE)
   
-  const initialContext = {
-    setLoading,
-    setMessage,
-  }
+	const initialContext = {
+		setLoading,
+		setMessage,
+	}
   
-  useEffect(() => {
-    USER.id || setNavigate('/login')
-  }, [USER, setNavigate])
+	useEffect(() => {
+		USER.id || setNavigate('/login')
+	}, [USER, setNavigate])
 
-  return (
-    <Context.Provider value={initialContext}>
-      <Loading stateLoading={[loagind, setLoading]}>
-        <Routes />
-      </Loading>
-      <Message stateMessage={[message, setMessage]} />
-    </Context.Provider>
-  )
+	return (
+		<Context.Provider value={initialContext}>
+			<Loading stateLoading={[loagind, setLoading]}>
+				<Routes />
+			</Loading>
+			<Message stateMessage={[message, setMessage]} />
+		</Context.Provider>
+	)
 }
 
 export default App

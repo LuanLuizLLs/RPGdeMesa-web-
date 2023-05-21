@@ -8,20 +8,20 @@ import { BREAKPOINT } from './configs'
 import { BrowserRouter } from 'react-router-dom'
 
 const alterDevice = () => {
-  document.querySelector('html')
-    .setAttribute('device', Object.keys(BREAKPOINT).filter((device) => {
-      return window.innerWidth <= BREAKPOINT[device]
-    })[0] || 'desktop')
+	document.querySelector('html')
+		.setAttribute('device', Object.keys(BREAKPOINT).filter((device) => {
+			return window.innerWidth <= BREAKPOINT[device]
+		})[0] || 'desktop')
 }
 window.onresize = alterDevice
 alterDevice()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={reducer}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
+	<React.StrictMode>
+		<BrowserRouter>
+			<Provider store={reducer}>
+				<App />
+			</Provider>
+		</BrowserRouter>
+	</React.StrictMode>
 )
