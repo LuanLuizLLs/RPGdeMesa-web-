@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import API from '../../../../services/api'
 import useLoading from '../../../../hooks/useLoading'
 import useMessage from '../../../../hooks/useMessage'
-import useCampaign from '../../../../hooks/useCampaign'
 import imageMaster from '../../../../assets/img/master.png'
 import { INITIAL } from './initial'
+import { campaignAttributes } from './utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { CAMPAIGNS } from '../../../../constants'
@@ -28,7 +28,6 @@ function Campaigns() {
 	const setDispatch = useDispatch()
 
 	const { openMessage } = useMessage()
-	const { additionalAttributes } = useCampaign()
 	const { startLoading, stopLoading } = useLoading()
 
 	const [list, setList] = useState(INITIAL.LIST)
@@ -64,7 +63,7 @@ function Campaigns() {
 
 			API('campaigns', {
 				...values,
-				...additionalAttributes(values.period, values.climate),
+				...campaignAttributes(values.period, values.climate),
 				id_user: USER.id,
 			})
 				.create(({ data }) => {
