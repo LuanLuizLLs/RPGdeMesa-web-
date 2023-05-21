@@ -20,7 +20,6 @@ import {
 } from '../../../../components'
 
 function Adventures({
-	campaign,
 	setRefreshCampaign,
 }) {
 
@@ -28,7 +27,7 @@ function Adventures({
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
-	const { ADVENTURE } = useSelector(({ reducer }) => reducer)
+	const { ADVENTURE, CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
 	const [list, setList] = useState(INITIAL.LIST)
 	const [modal, setModal] = useState(INITIAL.MODAL)
@@ -37,10 +36,10 @@ function Adventures({
 
 	useEffect(() => {
 		API('adventures', {
-			id_campaign: campaign.id,
+			id_campaign: CAMPAIGN.id,
 		})
 			.read(({ data }) => {
-				const adventureStarted = data.response.find(({ id }) => (id === campaign.id_adventure))
+				const adventureStarted = data.response.find(({ id }) => (id === CAMPAIGN.id_adventure))
 				setList((state) => ({
 					...state, rows: data.response,
 				}))
@@ -49,7 +48,7 @@ function Adventures({
 					data: adventureStarted || {},
 				})
 			})
-	}, [campaign, setDispatch])
+	}, [CAMPAIGN, setDispatch])
 
 	const handle = {
 		openModal: (content, data = {}) => {
@@ -78,7 +77,7 @@ function Adventures({
 
 			API('adventures', {
 				...values,
-				id_campaign: campaign.id,
+				id_campaign: CAMPAIGN.id,
 			})
 				.create(({ data }) => {
 					setRefreshCampaign(data)
@@ -106,7 +105,7 @@ function Adventures({
 			startLoading('bar')
 
 			API('campaigns', {
-				...campaign,
+				...CAMPAIGN,
 				id_adventure: values.id,
 			})
 				.update(({ data }) => {

@@ -26,19 +26,19 @@
   border: solid var(--color-secondary);
 }
 
-.component[validate=valid] {
+.component[data-validate=valid] {
   border: solid var(--color-success);
 }
 
-.component[validate=valid]:focus {
+.component[data-validate=valid]:focus {
   box-shadow: 0 0 4px var(--color-success);
 }
 
-.component[validate=invalid] {
+.component[data-validate=invalid] {
   border: solid var(--color-error);
 }
 
-.component[validate=invalid]:focus {
+.component[data-validate=invalid]:focus {
   box-shadow: 0 0 4px var(--color-error);
 }
 

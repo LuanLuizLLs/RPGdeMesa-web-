@@ -5,6 +5,7 @@ import useLoading from '../../../../hooks/useLoading'
 import { INITIAL } from './initial'
 import { ATTRIBUTE } from '../../../../configs'
 import { scrollingPoints, modifierPoints } from '../../../../utils'
+import { useSelector } from 'react-redux'
 import {
 	Box,
 	Button,
@@ -20,13 +21,13 @@ import {
 } from '../../../../components'
 
 function Abilities({
-	user,
-	character,
 	setRefreshCharacter,
 }) {
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
+
+	const { USER, CHARACTER } = useSelector(({ reducer }) => reducer)
 
 	const [modal, setModal] = useState(INITIAL.MODAL)
 	const [values, setValues] = useState(INITIAL.VALUES)
@@ -34,9 +35,9 @@ function Abilities({
 	const [abilities, setAbilities] = useState(INITIAL.ABILITIES)
 
 	useEffect(() => {
-		if (character.id) {
+		if (CHARACTER.id) {
 			API('abilities', {
-				id_character: character.id,
+				id_character: CHARACTER.id,
 			})
 				.read(({ data }) => {
 					setAbilities((state) => ({
@@ -44,7 +45,7 @@ function Abilities({
 					}))
 				})
 		}
-	}, [refresh, character.id])
+	}, [refresh, CHARACTER.id])
 
 	const handle = {
 		openModal: (content, data = {}) => {
@@ -61,8 +62,8 @@ function Abilities({
 
 			API('abilities', {
 				...values,
-				user: user.id,
-				id_character: character.id,
+				user: USER.id,
+				id_character: CHARACTER.id,
 			})
 				.create(({ data }) => {
 					setRefresh(data)
@@ -79,7 +80,7 @@ function Abilities({
 
 			API('abilities', {
 				...values,
-				user: user.id,
+				user: USER.id,
 				level: values.level + 1,
 			})
 				.update(({ data }) => {
@@ -171,13 +172,13 @@ function Abilities({
 									{modal.data.description}
 								</Text>
 								<Text>
-									{modifierPoints(character, modal.data)}
+									{modifierPoints(CHARACTER, modal.data)}
 								</Text>
 							</Paper>
 							<Paper backgroundColor="secondary" margin="10px 0">
 								<Box display="flex" justifyContent="space-between" alignItems="center">
 									<Text color="gray" fontWeight="bold">
-										{scrollingPoints(character[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
+										{scrollingPoints(CHARACTER[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
 									</Text>
 									<Button type="filled" color="success" fontSize="medium" onClick={handle.updateAbility}>
                     Aprimorar
@@ -199,9 +200,9 @@ function Abilities({
 			<List height={200} onClick={(row) => handle.openModal('detail_ability', row)} {...abilities} />
 			<Box display="flex" justifyContent="space-between" margin={10}>
 				<Text fontWeight="bold">
-					<Text inline color="primary">Capacidade: </Text> {character.mental_capacity}
+					<Text inline color="primary">Capacidade: </Text> {CHARACTER.mental_capacity}
 				</Text>
-				<Button type="filled" onClick={() => Boolean(character.id) && handle.openModal('add_ability')}>
+				<Button type="filled" onClick={() => Boolean(CHARACTER.id) && handle.openModal('add_ability')}>
           Adicionar
 				</Button>
 			</Box>

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import classes from './style.module.css'
+import PropTypes from 'prop-types'
 import useMessage from '../../hooks/useMessage'
 
 function Message({
@@ -29,6 +30,10 @@ function Message({
 			</div>
 		</div>
 	)
+}
+
+Message.propTypes = {
+	stateMessage: PropTypes.array,
 }
 
 export default Message

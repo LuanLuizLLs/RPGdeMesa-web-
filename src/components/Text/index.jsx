@@ -39,6 +39,7 @@ Text.propTypes = {
 	inline: PropTypes.any,
 	display: PropTypes.string,
 	color: PropTypes.string,
+	fontSize:  PropTypes.string,
 	fontWeight: PropTypes.string,
 	textAlign: PropTypes.string,
 	textTransform: PropTypes.string,

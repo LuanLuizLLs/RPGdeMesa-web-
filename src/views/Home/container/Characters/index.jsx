@@ -5,7 +5,7 @@ import useMessage from '../../../../hooks/useMessage'
 import useCharacter from '../../../../hooks/useCharacter'
 import imagePlayer from '../../../../assets/img/player.png'
 import { INITIAL } from './initial'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { CHARACTERS } from '../../../../constants'
 import {
@@ -23,8 +23,7 @@ import {
 	Paper,
 } from '../../../../components'
 
-function Characters({ user }) {
-
+function Characters() {
 	const setNavigate = useNavigate()
 	const setDispatch = useDispatch()
 
@@ -37,16 +36,18 @@ function Characters({ user }) {
 	const [values, setValues] = useState(INITIAL.VALUES)
 	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 
+	const { USER } = useSelector(({ reducer }) => reducer)
+
 	useEffect(() => {
 		API('characters', {
-			id_user: user.id
+			id_user: USER.id
 		})
 			.read(({ data }) => {
 				setList((state) => ({
 					...state, rows: data.response,
 				}))
 			})
-	}, [refresh, user.id])
+	}, [refresh, USER.id])
 
 	const handle = {
 		openModal: (content, data = {}) => {
@@ -64,7 +65,7 @@ function Characters({ user }) {
 			API('characters', {
 				...values,
 				...additionalAttributes(values.race, values.caste),
-				id_user: user.id,
+				id_user: USER.id,
 			})
 				.create(({ data }) => {
 					setRefresh(data)

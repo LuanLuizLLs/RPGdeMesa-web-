@@ -1,6 +1,7 @@
 import React, { useLayoutEffect } from 'react'
 import { useSelector } from 'react-redux'
 import classes from './style.module.css'
+import PropTypes from 'prop-types'
 import logo from '../../assets/img/logo.png'
 import useLogin from '../../hooks/useLogin'
 
@@ -51,6 +52,13 @@ function Page({
 			</div>
 		</div>
 	)
+}
+
+Page.propTypes = {
+	children: PropTypes.any,
+	tab: PropTypes.string,
+	title: PropTypes.string,
+	width: PropTypes.string,
 }
 
 export default Page

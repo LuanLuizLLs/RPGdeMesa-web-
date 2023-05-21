@@ -3,7 +3,7 @@ import Interactions from './containers/Interactions'
 
 function Board({ current }) {
 	return [
-		<Interactions />,
+		<Interactions key="interactions" />,
 		<>EXPLORATION</>
 	][current]
 }

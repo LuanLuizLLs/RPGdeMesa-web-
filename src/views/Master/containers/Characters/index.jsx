@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import theme from '../../../../theme'
 import API from '../../../../services/api'
 import useMessage from '../../../../hooks/useMessage'
@@ -19,7 +20,7 @@ import {
 	Title,
 } from '../../../../components'
 
-function Characters({ campaign }) {
+function Characters() {
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -29,14 +30,16 @@ function Characters({ campaign }) {
 	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 	const [characters, setCharacters] = useState(INITIAL.CHARACTERS)
 
+	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
+
 	useEffect(() => {
 		API('characters', {
-			id_campaign: campaign.id
+			id_campaign: CAMPAIGN.id
 		})
 			.read(({ data }) => {
 				setCharacters(Object.assign({ ...INITIAL.CHARACTERS }, data.response))
 			})
-	}, [refresh, campaign.id])
+	}, [refresh, CAMPAIGN.id])
 
 	const handle = {
 		openModal: (content, data = {}) => {
@@ -70,7 +73,7 @@ function Characters({ campaign }) {
 
 			API('characters', {
 				...values,
-				id_campaign: campaign.id,
+				id_campaign: CAMPAIGN.id,
 			})
 				.update(({ data }) => {
 					setRefresh(data)

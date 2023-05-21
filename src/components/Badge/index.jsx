@@ -5,10 +5,10 @@ import theme, { contrast } from '../../theme'
 
 export const Badge = ({
 	children,
-	padding = 8,
-	margin = 4,
+	padding = '8px',
+	margin = '4px',
 	color = 'primary',
-	borderRadius = 8,
+	borderRadius = '8px',
 }) => {
 
 	const style = {
@@ -28,4 +28,8 @@ export const Badge = ({
 
 Badge.propTypes = {
 	children: PropTypes.any,
+	padding: PropTypes.string,
+	margin: PropTypes.string,
+	color: PropTypes.string,
+	borderRadius: PropTypes.string,
 }

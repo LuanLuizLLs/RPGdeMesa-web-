@@ -46,6 +46,9 @@ export const Radio = ({
 }
 
 Radio.propTypes = {
+	name: PropTypes.string,
+	label: PropTypes.string,
 	direction: PropTypes.string,
+	stateValue: PropTypes.array,
 	options: PropTypes.object,
 }

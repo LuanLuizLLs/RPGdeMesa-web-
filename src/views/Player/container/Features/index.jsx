@@ -4,6 +4,7 @@ import useMessage from '../../../../hooks/useMessage'
 import useLoading from '../../../../hooks/useLoading'
 import { INITIAL } from './initial'
 import { ATTRIBUTE } from '../../../../configs'
+import { useSelector } from 'react-redux'
 import {
 	Box,
 	Button,
@@ -18,13 +19,12 @@ import {
 } from '../../../../components'
 
 function Features({
-	user,
-	character,
 	setRefreshCharacter,
 }) {
-
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
+
+	const { USER, CHARACTER } = useSelector(({ reducer }) => reducer)
 
 	const [modal, setModal] = useState(INITIAL.MODAL)
 	const [values, setValues] = useState(INITIAL.VALUES)
@@ -32,9 +32,9 @@ function Features({
 	const [features, setFeatures] = useState(INITIAL.FEATURES)
 
 	useEffect(() => {
-		if (character.id) {
+		if (CHARACTER.id) {
 			API('features', {
-				id_character: character.id,
+				id_character: CHARACTER.id,
 			})
 				.read(({ data }) => {
 					setFeatures((state) => ({
@@ -42,7 +42,7 @@ function Features({
 					}))
 				})
 		}
-	}, [refresh, character.id])
+	}, [refresh, CHARACTER.id])
 
 	const handle = {
 		openModal: (content, data = {}) => {
@@ -59,8 +59,8 @@ function Features({
 
 			API('features', {
 				...values,
-				user: user.id,
-				id_character: character.id,
+				user: USER.id,
+				id_character: CHARACTER.id,
 			})
 				.create(({ data }) => {
 					setRefresh(data)
@@ -238,7 +238,7 @@ function Features({
 				{...features}
 			/>
 			<Box display="flex" justifyContent="flex-end" margin={10}>
-				<Button type="filled" onClick={() => Boolean(character.id) && handle.openModal('add_feature')}>
+				<Button type="filled" onClick={() => Boolean(CHARACTER.id) && handle.openModal('add_feature')}>
           Adicionar
 				</Button>
 			</Box>

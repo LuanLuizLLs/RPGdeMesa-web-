@@ -4,6 +4,7 @@ import useLoading from '../../../../hooks/useLoading'
 import useMessage from '../../../../hooks/useMessage'
 import { INITIAL } from './initial'
 import { optionsUsable } from './utils'
+import { useSelector } from 'react-redux'
 import { ATTRIBUTE, INVENTORY } from '../../../../configs'
 import { scrollingPoints, modifierPoints } from '../../../../utils'
 import {
@@ -22,8 +23,6 @@ import {
 } from '../../../../components'
 
 function Inventory({
-	user,
-	character,
 	setRefreshCharacter,
 }) {
 
@@ -35,10 +34,12 @@ function Inventory({
 	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 	const [inventory, setInventory] = useState(INITIAL.INVENTORY)
 
+	const { USER, CHARACTER } = useSelector(({ reducer }) => reducer)
+
 	useEffect(() => {
-		if (character.id) {
+		if (CHARACTER.id) {
 			API('items', {
-				id_character: character.id,
+				id_character: CHARACTER.id,
 			})
 				.read(({ data }) => {
 					setInventory((state) => ({
@@ -46,7 +47,7 @@ function Inventory({
 					}))
 				})
 		}
-	}, [refresh, character.id])
+	}, [refresh, CHARACTER.id])
 
 	useEffect(() => {
 		const [attribute] = optionsUsable(values.usable)
@@ -71,8 +72,8 @@ function Inventory({
 
 			API('items', {
 				...values,
-				user: user.id,
-				id_character: character.id,
+				user: USER.id,
+				id_character: CHARACTER.id,
 			})
 				.create(({ data }) => {
 					setRefresh(data)
@@ -89,7 +90,7 @@ function Inventory({
 
 			API('items', {
 				...values,
-				user: user.id,
+				user: USER.id,
 				level: values.level + 1,
 			})
 				.update(({ data }) => {
@@ -221,13 +222,13 @@ function Inventory({
 									{modal.data.description}
 								</Text>
 								<Text>
-									{modifierPoints(character, modal.data)}
+									{modifierPoints(CHARACTER, modal.data)}
 								</Text>
 							</Paper>
 							<Paper backgroundColor="secondary" margin="10px 0">
 								<Box display="flex" justifyContent="space-between" alignItems="center">
 									<Text color="gray" fontWeight="bold">
-										{scrollingPoints(character[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
+										{scrollingPoints(CHARACTER[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
 									</Text>
 									<Button type="filled" color="success" fontSize="medium" onClick={handle.updateInventory}>
                     Aprimorar
@@ -249,9 +250,9 @@ function Inventory({
 			<List height={200} onClick={(row) => handle.openModal('detail_item', row)} {...inventory} />
 			<Box display="flex" justifyContent="space-between" margin={10}>
 				<Text fontWeight="bold">
-					<Text inline color="primary">Capacidade: </Text> {character.physical_capacity}
+					<Text inline color="primary">Capacidade: </Text> {CHARACTER.physical_capacity}
 				</Text>
-				<Button type="filled" onClick={() => Boolean(character.id) && handle.openModal('add_item')}>
+				<Button type="filled" onClick={() => Boolean(CHARACTER.id) && handle.openModal('add_item')}>
           Adicionar
 				</Button>
 			</Box>

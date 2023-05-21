@@ -5,7 +5,7 @@ import useMessage from '../../../../hooks/useMessage'
 import useCampaign from '../../../../hooks/useCampaign'
 import imageMaster from '../../../../assets/img/master.png'
 import { INITIAL } from './initial'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { CAMPAIGNS } from '../../../../constants'
 import {
@@ -23,7 +23,7 @@ import {
 	Paper,
 } from '../../../../components'
 
-function Campaigns({ user }) {
+function Campaigns() {
 	const setNavigate = useNavigate()
 	const setDispatch = useDispatch()
 
@@ -36,16 +36,18 @@ function Campaigns({ user }) {
 	const [values, setValues] = useState(INITIAL.VALUES)
 	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 
+	const { USER } = useSelector(({ reducer }) => reducer)
+
 	useEffect(() => {
 		API('campaigns', {
-			id_user: user.id
+			id_user: USER.id
 		})
 			.read(({ data }) => {
 				setList((state) => ({
 					...state, rows: data.response,
 				}))
 			})
-	}, [refresh, user.id])
+	}, [refresh, USER.id])
 
 	const handle = {
 		openModal: (content, data = {}) => {
@@ -63,7 +65,7 @@ function Campaigns({ user }) {
 			API('campaigns', {
 				...values,
 				...additionalAttributes(values.period, values.climate),
-				id_user: user.id,
+				id_user: USER.id,
 			})
 				.create(({ data }) => {
 					setRefresh(data)

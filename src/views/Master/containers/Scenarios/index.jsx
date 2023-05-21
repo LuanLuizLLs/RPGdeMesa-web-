@@ -20,7 +20,6 @@ import {
 } from '../../../../components'
 
 function Scenarios({
-	campaign,
 	setRefreshCampaign,
 }) {
 
@@ -28,7 +27,8 @@ function Scenarios({
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
-	const { SCENERY } = useSelector(({ reducer }) => reducer)
+
+	const { SCENERY, CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
 	const [list, setList] = useState(INITIAL.LIST)
 	const [modal, setModal] = useState(INITIAL.MODAL)
@@ -37,10 +37,10 @@ function Scenarios({
 
 	useEffect(() => {
 		API('scenarios', {
-			id_campaign: campaign.id,
+			id_campaign: CAMPAIGN.id,
 		})
 			.read(({ data }) => {
-				const scenerySelected = data.response.find(({ id }) => (id === campaign.id_scenery))
+				const scenerySelected = data.response.find(({ id }) => (id === CAMPAIGN.id_scenery))
 				setList((state) => ({
 					...state, rows: data.response,
 				}))
@@ -49,7 +49,7 @@ function Scenarios({
 					data: scenerySelected || {},
 				})
 			})
-	}, [campaign, setDispatch])
+	}, [CAMPAIGN, setDispatch])
 
 	const handle = {
 		openModal: (content, data = {}) => {
@@ -77,7 +77,7 @@ function Scenarios({
 
 			API('scenarios', {
 				...values,
-				id_campaign: campaign.id,
+				id_campaign: CAMPAIGN.id,
 			})
 				.create(({ data }) => {
 					setRefreshCampaign(data)
@@ -105,7 +105,7 @@ function Scenarios({
 			startLoading('bar')
 
 			API('campaigns', {
-				...campaign,
+				...CAMPAIGN,
 				id_scenery: values.id,
 			})
 				.update(({ data }) => {

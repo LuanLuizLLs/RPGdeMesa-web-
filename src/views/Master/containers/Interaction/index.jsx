@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import API from '../../../../services/api'
 import useLoading from '../../../../hooks/useLoading'
 import useMessage from '../../../../hooks/useMessage'
@@ -17,7 +18,7 @@ import {
 } from '../../../../components'
 import { ATTRIBUTE } from '../../../../configs'
 
-function Interaction({ campaign }) {
+function Interaction() {
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -27,9 +28,11 @@ function Interaction({ campaign }) {
 	const [values, setValues] = useState(INITIAL.VALUES)
 	const [refresh, setRefresh] = useState(null)
 
+	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
+
 	useEffect(() => {
 		API('interactions', {
-			id_campaign: campaign.id,
+			id_campaign: CAMPAIGN.id,
 		})
 			.read(({ data }) => {
 				setList((state) => ({
@@ -37,7 +40,7 @@ function Interaction({ campaign }) {
 					rows: data.response,
 				}))
 			})
-	}, [refresh, campaign.id])
+	}, [refresh, CAMPAIGN.id])
 
 	const handle = {
 		openModal: (content, data = modal.data) => {
@@ -54,7 +57,7 @@ function Interaction({ campaign }) {
 
 			API('interactions', {
 				...values,
-				id_campaign: campaign.id,
+				id_campaign: CAMPAIGN.id,
 			})
 				.create(({ data }) => {
 					setRefresh(data)

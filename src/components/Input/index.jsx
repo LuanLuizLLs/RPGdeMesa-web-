@@ -19,7 +19,7 @@ export const Input = ({
 	readOnly = false,
 	placeholder = '',
 	stateValue = [],
-	onEnter = () => { },
+	onEnter = () => {},
 }) => {
 
 	const [value, setValue] = stateValue
@@ -41,7 +41,7 @@ export const Input = ({
 					{label}
 				</label>
 			)}
-			<div className={classes.component} style={style.component} validate={validate}>
+			<div className={classes.component} style={style.component} data-validate={validate}>
 				{start && (
 					<span className={classes.start}>
 						{start}
@@ -92,10 +92,12 @@ Input.propTypes = {
 	label: PropTypes.string,
 	start: PropTypes.string,
 	end: PropTypes.string,
+	width: PropTypes.string,
 	noLabel: PropTypes.bool,
 	disabled: PropTypes.bool,
 	readOnly: PropTypes.bool,
 	validate: PropTypes.string,
 	placeholder: PropTypes.string,
 	stateValue: PropTypes.array.isRequired,
+	onEnter: PropTypes.func,
 }
