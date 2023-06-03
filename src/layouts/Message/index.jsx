@@ -12,7 +12,7 @@ function Message({
 	const { closeMessage } = useMessage()
 
 	const style = {
-		width: state.open ? '100%' : '0',
+		width: state.open && state.message ? '100%' : '0',
 	}
 
 	useEffect(() => {
@@ -25,7 +25,7 @@ function Message({
 		<div className={classes.container}>
 			<div className={classes.hidden} style={style}>
 				<div className={classes.message} type={state.type} onClick={closeMessage}>
-					{state.message || 'Teste de mensagem'}
+					{state.message}
 				</div>
 			</div>
 		</div>
