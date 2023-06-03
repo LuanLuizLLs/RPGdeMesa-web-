@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import API from '../../../../services/api'
-import useLoading from '../../../../hooks/useLoading'
-import useMessage from '../../../../hooks/useMessage'
+import useAPI from '../../../../hooks/useAPI'
 import imageMaster from '../../../../assets/img/master.png'
 import { INITIAL } from './initial'
 import { useNavigate } from 'react-router-dom'
@@ -27,87 +25,67 @@ function Campaigns() {
 	const setNavigate = useNavigate()
 	const setDispatch = useDispatch()
 
-	const { openMessage } = useMessage()
-	const { startLoading, stopLoading } = useLoading()
-
 	const [list, setList] = useState(INITIAL.LIST)
 	const [modal, setModal] = useState(INITIAL.MODAL)
 	const [values, setValues] = useState(INITIAL.VALUES)
-	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 
 	const { USER } = useSelector(({ reducer }) => reducer)
 
+	const {
+		list: campaignList,
+		fetch: fetchCampaign,
+		create: createCampaign,
+		update: updateCampaign,
+		delete: deleteCampaign,
+	} = useAPI('campaigns', {
+		id_user: USER.id
+	})
+
 	useEffect(() => {
-		API('campaigns', {
-			id_user: USER.id
+		setList((state) => ({
+			...state, rows: campaignList,
+		}))
+	}, [campaignList])
+
+
+	const handleOpenModal = (content, data = {}) => {
+		setModal({ content, data })
+		setValues({ ...values, ...data })
+	}
+
+	const handleResetValues = () => {
+		setModal(INITIAL.MODAL)
+		setValues(INITIAL.VALUES)
+	}
+
+	const handleCreateCampaign = () => {
+		createCampaign({
+			...values,
+			...campaignAttributes(values.period, values.climate),
+			id_user: USER.id,
 		})
-			.read(({ data }) => {
-				setList((state) => ({
-					...state, rows: data.response,
-				}))
-			})
-	}, [refresh, USER.id])
+			.then(fetchCampaign)
+			.finally(handleResetValues)
+	}
 
-	const handle = {
-		openModal: (content, data = {}) => {
-			setModal({ content, data })
-			setValues({ ...values, ...data })
-		},
-		resetValues: () => {
-			setModal(INITIAL.MODAL)
-			setValues(INITIAL.VALUES)
-			stopLoading()
-		},
-		createCampaign: () => {
-			startLoading('bar')
+	const handleUpdateCampaign = () => {
+		updateCampaign(values)
+			.then(fetchCampaign)
+			.finally(handleResetValues)
+	}
 
-			API('campaigns', {
-				...values,
-				...campaignAttributes(values.period, values.climate),
-				id_user: USER.id,
-			})
-				.create(({ data }) => {
-					setRefresh(data)
-					openMessage(data.status, data.message)
-				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
-		},
-		updateCampaign: () => {
-			startLoading('bar')
+	const handleDeleteCampaign = () => {
+		deleteCampaign(values)
+			.then(fetchCampaign)
+			.finally(handleResetValues)
+	}
 
-			API('campaigns', values)
-				.update(({ data }) => {
-					setRefresh(data)
-					openMessage(data.status, data.message)
-				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
-		},
-		deleteCampaign: () => {
-			startLoading('bar')
-
-			API('campaigns', values)
-				.delete(({ data }) => {
-					openMessage(data.status, data.message)
-					setRefresh(data)
-				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
-		},
-		startCampaign: () => {
-			setDispatch({
-				type: 'CAMPAIGN',
-				data: values,
-			})
-			setNavigate('/master')
-		},
+	const handleStartCampaign = () => {
+		setDispatch({
+			type: 'CAMPAIGN',
+			data: values,
+		})
+		setNavigate('/master')
 	}
 
 	return (
@@ -115,7 +93,7 @@ function Campaigns() {
 			<Modal
 				maxWidth={450}
 				stateModal={[modal, setModal]}
-				onClose={handle.resetValues}
+				onClose={handleResetValues}
 			>
 				{{
 					campaign_start: (
@@ -132,10 +110,10 @@ function Campaigns() {
 								</Text>
 							</Paper>
 							<Box display="flex" justifyContent="flex-end" marginTop={10}>
-								<Button type="bottomless" color="primary" padding={10} onClick={handle.resetValues}>
+								<Button type="bottomless" color="primary" padding={10} onClick={handleResetValues}>
                   Voltar
 								</Button>
-								<Button type="filled" padding={10} onClick={handle.startCampaign}>
+								<Button type="filled" padding={10} onClick={handleStartCampaign}>
                   Mestrar
 								</Button>
 							</Box>
@@ -170,10 +148,10 @@ function Campaigns() {
 								stateValue={[values, setValues]}
 							/>
 							<Box display="flex" justifyContent="flex-end">
-								<Button type="filled" color="secondary" padding={10} onClick={handle.resetValues}>
+								<Button type="filled" color="secondary" padding={10} onClick={handleResetValues}>
                   Cancelar
 								</Button>
-								<Button type="filled" color="primary" padding={10} onClick={handle.createCampaign}>
+								<Button type="filled" color="primary" padding={10} onClick={handleCreateCampaign}>
                   Criar
 								</Button>
 							</Box>
@@ -196,10 +174,10 @@ function Campaigns() {
 								stateValue={[values, setValues]}
 							/>
 							<Box display="flex" justifyContent="flex-end">
-								<Button type="filled" color="secondary" padding={10} onClick={handle.resetValues}>
+								<Button type="filled" color="secondary" padding={10} onClick={handleResetValues}>
                   Cancelar
 								</Button>
-								<Button type="filled" padding={10} onClick={handle.updateCampaign}>
+								<Button type="filled" padding={10} onClick={handleUpdateCampaign}>
                   Salvar
 								</Button>
 							</Box>
@@ -214,10 +192,10 @@ function Campaigns() {
                 Tem certeza que deseja excluir a campanha <b>{modal.data.name}</b>?
 							</Text>
 							<Box display="flex" justifyContent="flex-end" marginTop={10}>
-								<Button type="bottomless" padding={10} onClick={handle.resetValues}>
+								<Button type="bottomless" padding={10} onClick={handleResetValues}>
                   Cancelar
 								</Button>
-								<Button type="filled" color="error" padding={10} onClick={handle.deleteCampaign}>
+								<Button type="filled" color="error" padding={10} onClick={handleDeleteCampaign}>
                   Excluir
 								</Button>
 							</Box>
@@ -239,13 +217,13 @@ function Campaigns() {
 				<List
 					height={300}
 					{...list}
-					onClick={(row) => handle.openModal('campaign_start', row)}
+					onClick={(row) => handleOpenModal('campaign_start', row)}
 					actions={{
-						update: (row) => handle.openModal('campaign_update', row),
-						delete: (row) => handle.openModal('campaign_delete', row),
+						update: (row) => handleOpenModal('campaign_update', row),
+						delete: (row) => handleOpenModal('campaign_delete', row),
 					}}
 				/>
-				<Button type="filled" padding={10} onClick={() => handle.openModal('campaign_create')}>
+				<Button type="filled" padding={10} onClick={() => handleOpenModal('campaign_create')}>
           Criar campanha
 				</Button>
 			</Card>
