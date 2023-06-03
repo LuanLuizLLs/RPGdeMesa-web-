@@ -15,16 +15,6 @@ export const ATTRIBUTES = {
 	],
 }
 
-/** Rank options */
-export const RANK = [
-	'A',
-	'B',
-	'C',
-	'D',
-	'E',
-	'F',
-]
-
 /** Characters options */
 export const CHARACTERS = {
 	RACE: [

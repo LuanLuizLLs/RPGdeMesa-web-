@@ -8,12 +8,11 @@ import Interaction from './containers/Interaction'
 import Characters from './containers/Characters'
 import useMessage from '../../hooks/useMessage'
 import useLoading from '../../hooks/useLoading'
-import useCampaign from '../../hooks/useCampaign'
 import { INITIAL } from './initial'
-import { addSignal } from '../../utils'
-import { colorConditions } from './utils'
 import { CAMPAIGNS } from '../../constants'
+import { colorConditions } from './utils'
 import { useDispatch, useSelector } from 'react-redux'
+import { addSignal, campaignAttributes } from '../../utils'
 import {
 	Card,
 	Divider,
@@ -32,7 +31,6 @@ function Master() {
 	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
 	const { openMessage } = useMessage()
-	const { additionalAttributes } = useCampaign()
 	const { startLoading, stopLoading } = useLoading()
 
 	const [tab, setTab] = useState(INITIAL.TAB)
@@ -58,7 +56,7 @@ function Master() {
 
 			API('campaigns', {
 				...update,
-				...additionalAttributes(update.period, update.climate),
+				...campaignAttributes(update.period, update.climate),
 			})
 				.update(({ data }) => {
 					setRefresh(data)

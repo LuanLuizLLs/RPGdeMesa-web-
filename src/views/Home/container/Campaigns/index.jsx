@@ -4,10 +4,10 @@ import useLoading from '../../../../hooks/useLoading'
 import useMessage from '../../../../hooks/useMessage'
 import imageMaster from '../../../../assets/img/master.png'
 import { INITIAL } from './initial'
-import { campaignAttributes } from './utils'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { CAMPAIGNS } from '../../../../constants'
+import { campaignAttributes } from '../../../../utils'
 import {
 	Box,
 	Button,

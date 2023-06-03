@@ -4,8 +4,9 @@ import useLoading from '../../../../hooks/useLoading'
 import useMessage from '../../../../hooks/useMessage'
 import imagePlayer from '../../../../assets/img/player.png'
 import { INITIAL } from './initial'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { characterAttributes } from '../../../../utils'
 import { CHARACTERS } from '../../../../constants'
 import {
 	Box,
@@ -21,7 +22,6 @@ import {
 	Select,
 	Paper,
 } from '../../../../components'
-import { characterAttributes } from './utils'
 
 function Characters() {
 	const setNavigate = useNavigate()

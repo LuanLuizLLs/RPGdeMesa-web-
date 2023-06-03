@@ -43,7 +43,15 @@ export const ATTRIBUTE = {
 		'MOE': '💰',
 		'ACO': '👣',
 		'DAN': '🩸',
-	}
+	},
+	RANK: [
+		'A',
+		'B',
+		'C',
+		'D',
+		'E',
+		'F',
+	],
 }
 
 /** Race configs */

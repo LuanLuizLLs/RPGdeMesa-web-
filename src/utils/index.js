@@ -1,14 +1,8 @@
-import { BREAKPOINT, ATTRIBUTE } from '../configs'
-import { RANK } from '../constants'
+import * as CONFIGS from '../configs'
 
-/**
- * Which device current
- * @param {String} device
- * @returns 
- */
 export const whichDevice = (device = '') => {
 	let devices = {}
-	Object.entries(BREAKPOINT).forEach(([key, value]) => {
+	Object.entries(CONFIGS.BREAKPOINT).forEach(([key, value]) => {
 		devices = {
 			...devices, [key]: (window.innerWidth <= value)
 		}
@@ -16,12 +10,6 @@ export const whichDevice = (device = '') => {
 	return devices[device]
 }
 
-/**
- * Checks if values are null
- * @param {Object} values 
- * @param {Array} optionals
- * @returns 
- */
 export const isNull = (values = {}, optionals = []) => {
 	const nulls = []
 	Object.entries(values).forEach(([key, value]) => {
@@ -30,12 +18,6 @@ export const isNull = (values = {}, optionals = []) => {
 	return nulls.length > 0 && nulls
 }
 
-/**
- * Separate data according to initials
- * @param {Object} initial 
- * @param {Object} current 
- * @returns 
- */
 export const separateData = (initial = {}, current = {}) => {
 	const separate = {}
 	Object.keys(initial).forEach((key) => {
@@ -44,21 +26,10 @@ export const separateData = (initial = {}, current = {}) => {
 	return separate
 }
 
-/**
- * Draw one of the options
- * @param {Array} options 
- * @returns 
- */
 export const optionRandow = (options = []) => {
 	return options[Math.floor(Math.random() * options.length)]
 }
 
-/**
- * Draw between a minimum and maximum number 
- * @param {Number} min 
- * @param {Number} max 
- * @returns 
- */
 export const numberRandow = (min = 0, max = 0) => {
 	if (min < 0) {
 		return parseInt((Math.random() * (min - 1))) + parseInt((Math.random() * (max + 1)))
@@ -66,11 +37,6 @@ export const numberRandow = (min = 0, max = 0) => {
 	return parseInt((Math.random() * ((max + 1) - min)) + min)
 }
 
-/**
- * Add arithmetic sign
- * @param {Number} number 
- * @returns 
- */
 export const addSignal = (number = 0) => {
 	if (number > 0) {
 		return `+${number}`
@@ -78,13 +44,6 @@ export const addSignal = (number = 0) => {
 	return number
 }
 
-/**
- * Point attributes
- * @param {String} attribute 
- * @param {Number} modifier
- * @param {Number} level
- * @returns 
- */
 export const pointAttribute = (attribute = '', modifier = 0, level = 0) => {
 	const format = {
 		attribute,
@@ -94,31 +53,19 @@ export const pointAttribute = (attribute = '', modifier = 0, level = 0) => {
 	return `${format.attribute} 1d20${format.modifier} 1d6${format.damage}`
 }
 
-/**
- * Modifier information
- * @param {Object} character 
- * @param {Object} item 
- * @returns 
- */
 export const modifierPoints = (character = {}, item = {}) => {
 	const {
 		icon,
 		modifier,
 		damage,
 	} = {
-		icon: ATTRIBUTE.ICONS[item.attribute],
-		modifier: character[ATTRIBUTE.PRIMARY[item.attribute]],
+		icon: CONFIGS.ATTRIBUTE.ICONS[item.attribute],
+		modifier: character[CONFIGS.ATTRIBUTE.PRIMARY[item.attribute]],
 		damage: item.level,
 	}
-	return `${icon} ${RANK[modifier - damage] || '⨉'} ${ATTRIBUTE.ICONS.DAN} ${damage}`
+	return `${icon} ${CONFIGS.ATTRIBUTE.RANK[modifier - damage] || '⨉'} ${CONFIGS.ATTRIBUTE.ICONS.DAN} ${damage}`
 }
 
-/**
- * Scroll points
- * @param {Number} modifier
- * @param {Number} level
- * @returns 
- */
 export const scrollingPoints = (attribute = 0, level = 0) => {
 	const {
 		modifier,
@@ -128,4 +75,35 @@ export const scrollingPoints = (attribute = 0, level = 0) => {
 		damage: attribute >= level ? level : level - (level - attribute),
 	}
 	return `1d20${modifier ? addSignal(modifier) : ''} | 1d6${damage ? addSignal(damage) : ''}`
+}
+
+export const campaignAttributes = (period = '', climate = '') => {
+	const [min, max] = CONFIGS.CONDITIONS[period][climate]
+	return {
+		ground: numberRandow(min, max),
+		resources: numberRandow(min, max),
+	}
+}
+
+export const characterAttributes = (race = '', caste = '') => {
+	const {
+		strength: [strengthMin, strengthMax],
+		dexterity: [dexterityMin, dexterityMax],
+		constitution: [constitutionMin, constitutionMax],
+		intelligence: [intelligenceMin, intelligenceMax],
+		wisdom: [wisdomMin, wisdomMax],
+		charisma: [charismaMin, charismaMax],
+	} = {
+		...CONFIGS.RACE[race],
+		...CONFIGS.CASTE[caste],
+	}
+  
+	return {
+		strength: numberRandow(strengthMin, strengthMax),
+		dexterity: numberRandow(dexterityMin, dexterityMax),
+		constitution: numberRandow(constitutionMin, constitutionMax),
+		intelligence: numberRandow(intelligenceMin, intelligenceMax),
+		wisdom: numberRandow(wisdomMin, wisdomMax),
+		charisma: numberRandow(charismaMin, charismaMax),
+	}
 }
