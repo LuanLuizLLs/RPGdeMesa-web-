@@ -13,13 +13,11 @@ function routes() {
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />
+			<Route path="*" element={<NotFound />} />
 			<Route path="/login" element={<Login />} />
 			<Route path="/master" element={<Master />} />
 			<Route path="/player" element={<Player />} />
 			<Route path="/player/:id_character" element={<Player />} />
-
-			{ /** 404 Not Found */ }
-			<Route path="*" element={<NotFound />} />
 		</Routes>
 	)
 }

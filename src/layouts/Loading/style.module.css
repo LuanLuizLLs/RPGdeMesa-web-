@@ -8,7 +8,6 @@
   overflow: hidden;
 }
 
-/** Circular loading */
 .loading[loading=circular]::after {
   content: '';
   width: 100%;
@@ -47,7 +46,6 @@
   }
 }
 
-/** Bar loading */
 .loading[loading=bar] {
   position: relative;
   overflow: hidden;

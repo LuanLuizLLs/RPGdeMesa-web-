@@ -1,4 +1,3 @@
-/** Colors palette of theme  */
 const theme = {
 	primary: '#997C52',
 	secondary: '#F5DEB3',
@@ -11,7 +10,6 @@ const theme = {
 	white: '#EBEFD4',
 }
 
-/** Colors contrast  */
 export const contrast = (color) => {
 	return [
 		'secondary',

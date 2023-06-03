@@ -1,4 +1,3 @@
-/** Screen size breakpoint  */
 export const BREAKPOINT = {
 	mobile: 425,
 	tablet: 768,
@@ -6,7 +5,6 @@ export const BREAKPOINT = {
 	desktop: 1440,
 }
 
-/** Attributes configs */
 export const ATTRIBUTE = {
 	PHISICAL: [
 		'strength',
@@ -54,7 +52,6 @@ export const ATTRIBUTE = {
 	],
 }
 
-/** Race configs */
 export const RACE = {
 	'Anão': {
 		strength: [2, 3],
@@ -118,7 +115,6 @@ export const RACE = {
 	},
 }
 
-/** Caste configs */
 export const CASTE = {
 	'Bárbaro': {
 		intelligence: [0, 1],
@@ -182,7 +178,6 @@ export const CASTE = {
 	},
 }
 
-/** Conditions configs */
 export const CONDITIONS = {
 	'Dia': {
 		'Frio': [-2, 6],
@@ -201,7 +196,6 @@ export const CONDITIONS = {
 	},
 }
 
-/** Inventory configs */
 export const INVENTORY = {
 	USABLE: {
 		'Não': false,

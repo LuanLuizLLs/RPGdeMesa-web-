@@ -1,4 +1,3 @@
-/** Attributes options */
 export const ATTRIBUTES = {
 	PRIMARY: [
 		'FOR',
@@ -15,7 +14,6 @@ export const ATTRIBUTES = {
 	],
 }
 
-/** Characters options */
 export const CHARACTERS = {
 	RACE: [
 		'Anão',
@@ -54,7 +52,6 @@ export const CHARACTERS = {
 	]
 }
 
-/** Campaigns options */
 export const CAMPAIGNS = {
 	PERIOD: [
 		'Dia',

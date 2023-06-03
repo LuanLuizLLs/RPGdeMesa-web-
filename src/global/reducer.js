@@ -3,7 +3,6 @@ import storeSynchronize, { defineState } from 'redux-localstore'
 import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 
-/** Global reducer */
 const INITIAL_REDUCER = {
 	USER: {},
 	CAMPAIGN: {},

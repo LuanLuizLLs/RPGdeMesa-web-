@@ -1,4 +1,3 @@
-/** Styles global */
 * {
   margin: 0;
   padding: 0;
@@ -6,24 +5,20 @@
   font-family: monospace;
 }
 
-/** Scroll all */
 *::-webkit-scrollbar {
   height: 0;
   width: 0;
 }
 
-/** Size page */
 #root {
   height: 100vh;
   width: 100vw;
 }
 
-/** Variables global  */
 :root {
   color: var(--color-black);
   background: var(--color-background);
 
-  /** Palette colors */
   --color-primary: #997C52;
   --color-secondary: #F5DEB3;
   --color-background: #412505;
@@ -35,7 +30,6 @@
   --color-gray: #76767E;
   --color-white: #EBEFD4;
 
-  /** All icons */
   --icon-success: '\2713';
   --icon-error: '\2717';
   --icon-warning: '\0021';
