@@ -1,4 +1,5 @@
-import { useGlobalContext } from '../global/context'
+import { useContext } from 'react'
+import Context from '../global/context'
 
 export const INITIAL_MESSAGE = {
 	type: '',
@@ -8,7 +9,7 @@ export const INITIAL_MESSAGE = {
 }
 
 const useMessage = () => {
-	const { message, setMessage } = useGlobalContext()
+	const { setMessage } = useContext(Context)
 
 	const openMessage = (type = '', message = '') => {
 		setMessage((state) => ({
@@ -27,7 +28,6 @@ const useMessage = () => {
 	}
 
 	return {
-		message,
 		openMessage,
 		closeMessage,
 	}
