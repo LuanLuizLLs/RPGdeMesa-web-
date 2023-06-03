@@ -51,7 +51,7 @@ const useAPI = (route, params) => {
 		delete: async (payload) => {
 			startLoading('bar')
 			try {
-				const { data } = await API(route+2, payload).delete()
+				const { data } = await API(route, payload).delete()
 				openMessage(data.status, data.message)
 			} catch ({ response }) {
 				openMessage(response.data.status, response.data.message)
