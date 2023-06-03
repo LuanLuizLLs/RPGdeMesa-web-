@@ -1,13 +1,12 @@
 import React from 'react'
-import classes from './style.module.css'
 import PropTypes from 'prop-types'
+import classes from './style.module.css'
+import useLoading from '../../hooks/useLoading'
 
 function Loading({
 	children,
-	stateLoading = [],
 }) {
-
-	const [loading = {}] = stateLoading
+	const { loading } = useLoading()
 
 	return (
 		<div className={classes.loading} loading={loading.type}>
@@ -18,7 +17,6 @@ function Loading({
 
 Loading.propTypes = {
 	children: PropTypes.any,
-	stateLoading: PropTypes.array,
 }
 
 export default Loading

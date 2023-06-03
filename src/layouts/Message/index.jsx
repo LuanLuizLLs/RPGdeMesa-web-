@@ -1,39 +1,29 @@
 import React, { useEffect } from 'react'
 import classes from './style.module.css'
-import PropTypes from 'prop-types'
 import useMessage from '../../hooks/useMessage'
 
-function Message({
-	stateMessage = [],
-}) {
-
-	const [state = {}] = stateMessage
-
-	const { closeMessage } = useMessage()
+function Message() {
+	const { message, closeMessage } = useMessage()
 
 	const style = {
-		width: state.open ? '100%' : '0',
+		width: message.open ? '100%' : '0',
 	}
 
 	useEffect(() => {
-		if (state.open) {
-			setTimeout(closeMessage, state.time)
+		if (message.open) {
+			setTimeout(closeMessage, message.time)
 		}
-	}, [state, closeMessage])
+	}, [message, closeMessage])
 
 	return (
 		<div className={classes.container}>
 			<div className={classes.hidden} style={style}>
-				<div className={classes.message} type={state.type} onClick={closeMessage}>
-					{state.message || 'Teste de mensagem'}
+				<div className={classes.message} type={message.type} onClick={closeMessage}>
+					{message.message || 'Teste de mensagem'}
 				</div>
 			</div>
 		</div>
 	)
-}
-
-Message.propTypes = {
-	stateMessage: PropTypes.array,
 }
 
 export default Message

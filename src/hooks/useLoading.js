@@ -1,12 +1,11 @@
-import { useContext } from 'react'
-import Context from '../global/context'
+import { useGlobalContext } from '../global/context'
 
 export const INITIAL_LOADING = {
 	type: ''
 }
 
 const useLoading = () => {
-	const { setLoading } = useContext(Context)
+	const { loading, setLoading } = useGlobalContext()
 
 	const startLoading = (type = '') => {
 		setLoading({
@@ -19,6 +18,7 @@ const useLoading = () => {
 	}
 
 	return {
+		loading,
 		startLoading,
 		stopLoading,
 	}
