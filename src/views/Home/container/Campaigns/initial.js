@@ -9,7 +9,6 @@ export const INITIAL = {
 		climate: '',
 		period: '',
 	},
-	REFRESH: null,
 	LIST: {
 		columns: {
 			id: 'ID',
