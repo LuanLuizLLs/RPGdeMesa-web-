@@ -1,30 +1,24 @@
-import { useContext } from 'react'
-import Context from '../global/context'
-
-export const INITIAL_MESSAGE = {
-	type: '',
-	message: '',
-	open: false,
-	time: 5000,
-}
+import { INITIAL, useGlobalContext } from '../context'
 
 const useMessage = () => {
-	const { setMessage } = useContext(Context)
+	const { stateMessage } = useGlobalContext(INITIAL.MESSAGE)
+
+	const [state, setState] = stateMessage
 
 	const openMessage = (type = '', message = '') => {
-		setMessage((state) => ({
+		setState({
 			...state,
 			type,
 			message,
 			open: true,
-		}))
+		})
 	}
 
 	const closeMessage = () => {
-		setMessage((state) => ({
+		setState({
 			...state,
 			open: false,
-		}))
+		})
 	}
 
 	return {

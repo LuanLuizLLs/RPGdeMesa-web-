@@ -1,21 +1,19 @@
-import { useContext } from 'react'
-import Context from '../global/context'
-
-export const INITIAL_LOADING = {
-	type: ''
-}
+import { INITIAL, useGlobalContext } from '../context'
 
 const useLoading = () => {
-	const { setLoading } = useContext(Context)
+	const { stateLoading } = useGlobalContext()
+
+	const [state, setState] = stateLoading 
 
 	const startLoading = (type = '') => {
-		setLoading({
+		setState({
+			...state,
 			type,
 		})
 	}
 
 	const stopLoading = () => {
-		setLoading(INITIAL_LOADING)
+		setState(INITIAL.LOADING)
 	}
 
 	return {

@@ -20,7 +20,6 @@ import {
 } from '../../components'
 
 function Login() {
-  
 	const setNavigate = useNavigate()
 
 	const { submitLogin } = useLogin()

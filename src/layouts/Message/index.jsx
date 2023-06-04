@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
 import classes from './style.module.css'
-import PropTypes from 'prop-types'
 import useMessage from '../../hooks/useMessage'
+import { useGlobalContext } from '../../context'
 
-function Message({
-	stateMessage = [],
-}) {
+function Message() {
+	const { stateMessage } = useGlobalContext()
 
-	const [state = {}] = stateMessage
+	const [state] = stateMessage
 
 	const { closeMessage } = useMessage()
 
@@ -30,10 +29,6 @@ function Message({
 			</div>
 		</div>
 	)
-}
-
-Message.propTypes = {
-	stateMessage: PropTypes.array,
 }
 
 export default Message
