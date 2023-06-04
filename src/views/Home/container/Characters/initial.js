@@ -10,7 +10,6 @@ export const INITIAL = {
 		caste: '',
 		tendency: '',
 	},
-	REFRESH: null,
 	LIST: {
 		columns: {
 			id: 'ID',

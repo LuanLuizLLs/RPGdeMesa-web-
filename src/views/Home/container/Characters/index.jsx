@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import API from '../../../../services/api'
-import useLoading from '../../../../hooks/useLoading'
-import useMessage from '../../../../hooks/useMessage'
+import useAPI from '../../../../hooks/useAPI'
 import imagePlayer from '../../../../assets/img/player.png'
 import { INITIAL } from './initial'
 import { useNavigate } from 'react-router-dom'
@@ -27,87 +25,66 @@ function Characters() {
 	const setNavigate = useNavigate()
 	const setDispatch = useDispatch()
 
-	const { openMessage } = useMessage()
-	const { startLoading, stopLoading } = useLoading()
-
 	const [list, setList] = useState(INITIAL.LIST)
 	const [modal, setModal] = useState(INITIAL.MODAL)
 	const [values, setValues] = useState(INITIAL.VALUES)
-	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 
 	const { USER } = useSelector(({ reducer }) => reducer)
 
+	const {
+		list: characterList,
+		fetch: fetchCharacter,
+		create: createCharacter,
+		update: updateCharacter,
+		delete: deleteCharacter,
+	} = useAPI('characters', {
+		id_user: USER.id
+	})
+
 	useEffect(() => {
-		API('characters', {
-			id_user: USER.id
+		setList((state) => ({
+			...state, rows: characterList,
+		}))
+	}, [characterList])
+
+	const handleOpenModal = (content, data = {}) => {
+		setModal({ content, data })
+		setValues({ ...values, ...data })
+	}
+
+	const handleResetValues = () => {
+		setModal(INITIAL.MODAL)
+		setValues(INITIAL.VALUES)
+	}
+
+	const handleCreateCharacter = () => {
+		createCharacter({
+			...values,
+			...characterAttributes(values.race, values.caste),
+			id_user: USER.id,
 		})
-			.read(({ data }) => {
-				setList((state) => ({
-					...state, rows: data.response,
-				}))
-			})
-	}, [refresh, USER.id])
+			.then(fetchCharacter)
+			.finally(handleResetValues)
+	}
 
-	const handle = {
-		openModal: (content, data = {}) => {
-			setModal({ content, data })
-			setValues({ ...values, ...data })
-		},
-		resetValues: () => {
-			setModal(INITIAL.MODAL)
-			setValues(INITIAL.VALUES)
-			stopLoading()
-		},
-		createCharacter: () => {
-			startLoading('bar')
+	const handleUpdateCharacter = () => {
+		updateCharacter(values)
+			.then(fetchCharacter)
+			.finally(handleResetValues)
+	}
 
-			API('characters', {
-				...values,
-				...characterAttributes(values.race, values.caste),
-				id_user: USER.id,
-			})
-				.create(({ data }) => {
-					setRefresh(data)
-					openMessage(data.status, data.message)
-				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
-		},
-		updateCharacter: () => {
-			startLoading('bar')
+	const handleDeleteCharacter = () => {
+		deleteCharacter(values)
+			.then(fetchCharacter)
+			.finally(handleResetValues)
+	}
 
-			API('characters', values)
-				.update(({ data }) => {
-					setRefresh(data)
-					openMessage(data.status, data.message)
-				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
-		},
-		deleteCharacter: () => {
-			startLoading('bar')
-
-			API('characters', values)
-				.delete(({ data }) => {
-					setRefresh(data)
-					openMessage(data.status, data.message)
-				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
-		},
-		startCharacter: () => {
-			setDispatch({
-				type: 'CHARACTER',
-				data: values,
-			})
-			setNavigate('/player')
-		},
+	const handleStartCharacter = () => {
+		setDispatch({
+			type: 'CHARACTER',
+			data: values,
+		})
+		setNavigate('/player')
 	}
 
 	return (
@@ -115,7 +92,7 @@ function Characters() {
 			<Modal
 				maxWidth={450}
 				stateModal={[modal, setModal]}
-				onClose={handle.resetValues}
+				onClose={handleResetValues}
 			>
 				{{
 					character_start: (
@@ -132,10 +109,10 @@ function Characters() {
 								</Text>
 							</Paper>
 							<Box display="flex" justifyContent="flex-end" marginTop={10}>
-								<Button type="bottomless" color="primary" padding={10} onClick={handle.resetValues}>
+								<Button type="bottomless" color="primary" padding={10} onClick={handleResetValues}>
                   Voltar
 								</Button>
-								<Button type="filled" padding={10} onClick={handle.startCharacter}>
+								<Button type="filled" padding={10} onClick={handleStartCharacter}>
                   Jogar
 								</Button>
 							</Box>
@@ -176,10 +153,10 @@ function Characters() {
 								stateValue={[values, setValues]}
 							/>
 							<Box display="flex" justifyContent="flex-end">
-								<Button type="filled" color="secondary" padding={10} onClick={handle.resetValues}>
+								<Button type="filled" color="secondary" padding={10} onClick={handleResetValues}>
                   Cancelar
 								</Button>
-								<Button type="filled" padding={10} onClick={handle.createCharacter}>
+								<Button type="filled" padding={10} onClick={handleCreateCharacter}>
                   Criar
 								</Button>
 							</Box>
@@ -202,10 +179,10 @@ function Characters() {
 								stateValue={[values, setValues]}
 							/>
 							<Box display="flex" justifyContent="flex-end">
-								<Button type="filled" color="secondary" padding={10} onClick={handle.resetValues}>
+								<Button type="filled" color="secondary" padding={10} onClick={handleResetValues}>
                   Cancelar
 								</Button>
-								<Button type="filled" padding={10} onClick={handle.updateCharacter}>
+								<Button type="filled" padding={10} onClick={handleUpdateCharacter}>
                   Salvar
 								</Button>
 							</Box>
@@ -220,10 +197,10 @@ function Characters() {
                 Tem certeza que deseja excluir o personagem <b>{modal.data.name}</b>?
 							</Text>
 							<Box display="flex" justifyContent="flex-end" marginTop={10}>
-								<Button type="bottomless" padding={10} onClick={handle.resetValues}>
+								<Button type="bottomless" padding={10} onClick={handleResetValues}>
                   Cancelar
 								</Button>
-								<Button type="filled" color="error" padding={10} onClick={handle.deleteCharacter}>
+								<Button type="filled" color="error" padding={10} onClick={handleDeleteCharacter}>
                   Excluir
 								</Button>
 							</Box>
@@ -245,13 +222,13 @@ function Characters() {
 				<List
 					height={300}
 					{...list}
-					onClick={(row) => handle.openModal('character_start', row)}
+					onClick={(row) => handleOpenModal('character_start', row)}
 					actions={{
-						update: (row) => handle.openModal('character_update', row),
-						delete: (row) => handle.openModal('character_delete', row),
+						update: (row) => handleOpenModal('character_update', row),
+						delete: (row) => handleOpenModal('character_delete', row),
 					}}
 				/>
-				<Button type="filled" padding={10} onClick={() => handle.openModal('character_create')}>
+				<Button type="filled" padding={10} onClick={() => handleOpenModal('character_create')}>
           Criar personagem
 				</Button>
 			</Card>
