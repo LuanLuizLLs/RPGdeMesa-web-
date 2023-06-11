@@ -3,7 +3,7 @@ import useLoading from './useLoading'
 import useMessage from './useMessage'
 import API from '../services/api'
 
-const useAPI = (route, params) => {
+function useAPI(route, params) {
 	const [list, setList] = useState([])
 
 	const { openMessage } = useMessage()

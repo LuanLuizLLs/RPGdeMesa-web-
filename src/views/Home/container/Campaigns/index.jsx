@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import useAPI from '../../../../hooks/useAPI'
+import useRedux from '../../../../hooks/useRedux'
 import imageMaster from '../../../../assets/img/master.png'
 import { INITIAL } from './initial'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import { CAMPAIGNS } from '../../../../constants'
 import { campaignAttributes } from '../../../../utils'
 import {
@@ -22,14 +22,14 @@ import {
 } from '../../../../components'
 
 function Campaigns() {
-	const setNavigate = useNavigate()
-	const setDispatch = useDispatch()
+	const navigate = useNavigate()
 
 	const [list, setList] = useState(INITIAL.LIST)
 	const [modal, setModal] = useState(INITIAL.MODAL)
 	const [values, setValues] = useState(INITIAL.VALUES)
 
-	const { USER } = useSelector(({ reducer }) => reducer)
+	const { getRedux, setRedux } = useRedux()
+	const { USER } = getRedux()
 
 	const {
 		list: campaignList,
@@ -81,11 +81,8 @@ function Campaigns() {
 	}
 
 	const handleStartCampaign = () => {
-		setDispatch({
-			type: 'CAMPAIGN',
-			data: values,
-		})
-		setNavigate('/master')
+		setRedux('CAMPAIGN', values)
+		navigate('/master')
 	}
 
 	return (

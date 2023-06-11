@@ -1,6 +1,6 @@
 import { INITIAL, useGlobalContext } from '../context'
 
-const useMessage = () => {
+function useMessage(){
 	const { stateMessage } = useGlobalContext(INITIAL.MESSAGE)
 
 	const [state, setState] = stateMessage

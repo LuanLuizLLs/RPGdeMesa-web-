@@ -1,6 +1,6 @@
 import { INITIAL, useGlobalContext } from '../context'
 
-const useLoading = () => {
+function useLoading() {
 	const { stateLoading } = useGlobalContext()
 
 	const [state, setState] = stateLoading 

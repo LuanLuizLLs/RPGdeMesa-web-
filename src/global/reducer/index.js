@@ -1,21 +1,14 @@
    
 import storeSynchronize, { defineState } from 'redux-localstore'
+import { INITIAL } from './initial'
 import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 
-const INITIAL_REDUCER = {
-	USER: {},
-	CAMPAIGN: {},
-	CHARACTER: {},
-	ADVENTURE: {},
-	SCENERY: {},
-}
-
-const initialState = defineState(INITIAL_REDUCER)('reducer')
+const initialState = defineState(INITIAL)('reducer')
 
 const reducer = (state = initialState, { type, data }) => {
 	if (type === 'INITIAL') 
-		return { ...INITIAL_REDUCER }
+		return { ...INITIAL }
 	else 
 		return { ...state, [type]: data }
 }

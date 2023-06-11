@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import useAPI from '../../../../hooks/useAPI'
+import useRedux from '../../../../hooks/useRedux'
 import imagePlayer from '../../../../assets/img/player.png'
 import { INITIAL } from './initial'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import { characterAttributes } from '../../../../utils'
 import { CHARACTERS } from '../../../../constants'
 import {
@@ -22,14 +22,14 @@ import {
 } from '../../../../components'
 
 function Characters() {
-	const setNavigate = useNavigate()
-	const setDispatch = useDispatch()
+	const navigate = useNavigate()
 
 	const [list, setList] = useState(INITIAL.LIST)
 	const [modal, setModal] = useState(INITIAL.MODAL)
 	const [values, setValues] = useState(INITIAL.VALUES)
 
-	const { USER } = useSelector(({ reducer }) => reducer)
+	const { setRedux, getRedux } = useRedux()
+	const { USER } = getRedux()
 
 	const {
 		list: characterList,
@@ -80,11 +80,8 @@ function Characters() {
 	}
 
 	const handleStartCharacter = () => {
-		setDispatch({
-			type: 'CHARACTER',
-			data: values,
-		})
-		setNavigate('/player')
+		setRedux('CHARACTER', values)
+		navigate('/player')
 	}
 
 	return (
