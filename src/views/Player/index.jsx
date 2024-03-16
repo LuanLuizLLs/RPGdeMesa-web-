@@ -23,12 +23,11 @@ function Player() {
 	const setDispatch = useDispatch()
 
 	const { id_character } = useParams()
+	const { USER, CHARACTER, CAMPAIGN } = useSelector(({ reducer }) => reducer)
 	
 	const [tab, setTab] = useState(INITIAL.TAB)
 	const [values, setValues] = useState(id_character ? INITIAL.VALUES : CHARACTER)
 	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
-
-	const { USER, CHARACTER, CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
 	useEffect(() => {
 		API('characters', {
