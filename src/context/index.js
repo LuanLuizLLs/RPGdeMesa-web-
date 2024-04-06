@@ -28,5 +28,4 @@ export const useGlobalContext = () => {
 	return useContext(Context)
 }
 
-
 export default GlobalContextProvider
