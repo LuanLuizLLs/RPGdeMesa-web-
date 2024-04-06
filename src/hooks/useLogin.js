@@ -12,7 +12,8 @@ function useLogin() {
 
 	const submitLogout = () => {
 		setDispatch({
-			type: 'INITIAL'
+			type: 'USER',
+			data: {},
 		})
 	}
 
