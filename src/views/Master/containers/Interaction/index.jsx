@@ -38,7 +38,7 @@ function Interaction() {
 						<DeleteInteraction
 							stateModal={stateModal}
 							onReset={handle.resetInteraction}
-							onDelete={handle.updateInteraction}
+							onDelete={handle.deleteInteraction}
 						/>
 					)
 				}}

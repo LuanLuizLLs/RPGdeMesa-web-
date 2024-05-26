@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { INITIAL } from '../constants/initial'
 import useLoading from '../../../../../hooks/useLoading'
 import useMessage from '../../../../../hooks/useMessage'
+import useRefresh from '../../../../../hooks/useRefresh'
 import API from '../../../../../services/api'
 
 export function useInteractions() {
@@ -13,6 +14,7 @@ export function useInteractions() {
 	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
 	const { openMessage } = useMessage()
+	const { refreshData } = useRefresh()
 	const { startLoading, stopLoading } = useLoading()
 
 	const handle = {
@@ -58,6 +60,7 @@ export function useInteractions() {
 			API('interactions', values)
 				.update(({ data }) => {
 					handle.listInteraction()
+					refreshData('interactions-board')
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -88,6 +91,7 @@ export function useInteractions() {
 				...rest
 			})
 				.create(({ data }) => {
+					refreshData('interactions-board')
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {

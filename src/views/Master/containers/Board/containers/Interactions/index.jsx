@@ -11,18 +11,20 @@ import {
 	Text,
 	Title,
 } from '../../../../../../components'
+import useRefresh from '../../../../../../hooks/useRefresh'
 
 function Interactions() {
-
-	const [modal, setModal] = useState(INITIAL.MODAL)
+	const [, setModal] = useState(INITIAL.MODAL)
 	const [values, setValues] = useState(INITIAL.VALUES)
 	const [interactions, setInteractions] = useState(INITIAL.INTERACTIONS)
+
+	const { refreshTarget } = useRefresh()
 
 	useEffect(() => {
 		API('/interactions-board').read(({ data }) => {
 			setInteractions(Object.assign({}, data.response))
 		})
-	}, [])
+	}, [refreshTarget('interactions-board')])
 
 	const handle = {
 		openModal: (content, data = values) => {

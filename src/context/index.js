@@ -6,15 +6,14 @@ export { INITIAL }
 const Context = createContext({
 	stateLoading: [INITIAL.LOADING],
 	stateMessage: [INITIAL.MESSAGE],
+	stateRefresh: [INITIAL.REFRESH],
 })
 
 function GlobalContextProvider({ children }) {
-	const [loading, setLoading] = useState(INITIAL.LOADING)
-	const [message, setMessage] = useState(INITIAL.MESSAGE)
-
 	const valueContext = {
-		stateLoading: [loading, setLoading],
-		stateMessage: [message, setMessage],
+		stateLoading: useState(INITIAL.LOADING),
+		stateMessage: useState(INITIAL.MESSAGE),
+		stateRefresh: useState(INITIAL.REFRESH),
 	}
 
 	return (
