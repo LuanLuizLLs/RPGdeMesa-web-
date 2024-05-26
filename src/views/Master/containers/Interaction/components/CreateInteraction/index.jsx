@@ -1,32 +1,7 @@
 import React from 'react'
-import API from '../../../../../../services/api'
-import useMessage from '../../../../../../hooks/useMessage'
-import useLoading from '../../../../../../hooks/useLoading'
 import { Box, Button, Grid, Input, TextArea, Title } from '../../../../../../components'
 
-export function CreateInteraction({ campaign, stateValues, onReset, onRefresh }) {
-	const [values, setValues] = stateValues
-
-	const { openMessage } = useMessage()
-	const { startLoading } = useLoading()
-
-	function handleCreateInteraction() {
-		startLoading('bar')
-
-		API('interactions', {
-			...values,
-			id_campaign: campaign.id,
-		})
-			.create(({ data }) => {
-				onRefresh(data)
-				openMessage(data.status, data.message)
-			})
-			.catch(({ response }) => {
-				openMessage(response.data.status, response.data.message)
-			})
-			.finally(onReset)
-	}
-
+export function CreateInteraction({ stateValues, onReset, onCreate }) {
 	return (
 		<>
 			<Title type="h6">
@@ -35,12 +10,12 @@ export function CreateInteraction({ campaign, stateValues, onReset, onRefresh })
 			<Input
 				name="name"
 				placeholder="Nome"
-				stateValue={[values, setValues]}
+				stateValue={stateValues}
 			/>
 			<TextArea
 				name="description"
 				placeholder="Descrição"
-				stateValue={[values, setValues]}
+				stateValue={stateValues}
 			/>
 			<Grid type="container">
 				<Grid type="row" padding={[5, 0]}>
@@ -50,7 +25,7 @@ export function CreateInteraction({ campaign, stateValues, onReset, onRefresh })
 							name="life"
 							label="Vida"
 							type="number"
-							stateValue={[values, setValues]}
+							stateValue={stateValues}
 						/>
 					</Grid>
 					<Grid type="column" margin={[0, 5]}>
@@ -59,7 +34,7 @@ export function CreateInteraction({ campaign, stateValues, onReset, onRefresh })
 							type="number"
 							label="Dano"
 							name="damage"
-							stateValue={[values, setValues]}
+							stateValue={stateValues}
 						/>
 					</Grid>
 				</Grid>
@@ -69,7 +44,7 @@ export function CreateInteraction({ campaign, stateValues, onReset, onRefresh })
 							start="💪"
 							type="number"
 							name="strength"
-							stateValue={[values, setValues]}
+							stateValue={stateValues}
 						/>
 					</Grid>
 					<Grid type="column" margin={[0, 5]}>
@@ -77,7 +52,7 @@ export function CreateInteraction({ campaign, stateValues, onReset, onRefresh })
 							start="👋"
 							type="number"
 							name="dexterity"
-							stateValue={[values, setValues]}
+							stateValue={stateValues}
 						/>
 					</Grid>
 					<Grid type="column" margin={[0, 5]}>
@@ -85,7 +60,7 @@ export function CreateInteraction({ campaign, stateValues, onReset, onRefresh })
 							start="✊"
 							type="number"
 							name="constitution"
-							stateValue={[values, setValues]}
+							stateValue={stateValues}
 						/>
 					</Grid>
 				</Grid>
@@ -95,7 +70,7 @@ export function CreateInteraction({ campaign, stateValues, onReset, onRefresh })
 							start="📙"
 							type="number"
 							name="intelligence"
-							stateValue={[values, setValues]}
+							stateValue={stateValues}
 						/>
 					</Grid>
 					<Grid type="column" margin={[0, 5]}>
@@ -103,7 +78,7 @@ export function CreateInteraction({ campaign, stateValues, onReset, onRefresh })
 							start="🙌"
 							type="number"
 							name="wisdom"
-							stateValue={[values, setValues]}
+							stateValue={stateValues}
 						/>
 					</Grid>
 					<Grid type="column" margin={[0, 5]}>
@@ -111,7 +86,7 @@ export function CreateInteraction({ campaign, stateValues, onReset, onRefresh })
 							start="🤝"
 							type="number"
 							name="charisma"
-							stateValue={[values, setValues]}
+							stateValue={stateValues}
 						/>
 					</Grid>
 				</Grid>
@@ -120,7 +95,7 @@ export function CreateInteraction({ campaign, stateValues, onReset, onRefresh })
 				<Button type="filled" color="secondary" padding={10} onClick={onReset}>
           Cancelar
 				</Button>
-				<Button type="filled" padding={10} onClick={handleCreateInteraction}>
+				<Button type="filled" padding={10} onClick={onCreate}>
           Criar
 				</Button>
 			</Box>
