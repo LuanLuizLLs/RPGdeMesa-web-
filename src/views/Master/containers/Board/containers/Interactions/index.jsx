@@ -1,53 +1,34 @@
-import React, { useState, useEffect } from 'react'
-import API from '../../../../../../services/api'
-import { INITIAL } from './initial'
+import React from 'react'
+import { useInteractions } from './hooks/useInteractions'
+import { InteractionDetails } from './components/InteractionDetails'
 import {
 	Box,
 	Divider,
 	Grid,
 	Input,
 	Link,
+	Modal,
 	Paper,
 	Text,
 	Title,
-} from '../../../../../../components'
-import useRefresh from '../../../../../../hooks/useRefresh'
+} from 'components'
 
 function Interactions() {
-	const [, setModal] = useState(INITIAL.MODAL)
-	const [values, setValues] = useState(INITIAL.VALUES)
-	const [interactions, setInteractions] = useState(INITIAL.INTERACTIONS)
+	const { handle, stateList, stateModal } = useInteractions()
 
-	const { refreshTarget } = useRefresh()
-
-	useEffect(() => {
-		API('/interactions-board').read(({ data }) => {
-			setInteractions(Object.assign({}, data.response))
-		})
-	}, [refreshTarget('interactions-board')])
-
-	const handle = {
-		openModal: (content, data = values) => {
-			setModal({ content, data })
-			setValues({ ...values, ...data })
-		},
-		resetInteraction: () => {
-			setValues(INITIAL.VALUES)
-			setModal(INITIAL.MODAL)
-		},
-	}
+	const [list] = stateList
 
 	return (
 		<>
 			<Title type="h6">
         Quadro de interações:
 			</Title>
-			{Object.values(interactions).map((interaction, i) => (
+			{Object.values(list).map((interaction, i) => (
 				<Paper key={i} backgroundColor="secondary" margin="10px 0">
 					<Box margin={5}>
 						<Text inline color="primary" fontWeight="bold">
               #{i + 1}&nbsp;
-							<Link target="_blank" onClick={() => handle.openModal('interaction_detail', interaction)}>
+							<Link target="_blank" onClick={() => handle.openInteraction('interaction_details', interaction)}>
 								{interaction.shape.name}
 							</Link>
               &nbsp;(Lv {interaction.shape.level})
@@ -66,9 +47,9 @@ function Interactions() {
 								name="life"
 								type="number"
 								fontSize="medium"
-								max={interaction.shape.life}
-								stateValue={[interactions, setInteractions]}
-								onEnter={() => null}
+								end={`/${interaction.shape.life}`}
+								stateValue={stateList}
+								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Grid type="column">
@@ -79,9 +60,9 @@ function Interactions() {
 								name="damage"
 								type="number"
 								fontSize="medium"
-								max={interaction.shape.damage}
-								stateValue={[interactions, setInteractions]}
-								onEnter={() => null}
+								end={`/${interaction.shape.damage}`}
+								stateValue={stateList}
+								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Divider borderStyle="solid" margin="0 10px" />
@@ -93,9 +74,9 @@ function Interactions() {
 								name="strength"
 								type="number"
 								fontSize="medium"
-								max={interaction.strength}
-								stateValue={[interactions, setInteractions]}
-								onEnter={() => null}
+								end={`/${interaction.shape.strength}`}
+								stateValue={stateList}
+								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Grid type="column">
@@ -106,9 +87,9 @@ function Interactions() {
 								name="dexterity"
 								type="number"
 								fontSize="medium"
-								max={interaction.dexterity}
-								stateValue={[interactions, setInteractions]}
-								onEnter={() => null}
+								end={`/${interaction.shape.dexterity}`}
+								stateValue={stateList}
+								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Grid type="column">
@@ -119,9 +100,9 @@ function Interactions() {
 								name="constitution"
 								type="number"
 								fontSize="medium"
-								max={interaction.constitution}
-								stateValue={[interactions, setInteractions]}
-								onEnter={() => null}
+								end={`/${interaction.shape.constitution}`}
+								stateValue={stateList}
+								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Divider borderStyle="solid" margin="0 10px" />
@@ -133,9 +114,9 @@ function Interactions() {
 								name="intelligence"
 								type="number"
 								fontSize="medium"
-								max={interaction.intelligence}
-								stateValue={[interactions, setInteractions]}
-								onEnter={() => null}
+								end={`/${interaction.shape.intelligence}`}
+								stateValue={stateList}
+								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Grid type="column">
@@ -146,9 +127,9 @@ function Interactions() {
 								name="wisdom"
 								type="number"
 								fontSize="medium"
-								max={interaction.wisdom}
-								stateValue={[interactions, setInteractions]}
-								onEnter={() => null}
+								end={`/${interaction.shape.wisdom}`}
+								stateValue={stateList}
+								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Grid type="column">
@@ -159,14 +140,25 @@ function Interactions() {
 								name="charisma"
 								type="number"
 								fontSize="medium"
-								max={interaction.charisma}
-								stateValue={[interactions, setInteractions]}
-								onEnter={() => null}
+								end={`/${interaction.shape.charisma}`}
+								stateValue={stateList}
+								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 					</Grid>
 				</Paper>
 			))}
+			<Modal maxWidth={500} stateModal={stateModal} onClose={handle.resetInteraction}>
+				{{
+					interaction_details: (
+						<InteractionDetails 
+							stateModal={stateModal}
+							onReset={handle.resetInteraction}
+							onRemove={handle.removeInteraction}
+						/>
+					)
+				}}
+			</Modal>
 		</>
 	)
 }

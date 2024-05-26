@@ -1,5 +1,4 @@
 .tab {
-  padding: 10px 0;
   overflow-x: auto;
   margin-bottom: 10px;
   border-bottom: solid var(--color-primary);
@@ -7,10 +6,13 @@
 
 .tab span {
   cursor: pointer;
-  padding: 0 10px;
+  display: inline-block;
+  padding: 4px 10px;
 }
 
 .tab span[select] {
   font-weight: bold;
-  color: var(--color-primary);
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-radius: 4px 4px 0 0;
 }

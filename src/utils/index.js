@@ -44,13 +44,9 @@ export const addSignal = (number = 0) => {
 	return number
 }
 
-export const pointAttribute = (attribute = '', modifier = 0, level = 0) => {
-	const format = {
-		attribute,
-		damage: level ? addSignal(level) : '',
-		modifier: modifier ? addSignal(modifier) : '',
-	}
-	return `${format.attribute} 1d20${format.modifier} 1d6${format.damage}`
+export const pointAttribute = (modifier = 0, level = 0) => {
+	const damage = Math.floor((modifier + level) / 2)
+	return `1d20${modifier ? addSignal(modifier) : ''} | 1d6${damage ? addSignal(damage) : ''}`
 }
 
 export const modifierPoints = (character = {}, item = {}) => {
