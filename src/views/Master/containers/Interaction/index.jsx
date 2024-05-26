@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, List, Modal, Button } from '../../../../components'
+import { Box, List, Modal, Button } from 'components'
 import { CreateInteraction } from './components/CreateInteraction'
 import { ReadInteraction } from './components/ReadInteraction'
 import { UpdateInteraction } from './components/UpdateInteraction'

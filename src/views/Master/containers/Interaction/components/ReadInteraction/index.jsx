@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Button, Paper, Text, Title } from '../../../../../../components'
-import { ATTRIBUTE } from '../../../../../../configs'
+import { Box, Button, Paper, Text, Title } from 'components'
+import { ATTRIBUTE } from 'configs'
 
 export function ReadInteraction({ stateModal, onReset, onStart }) {
 	const [modal] = stateModal

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Text, Title } from '../../../../../../components'
+import { Box, Button, Text, Title } from 'components'
 
 export function DeleteInteraction({ stateModal, onReset, onDelete }) {
 	const [modal] = stateModal

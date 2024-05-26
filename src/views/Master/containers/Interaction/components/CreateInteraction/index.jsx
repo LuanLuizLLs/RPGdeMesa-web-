@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Grid, Input, TextArea, Title } from '../../../../../../components'
+import { Box, Button, Grid, Input, TextArea, Title } from 'components'
 
 export function CreateInteraction({ stateValues, onReset, onCreate }) {
 	return (

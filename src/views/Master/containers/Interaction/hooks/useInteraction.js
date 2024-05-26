@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { INITIAL } from '../constants/initial'
-import useLoading from '../../../../../hooks/useLoading'
-import useMessage from '../../../../../hooks/useMessage'
-import useRefresh from '../../../../../hooks/useRefresh'
-import API from '../../../../../services/api'
+import useLoading from 'hooks/useLoading'
+import useMessage from 'hooks/useMessage'
+import useRefresh from 'hooks/useRefresh'
+import API from 'services/api'
 
 export function useInteractions() {
 	const [list, setList] = useState(INITIAL.LIST)
