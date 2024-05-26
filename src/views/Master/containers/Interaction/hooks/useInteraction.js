@@ -50,7 +50,7 @@ export function useInteractions() {
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
-					openMessage('error', response.data.message)
+					openMessage(response.data.status, response.data.message)
 				})
 				.finally(handle.resetInteraction)
 		},
@@ -64,7 +64,7 @@ export function useInteractions() {
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
-					openMessage('error', response.data.message)
+					openMessage(response.data.status, response.data.message)
 				})
 				.finally(handle.resetInteraction)
 		},
@@ -77,7 +77,7 @@ export function useInteractions() {
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
-					openMessage('error', response.data.message)
+					openMessage(response.data.status, response.data.message)
 				})
 				.finally(handle.resetInteraction)
 		},
@@ -95,7 +95,7 @@ export function useInteractions() {
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
-					openMessage('error', response.data.message)
+					openMessage(response.data.status, response.data.message)
 				})
 				.finally(handle.resetInteraction)
 		}
