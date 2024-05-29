@@ -143,7 +143,7 @@ function Characters() {
 									/>
 								</Paper>
 							</Grid>
-							<Grid type="column" padding={[5, 5]} minWidth={280}>
+							<Grid type="column" padding={[5, 5]} minWidth={300}>
 								<Paper backgroundColor="secondary">
 									<Text fontSize="medium">
 										<Link target="_blank" {...Boolean(character.id) && { href: `/player/${character.id}` }}>
@@ -154,21 +154,21 @@ function Characters() {
 										{character.description}
 									</Text>
 									<Divider borderStyle="solid" margin="0" />
-									<Grid type="row">
-										<Grid type="column" flex="none" minWidth={100}>
+									<Grid type="row" overflow="auto">
+										<Grid type="column" minWidth={100}>
 											<Input
 												index={i}
 												start="❤️"
 												name="life"
 												type="number"
 												fontSize="medium"
-												max={character.life_capacity}
+												end={`/${character.life_capacity}`}
 												readOnly={!character.id}
 												stateValue={[characters, setCharacters]}
 												onEnter={() => handle.updateCharacter(i)}
 											/>
 										</Grid>
-										<Grid type="column" flex="none" minWidth={100}>
+										<Grid type="column" minWidth={100}>
 											<Input
 												index={i}
 												start="👣"
@@ -180,7 +180,7 @@ function Characters() {
 												onEnter={() => handle.updateCharacter(i)}
 											/>
 										</Grid>
-										<Grid type="column" flex="none" minWidth={100}>
+										<Grid type="column" minWidth={100}>
 											<Input
 												index={i}
 												start="💰"

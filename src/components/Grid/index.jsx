@@ -15,6 +15,7 @@ export const Grid = ({
 	alignItems = '',
 	justifyContent = '',
 	flexDirection = 'row',
+	overflow = '',
 }) => {
 
 	const style = {
@@ -28,6 +29,10 @@ export const Grid = ({
 				alignItems,
 				flexDirection,
 				justifyContent,
+				...overflow && {
+					overflow,
+					flexWrap: 'unset'
+				}
 			},
 			column: {
 				flex,

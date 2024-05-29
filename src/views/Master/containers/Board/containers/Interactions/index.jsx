@@ -38,8 +38,8 @@ function Interactions() {
 						</Text>
 					</Box>
 					<Divider borderStyle="solid" margin="0" />
-					<Grid type="row" margin={[5, 0]}>
-						<Grid type="column">
+					<Grid type="row" margin={[5, 0]} overflow="auto">
+						<Grid type="column" minWidth={100}>
 							<Input
 								noLabel
 								index={i}
@@ -52,7 +52,7 @@ function Interactions() {
 								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
-						<Grid type="column">
+						<Grid type="column" minWidth={100}>
 							<Input
 								noLabel
 								index={i}
@@ -66,7 +66,7 @@ function Interactions() {
 							/>
 						</Grid>
 						<Divider borderStyle="solid" margin="0 10px" />
-						<Grid type="column">
+						<Grid type="column" minWidth={100}>
 							<Input
 								noLabel
 								index={i}
@@ -79,7 +79,7 @@ function Interactions() {
 								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
-						<Grid type="column">
+						<Grid type="column" minWidth={100}>
 							<Input
 								noLabel
 								index={i}
@@ -92,7 +92,7 @@ function Interactions() {
 								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
-						<Grid type="column">
+						<Grid type="column" minWidth={100}>
 							<Input
 								noLabel
 								index={i}
@@ -106,7 +106,7 @@ function Interactions() {
 							/>
 						</Grid>
 						<Divider borderStyle="solid" margin="0 10px" />
-						<Grid type="column">
+						<Grid type="column" minWidth={100}>
 							<Input
 								noLabel
 								index={i}
@@ -119,7 +119,7 @@ function Interactions() {
 								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
-						<Grid type="column">
+						<Grid type="column" minWidth={100}>
 							<Input
 								noLabel
 								index={i}
@@ -132,7 +132,7 @@ function Interactions() {
 								onEnter={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
-						<Grid type="column">
+						<Grid type="column" minWidth={100}>
 							<Input
 								noLabel
 								index={i}
