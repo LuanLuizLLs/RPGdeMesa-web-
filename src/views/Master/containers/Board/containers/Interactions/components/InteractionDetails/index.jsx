@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Box, Button, Paper, Tab, Text, Title } from 'components'
-import { pointAttribute } from 'utils'
+import { pointAttribute } from '../../utils'
 import { ATTRIBUTE } from 'configs'
 
 export function InteractionDetails({ stateModal, onReset, onRemove }) {
