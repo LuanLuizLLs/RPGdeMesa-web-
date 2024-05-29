@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import API from '../../../../services/api'
+import useSse from 'hooks/useSse'
 import useLoading from '../../../../hooks/useLoading'
 import useMessage from '../../../../hooks/useMessage'
 import { INITIAL } from './initial'
@@ -36,7 +37,7 @@ function Inventory({
 
 	const { USER, CHARACTER } = useSelector(({ reducer }) => reducer)
 
-	useEffect(() => {
+	useSse('characters', () => {
 		if (CHARACTER.id) {
 			API('items', {
 				id_character: CHARACTER.id,

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import useSse from 'hooks/useSse'
 import API from '../../services/api'
 import Page from '../../layouts/Page'
 import Features from './container/Features'
@@ -29,7 +30,7 @@ function Player() {
 	const [values, setValues] = useState(id_character ? INITIAL.VALUES : CHARACTER)
 	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 
-	useEffect(() => {
+	useSse('characters', () => {
 		API('characters', {
 			id: id_character || CHARACTER.id,
 			user: USER.id,

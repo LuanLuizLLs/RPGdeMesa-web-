@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import API from '../../../../services/api'
+import useSse from 'hooks/useSse'
 import useMessage from '../../../../hooks/useMessage'
 import useLoading from '../../../../hooks/useLoading'
 import { INITIAL } from './initial'
@@ -31,7 +32,7 @@ function Features({
 	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 	const [features, setFeatures] = useState(INITIAL.FEATURES)
 
-	useEffect(() => {
+	useSse('characters', () => {
 		if (CHARACTER.id) {
 			API('features', {
 				id_character: CHARACTER.id,

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import API from '../../../../services/api'
+import useSse from 'hooks/useSse'
 import useMessage from '../../../../hooks/useMessage'
 import useLoading from '../../../../hooks/useLoading'
 import { INITIAL } from './initial'
@@ -34,7 +35,7 @@ function Abilities({
 	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 	const [abilities, setAbilities] = useState(INITIAL.ABILITIES)
 
-	useEffect(() => {
+	useSse('characters', () => {
 		if (CHARACTER.id) {
 			API('abilities', {
 				id_character: CHARACTER.id,
