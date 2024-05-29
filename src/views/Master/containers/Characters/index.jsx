@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import theme from '../../../../theme'
 import API from '../../../../services/api'
+import useSse from 'hooks/useSse'
 import useMessage from '../../../../hooks/useMessage'
 import useLoading from '../../../../hooks/useLoading'
 import imagePlayer from '../../../../assets/img/player.png'
@@ -14,7 +15,7 @@ import {
 	Image,
 	Input,
 	Link,
-	Modal,
+	Modal, 
 	Paper,
 	Text,
 	Title,
@@ -32,7 +33,7 @@ function Characters() {
 
 	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
-	useEffect(() => {
+	useSse('player', () => {
 		API('characters', {
 			id_campaign: CAMPAIGN.id
 		})
