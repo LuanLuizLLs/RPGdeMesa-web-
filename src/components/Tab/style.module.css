@@ -2,6 +2,7 @@
   overflow-x: auto;
   margin-bottom: 10px;
   border-bottom: solid var(--color-primary);
+  white-space: nowrap;
 }
 
 .tab span {
