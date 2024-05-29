@@ -35,7 +35,7 @@ function Abilities({
 	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 	const [abilities, setAbilities] = useState(INITIAL.ABILITIES)
 
-	useSse('characters', () => {
+	useSse('player', () => {
 		if (CHARACTER.id) {
 			API('abilities', {
 				id_character: CHARACTER.id,

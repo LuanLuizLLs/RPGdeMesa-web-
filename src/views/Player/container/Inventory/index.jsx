@@ -37,7 +37,7 @@ function Inventory({
 
 	const { USER, CHARACTER } = useSelector(({ reducer }) => reducer)
 
-	useSse('characters', () => {
+	useSse('player', () => {
 		if (CHARACTER.id) {
 			API('items', {
 				id_character: CHARACTER.id,

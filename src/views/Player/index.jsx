@@ -30,7 +30,7 @@ function Player() {
 	const [values, setValues] = useState(id_character ? INITIAL.VALUES : CHARACTER)
 	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 
-	useSse('characters', () => {
+	useSse('player', () => {
 		API('characters', {
 			id: id_character || CHARACTER.id,
 			user: USER.id,

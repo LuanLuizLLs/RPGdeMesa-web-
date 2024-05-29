@@ -32,7 +32,7 @@ function Features({
 	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
 	const [features, setFeatures] = useState(INITIAL.FEATURES)
 
-	useSse('characters', () => {
+	useSse('player', () => {
 		if (CHARACTER.id) {
 			API('features', {
 				id_character: CHARACTER.id,
