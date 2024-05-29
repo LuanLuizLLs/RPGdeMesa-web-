@@ -1,13 +1,7 @@
-import React, { useState } from 'react'
-import API from '../../services/api'
-import Logo from '../../assets/img/logo.png'
-import useLogin from '../../hooks/useLogin'
-import useLoading from '../../hooks/useLoading'
-import useMessage from '../../hooks/useMessage'
-import { isNull } from '../../utils'
-import { INITIAL } from './initial'
+import React from 'react'
+import Logo from 'assets/img/logo.png'
+import { useLogin } from './hooks/useLogin'
 import { comparativePassword } from './utils'
-import { useNavigate } from 'react-router-dom'
 import {
 	Box,
 	Title,
@@ -20,84 +14,9 @@ import {
 } from '../../components'
 
 function Login() {
-	const setNavigate = useNavigate()
-
-	const { submitLogin } = useLogin()
-	const { openMessage } = useMessage()
-	const { startLoading, stopLoading } = useLoading()
-
-	const [view, setView] = useState(INITIAL.VIEW)
-	const [values, setValues] = useState(INITIAL.VALUES)
-
-	const handle = {
-		alterView: (view = INITIAL.VIEW) => {
-			setView(view)
-			setValues({
-				...INITIAL.VALUES,
-				name: values.name,
-			})
-		},
-		resetLogin: () => {
-			stopLoading()
-		},
-		submitLogin: () => {
-			if (isNull(values, ['new_password'])) {
-				return openMessage('warning', 'Preencha todos os dados')
-			}
-      
-			startLoading('circular')
-
-			API('users', values)
-				.read(({ data }) => {
-					const [user = {}] = data.response
-					submitLogin(user)
-					setNavigate('/')
-					openMessage(data.status, data.message)
-				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetLogin)
-		},
-		submitRegister: () => {
-			if (isNull(values)) {
-				return openMessage('warning', 'Preencha todos os dados')
-			} else if (!comparativePassword(values.password, values.new_password).valid) {
-				return openMessage('warning', 'As senhas não coincidem')
-			}
-
-			startLoading('bar')
-
-			API('users', values)
-				.create(({ data }) => {
-					setView(INITIAL.VIEW)
-					openMessage(data.status, data.message)
-				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetLogin)
-		},
-		submitRecover: () => {
-			if (isNull(values)) {
-				return openMessage('warning', 'Preencha todos os dados')
-			} else if (!comparativePassword(values.password, values.new_password).valid) {
-				return openMessage('warning', 'As senhas não coincidem')
-			}
-
-			startLoading('bar')
-
-			API('users', values)
-				.update(({ data }) => {
-					setView(INITIAL.VIEW)
-					openMessage(data.status, data.message)
-				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetLogin)
-		},
-	}
+	const { view, handle, stateValues } = useLogin()
+  
+	const [values] = stateValues
 
 	return (
 		<Box flex="auto" maxWidth="90vw">
@@ -119,7 +38,7 @@ function Login() {
 								name="name"
 								label="Usuário"
 								placeholder="Digite seu usuário"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 								onEnter={handle.submitLogin}
 							/>
 							<Input
@@ -127,7 +46,7 @@ function Login() {
 								label="Senha"
 								type="password"
 								placeholder="Digite sua senha"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 								onEnter={handle.submitLogin}
 							/>
 							<Grid type="container" padding={[20, 0]}>
@@ -170,7 +89,7 @@ function Login() {
 								name="name"
 								label="Usuário"
 								placeholder="Seu novo usuário"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 								onEnter={handle.submitRegister}
 							/>
 							<Input
@@ -178,7 +97,7 @@ function Login() {
 								label="Senha"
 								type="password"
 								placeholder="Digite sua senha"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 								onEnter={handle.submitRegister}
 								{...comparativePassword(values.password, values.new_password)}
 							/>
@@ -187,7 +106,7 @@ function Login() {
 								label="Confirmar senha"
 								type="password"
 								placeholder="Confirme sua senha"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 								onEnter={handle.submitRegister}
 								{...comparativePassword(values.password, values.new_password)}
 							/>
@@ -226,7 +145,7 @@ function Login() {
 								name="name"
 								label="Usuário"
 								placeholder="Digite seu usuário"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 								onEnter={handle.submitRecover}
 							/>
 							<Input
@@ -234,7 +153,7 @@ function Login() {
 								label="Nova senha"
 								type="password"
 								placeholder="Digite sua senha"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 								onEnter={handle.submitRecover}
 								{...comparativePassword(values.password, values.new_password)}
 							/>
@@ -243,7 +162,7 @@ function Login() {
 								label="Confirmar senha"
 								type="password"
 								placeholder="Digite sua senha novamente"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 								onEnter={handle.submitRecover}
 								{...comparativePassword(values.password, values.new_password)}
 							/>
