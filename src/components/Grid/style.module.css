@@ -3,6 +3,10 @@
   flex-wrap: wrap;
 }
 
+.row[data-overflow=auto] {
+  flex-wrap: unset;
+}
+
 .slide {
   overflow: hidden;
   transition: width .3s;

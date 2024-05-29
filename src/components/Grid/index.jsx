@@ -26,13 +26,10 @@ export const Grid = ({
 				maxWidth,
 			},
 			row: {
+				overflow,
 				alignItems,
 				flexDirection,
 				justifyContent,
-				...overflow && {
-					overflow,
-					flexWrap: 'unset'
-				}
 			},
 			column: {
 				flex,
@@ -46,7 +43,7 @@ export const Grid = ({
 	}
 
 	return (
-		<div className={classes[type]} style={style}>
+		<div className={classes[type]} style={style} data-overflow={overflow}>
 			{type === 'slide' ? <div>{children}</div> : children}
 		</div>
 	)

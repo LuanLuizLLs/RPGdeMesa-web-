@@ -201,7 +201,7 @@ function Features({
 									{modal.data.description}
 								</Text>
 							</Paper>
-							<Paper backgroundColor="secondary" margin="10px 0">
+							<Paper backgroundColor="secondary" margin="10px 0" overflow="auto">
 								<Text inline display="inline">
 									{ATTRIBUTE.ICONS.FOR} {modal.data.strength} &nbsp;
 								</Text>

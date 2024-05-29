@@ -23,7 +23,7 @@ export const Paper = ({
 	}
 
 	return (
-		<div className={classes.paper} style={style}>
+		<div className={classes.paper} style={style} data-overflow={overflow}>
 			{children}
 		</div>
 	)
