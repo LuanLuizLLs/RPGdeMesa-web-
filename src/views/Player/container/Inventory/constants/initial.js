@@ -10,8 +10,7 @@ export const INITIAL = {
 		usable: false,
 		level: 1,
 	},
-	REFRESH: null,
-	INVENTORY: {
+	LIST: {
 		columns: {
 			id: 'ID',
 			name: 'Item',

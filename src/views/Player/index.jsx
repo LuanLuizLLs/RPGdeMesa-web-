@@ -1,50 +1,16 @@
-import React, { useState } from 'react'
-import useSse from 'hooks/useSse'
-import API from '../../services/api'
-import Page from '../../layouts/Page'
+import React from 'react'
+import Page from 'layouts/Page'
 import Features from './container/Features'
 import Abilities from './container/Abilities'
 import Inventory from './container/Inventory'
-import { INITIAL } from './initial'
-import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-	Box,
-	Card,
-	Divider,
-	Grid,
-	Input,
-	Tab,
-	Text,
-	TextArea,
-	Title,
-} from '../../components'
+import { useSelector } from 'react-redux'
+import { usePlayer } from './hooks/usePlayer'
+import { Box, Card, Divider, Grid, Input, Tab, Text, TextArea, Title } from 'components'
 
 function Player() {
-	const setDispatch = useDispatch()
+	const { stateTabs, stateValues } = usePlayer()
 
-	const { id_character } = useParams()
-	const { USER, CHARACTER, CAMPAIGN } = useSelector(({ reducer }) => reducer)
-	
-	const [tab, setTab] = useState(INITIAL.TAB)
-	const [values, setValues] = useState(id_character ? INITIAL.VALUES : CHARACTER)
-	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
-
-	useSse('player', () => {
-		API('characters', {
-			id: id_character || CHARACTER.id,
-			user: USER.id,
-			campaign: CAMPAIGN.id,
-		})
-			.read(({ data }) => {
-				const [character = INITIAL.VALUES] = data.response
-				setValues(character)
-				setDispatch({
-					type: 'CHARACTER',
-					data: character,
-				})
-			})
-	}, [refresh, id_character, setValues, setDispatch, USER.id, CAMPAIGN.id, CHARACTER.id])
+	const { CHARACTER } = useSelector(({ reducer }) => reducer)
 
 	return (
 		<Page tab="Jogador" title="Ficha do Jogador" width="80vw">
@@ -59,7 +25,7 @@ function Player() {
 								readOnly
 								name="name"
 								label="Nome"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 							/>
 						</Grid>
 						<Grid type="column" padding={[0, 5]} minWidth={200}>
@@ -67,7 +33,7 @@ function Player() {
 								readOnly
 								name="race"
 								label="Raça"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 							/>
 						</Grid>
 						<Grid type="column" padding={[0, 5]} minWidth={200}>
@@ -75,7 +41,7 @@ function Player() {
 								readOnly
 								name="caste"
 								label="Classe"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 							/>
 						</Grid>
 						<Grid type="column" padding={[0, 5]} minWidth={200}>
@@ -83,7 +49,7 @@ function Player() {
 								readOnly
 								name="tendency"
 								label="Tendência"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 							/>
 						</Grid>
 					</Grid>
@@ -93,7 +59,7 @@ function Player() {
 								readOnly
 								name="description"
 								label="Descrição"
-								stateValue={[values, setValues]}
+								stateValue={stateValues}
 							/>
 						</Grid>
 					</Grid>
@@ -124,7 +90,7 @@ function Player() {
 									type="number"
 									label="Vida"
 									fontSize="medium"
-									stateValue={[values, setValues]}
+									stateValue={stateValues}
 								/>
 							</Grid>
 							<Grid type="column" padding={[0, 5]} minWidth={150}>
@@ -135,7 +101,7 @@ function Player() {
 									type="number"
 									label="Ações"
 									fontSize="medium"
-									stateValue={[values, setValues]}
+									stateValue={stateValues}
 								/>
 							</Grid>
 							<Grid type="column" padding={[0, 5]} minWidth={150}>
@@ -146,7 +112,7 @@ function Player() {
 									type="number"
 									label="Moedas"
 									fontSize="medium"
-									stateValue={[values, setValues]}
+									stateValue={stateValues}
 								/>
 							</Grid>
 						</Grid>
@@ -155,11 +121,11 @@ function Player() {
 			</Grid>
 			<Divider borderStyle="solid" />
 			<Card>
-				<Tab tabs={['Características', 'Habilidades', 'Inventário']} stateTab={[tab, setTab]}>
+				<Tab tabs={['Características', 'Habilidades', 'Inventário']} stateTab={stateTabs}>
 					{[
-						<Features key="features" user={USER} character={CHARACTER} setRefreshCharacter={setRefresh} />,
-						<Abilities key="abilities" user={USER} character={CHARACTER} setRefreshCharacter={setRefresh} />,
-						<Inventory key="inventory" user={USER} character={CHARACTER} setRefreshCharacter={setRefresh} />,
+						<Features key="features" />,
+						<Abilities key="abilities" />,
+						<Inventory key="inventory" />,
 					]}
 				</Tab>
 			</Card>

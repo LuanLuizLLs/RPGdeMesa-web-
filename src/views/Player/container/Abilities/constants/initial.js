@@ -9,8 +9,7 @@ export const INITIAL = {
 		attribute: 'FOR',
 		level: 1,
 	},
-	REFRESH: null,
-	ABILITIES: {
+	LIST: {
 		columns: {
 			id: 'ID',
 			name: 'Habilidade',

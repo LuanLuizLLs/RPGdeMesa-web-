@@ -13,8 +13,7 @@ export const INITIAL = {
 		wisdom: 0,
 		charisma: 0,
 	},
-	REFRESH: null,
-	FEATURES: {
+	LIST: {
 		columns: {
 			id: 'ID',
 			name: 'Característica',

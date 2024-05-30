@@ -14,11 +14,7 @@ function Characters() {
 				stateModal={stateModal}
 				onClose={handle.resetValues}
 			>
-				<Modals
-					handle={handle}
-					stateModal={stateModal}
-					stateValues={stateValues}
-				/>
+				{Modals({ handle, stateModal, stateValues })}
 			</Modal>
 			<Card>
 				<Image
