@@ -1,5 +1,7 @@
 import * as CONFIGS from '../configs'
 
+export { campaignAttributes } from 'views/Home/container/Campaigns/utils'
+
 export const whichDevice = (device = '') => {
 	let devices = {}
 	Object.entries(CONFIGS.BREAKPOINT).forEach(([key, value]) => {
@@ -66,35 +68,4 @@ export const scrollingPoints = (attribute = 0, level = 0) => {
 		damage: attribute >= level ? level : level - (level - attribute),
 	}
 	return `1d20${modifier ? addSignal(modifier) : ''} | 1d6${damage ? addSignal(damage) : ''}`
-}
-
-export const campaignAttributes = (period = '', climate = '') => {
-	const [min, max] = CONFIGS.CONDITIONS[period][climate]
-	return {
-		ground: numberRandow(min, max),
-		resources: numberRandow(min, max),
-	}
-}
-
-export const characterAttributes = (race = '', caste = '') => {
-	const {
-		strength: [strengthMin, strengthMax],
-		dexterity: [dexterityMin, dexterityMax],
-		constitution: [constitutionMin, constitutionMax],
-		intelligence: [intelligenceMin, intelligenceMax],
-		wisdom: [wisdomMin, wisdomMax],
-		charisma: [charismaMin, charismaMax],
-	} = {
-		...CONFIGS.RACE[race],
-		...CONFIGS.CASTE[caste],
-	}
-  
-	return {
-		strength: numberRandow(strengthMin, strengthMax),
-		dexterity: numberRandow(dexterityMin, dexterityMax),
-		constitution: numberRandow(constitutionMin, constitutionMax),
-		intelligence: numberRandow(intelligenceMin, intelligenceMax),
-		wisdom: numberRandow(wisdomMin, wisdomMax),
-		charisma: numberRandow(charismaMin, charismaMax),
-	}
 }
