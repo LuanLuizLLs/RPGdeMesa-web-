@@ -10,9 +10,9 @@ import useMessage from '../../hooks/useMessage'
 import useLoading from '../../hooks/useLoading'
 import { INITIAL } from './initial'
 import { CAMPAIGNS } from '../../constants'
-import { colorConditions } from './utils'
+import { colorConditions, campaignAttributes } from './utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { addSignal, campaignAttributes } from '../../utils'
+import { addSignal } from '../../utils'
 import {
 	Card,
 	Divider,

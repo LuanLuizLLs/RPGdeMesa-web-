@@ -1,7 +1,5 @@
 import * as CONFIGS from '../configs'
 
-export { campaignAttributes } from 'views/Home/container/Campaigns/utils'
-
 export const whichDevice = (device = '') => {
 	let devices = {}
 	Object.entries(CONFIGS.BREAKPOINT).forEach(([key, value]) => {
@@ -44,28 +42,4 @@ export const addSignal = (number = 0) => {
 		return `+${number}`
 	}
 	return number
-}
-
-export const modifierPoints = (character = {}, item = {}) => {
-	const {
-		icon,
-		modifier,
-		damage,
-	} = {
-		icon: CONFIGS.ATTRIBUTE.ICONS[item.attribute],
-		modifier: character[CONFIGS.ATTRIBUTE.PRIMARY[item.attribute]],
-		damage: item.level,
-	}
-	return `${icon} ${CONFIGS.ATTRIBUTE.RANK[modifier - damage] || '⨉'} ${CONFIGS.ATTRIBUTE.ICONS.DAN} ${damage}`
-}
-
-export const scrollingPoints = (attribute = 0, level = 0) => {
-	const {
-		modifier,
-		damage,
-	} = {
-		modifier: attribute >= level ? attribute : attribute - level,
-		damage: attribute >= level ? level : level - (level - attribute),
-	}
-	return `1d20${modifier ? addSignal(modifier) : ''} | 1d6${damage ? addSignal(damage) : ''}`
 }
