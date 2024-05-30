@@ -12,7 +12,7 @@ export function usePlayer() {
 
 	const { id_character } = useParams()
 	const { openMessage } = useMessage()
-	const { CHARACTER, USER, CAMPAIGN } = useSelector(({ reducer }) => reducer)
+	const { CHARACTER, USER } = useSelector(({ reducer }) => reducer)
 	
 	const [tab, setTab] = useState(INITIAL.TAB)
 	const [values, setValues] = useState(id_character ? INITIAL.VALUES : CHARACTER)
@@ -22,7 +22,6 @@ export function usePlayer() {
 			API('characters', {
 				id: id_character || CHARACTER.id,
 				user: USER.id,
-				campaign: CAMPAIGN.id,
 			})
 				.read(({ data }) => {
 					if (data.blocked) {
@@ -45,7 +44,7 @@ export function usePlayer() {
 
 	useSse('player', () => {
 		handle.loadCharacter()
-	}, [id_character, CHARACTER.id, USER.id, CAMPAIGN.id])
+	}, [id_character, CHARACTER.id, USER.id])
 
 	return {
 		stateTabs: [tab, setTab],
