@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { INITIAL } from '../constants/initial'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
-import useRefresh from 'hooks/useRefresh'
+import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useInteractions() {
-	const [list, setList] = useState(INITIAL.LIST)
-	const [modal, setModal] = useState(INITIAL.MODAL)
-	const [values, setValues] = useState(INITIAL.VALUES)
-
 	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
 	const { openMessage } = useMessage()
-	const { refreshTarget } = useRefresh()
 	const { startLoading, stopLoading } = useLoading()
+
+	const [tab, setTab] = useState(INITIAL.TAB)
+	const [list, setList] = useState(INITIAL.LIST)
+	const [modal, setModal] = useState(INITIAL.MODAL)
+	const [values, setValues] = useState(INITIAL.VALUES)
 
 	const handle = {
 		openInteraction(content, data = modal.data) {
@@ -50,7 +50,6 @@ export function useInteractions() {
 
 			API('interactions-board', values)
 				.delete(({ data }) => {
-					handle.listInteraction()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -60,12 +59,13 @@ export function useInteractions() {
 		}
 	}
 
-	useEffect(() => {
+	useSse('master', () => {
 		handle.listInteraction()
-	}, [refreshTarget('interactions-board')])
+	}, [CAMPAIGN.id])
 
 	return {
 		handle,
+		stateTab: [tab, setTab],
 		stateList: [list, setList],
 		stateModal: [modal, setModal],
 		stateValues: [values, setValues]

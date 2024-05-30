@@ -1,20 +1,10 @@
 import React from 'react'
 import { useInteractions } from './hooks/useInteractions'
-import { InteractionDetails } from './components/InteractionDetails'
-import {
-	Box,
-	Divider,
-	Grid,
-	Input,
-	Link,
-	Modal,
-	Paper,
-	Text,
-	Title,
-} from 'components'
+import { Modals } from './components/Modals'
+import { Box, Divider, Grid, Input, Link, Modal, Paper, Text, Title } from 'components'
 
 function Interactions() {
-	const { handle, stateList, stateModal } = useInteractions()
+	const { handle, stateTab, stateList, stateModal } = useInteractions()
 
 	const [list] = stateList
 
@@ -149,15 +139,7 @@ function Interactions() {
 				</Paper>
 			))}
 			<Modal maxWidth={500} stateModal={stateModal} onClose={handle.resetInteraction}>
-				{{
-					interaction_details: (
-						<InteractionDetails 
-							stateModal={stateModal}
-							onReset={handle.resetInteraction}
-							onRemove={handle.removeInteraction}
-						/>
-					)
-				}}
+				{Modals({ handle, stateTab, stateModal })}
 			</Modal>
 		</>
 	)

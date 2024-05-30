@@ -1,7 +1,10 @@
 export const INITIAL = {
+	TAB: 0,
 	MODAL: {
 		content: '',
-		data: {}
+		data: {
+			shape: {}
+		}
 	},
 	VALUES: {
 		id: 0,

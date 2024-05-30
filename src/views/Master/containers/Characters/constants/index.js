@@ -7,8 +7,7 @@ export const INITIAL = {
 		id: '',
 		name: '',
 	},
-	REFRESH: null,
-	CHARACTERS: {
+	LIST: {
 		0: {
 			id: 0,
 			name: 'Nome',
@@ -25,6 +24,7 @@ export const INITIAL = {
 			intelligence: 0,
 			wisdom: 0,
 			charisma: 0,
+			life_capacity: 0,
 		}
 	}
 }

@@ -1,73 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import API from '../../services/api'
-import Page from '../../layouts/Page'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { useMaster } from './hooks/useMaster'
+import { colorConditions } from './utils'
+import { CAMPAIGNS } from 'constants'
+import { addSignal } from 'utils'
+import { Card, Divider, Grid, Select, Tab, Text, Title } from 'components'
 import Scenarios from './containers/Scenarios'
 import Adventures from './containers/Adventures'
 import Exploration from './containers/Exploration'
 import Interaction from './containers/Interaction'
 import Characters from './containers/Characters'
-import useMessage from '../../hooks/useMessage'
-import useLoading from '../../hooks/useLoading'
-import { INITIAL } from './initial'
-import { CAMPAIGNS } from '../../constants'
-import { colorConditions, campaignAttributes } from './utils'
-import { useDispatch, useSelector } from 'react-redux'
-import { addSignal } from '../../utils'
-import {
-	Card,
-	Divider,
-	Grid,
-	Select,
-	Tab,
-	Text,
-	Title,
-} from '../../components'
 import Board from './containers/Board'
+import Page from 'layouts/Page'
 
 function Master() {
-
-	const setDispatch = useDispatch()
-
+	const { handle, stateTab, stateValues } = useMaster()
 	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
-	const { openMessage } = useMessage()
-	const { startLoading, stopLoading } = useLoading()
-
-	const [tab, setTab] = useState(INITIAL.TAB)
-	const [values, setValues] = useState(CAMPAIGN)
-	const [refresh, setRefresh] = useState(INITIAL.REFRESH)
-
-	useEffect(() => {
-		API('campaigns', {
-			id: CAMPAIGN.id,
-		})
-			.read(({ data }) => {
-				const [campaign = {}] = data.response
-				setDispatch({
-					type: 'CAMPAIGN',
-					data: campaign,
-				})
-			})
-	}, [refresh, setDispatch, CAMPAIGN.id])
-
-	const handle = {
-		updateCampaign: (update = values) => {
-			startLoading('bar')
-
-			API('campaigns', {
-				...update,
-				...campaignAttributes(update.period, update.climate),
-			})
-				.update(({ data }) => {
-					setRefresh(data)
-					openMessage(data.status, data.message)
-				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(stopLoading)
-		},
-	}
+	const [tab] = stateTab
 
 	return (
 		<Page tab="Mestre" title="Escudo do Mestre" width="90vw">
@@ -85,10 +35,10 @@ function Master() {
 			<Card margin="20px 0">
 				<Grid type="row">
 					<Grid type="column" padding={[10, 10]} minWidth={250}>
-						<Adventures campaign={CAMPAIGN} setRefreshCampaign={setRefresh} />
+						<Adventures />
 					</Grid>
 					<Grid type="column" padding={[10, 10]} minWidth={250}>
-						<Scenarios campaign={CAMPAIGN} setRefreshCampaign={setRefresh} />
+						<Scenarios />
 					</Grid>
 				</Grid>
 			</Card>
@@ -100,7 +50,7 @@ function Master() {
 							<Title type="h6">
                 Personagens:
 							</Title>
-							<Characters campaign={CAMPAIGN} />
+							<Characters />
 						</Grid>
 					</Grid>
 				</Grid>
@@ -115,7 +65,7 @@ function Master() {
 									label="Período"
 									options={CAMPAIGNS.PERIOD}
 									onSelect={handle.updateCampaign}
-									stateValue={[values, setValues]}
+									stateValue={stateValues}
 								/>
 							</Grid>
 							<Grid type="column" padding={[0, 10]} minWidth={200}>
@@ -124,7 +74,7 @@ function Master() {
 									label="Clima"
 									options={CAMPAIGNS.CLIMATE}
 									onSelect={handle.updateCampaign}
-									stateValue={[values, setValues]}
+									stateValue={stateValues}
 								/>
 							</Grid>
 						</Grid>
@@ -144,10 +94,10 @@ function Master() {
 				<Board current={tab} />
 			</Card>
 			<Card>
-				<Tab tabs={['Interação', 'Exploração']} stateTab={[tab, setTab]}>
+				<Tab tabs={['Interação', 'Exploração']} stateTab={stateTab}>
 					{[
-						<Interaction key="interaction" campaign={CAMPAIGN} />,
-						<Exploration key="exploration" campaign={CAMPAIGN} />,
+						<Interaction key="interaction" />,
+						<Exploration key="exploration" />,
 					]}
 				</Tab>
 			</Card>

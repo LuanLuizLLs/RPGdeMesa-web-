@@ -1,10 +1,7 @@
 import React from 'react'
-import { Box, List, Modal, Button } from 'components'
-import { CreateInteraction } from './components/CreateInteraction'
-import { ReadInteraction } from './components/ReadInteraction'
-import { UpdateInteraction } from './components/UpdateInteraction'
-import { DeleteInteraction } from './components/DeleteInteraction'
 import { useInteractions } from './hooks/useInteraction'
+import { Box, List, Modal, Button } from 'components'
+import { Modals } from './components/Modals'
 
 function Interaction() {
 	const { list, handle, stateModal, stateValues } = useInteractions()
@@ -12,36 +9,7 @@ function Interaction() {
 	return (
 		<>
 			<Modal maxWidth={500} stateModal={stateModal} onClose={handle.resetInteraction}>
-				{{
-					create_interaction: (
-						<CreateInteraction
-							stateValues={stateValues}
-							onReset={handle.resetInteraction}
-							onCreate={handle.createInteraction}
-						/>
-					),
-					read_interaction: (
-						<ReadInteraction
-							stateModal={stateModal}
-							onReset={handle.resetInteraction}
-							onStart={handle.startInteraction}
-						/>
-					),
-					update_interaction: (
-						<UpdateInteraction
-							stateValues={stateValues}
-							onReset={handle.resetInteraction}
-							onUpdate={handle.updateInteraction}
-						/>
-					),
-					delete_interaction: (
-						<DeleteInteraction
-							stateModal={stateModal}
-							onReset={handle.resetInteraction}
-							onDelete={handle.deleteInteraction}
-						/>
-					)
-				}}
+				{Modals({ handle, stateModal, stateValues })}
 			</Modal>
 			<List
 				{...list}
