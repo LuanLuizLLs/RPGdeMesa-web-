@@ -45,7 +45,6 @@ export function useFeatures() {
 				id_character: CHARACTER.id,
 			})
 				.create(({ data }) => {
-					handle.listFeature()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -58,7 +57,6 @@ export function useFeatures() {
 
 			API('features', values)
 				.delete(({ data }) => {
-					handle.listFeature()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {

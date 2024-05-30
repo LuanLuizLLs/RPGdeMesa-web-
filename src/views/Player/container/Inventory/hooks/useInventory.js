@@ -46,7 +46,6 @@ export function useInventory() {
 				id_character: CHARACTER.id,
 			})
 				.create(({ data }) => {
-					handle.listInventory()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -63,7 +62,6 @@ export function useInventory() {
 				level: values.level + 1,
 			})
 				.update(({ data }) => {
-					handle.listInventory()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -78,7 +76,6 @@ export function useInventory() {
 				...values,
 			})
 				.delete(({ data }) => {
-					handle.listInventory()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {

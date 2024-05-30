@@ -45,7 +45,6 @@ export function useAbilities() {
 				id_character: CHARACTER.id,
 			})
 				.create(({ data }) => {
-					handle.listAbility()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -62,7 +61,6 @@ export function useAbilities() {
 				level: values.level + 1,
 			})
 				.update(({ data }) => {
-					handle.listAbility()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -75,7 +73,6 @@ export function useAbilities() {
 
 			API('abilities', values)
 				.delete(({ data }) => {
-					handle.listAbility()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
