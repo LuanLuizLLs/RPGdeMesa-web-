@@ -96,7 +96,9 @@ export function useCharacters() {
 	}
   
 	useSse('player', () => {
-		handle.listCharacter()
+		if (CAMPAIGN.id) {
+			handle.listCharacter()
+		}
 	}, [CAMPAIGN.id])
 
 	return {

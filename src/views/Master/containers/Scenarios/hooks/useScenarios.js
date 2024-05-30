@@ -114,7 +114,9 @@ export function useScenarios() {
 	}
 
 	useSse('master',() => {
-		handle.listSecenery()
+		if (CAMPAIGN.id) {
+			handle.listSecenery()
+		}
 	}, [CAMPAIGN.id])
 
 	return {

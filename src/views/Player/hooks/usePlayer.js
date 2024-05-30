@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { INITIAL } from '../constants/initial'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
+import useMessage from 'hooks/useMessage'
 
 export function usePlayer() {
+	const setNavigate = useNavigate()
 	const setDispatch = useDispatch()
 
 	const { id_character } = useParams()
-	const { USER, CHARACTER, CAMPAIGN } = useSelector(({ reducer }) => reducer)
+	const { openMessage } = useMessage()
+	const { CHARACTER, USER, CAMPAIGN } = useSelector(({ reducer }) => reducer)
 	
 	const [tab, setTab] = useState(INITIAL.TAB)
 	const [values, setValues] = useState(id_character ? INITIAL.VALUES : CHARACTER)
@@ -22,6 +25,14 @@ export function usePlayer() {
 				campaign: CAMPAIGN.id,
 			})
 				.read(({ data }) => {
+					if (data.blocked) {
+						openMessage(data.status, data.message)
+						setDispatch({
+							type: 'CHARACTER',
+							data: {},
+						})
+						return setNavigate('/')
+					}
 					const [character = INITIAL.VALUES] = data.response
 					setValues(character)
 					setDispatch({
@@ -34,7 +45,7 @@ export function usePlayer() {
 
 	useSse('player', () => {
 		handle.loadCharacter()
-	}, [id_character, USER.id, CAMPAIGN.id, CHARACTER.id])
+	}, [id_character, CHARACTER.id, USER.id, CAMPAIGN.id])
 
 	return {
 		stateTabs: [tab, setTab],

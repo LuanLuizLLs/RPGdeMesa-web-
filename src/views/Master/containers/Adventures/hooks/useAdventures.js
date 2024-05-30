@@ -115,7 +115,9 @@ export function useAdventures() {
 	}
 
 	useSse('master', () => {
-		handle.listAdventure()
+		if (CAMPAIGN.id) {
+			handle.listAdventure()
+		}
 	}, [CAMPAIGN.id])
 
 	return {

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
 import { campaignAttributes } from '../utils'
 import { INITIAL } from '../constants'
 import useLoading from 'hooks/useLoading'
@@ -8,22 +9,33 @@ import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useMaster() {
+	const setNavigate = useNavigate()
 	const setDispatch = useDispatch()
 
-	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
+	const { id_campaign } = useParams()
+	const { CAMPAIGN, USER } = useSelector(({ reducer }) => reducer)
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
 
 	const [tab, setTab] = useState(INITIAL.TAB)
-	const [values, setValues] = useState(CAMPAIGN)
+	const [values, setValues] = useState(id_campaign ? INITIAL.VALUES : CAMPAIGN)
 
 	const handle = {
 		loadCampaign() {
 			API('campaigns', {
-				id: CAMPAIGN.id,
+				id: id_campaign || CAMPAIGN.id,
+				user: USER.id,
 			})
 				.read(({ data }) => {
+					if (data.blocked) {
+						openMessage(data.status, data.message)
+						setDispatch({
+							type: 'CAMPAIGN',
+							data: {},
+						})
+						return setNavigate('/')
+					}
 					const [campaign = {}] = data.response
 					setDispatch({
 						type: 'CAMPAIGN',
@@ -50,7 +62,7 @@ export function useMaster() {
 
 	useSse('master', () => {
 		handle.loadCampaign()
-	}, [CAMPAIGN.id])
+	}, [id_campaign, CAMPAIGN.id, USER.id])
 
 	return {
 		handle,

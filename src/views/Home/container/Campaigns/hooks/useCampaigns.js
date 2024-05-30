@@ -86,7 +86,7 @@ export function useCampaigns() {
 				type: 'CAMPAIGN',
 				data: values,
 			})
-			setNavigate('/master')
+			setNavigate(`/master/${values.id}`)
 		},
 	}
 

@@ -96,7 +96,9 @@ export function useInteractions() {
 	}
 
 	useSse('master', () => {
-		handle.listInteraction()
+		if (CAMPAIGN.id) {
+			handle.listInteraction()
+		}
 	}, [CAMPAIGN.id])
 
 	return {

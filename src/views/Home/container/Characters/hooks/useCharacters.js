@@ -86,7 +86,7 @@ export function useCharacters() {
 				type: 'CHARACTER',
 				data: values,
 			})
-			setNavigate('/player')
+			setNavigate(`/player/${values.id}`)
 		},
 	}
 
