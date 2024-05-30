@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { INITIAL } from '../global/reducer/initial'
+import { INITIAL } from 'global/reducer/initial'
 
 function useRedux() {
 	const dispatch = useDispatch()

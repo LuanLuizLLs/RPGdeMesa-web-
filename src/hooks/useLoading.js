@@ -1,4 +1,4 @@
-import { INITIAL, useGlobalContext } from '../context'
+import { INITIAL, useGlobalContext } from 'context'
 
 function useLoading() {
 	const { stateLoading } = useGlobalContext()

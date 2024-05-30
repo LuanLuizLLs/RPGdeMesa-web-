@@ -1,4 +1,4 @@
-import { INITIAL, useGlobalContext } from '../context'
+import { INITIAL, useGlobalContext } from 'context'
 
 function useMessage(){
 	const { stateMessage } = useGlobalContext(INITIAL.MESSAGE)
