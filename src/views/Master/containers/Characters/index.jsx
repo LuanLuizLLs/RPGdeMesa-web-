@@ -16,7 +16,7 @@ function Characters() {
 			{Object.values(list).map((character, i) => (
 				<Box
 					key={character.id}
-					marginTop={10}
+					margin="5px 0"
 					borderRadius={10}
 					borderStyle="solid"
 					borderColor={theme.primary}
@@ -50,8 +50,8 @@ function Characters() {
 										{character.description}
 									</Text>
 									<Divider borderStyle="solid" margin="0" />
-									<Grid type="row" overflow="auto">
-										<Grid type="column" minWidth={100}>
+									<Grid type="row" overflow="auto" maxWidth={400}>
+										<Grid type="column" minWidth={80}>
 											<Input
 												index={i}
 												name="life"
@@ -64,7 +64,7 @@ function Characters() {
 												onBlur={() => handle.updateCharacter(i)}
 											/>
 										</Grid>
-										<Grid type="column" minWidth={100}>
+										<Grid type="column" minWidth={80}>
 											<Input
 												index={i}
 												name="actions"
@@ -76,7 +76,7 @@ function Characters() {
 												onBlur={() => handle.updateCharacter(i)}
 											/>
 										</Grid>
-										<Grid type="column" minWidth={100}>
+										<Grid type="column" minWidth={80}>
 											<Input
 												index={i}
 												name="coins"

@@ -26,6 +26,7 @@ export const Grid = ({
 				maxWidth,
 			},
 			row: {
+				maxWidth,
 				overflow,
 				alignItems,
 				flexDirection,
