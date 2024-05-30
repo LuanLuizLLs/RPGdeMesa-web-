@@ -3,9 +3,9 @@ import classes from './style.module.css'
 import useMessage from 'hooks/useMessage'
 
 function Message() {
-	const [state] = stateMessage
-
 	const { stateMessage, closeMessage } = useMessage()
+
+	const [state] = stateMessage
 
 	const style = {
 		width: state.open && state.message ? '100%' : '0',
