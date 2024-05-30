@@ -2,16 +2,7 @@ import React from 'react'
 import Logo from 'assets/img/logo.png'
 import { useLogin } from './hooks/useLogin'
 import { comparativePassword } from './utils'
-import {
-	Box,
-	Title,
-	Card,
-	Image,
-	Input,
-	Button,
-	Link,
-	Grid,
-} from '../../components'
+import { Box, Title, Card, Image, Input, Button, Link, Grid } from 'components'
 
 function Login() {
 	const { view, handle, stateValues } = useLogin()

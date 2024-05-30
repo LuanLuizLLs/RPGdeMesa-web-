@@ -1,8 +1,8 @@
 import React from 'react'
-import Page from '../../layouts/Page'
+import Page from 'layouts/Page'
 import Campaigns from './container/Campaigns'
 import Characters from './container/Characters'
-import { Grid } from '../../components'
+import { Grid } from 'components'
 
 function Home() {
 	return (
