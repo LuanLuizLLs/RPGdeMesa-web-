@@ -1,5 +1,5 @@
-import { Box, Button, Input, Text, Title } from 'components'
 import React from 'react'
+import { Box, Button, Input, Text, Title } from 'components'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
