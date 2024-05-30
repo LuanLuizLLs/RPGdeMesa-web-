@@ -12,10 +12,10 @@ export const Grid = ({
 	padding = [0, 0],
 	minWidth = 0,
 	maxWidth = '',
+	overflow = '',
 	alignItems = '',
 	justifyContent = '',
 	flexDirection = 'row',
-	overflow = '',
 }) => {
 
 	const style = {
@@ -59,6 +59,7 @@ Grid.propTypes = {
 	padding: PropTypes.array,
 	minWidth: PropTypes.number,
 	maxWidth: PropTypes.string,
+	overflow: PropTypes.string,
 	alignItems: PropTypes.string,
 	justifyContent: PropTypes.string,
 	flexDirection: PropTypes.string,
