@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useFeatures } from './hooks/useFeatures'
 import { Modals } from './components/Modals'
-import { Box, Button, List, Modal } from '../../../../components'
+import { Box, Button, List, Modal } from 'components'
 
 function Features() {
 	const { list, handle, stateModal, stateValues } = useFeatures()

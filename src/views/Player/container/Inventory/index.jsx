@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useInventory } from './hooks/useInventory'
 import { Modals } from './components/Modals'
-import { Box, Button, List, Modal, Text } from '../../../../components'
+import { Box, Button, List, Modal, Text } from 'components'
 
 function Inventory() {
 	const { list, handle, stateModal, stateValues } = useInventory()
