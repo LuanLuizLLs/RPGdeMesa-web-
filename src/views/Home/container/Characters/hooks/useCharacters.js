@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { INITIAL } from '../constants/initial'
 import { characterAttributes } from '../utils'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
+import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useCharacters() {
@@ -92,7 +93,7 @@ export function useCharacters() {
 		},
 	}
 
-	useEffect(() => {
+	useSse('player', () => {
 		handle.listCharacter()
 	}, [USER.id])
 
