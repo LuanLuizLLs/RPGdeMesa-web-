@@ -14,20 +14,26 @@ export function usePlayer() {
 	const [tab, setTab] = useState(INITIAL.TAB)
 	const [values, setValues] = useState(id_character ? INITIAL.VALUES : CHARACTER)
 
-	useSse('player', () => {
-		API('characters', {
-			id: id_character || CHARACTER.id,
-			user: USER.id,
-			campaign: CAMPAIGN.id,
-		})
-			.read(({ data }) => {
-				const [character = INITIAL.VALUES] = data.response
-				setValues(character)
-				setDispatch({
-					type: 'CHARACTER',
-					data: character,
-				})
+	const handle = {
+		loadCharacter() {
+			API('characters', {
+				id: id_character || CHARACTER.id,
+				user: USER.id,
+				campaign: CAMPAIGN.id,
 			})
+				.read(({ data }) => {
+					const [character = INITIAL.VALUES] = data.response
+					setValues(character)
+					setDispatch({
+						type: 'CHARACTER',
+						data: character,
+					})
+				})
+		}
+	}
+
+	useSse('player', () => {
+		handle.loadCharacter()
 	}, [id_character, USER.id, CAMPAIGN.id, CHARACTER.id])
 
 	return {
