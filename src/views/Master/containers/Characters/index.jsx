@@ -61,7 +61,7 @@ function Characters() {
 												end={`/${character.life_capacity}`}
 												readOnly={!character.id}
 												stateValue={stateList}
-												onEnter={() => handle.updateCharacter(i)}
+												onBlur={() => handle.updateCharacter(i)}
 											/>
 										</Grid>
 										<Grid type="column" minWidth={100}>
@@ -73,7 +73,7 @@ function Characters() {
 												start={ATTRIBUTE.ICONS.ACO}
 												readOnly={!character.id}
 												stateValue={stateList}
-												onEnter={() => handle.updateCharacter(i)}
+												onBlur={() => handle.updateCharacter(i)}
 											/>
 										</Grid>
 										<Grid type="column" minWidth={100}>
@@ -85,7 +85,7 @@ function Characters() {
 												start={ATTRIBUTE.ICONS.MOE}
 												readOnly={!character.id}
 												stateValue={stateList}
-												onEnter={() => handle.updateCharacter(i)}
+												onBlur={() => handle.updateCharacter(i)}
 											/>
 										</Grid>
 									</Grid>

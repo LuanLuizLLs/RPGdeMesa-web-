@@ -39,7 +39,7 @@ function Interactions() {
 								fontSize="medium"
 								end={`/${interaction.shape.life}`}
 								stateValue={stateList}
-								onEnter={() => handle.updateInteraction(interaction)}
+								onBlur={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Grid type="column" minWidth={100}>
@@ -52,7 +52,7 @@ function Interactions() {
 								fontSize="medium"
 								end={`/${interaction.shape.damage}`}
 								stateValue={stateList}
-								onEnter={() => handle.updateInteraction(interaction)}
+								onBlur={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Divider borderStyle="solid" margin="0 10px" />
@@ -66,7 +66,7 @@ function Interactions() {
 								fontSize="medium"
 								end={`/${interaction.shape.strength}`}
 								stateValue={stateList}
-								onEnter={() => handle.updateInteraction(interaction)}
+								onBlur={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Grid type="column" minWidth={100}>
@@ -79,7 +79,7 @@ function Interactions() {
 								fontSize="medium"
 								end={`/${interaction.shape.dexterity}`}
 								stateValue={stateList}
-								onEnter={() => handle.updateInteraction(interaction)}
+								onBlur={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Grid type="column" minWidth={100}>
@@ -92,7 +92,7 @@ function Interactions() {
 								fontSize="medium"
 								end={`/${interaction.shape.constitution}`}
 								stateValue={stateList}
-								onEnter={() => handle.updateInteraction(interaction)}
+								onBlur={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Divider borderStyle="solid" margin="0 10px" />
@@ -106,7 +106,7 @@ function Interactions() {
 								fontSize="medium"
 								end={`/${interaction.shape.intelligence}`}
 								stateValue={stateList}
-								onEnter={() => handle.updateInteraction(interaction)}
+								onBlur={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Grid type="column" minWidth={100}>
@@ -119,7 +119,7 @@ function Interactions() {
 								fontSize="medium"
 								end={`/${interaction.shape.wisdom}`}
 								stateValue={stateList}
-								onEnter={() => handle.updateInteraction(interaction)}
+								onBlur={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 						<Grid type="column" minWidth={100}>
@@ -132,7 +132,7 @@ function Interactions() {
 								fontSize="medium"
 								end={`/${interaction.shape.charisma}`}
 								stateValue={stateList}
-								onEnter={() => handle.updateInteraction(interaction)}
+								onBlur={() => handle.updateInteraction(interaction)}
 							/>
 						</Grid>
 					</Grid>

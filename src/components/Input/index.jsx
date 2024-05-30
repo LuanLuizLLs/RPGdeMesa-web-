@@ -19,6 +19,7 @@ export const Input = ({
 	readOnly = false,
 	placeholder = '',
 	stateValue = [],
+	onBlur = () => {},
 	onEnter = () => {},
 }) => {
 
@@ -54,6 +55,7 @@ export const Input = ({
 					value={(index > -1) ? value[index][name] : value[name]}
 					className={classes.input}
 					placeholder={placeholder}
+					onBlur={onBlur}
 					onKeyDown={({ key }) => (key === 'Enter') && onEnter()}
 					onChange={({ target }) => {
 						if (!isNaN(min) && target.value < min) return
@@ -99,5 +101,6 @@ Input.propTypes = {
 	validate: PropTypes.string,
 	placeholder: PropTypes.string,
 	stateValue: PropTypes.array.isRequired,
+	onBlur: PropTypes.func,
 	onEnter: PropTypes.func,
 }
