@@ -22,6 +22,7 @@ function useMessage(){
 	}
 
 	return {
+		stateMessage,
 		openMessage,
 		closeMessage,
 	}

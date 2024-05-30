@@ -1,14 +1,11 @@
 import React, { useEffect } from 'react'
 import classes from './style.module.css'
-import useMessage from '../../hooks/useMessage'
-import { useGlobalContext } from '../../context'
+import useMessage from 'hooks/useMessage'
 
 function Message() {
-	const { stateMessage } = useGlobalContext()
-
 	const [state] = stateMessage
 
-	const { closeMessage } = useMessage()
+	const { stateMessage, closeMessage } = useMessage()
 
 	const style = {
 		width: state.open && state.message ? '100%' : '0',
