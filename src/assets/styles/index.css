@@ -6,8 +6,16 @@
 }
 
 *::-webkit-scrollbar {
-  height: 0;
-  width: 0;
+  height: 4px;
+  width: 4px;
+}
+
+*::-webkit-scrollbar-corner {
+  display: none;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-background);
 }
 
 #root {
