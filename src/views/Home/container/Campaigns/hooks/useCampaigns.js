@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { campaignAttributes } from '../utils'
 import { INITIAL } from '../constants/initial'
 import useMessage from 'hooks/useMessage'
 import useLoading from 'hooks/useLoading'
+import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useCampaigns() {
@@ -21,11 +22,11 @@ export function useCampaigns() {
 	const { USER } = useSelector(({ reducer }) => reducer)
 
 	const handle = {
-		openModal: (content, data = {}) => {
+		openModal(content, data = {}) {
 			setModal({ content, data })
 			setValues({ ...values, ...data })
 		},
-		resetValues: () => {
+		resetValues() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
 			stopLoading()
@@ -40,7 +41,7 @@ export function useCampaigns() {
 					}))
 				})
 		},
-		createCampaign: () => {
+		createCampaign() {
 			startLoading('bar')
 
 			API('campaigns', {
@@ -49,7 +50,6 @@ export function useCampaigns() {
 				id_user: USER.id,
 			})
 				.create(({ data }) => {
-					handle.listCampaign()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -57,12 +57,11 @@ export function useCampaigns() {
 				})
 				.finally(handle.resetValues)
 		},
-		updateCampaign: () => {
+		updateCampaign() {
 			startLoading('bar')
 
 			API('campaigns', values)
 				.update(({ data }) => {
-					handle.listCampaign()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -70,12 +69,11 @@ export function useCampaigns() {
 				})
 				.finally(handle.resetValues)
 		},
-		deleteCampaign: () => {
+		deleteCampaign() {
 			startLoading('bar')
 
 			API('campaigns', values)
 				.delete(({ data }) => {
-					handle.listCampaign()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -83,7 +81,7 @@ export function useCampaigns() {
 				})
 				.finally(handle.resetValues)
 		},
-		startCampaign: () => {
+		startCampaign() {
 			setDispatch({
 				type: 'CAMPAIGN',
 				data: values,
@@ -92,7 +90,7 @@ export function useCampaigns() {
 		},
 	}
 
-	useEffect(() => {
+	useSse('master', () => {
 		handle.listCampaign()
 	}, [USER.id])
 

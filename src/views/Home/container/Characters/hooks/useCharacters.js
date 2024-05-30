@@ -22,11 +22,11 @@ export function useCharacters() {
 	const { USER } = useSelector(({ reducer }) => reducer)
 
 	const handle = {
-		openModal: (content, data = {}) => {
+		openModal(content, data = {}) {
 			setModal({ content, data })
 			setValues({ ...values, ...data })
 		},
-		resetValues: () => {
+		resetValues() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
 			stopLoading()
@@ -41,7 +41,7 @@ export function useCharacters() {
 					}))
 				})
 		},
-		createCharacter: () => {
+		createCharacter() {
 			startLoading('bar')
 
 			API('characters', {
@@ -50,7 +50,6 @@ export function useCharacters() {
 				id_user: USER.id,
 			})
 				.create(({ data }) => {
-					handle.listCharacter()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -58,12 +57,11 @@ export function useCharacters() {
 				})
 				.finally(handle.resetValues)
 		},
-		updateCharacter: () => {
+		updateCharacter() {
 			startLoading('bar')
 
 			API('characters', values)
 				.update(({ data }) => {
-					handle.listCharacter()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -71,12 +69,11 @@ export function useCharacters() {
 				})
 				.finally(handle.resetValues)
 		},
-		deleteCharacter: () => {
+		deleteCharacter() {
 			startLoading('bar')
 
 			API('characters', values)
 				.delete(({ data }) => {
-					handle.listCharacter()
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
@@ -84,7 +81,7 @@ export function useCharacters() {
 				})
 				.finally(handle.resetValues)
 		},
-		startCharacter: () => {
+		startCharacter() {
 			setDispatch({
 				type: 'CHARACTER',
 				data: values,
