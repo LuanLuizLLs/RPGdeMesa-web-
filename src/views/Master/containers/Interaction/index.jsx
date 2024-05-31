@@ -1,10 +1,10 @@
 import React from 'react'
-import { useInteractions } from './hooks/useInteraction'
+import { useInteraction } from './hooks/useInteraction'
 import { Box, List, Modal, Button } from 'components'
 import { Modals } from './components/Modals'
 
 function Interaction() {
-	const { list, handle, stateModal, stateValues } = useInteractions()
+	const { list, handle, stateModal, stateValues } = useInteraction()
 
 	return (
 		<>
