@@ -7,12 +7,12 @@ import { Grid } from 'components'
 function Home() {
 	return (
 		<Page tab="Home">
-			<Grid type="container" padding={[0, 20]}>
+			<Grid type="container" padding={[0, 0]}>
 				<Grid type="row">
-					<Grid type="column" padding={[20, 20]} minWidth={300}>
+					<Grid type="column" padding={[20, 10]} minWidth={300}>
 						<Campaigns />
 					</Grid>
-					<Grid type="column" padding={[20, 20]} minWidth={300}>
+					<Grid type="column" padding={[20, 10]} minWidth={300}>
 						<Characters />
 					</Grid>
 				</Grid>

@@ -9,7 +9,6 @@ import {
 } from 'components'
 
 function NotFound() {
-
 	const setNavigate = useNavigate()
 
 	return (

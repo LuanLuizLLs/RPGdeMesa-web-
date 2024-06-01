@@ -20,7 +20,7 @@ function Master() {
 	const [tab] = stateTab
 
 	return (
-		<Page tab="Mestre" title="Escudo do Mestre" width="90vw">
+		<Page tab="Mestre" title="Escudo do Mestre">
 			<Title type="h6" color="secondary">
         #{CAMPAIGN.id} - {CAMPAIGN.name}
 			</Title>

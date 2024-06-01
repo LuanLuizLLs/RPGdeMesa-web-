@@ -9,7 +9,7 @@ function Page({
 	children,
 	tab = '',
 	title = '',
-	width = 'initial',
+	width = '90vw',
 }) {
 
 	const { submitLogout } = useLogin()

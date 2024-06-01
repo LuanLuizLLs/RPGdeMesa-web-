@@ -13,7 +13,7 @@ function Player() {
 	const { CHARACTER } = useSelector(({ reducer }) => reducer)
 
 	return (
-		<Page tab="Jogador" title="Ficha do Jogador" width="80vw">
+		<Page tab="Jogador" title="Ficha do Jogador">
 			<Title type="h6" color="secondary">
         #{CHARACTER.id || 'ID'} - {CHARACTER.name || 'Personagem'}
 			</Title>

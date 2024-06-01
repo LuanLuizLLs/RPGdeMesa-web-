@@ -10,7 +10,7 @@ function Login() {
 	const [values] = stateValues
 
 	return (
-		<Box flex="auto" maxWidth="90vw">
+		<Box flex="auto">
 			<Card maxWidth="350px">
 				{({
 					login: (
