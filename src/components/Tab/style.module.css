@@ -5,6 +5,10 @@
   white-space: nowrap;
 }
 
+.tab::-webkit-scrollbar {
+  background-color: var(--color-primary);
+}
+
 .tab span {
   cursor: pointer;
   display: inline-block;
