@@ -23,7 +23,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 				/>
 				<Grid type="container">
 					<Grid type="row" padding={[5, 0]}>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={180}>
 							<Input
 								name="life"
 								label="Vida"
@@ -32,7 +32,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 								stateValue={stateValues}
 							/>
 						</Grid>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={180}>
 							<Input
 								type="number"
 								label="Dano"
@@ -43,52 +43,56 @@ export function Modals({ handle, stateModal, stateValues }) {
 						</Grid>
 					</Grid>
 					<Grid type="row" padding={[5, 0]}>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={140}>
 							<Input
 								type="number"
 								name="strength"
+								end="FOR"
 								start={ATTRIBUTE.ICONS.FOR}
 								stateValue={stateValues}
 							/>
 						</Grid>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={140}>
 							<Input
 								type="number"
 								name="dexterity"
+								end="DES"
 								start={ATTRIBUTE.ICONS.DES}
 								stateValue={stateValues}
 							/>
 						</Grid>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={140}>
 							<Input
 								type="number"
 								name="constitution"
+								end="CON"
 								start={ATTRIBUTE.ICONS.CON}
 								stateValue={stateValues}
 							/>
 						</Grid>
-					</Grid>
-					<Grid type="row">
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={140}>
 							<Input
 								type="number"
 								name="intelligence"
+								end="INT"
 								start={ATTRIBUTE.ICONS.INT}
 								stateValue={stateValues}
 							/>
 						</Grid>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={140}>
 							<Input
 								type="number"
 								name="wisdom"
+								end="SAB"
 								start={ATTRIBUTE.ICONS.SAB}
 								stateValue={stateValues}
 							/>
 						</Grid>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={140}>
 							<Input
 								type="number"
 								name="charisma"
+								end="CAR"
 								start={ATTRIBUTE.ICONS.CAR}
 								stateValue={stateValues}
 							/>
@@ -169,7 +173,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 				/>
 				<Grid type="container">
 					<Grid type="row" padding={[5, 0]}>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={180}>
 							<Input
 								name="life"
 								label="Vida"
@@ -178,7 +182,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 								stateValue={stateValues}
 							/>
 						</Grid>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={180}>
 							<Input
 								type="number"
 								label="Dano"
@@ -189,52 +193,56 @@ export function Modals({ handle, stateModal, stateValues }) {
 						</Grid>
 					</Grid>
 					<Grid type="row" padding={[5, 0]}>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={140}>
 							<Input
 								type="number"
 								name="strength"
+								end="FOR"
 								start={ATTRIBUTE.ICONS.FOR}
 								stateValue={stateValues}
 							/>
 						</Grid>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={140}>
 							<Input
 								type="number"
 								name="dexterity"
+								end="DES"
 								start={ATTRIBUTE.ICONS.DES}
 								stateValue={stateValues}
 							/>
 						</Grid>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={140}>
 							<Input
 								type="number"
 								name="constitution"
+								end="CON"
 								start={ATTRIBUTE.ICONS.CON}
 								stateValue={stateValues}
 							/>
 						</Grid>
-					</Grid>
-					<Grid type="row">
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={140}>
 							<Input
 								type="number"
 								name="intelligence"
+								end="INT"
 								start={ATTRIBUTE.ICONS.INT}
 								stateValue={stateValues}
 							/>
 						</Grid>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={140}>
 							<Input
 								type="number"
 								name="wisdom"
+								end="SAB"
 								start={ATTRIBUTE.ICONS.SAB}
 								stateValue={stateValues}
 							/>
 						</Grid>
-						<Grid type="column" margin={[0, 5]}>
+						<Grid type="column" margin={[0, 5]} minWidth={140}>
 							<Input
 								type="number"
 								name="charisma"
+								end="CAR"
 								start={ATTRIBUTE.ICONS.CAR}
 								stateValue={stateValues}
 							/>
