@@ -15,7 +15,7 @@ export function usePlayer() {
 	const { CHARACTER, USER } = useSelector(({ reducer }) => reducer)
 	
 	const [tab, setTab] = useState(INITIAL.TAB)
-	const [values, setValues] = useState(id_character ? INITIAL.VALUES : CHARACTER)
+	const [values, setValues] = useState(CHARACTER)
 
 	const handle = {
 		loadCharacter() {

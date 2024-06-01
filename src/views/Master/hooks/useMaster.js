@@ -19,7 +19,7 @@ export function useMaster() {
 	const { startLoading, stopLoading } = useLoading()
 
 	const [tab, setTab] = useState(INITIAL.TAB)
-	const [values, setValues] = useState(id_campaign ? INITIAL.VALUES : CAMPAIGN)
+	const [values, setValues] = useState(CAMPAIGN)
 
 	const handle = {
 		loadCampaign() {
@@ -36,14 +36,14 @@ export function useMaster() {
 						})
 						return setNavigate('/')
 					}
-					const [campaign = {}] = data.response
+					const [campaign = INITIAL.VALUES] = data.response
 					setDispatch({
 						type: 'CAMPAIGN',
 						data: campaign,
 					})
 				})
 		},
-		updateCampaign: (update = values) => {
+		updateCampaign(update = values) {
 			startLoading('bar')
 
 			API('campaigns', {
