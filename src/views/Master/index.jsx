@@ -55,9 +55,10 @@ function Master() {
 					</Grid>
 				</Grid>
 			</Card>
+			<Divider borderStyle="solid" />
 			<Grid type="row" alignItems="center">
 				<Grid type="column" padding={[0, 10]} minWidth={250}>
-					<Card margin="20px 0">
+					<Card>
 						<Grid type="row">
 							<Grid type="column" padding={[0, 10]} minWidth={200}>
 								<Select
@@ -89,11 +90,10 @@ function Master() {
 					</Card>
 				</Grid>
 			</Grid>
-			<Divider borderStyle="solid" />
 			<Card margin="20px 0">
 				<Board current={tab} />
 			</Card>
-			<Card>
+			<Card margin="20px 0">
 				<Tab tabs={['Interação', 'Exploração']} stateTab={stateTab}>
 					{[
 						<Interaction key="interaction" />,
