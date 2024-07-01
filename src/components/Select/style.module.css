@@ -16,6 +16,7 @@
   border-radius: 5px;
   color: var(--color-black);
   border: solid var(--color-secondary);
+  background-color: #FFF;
 }
 
 .select[data-selected=false] {
