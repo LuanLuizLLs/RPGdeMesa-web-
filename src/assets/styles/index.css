@@ -15,6 +15,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
+  cursor: pointer;
   border-radius: 4px;
   background-color: var(--color-background);
 }
