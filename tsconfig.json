@@ -2,14 +2,21 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Create React App",
   "_version": "2.0.0",
-
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules"
+      }
+    ],
     "moduleResolution": "bundler",
     "module": "esnext",
     "target": "es2015",
     "baseUrl": "src",
-
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -21,5 +28,7 @@
     "skipLibCheck": true,
     "strict": true
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
