@@ -20,7 +20,7 @@ export const Text = ({
 		textAlign,
 		textTransform,
 		whiteSpace,
-		color: theme[color]
+		color: theme[color] ?? color,
 	}
 
 	return inline ? (
