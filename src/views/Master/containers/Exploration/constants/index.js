@@ -6,15 +6,16 @@ export const INITIAL = {
 	VALUES: {
 		name: '',
 		description: '',
-		resistance: 0,
-		cost: 0,
+		horizontal: 1,
+		vertical: 1,
 	},
 	LIST: {
 		columns: {
 			id: 'ID',
 			name: 'Exploração',
 			description: 'Descrição',
-			level: 'Level',
+			horizontal: 'Horizontal',
+			vertical: 'Vertical',
 		},
 		rows: [],
 	} 

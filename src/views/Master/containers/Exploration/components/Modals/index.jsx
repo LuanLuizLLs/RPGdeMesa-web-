@@ -1,6 +1,5 @@
 import { Box, Button, Grid, Input, Paper, Text, TextArea, Title } from 'components'
-import { ATTRIBUTE } from 'configs'
-import React from 'react'
+import { BOARD } from 'configs'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
@@ -25,19 +24,21 @@ export function Modals({ handle, stateModal, stateValues }) {
 					<Grid type="row" padding={[5, 0]}>
 						<Grid type="column" margin={[0, 5]} minWidth={180}>
 							<Input
+								min={1}
 								type="number"
-								name="resistance"
-								label="Resitência"
-								start={ATTRIBUTE.ICONS.VID}
+								name="horizontal"
+								label="Horizontal"
+								start={BOARD.ICONS.HOR}
 								stateValue={stateValues}
 							/>
 						</Grid>
 						<Grid type="column" margin={[0, 5]} minWidth={180}>
 							<Input
+								min={1}
 								type="number"
-								name="cost"
-								label="Custo"
-								start={ATTRIBUTE.ICONS.MOE}
+								name="vertical"
+								label="Vertical"
+								start={BOARD.ICONS.VER}
 								stateValue={stateValues}
 							/>
 						</Grid>
@@ -60,14 +61,14 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Title>
 				<Paper backgroundColor="secondary">
 					<Text fontWeight="bold" color="primary">
-						{modal.data.name} (Lv {modal.data.level})
+						{modal.data.name}
 					</Text>
 					<Text fontWeight="bold" color="gray">
 						{modal.data.description}
 					</Text>
-					<Text>
-						{ATTRIBUTE.ICONS.VID} {modal.data.resistance} &nbsp;
-						{ATTRIBUTE.ICONS.MOE} {modal.data.cost}
+					<Text fontWeight="bold" color="primary">
+						{BOARD.ICONS.HOR} {modal.data.horizontal} &nbsp;
+						{BOARD.ICONS.VER} {modal.data.vertical}
 					</Text>
 				</Paper>
 				<Box display="flex" justifyContent="flex-end">
@@ -75,7 +76,7 @@ export function Modals({ handle, stateModal, stateValues }) {
             Fechar
 					</Button>
 					<Button type="filled" padding={10} onClick={handle.startExploration}>
-            Interagir
+            Explorar
 					</Button>
 				</Box>
 			</>
@@ -95,28 +96,6 @@ export function Modals({ handle, stateModal, stateValues }) {
 					placeholder="Descrição"
 					stateValue={stateValues}
 				/>
-				<Grid type="container">
-					<Grid type="row" padding={[5, 0]}>
-						<Grid type="column" margin={[0, 5]} minWidth={180}>
-							<Input
-								type="number"
-								name="resistance"
-								label="Resitência"
-								start={ATTRIBUTE.ICONS.VID}
-								stateValue={stateValues}
-							/>
-						</Grid>
-						<Grid type="column" margin={[0, 5]} minWidth={180}>
-							<Input
-								type="number"
-								name="cost"
-								label="Custo"
-								start={ATTRIBUTE.ICONS.MOE}
-								stateValue={stateValues}
-							/>
-						</Grid>
-					</Grid>
-				</Grid>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="filled" color="secondary" padding={10} onClick={handle.resetExploration}>
             Cancelar

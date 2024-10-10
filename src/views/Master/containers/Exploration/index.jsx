@@ -1,4 +1,3 @@
-import React from 'react'
 import { useExploration } from './hooks/useExploration'
 import { Box, List, Modal, Button } from 'components'
 import { Modals } from './components/Modals'

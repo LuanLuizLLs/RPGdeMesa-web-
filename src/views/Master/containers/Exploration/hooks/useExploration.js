@@ -79,10 +79,10 @@ export function useExploration() {
 		startExploration() {
 			startLoading('bar')
 
-			const { id: id_interaction, ...rest } = values
+			const { id: id_exploration, ...rest } = values
 
 			API('explorations-board', {
-				id_interaction,
+				id_exploration,
 				...rest
 			})
 				.create(({ data }) => {

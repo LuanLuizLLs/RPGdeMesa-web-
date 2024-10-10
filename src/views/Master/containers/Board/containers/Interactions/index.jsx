@@ -1,7 +1,6 @@
-import React from 'react'
+import { Box, Divider, Grid, Input, Link, Modal, Paper, Text, Title } from 'components'
 import { useInteractions } from './hooks/useInteractions'
 import { Modals } from './components/Modals'
-import { Box, Divider, Grid, Input, Link, Modal, Paper, Text, Title } from 'components'
 
 function Interactions() {
 	const { handle, stateTab, stateList, stateModal } = useInteractions()
@@ -14,7 +13,7 @@ function Interactions() {
 			<Title type="h6">
         Quadro de interações:
 			</Title>
-			<Box height={240} overflow="auto">
+			<Box height={500} overflow="auto">
 				{!interactions.length && (
 					<Box height="100%" display="grid" placeContent="center">
 						<Text color="primary" fontWeight="bold">Nenhuma interação adicionada...</Text>
