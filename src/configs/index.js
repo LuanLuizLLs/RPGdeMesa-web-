@@ -52,6 +52,42 @@ export const ATTRIBUTE = {
 	],
 }
 
+export const BOARD = {
+	ICONS: {
+		'HOR': '⬌',
+		'VER': '⬍',
+	},
+	PIECES: {
+		'Personagem': [
+			'➊',
+			'➋',
+			'➌',
+			'➍',
+			'➎',
+			'➏',
+			'➐',
+			'➑',
+			'➒',
+			'➓',
+		],
+		'Marcador': [
+			'•',
+			'▪',
+			'▴',
+		],
+		'Passagem': [
+			'☗',
+			'⬍',
+			'⬌',
+		],
+		'Bloqueio': [
+			'✖',
+			'⊗',
+			'⊠',
+		],
+	},
+}
+
 export const RACE = {
 	'Anão': {
 		strength: [2, 3],
