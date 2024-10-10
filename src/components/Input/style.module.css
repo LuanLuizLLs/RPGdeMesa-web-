@@ -68,3 +68,14 @@
 .input::placeholder {
   color: var(--color-gray);
 }
+
+.input[type='color'] {
+  cursor: pointer;
+  padding: 4px 8px;
+  block-size: 30px;
+}
+
+.input[type='color']::-webkit-color-swatch {
+  border: none;
+  border-radius: 10px;
+}

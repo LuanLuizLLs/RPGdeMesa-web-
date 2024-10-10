@@ -1,4 +1,3 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import classes from './style.module.css'
 
@@ -17,7 +16,7 @@ export const Input = ({
 	noLabel = false,
 	disabled = false,
 	readOnly = false,
-	placeholder = '',
+	placeholder = null,
 	stateValue = [],
 	onBlur = () => {},
 	onEnter = () => {},
