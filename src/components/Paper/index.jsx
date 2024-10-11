@@ -1,4 +1,3 @@
-import React from 'react'
 import theme from '../../theme'
 import PropTypes from 'prop-types'
 import classes from './style.module.css'
@@ -19,7 +18,7 @@ export const Paper = ({
 		overflow,
 		textAlign,
 		borderRadius,
-		backgroundColor: theme[backgroundColor],
+		backgroundColor: theme[backgroundColor] || backgroundColor,
 	}
 
 	return (
