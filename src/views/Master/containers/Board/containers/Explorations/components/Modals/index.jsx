@@ -1,12 +1,41 @@
 import { BOARD } from 'configs'
-import { Box, Button, Grid, Input, Select, Text, Title } from 'components'
+import { Box, Button, Grid, Input, Paper, Select, Text, Title } from 'components'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
 	const [values] = stateValues
 
 	return {
-		exploration_board: (
+		read_board: (
+			<>
+				<Title type="h6">
+          Tabuleiro ({modal.data.horizontal} x {modal.data.vertical}):
+				</Title>
+				<Paper backgroundColor="#FFF">
+					<Text fontWeight="bold" color="primary">
+						{modal.data.name}
+					</Text>
+					<Text textAlign="center" fontSize="50px" color={modal.data.color}>
+						{modal.data.symbol}
+					</Text>
+				</Paper>
+				<Box display="grid" gap={10} gridTemplateColumns="1fr 1fr" padding={10} >
+					<Button type="filled" color="secondary" onClick={handle.moveExploration}>
+            Mover
+					</Button>
+					<Button type="filled" color="secondary" onClick={handle.duplicateExploration}>
+            Duplicar
+					</Button>
+					<Button type="filled" color="error" onClick={handle.removeExploration}>
+            Remover
+					</Button>
+					<Button type="filled" color="primary" onClick={() => handle.openExploration('update_board')}>
+            Editar
+					</Button>
+				</Box>
+			</>
+		),
+		update_board: (
 			<>
 				<Title type="h6">
           Tabuleiro ({modal.data.horizontal} x {modal.data.vertical}):
@@ -47,8 +76,8 @@ export function Modals({ handle, stateModal, stateValues }) {
 					</Grid>
 				</Grid>
 				<Box display="flex" justifyContent="flex-end">
-					<Button type="filled" color="error" padding={10} onClick={handle.removeExploration}>
-            Remover
+					<Button type="filled" color="secondary" padding={10} onClick={handle.resetExploration}>
+            Cancelar
 					</Button>
 					<Button type="filled" color="primary" padding={10} onClick={handle.updateExploration}>
             Salvar

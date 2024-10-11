@@ -1,4 +1,8 @@
 export const INITIAL = {
+	ACTION: {
+		type: '',
+		data: {},
+	},
 	MODAL: {
 		content: '',
 		data: {}

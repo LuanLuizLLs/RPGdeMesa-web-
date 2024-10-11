@@ -4,9 +4,11 @@ import { Map } from './components/Map'
 import { Modals } from './components/Modals'
 
 function Explorations() {
-	const { handle, stateList, stateModal, stateValues } = useExplorations()
+	const { handle, stateList, stateModal, stateValues, stateAction } = useExplorations()
 
 	const [list] = stateList
+	const [action] = stateAction
+	const [values] = stateValues
 	
 	return (
 		<>
@@ -14,13 +16,13 @@ function Explorations() {
         Quadro de exploração:
 			</Title>
 			<Box height={500} overflow="auto">
-				{!list.id && (
+				{Boolean(list.id) || (
 					<Box height="100%" display="grid" placeContent="center">
 						<Text color="primary" fontWeight="bold">Nenhuma exploração adicionada...</Text>
 					</Box>
 				)}
-				{!!list.id && (
-					<Map handle={handle} list={list} />
+				{Boolean(list.id) && (
+					<Map list={list} handle={handle} action={action} values={values} />
 				)}
 			</Box>
 			<Modal maxWidth={500} stateModal={stateModal} onClose={handle.resetExploration}>

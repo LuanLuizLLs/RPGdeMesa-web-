@@ -14,6 +14,7 @@ export function useExplorations() {
 
 	const [list, setList] = useState(INITIAL.LIST)
 	const [modal, setModal] = useState(INITIAL.MODAL)
+	const [action, setAction] = useState(INITIAL.ACTION)
 	const [values, setValues] = useState(INITIAL.VALUES)
 
 	const handle = {
@@ -23,6 +24,7 @@ export function useExplorations() {
 		},
 		resetExploration() {
 			setModal(INITIAL.MODAL)
+			setAction(INITIAL.ACTION)
 			setValues(INITIAL.VALUES)
 			stopLoading()
 		},
@@ -45,6 +47,10 @@ export function useExplorations() {
 			const updated = new Array(...board)
 			updated[horizontal][vertical] = rest
 
+			if (action.type === 'move') {
+				updated[action.data.horizontal][action.data.vertical] = null
+			}
+      
 			API('explorations-board', {
 				id,
 				board: updated
@@ -77,7 +83,21 @@ export function useExplorations() {
 					openMessage(response.data.status, response.data.message)
 				})
 				.finally(handle.resetExploration)
-		}
+		},
+		moveExploration() {
+			setModal(INITIAL.MODAL)
+			setAction({
+				type: 'move',
+				data: values
+			})
+		},
+		duplicateExploration() {
+			setModal(INITIAL.MODAL)
+			setAction({
+				type: 'duplicate',
+				data: values
+			})
+		},
 	}
 
 	useSse('master', () => {
@@ -90,6 +110,7 @@ export function useExplorations() {
 		handle,
 		stateList: [list, setList],
 		stateModal: [modal, setModal],
-		stateValues: [values, setValues]
+		stateAction: [action, setAction],
+		stateValues: [values, setValues],
 	}
 }

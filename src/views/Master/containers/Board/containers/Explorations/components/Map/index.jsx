@@ -1,8 +1,24 @@
 import { Box, Text, Title, Tooltip } from 'components'
 import theme from 'theme'
 
-export function Map({ handle, list }) {
+export function Map({ handle, list, action }) {
 	const { board: explorations = [] } = list
+  
+	const isSelected = (position = []) => {
+		const { vertical, horizontal } = action.data
+		return position[0] === vertical && position[1] === horizontal
+	}
+
+	const isBlocked = (column = {}, position = []) => {
+		const isMove = action.type === 'move'
+		const isDuplicate = action.type === 'duplicate'
+    
+		if (isMove || isDuplicate) {
+			return column && !isSelected(position)
+		}
+
+		return false
+	}
 
 	return (
 		<Box width="fit-content" margin="0 auto 40px">
@@ -20,7 +36,11 @@ export function Map({ handle, list }) {
 						<div
 							key={vertical}
 							onClick={() => {
-								handle.openExploration('exploration_board', {
+								if (isBlocked(column, [vertical, horizontal])) {
+									return null
+								}
+                
+								handle.openExploration(column ? 'read_board' : 'update_board', {
 									...column,
 									horizontal,
 									vertical,
@@ -32,11 +52,12 @@ export function Map({ handle, list }) {
 								width={80}
 								height={80}
 								cursor="pointer"
-								position="relative" 
-								borderStyle="solid"
-								borderColor={theme.secondary}
+								position="relative"
 								display="grid"
 								placeContent="center"
+								borderStyle="solid"
+								borderColor={isSelected([vertical, horizontal]) ? theme.primary : theme.secondary}
+								backgroundColor={isBlocked(column, [vertical, horizontal]) ? theme.white : 'white'}
 							>
 								<Box position="absolute" top={0} right={4}>
 									<Text inline color="gray" fontSize="12px" fontWeight="bold">{horizontal}-{vertical}</Text>

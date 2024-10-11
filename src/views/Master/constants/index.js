@@ -1,4 +1,4 @@
 export const INITIAL = {
-	TAB: 1,
+	TAB: 0,
 	VALUES: {},
 }
