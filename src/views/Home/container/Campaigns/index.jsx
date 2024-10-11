@@ -12,7 +12,7 @@ function Campaigns() {
 			<Modal
 				maxWidth={450}
 				stateModal={stateModal}
-				onClose={handle.resetValues}
+				onClose={handle.resetCampaign}
 			>
 				{Modals({ handle, stateModal, stateValues })}
 			</Modal>

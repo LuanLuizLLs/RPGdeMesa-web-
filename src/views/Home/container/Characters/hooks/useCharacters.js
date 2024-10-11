@@ -26,7 +26,7 @@ export function useCharacters() {
 			setModal({ content, data })
 			setValues({ ...values, ...data })
 		},
-		resetValues() {
+		resetCharacter() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
 			stopLoading()
@@ -40,9 +40,10 @@ export function useCharacters() {
 						...state, rows: data.response,
 					}))
 				})
+				.finally(handle.resetCharacter)
 		},
 		createCharacter() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('characters', {
 				...values,
@@ -55,10 +56,9 @@ export function useCharacters() {
 				.catch(({ response }) => {
 					openMessage('error', response.data.message)
 				})
-				.finally(handle.resetValues)
 		},
 		updateCharacter() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('characters', values)
 				.update(({ data }) => {
@@ -67,10 +67,9 @@ export function useCharacters() {
 				.catch(({ response }) => {
 					openMessage('error', response.data.message)
 				})
-				.finally(handle.resetValues)
 		},
 		deleteCharacter() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('characters', values)
 				.delete(({ data }) => {
@@ -79,7 +78,6 @@ export function useCharacters() {
 				.catch(({ response }) => {
 					openMessage('error', response.data.message)
 				})
-				.finally(handle.resetValues)
 		},
 		startCharacter() {
 			setDispatch({

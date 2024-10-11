@@ -12,7 +12,7 @@ function Characters() {
 			<Modal
 				maxWidth={450}
 				stateModal={stateModal}
-				onClose={handle.resetValues}
+				onClose={handle.resetCharacter}
 			>
 				{Modals({ handle, stateModal, stateValues })}
 			</Modal>

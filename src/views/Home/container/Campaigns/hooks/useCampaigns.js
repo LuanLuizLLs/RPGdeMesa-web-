@@ -26,7 +26,7 @@ export function useCampaigns() {
 			setModal({ content, data })
 			setValues({ ...values, ...data })
 		},
-		resetValues() {
+		resetCampaign() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
 			stopLoading()
@@ -40,9 +40,10 @@ export function useCampaigns() {
 						...state, rows: data.response,
 					}))
 				})
+				.finally(handle.resetCampaign)
 		},
 		createCampaign() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('campaigns', {
 				...values,
@@ -55,10 +56,9 @@ export function useCampaigns() {
 				.catch(({ response }) => {
 					openMessage('error', response.data.message)
 				})
-				.finally(handle.resetValues)
 		},
 		updateCampaign() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('campaigns', values)
 				.update(({ data }) => {
@@ -67,10 +67,9 @@ export function useCampaigns() {
 				.catch(({ response }) => {
 					openMessage('error', response.data.message)
 				})
-				.finally(handle.resetValues)
 		},
 		deleteCampaign() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('campaigns', values)
 				.delete(({ data }) => {
@@ -79,7 +78,6 @@ export function useCampaigns() {
 				.catch(({ response }) => {
 					openMessage('error', response.data.message)
 				})
-				.finally(handle.resetValues)
 		},
 		startCampaign() {
 			setDispatch({
