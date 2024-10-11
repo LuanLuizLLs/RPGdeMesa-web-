@@ -1,9 +1,19 @@
-import { Box, Text, Tooltip } from 'components'
+import { Box, Text, Title, Tooltip } from 'components'
 import theme from 'theme'
 
-export function Map({ handle, explorations = [] }) {
+export function Map({ handle, list }) {
+	const { board: explorations = [] } = list
+
 	return (
-		<Box width="fit-content" margin="0 auto" padding={2}>
+		<Box width="fit-content" margin="0 auto 40px">
+			<Box top={0} zIndex={1} position="sticky" backgroundColor={theme.white}>
+				<Title type="h6" textAlign="center" color="primary">
+					{list.name} ({list.vertical} x {list.horizontal})
+				</Title>
+				<Text color="gray" fontWeight="bold" textAlign="center">
+					{list.description}
+				</Text>
+			</Box>
 			{explorations.map((row, horizontal) => (
 				<Box key={horizontal} display="flex">
 					{row.map((column, vertical) => (
@@ -33,7 +43,7 @@ export function Map({ handle, explorations = [] }) {
 								</Box>
 								{column && (
 									<Tooltip text={column.name}>
-										<Text fontSize="50px" color={column.color}>{column.symbol}</Text>
+										<Text inline fontSize="50px" color={column.color}>{column.symbol}</Text>
 									</Tooltip>
 								)}
 							</Box>

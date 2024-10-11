@@ -1,0 +1,24 @@
+.container {
+  cursor: pointer;
+  position: relative;
+  height: fit-content;
+  width: fit-content;
+
+  display: flex;
+  justify-content: center;
+}
+
+.container:hover::before {
+  content: attr(data-tooltip);
+  color: var(--color-primary);
+  border: solid var(--color-primary);
+  background: #FFF;
+  border-radius: 4px;
+  padding: 4px 8px;
+
+  display: block;
+  width: max-content;
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+}

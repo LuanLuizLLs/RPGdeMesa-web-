@@ -7,31 +7,20 @@ function Explorations() {
 	const { handle, stateList, stateModal, stateValues } = useExplorations()
 
 	const [list] = stateList
-	const { board: explorations = [] } = list
-
+	
 	return (
 		<>
 			<Title type="h6">
         Quadro de exploração:
 			</Title>
-			{list.id && (
-				<>
-					<Title type="h6" textAlign="center" color="primary">
-						{list.name} ({list.vertical} x {list.horizontal})
-					</Title>
-					<Text color="gray" fontWeight="bold" textAlign="center">
-						{list.description}
-					</Text>
-				</>
-			)}
 			<Box height={500} overflow="auto">
-				{!explorations.length && (
+				{!list.id && (
 					<Box height="100%" display="grid" placeContent="center">
 						<Text color="primary" fontWeight="bold">Nenhuma exploração adicionada...</Text>
 					</Box>
 				)}
-				{!!explorations.length && (
-					<Map handle={handle} explorations={explorations} />
+				{!!list.id && (
+					<Map handle={handle} list={list} />
 				)}
 			</Box>
 			<Modal maxWidth={500} stateModal={stateModal} onClose={handle.resetExploration}>
