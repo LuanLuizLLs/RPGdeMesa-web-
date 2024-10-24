@@ -1,8 +1,8 @@
-import * as CONFIGS from '../constants'
+import { BREAKPOINT } from '../constants'
 
 export const whichDevice = (device = '') => {
 	let devices = {}
-	Object.entries(CONFIGS.BREAKPOINT).forEach(([key, value]) => {
+	Object.entries(BREAKPOINT).forEach(([key, value]) => {
 		devices = {
 			...devices, [key]: (window.innerWidth <= value)
 		}
