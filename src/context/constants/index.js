@@ -9,7 +9,3 @@ export const MESSAGE = {
 	time: 5000,
 }
 
-export const REFRESH = {
-	key: ''
-}
-
