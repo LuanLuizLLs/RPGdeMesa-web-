@@ -1,12 +1,11 @@
-import React from 'react'
 import {
 	Routes,
 	Route,
 } from 'react-router-dom'
-import Home from 'views/Home'
-import Login from 'views/Login'
-import Master from 'views/Master'
-import Player from 'views/Player'
+import Home from 'pages/Home'
+import Login from 'pages/Login'
+import Master from 'pages/Master'
+import Player from 'pages/Player'
 import NotFound from 'pages/NotFound'
 
 function routes() {
