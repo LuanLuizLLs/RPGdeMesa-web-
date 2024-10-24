@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
 import { useInventory } from './hooks/useInventory'
 import { Modals } from './components/Modals'

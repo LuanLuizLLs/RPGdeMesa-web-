@@ -1,6 +1,5 @@
 import { Box, Button, Grid, Input, Paper, Text, TextArea, Title } from 'components'
 import { ATTRIBUTE } from 'utils/constants'
-import React from 'react'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal

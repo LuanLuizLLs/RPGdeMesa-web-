@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import classes from './style.module.css'
 import useMessage from 'hooks/useMessage'
 

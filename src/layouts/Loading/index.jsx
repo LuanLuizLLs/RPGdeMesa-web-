@@ -1,4 +1,3 @@
-import React from 'react'
 import classes from './style.module.css'
 import { useGlobalContext } from 'context'
 

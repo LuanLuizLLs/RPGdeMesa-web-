@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
 import { optionsUsable } from '../../utils/functions'
 import { ATTRIBUTE, INVENTORY } from 'utils/constants'

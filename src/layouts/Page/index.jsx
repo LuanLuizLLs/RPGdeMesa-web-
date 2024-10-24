@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { useSelector } from 'react-redux'
 import classes from './style.module.css'
 import PropTypes from 'prop-types'

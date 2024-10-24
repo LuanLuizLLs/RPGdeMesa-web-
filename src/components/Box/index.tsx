@@ -1,4 +1,3 @@
-import React from 'react'
 
 interface IBox extends React.CSSProperties {
   children: React.ReactNode
