@@ -1,4 +1,4 @@
-import { BOARD, OPTIONS } from 'utils/configs'
+import { BOARD, OPTIONS } from 'utils/constants'
 import { Box, Button, Grid, Input, Paper, Select, Text, Title } from 'components'
 
 export function Modals({ handle, stateModal, stateValues }) {

@@ -1,4 +1,4 @@
-import * as CONFIGS from '../configs'
+import * as CONFIGS from '../constants'
 
 export const whichDevice = (device = '') => {
 	let devices = {}

@@ -1,4 +1,4 @@
-import { ATTRIBUTE } from 'utils/configs'
+import { ATTRIBUTE } from 'utils/constants'
 import { pointAttribute } from '../../utils/functions'
 import { Box, Button, Paper, Tab, Text, Title } from 'components'
 

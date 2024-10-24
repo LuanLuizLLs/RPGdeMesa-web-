@@ -1,5 +1,5 @@
 import { Box, Button, Input, Paper, Select, Text, TextArea, Title } from 'components'
-import { OPTIONS } from 'utils/configs'
+import { OPTIONS } from 'utils/constants'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal

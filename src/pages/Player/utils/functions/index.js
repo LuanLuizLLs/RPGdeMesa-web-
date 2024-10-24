@@ -1,5 +1,5 @@
 import { addSignal } from 'utils/functions'
-import { ATTRIBUTE } from 'utils/configs'
+import { ATTRIBUTE } from 'utils/constants'
 
 export const modifierPoints = (character = {}, item = {}) => {
 	const {

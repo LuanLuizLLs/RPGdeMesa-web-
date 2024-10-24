@@ -1,7 +1,7 @@
 import theme from 'utils/theme'
 import imagePlayer from 'assets/img/player.png'
 import { Modals } from './components/Modals'
-import { ATTRIBUTE } from 'utils/configs'
+import { ATTRIBUTE } from 'utils/constants'
 import { useCharacters } from './hooks/useCharacters'
 import { Box, Button, Divider, Grid, Image, Input, Link, Modal,  Paper, Text } from 'components'
 

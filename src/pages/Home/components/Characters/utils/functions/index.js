@@ -1,4 +1,4 @@
-import { RACE, CASTE } from 'utils/configs'
+import { RACE, CASTE } from 'utils/constants'
 import { numberRandow } from 'utils/functions'
 
 export const characterAttributes = (race = '', caste = '') => {

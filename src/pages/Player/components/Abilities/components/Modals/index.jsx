@@ -1,4 +1,4 @@
-import { ATTRIBUTE, OPTIONS } from 'utils/configs'
+import { ATTRIBUTE, OPTIONS } from 'utils/constants'
 import { useSelector } from 'react-redux'
 import { Box, Button, Grid, Input, Paper, Select, Text, TextArea, Title } from 'components'
 import { modifierPoints, scrollingPoints } from 'pages/Player/utils/functions'

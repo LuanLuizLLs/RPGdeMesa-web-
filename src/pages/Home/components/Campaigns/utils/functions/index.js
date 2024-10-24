@@ -1,4 +1,4 @@
-import { CONDITIONS } from 'utils/configs'
+import { CONDITIONS } from 'utils/constants'
 import { numberRandow } from 'utils/functions'
 
 export const campaignAttributes = (period = '', climate = '') => {

@@ -4,7 +4,7 @@ import React from 'react'
 import App from './App'
 import reducer from './utils/reducer'
 import { Provider } from 'react-redux'
-import { BREAKPOINT } from './utils/configs'
+import { BREAKPOINT } from './utils/constants'
 import { BrowserRouter } from 'react-router-dom'
 
 const alterDevice = () => {
