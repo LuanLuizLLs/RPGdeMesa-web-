@@ -1,10 +1,10 @@
 import React from 'react'
-import theme from 'theme'
+import theme from 'utils/theme'
 import imagePlayer from 'assets/img/player.png'
 import { useCharacters } from './hooks/useCharacters'
 import { Modals } from './components/Modals'
 import { Box, Button, Divider, Grid, Image, Input, Link, Modal,  Paper, Text } from 'components'
-import { ATTRIBUTE } from 'configs'
+import { ATTRIBUTE } from 'utils/configs'
 
 function Characters() {
 	const { handle, stateList, stateModal, stateValues } = useCharacters()

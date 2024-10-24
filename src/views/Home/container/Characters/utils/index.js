@@ -1,5 +1,5 @@
-import { RACE, CASTE } from 'configs'
-import { numberRandow } from 'utils'
+import { RACE, CASTE } from 'utils/configs'
+import { numberRandow } from 'utils/functions'
 
 export const characterAttributes = (race = '', caste = '') => {
 	const {

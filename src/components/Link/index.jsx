@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classes from './style.module.css'
-import theme from '../../theme'
+import theme from '../../utils/theme'
 
 export const Link = ({
 	children,

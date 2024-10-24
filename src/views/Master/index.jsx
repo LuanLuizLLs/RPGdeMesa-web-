@@ -2,8 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useMaster } from './hooks/useMaster'
 import { colorConditions } from './utils'
-import { CAMPAIGNS } from 'constants'
-import { addSignal } from 'utils'
+import { OPTIONS } from 'utils/configs'
+import { addSignal } from 'utils/functions'
 import { Card, Divider, Grid, Select, Tab, Text, Title } from 'components'
 import Scenarios from './containers/Scenarios'
 import Adventures from './containers/Adventures'
@@ -64,7 +64,7 @@ function Master() {
 								<Select
 									name="period"
 									label="Período"
-									options={CAMPAIGNS.PERIOD}
+									options={OPTIONS.CAMPAIGNS.PERIOD}
 									onSelect={handle.updateCampaign}
 									stateValue={stateValues}
 								/>
@@ -73,7 +73,7 @@ function Master() {
 								<Select
 									name="climate"
 									label="Clima"
-									options={CAMPAIGNS.CLIMATE}
+									options={OPTIONS.CAMPAIGNS.CLIMATE}
 									onSelect={handle.updateCampaign}
 									stateValue={stateValues}
 								/>

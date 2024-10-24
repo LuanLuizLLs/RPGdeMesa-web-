@@ -1,8 +1,15 @@
 
 import storeSynchronize, { defineState } from 'redux-localstore'
-import { INITIAL } from './initial'
 import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
+
+const INITIAL = {
+	USER: {},
+	CAMPAIGN: {},
+	CHARACTER: {},
+	ADVENTURE: {},
+	SCENERY: {},
+}
 
 const initialState = defineState({ ...INITIAL })('reducer')
 

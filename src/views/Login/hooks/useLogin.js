@@ -6,7 +6,7 @@ import useAuth from 'hooks/useLogin'
 import API from 'services/api'
 import { comparativePassword } from '../utils'
 import { INITIAL } from '../constants/initial'
-import { isNull } from 'utils'
+import { isNull } from 'utils/functions'
 
 export function useLogin() {
 	const setNavigate = useNavigate()

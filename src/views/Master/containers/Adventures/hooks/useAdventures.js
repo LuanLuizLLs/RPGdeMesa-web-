@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { optionRandow } from 'utils'
+import { optionRandow } from 'utils/functions'
 import { CAMPAIGNS } from 'constants'
 import { INITIAL } from '../constants'
 import useLoading from 'hooks/useLoading'

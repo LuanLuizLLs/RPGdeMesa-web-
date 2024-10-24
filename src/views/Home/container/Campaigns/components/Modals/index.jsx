@@ -1,6 +1,5 @@
-import React from 'react'
-import { CAMPAIGNS } from 'constants'
 import { Box, Button, Input, Paper, Select, Text, TextArea, Title } from 'components'
+import { OPTIONS } from 'utils/configs'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
@@ -42,13 +41,13 @@ export function Modals({ handle, stateModal, stateValues }) {
 				<Select
 					name="period"
 					placeholder="Período"
-					options={CAMPAIGNS.PERIOD}
+					options={OPTIONS.CAMPAIGNS.PERIOD}
 					stateValue={stateValues}
 				/>
 				<Select
 					name="climate"
 					placeholder="Clima"
-					options={CAMPAIGNS.CLIMATE}
+					options={OPTIONS.CAMPAIGNS.CLIMATE}
 					stateValue={stateValues}
 				/>
 				<TextArea

@@ -1,4 +1,4 @@
-import { addSignal } from 'utils'
+import { addSignal } from 'utils/functions'
 
 export const pointAttribute = (modifier = 0, damage = 0) => {
 	const point = {

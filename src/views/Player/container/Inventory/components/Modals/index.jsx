@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { optionsUsable } from '../../utils'
-import { ATTRIBUTE, INVENTORY } from 'configs'
+import { ATTRIBUTE, INVENTORY } from 'utils/configs'
 import { modifierPoints, scrollingPoints } from 'views/Player/utils'
 import { Box, Button, Grid, Input, Paper, Radio, Select, Text, TextArea, Title } from 'components'
 

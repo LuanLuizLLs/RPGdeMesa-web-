@@ -2,9 +2,9 @@ import './assets/styles/index.css'
 import ReactDOM from 'react-dom/client'
 import React from 'react'
 import App from './App'
-import reducer from './global/reducer'
+import reducer from './utils/reducer'
 import { Provider } from 'react-redux'
-import { BREAKPOINT } from './configs'
+import { BREAKPOINT } from './utils/configs'
 import { BrowserRouter } from 'react-router-dom'
 
 const alterDevice = () => {

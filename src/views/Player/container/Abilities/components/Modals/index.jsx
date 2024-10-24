@@ -1,5 +1,5 @@
 import React from 'react'
-import { ATTRIBUTE } from 'configs'
+import { ATTRIBUTE, OPTIONS } from 'utils/configs'
 import { useSelector } from 'react-redux'
 import { Box, Button, Grid, Input, Paper, Select, Text, TextArea, Title } from 'components'
 import { modifierPoints, scrollingPoints } from 'views/Player/utils'
@@ -31,7 +31,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 						<Select
 							name="attribute"
 							label="Atributo"
-							options={Object.keys(ATTRIBUTE.PRIMARY)}
+							options={OPTIONS.ATTRIBUTE.PRIMARY}
 							stateValue={stateValues}
 						/>
 					</Grid>

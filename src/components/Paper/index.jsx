@@ -1,4 +1,4 @@
-import theme from '../../theme'
+import theme from '../../utils/theme'
 import PropTypes from 'prop-types'
 import classes from './style.module.css'
 

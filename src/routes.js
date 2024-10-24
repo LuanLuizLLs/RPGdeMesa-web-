@@ -7,7 +7,7 @@ import Home from 'views/Home'
 import Login from 'views/Login'
 import Master from 'views/Master'
 import Player from 'views/Player'
-import NotFound from 'views/NotFound'
+import NotFound from 'pages/NotFound'
 
 function routes() {
 	return (

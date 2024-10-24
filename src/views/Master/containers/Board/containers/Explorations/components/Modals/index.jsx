@@ -1,4 +1,4 @@
-import { BOARD } from 'configs'
+import { BOARD, OPTIONS } from 'utils/configs'
 import { Box, Button, Grid, Input, Paper, Select, Text, Title } from 'components'
 
 export function Modals({ handle, stateModal, stateValues }) {
@@ -43,7 +43,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 				<Select
 					name="type"
 					label="Tipo"
-					options={Object.keys(BOARD.PIECES)}
+					options={OPTIONS.BOARD.PIECES}
 					stateValue={stateValues}
 				/>
 				<Input

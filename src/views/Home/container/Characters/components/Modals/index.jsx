@@ -1,6 +1,5 @@
 import { Box, Button, Input, Paper, Select, Text, TextArea, Title } from 'components'
-import { CHARACTERS } from 'constants'
-import React from 'react'
+import { OPTIONS } from 'utils/configs'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
@@ -42,19 +41,19 @@ export function Modals({ handle, stateModal, stateValues }) {
 				<Select
 					name="race"
 					placeholder="Raça"
-					options={CHARACTERS.RACE}
+					options={OPTIONS.CHARACTERS.RACE}
 					stateValue={stateValues}
 				/>
 				<Select
 					name="caste"
 					placeholder="Classe"
-					options={CHARACTERS.CASTE}
+					options={OPTIONS.CHARACTERS.CASTE}
 					stateValue={stateValues}
 				/>
 				<Select
 					name="tendency"
 					placeholder="Tendência"
-					options={CHARACTERS.TENDENCY}
+					options={OPTIONS.CHARACTERS.TENDENCY}
 					stateValue={stateValues}
 				/>
 				<TextArea

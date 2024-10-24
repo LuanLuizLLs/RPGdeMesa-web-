@@ -214,6 +214,14 @@ export const CASTE = {
 	},
 }
 
+export const TENDENCY = {
+	'Bom': [0, 3],
+	'Leal': [0, 2],
+	'Neutro': [0, 1],
+	'Caótico': [0, 2],
+	'Mau': [0, 3],
+}
+
 export const CONDITIONS = {
 	'Dia': {
 		'Frio': [-2, 6],
@@ -237,4 +245,26 @@ export const INVENTORY = {
 		'Não': false,
 		'Sim': true,
 	},
+}
+
+export const OPTIONS = {
+	ATTRIBUTE: {
+		PRIMARY: Object.keys(ATTRIBUTE.PRIMARY),
+		SECONDARY: Object.keys(ATTRIBUTE.SECONDARY)
+	},
+	BOARD: {
+		PIECES: Object.keys(BOARD.PIECES),
+	},
+	CHARACTERS: {
+		RACE: Object.keys(RACE),
+		CASTE: Object.keys(CASTE),
+		TENDENCY: Object.keys(TENDENCY),
+	},
+	CAMPAIGNS: {
+		PERIOD: Object.keys(CONDITIONS),
+		CLIMATE: Object.keys(CONDITIONS.Dia)
+	},
+	INVENTORY: {
+		USABLE: Object.keys(INVENTORY.USABLE)
+	}
 }

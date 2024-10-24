@@ -1,5 +1,5 @@
-import { ATTRIBUTE } from 'configs'
+import { OPTIONS } from 'utils/configs'
 
 export const optionsUsable = (usable = false) => {
-	return usable ? Object.keys(ATTRIBUTE.SECONDARY) : Object.keys(ATTRIBUTE.PRIMARY)
+	return usable ? OPTIONS.ATTRIBUTE.SECONDARY : OPTIONS.ATTRIBUTE.PRIMARY
 }

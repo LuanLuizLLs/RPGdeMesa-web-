@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Input, Paper, Text, TextArea, Title } from 'components'
-import { ATTRIBUTE } from 'configs'
+import { ATTRIBUTE } from 'utils/configs'
 import React from 'react'
 
 export function Modals({ handle, stateModal, stateValues }) {

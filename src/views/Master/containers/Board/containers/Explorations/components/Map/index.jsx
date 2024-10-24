@@ -1,5 +1,5 @@
 import { Box, Text, Title, Tooltip } from 'components'
-import theme from 'theme'
+import theme from 'utils/theme'
 
 export function Map({ handle, list, action }) {
 	const { board: explorations = [] } = list

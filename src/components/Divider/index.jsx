@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import theme from '../../theme'
+import theme from '../../utils/theme'
 
 export const Divider = ({
 	margin = '20px 0',

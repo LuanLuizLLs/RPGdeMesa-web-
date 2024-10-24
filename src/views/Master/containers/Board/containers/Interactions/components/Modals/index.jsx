@@ -1,5 +1,5 @@
 import React from 'react'
-import { ATTRIBUTE } from 'configs'
+import { ATTRIBUTE } from 'utils/configs'
 import { pointAttribute } from '../../utils'
 import { Box, Button, Paper, Tab, Text, Title } from 'components'
 
