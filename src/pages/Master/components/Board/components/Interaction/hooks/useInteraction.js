@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { INITIAL } from '../constants/initial'
+import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
-export function useInteractions() {
+export function useInteraction() {
 	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
 	const { openMessage } = useMessage()

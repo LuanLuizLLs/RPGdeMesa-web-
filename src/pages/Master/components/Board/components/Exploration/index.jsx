@@ -1,10 +1,10 @@
 import { Box, Modal, Text, Title } from 'components'
-import { useExplorations } from './hooks/useExplorations'
-import { Map } from './components/Map'
+import { useExploration } from './hooks/useExploration'
 import { Modals } from './components/Modals'
+import { Map } from './components/Map'
 
-function Explorations() {
-	const { handle, stateList, stateModal, stateValues, stateAction } = useExplorations()
+function Exploration() {
+	const { handle, stateList, stateModal, stateValues, stateAction } = useExploration()
 
 	const [list] = stateList
 	const [action] = stateAction
@@ -32,4 +32,4 @@ function Explorations() {
 	)
 }
 
-export default Explorations
+export default Exploration

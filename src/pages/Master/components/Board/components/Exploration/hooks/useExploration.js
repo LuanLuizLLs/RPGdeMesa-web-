@@ -6,7 +6,7 @@ import useMessage from 'hooks/useMessage'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
-export function useExplorations() {
+export function useExploration() {
 	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
 	const { openMessage } = useMessage()

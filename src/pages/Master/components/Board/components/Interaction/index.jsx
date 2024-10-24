@@ -1,9 +1,9 @@
 import { Box, Divider, Grid, Input, Link, Modal, Paper, Text, Title } from 'components'
-import { useInteractions } from './hooks/useInteractions'
+import { useInteraction } from './hooks/useInteraction'
 import { Modals } from './components/Modals'
 
-function Interactions() {
-	const { handle, stateTab, stateList, stateModal } = useInteractions()
+function Interaction() {
+	const { handle, stateTab, stateList, stateModal } = useInteraction()
 
 	const [list] = stateList
 	const interactions = Object.values(list)
@@ -11,7 +11,7 @@ function Interactions() {
 	return (
 		<>
 			<Title type="h6">
-        Quadro de interações:
+        Quadro de interação:
 			</Title>
 			<Box height={500} overflow="auto">
 				{!interactions.length && (
@@ -152,4 +152,4 @@ function Interactions() {
 	)
 }
 
-export default Interactions
+export default Interaction
