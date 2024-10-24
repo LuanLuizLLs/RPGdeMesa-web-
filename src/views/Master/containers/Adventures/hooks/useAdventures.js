@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { optionRandow } from 'utils/functions'
-import { CAMPAIGNS } from 'constants'
 import { INITIAL } from '../constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
@@ -40,7 +39,7 @@ export function useAdventures() {
 		generateAdventure() {
 			setValues({
 				...values,
-				name: optionRandow(CAMPAIGNS.ADVENTURES),
+				name: optionRandow([1, 2, 3]),
 			})
 		},
 		listAdventure() {

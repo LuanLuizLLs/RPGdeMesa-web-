@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { INITIAL } from '../constants'
-import { CAMPAIGNS } from 'constants'
 import { optionRandow } from 'utils/functions'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
@@ -39,7 +38,7 @@ export function useScenarios() {
 		generateSecenery() {
 			setValues({
 				...values,
-				name: optionRandow(CAMPAIGNS.SCENARIOS),
+				name: optionRandow([1, 2, 3]),
 			})
 		},
 		listSecenery() {
