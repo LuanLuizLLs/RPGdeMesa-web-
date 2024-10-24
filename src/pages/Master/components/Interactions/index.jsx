@@ -1,9 +1,9 @@
 import { Box, List, Modal, Button } from 'components'
-import { useInteraction } from './hooks/useInteraction'
+import { useInteractions } from './hooks/useInteractions'
 import { Modals } from './components/Modals'
 
-function Interaction() {
-	const { list, handle, stateModal, stateValues } = useInteraction()
+function Interactions() {
+	const { list, handle, stateModal, stateValues } = useInteractions()
 
 	return (
 		<>
@@ -28,4 +28,4 @@ function Interaction() {
 	)
 }
 
-export default Interaction
+export default Interactions

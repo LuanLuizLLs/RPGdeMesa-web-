@@ -6,7 +6,7 @@ import useMessage from 'hooks/useMessage'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
-export function useExploration() {
+export function useInteractions() {
 	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
 
 	const { openMessage } = useMessage()
@@ -17,17 +17,17 @@ export function useExploration() {
 	const [values, setValues] = useState(INITIAL.VALUES)
 
 	const handle = {
-		openExploration(content, data = modal.data) {
+		openInteraction(content, data = modal.data) {
 			setModal({ content, data })
 			setValues({ ...values, ...data })
 		},
-		resetExploration() {
+		resetInteraction() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
 			stopLoading()
 		},
-		listExploration() {
-			API('explorations', {
+		listInteraction() {
+			API('interactions', {
 				id_campaign: CAMPAIGN.id,
 			})
 				.read(({ data }) => {
@@ -37,10 +37,10 @@ export function useExploration() {
 					}))
 				})
 		},
-		createExploration() {
+		createInteraction() {
 			startLoading('bar')
 
-			API('explorations', {
+			API('interactions', {
 				...values,
 				id_campaign: CAMPAIGN.id,
 			})
@@ -50,39 +50,39 @@ export function useExploration() {
 				.catch(({ response }) => {
 					openMessage(response.data.status, response.data.message)
 				})
-				.finally(handle.resetExploration)
+				.finally(handle.resetInteraction)
 		},
-		updateExploration() {
+		updateInteraction() {
 			startLoading('bar')
 
-			API('explorations', values)
+			API('interactions', values)
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
 					openMessage(response.data.status, response.data.message)
 				})
-				.finally(handle.resetExploration)
+				.finally(handle.resetInteraction)
 		},
-		deleteExploration() {
+		deleteInteraction() {
 			startLoading('bar')
 
-			API('explorations', values)
+			API('interactions', values)
 				.delete(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.catch(({ response }) => {
 					openMessage(response.data.status, response.data.message)
 				})
-				.finally(handle.resetExploration)
+				.finally(handle.resetInteraction)
 		},
-		startExploration() {
+		startInteraction() {
 			startLoading('bar')
 
-			const { id: id_exploration, ...rest } = values
+			const { id: id_interaction, ...rest } = values
 
-			API('explorations-board', {
-				id_exploration,
+			API('interactions-board', {
+				id_interaction,
 				...rest
 			})
 				.create(({ data }) => {
@@ -91,13 +91,13 @@ export function useExploration() {
 				.catch(({ response }) => {
 					openMessage(response.data.status, response.data.message)
 				})
-				.finally(handle.resetExploration)
+				.finally(handle.resetInteraction)
 		}
 	}
 
 	useSse('master', () => {
 		if (CAMPAIGN.id) {
-			handle.listExploration()
+			handle.listInteraction()
 		}
 	}, [CAMPAIGN.id])
 

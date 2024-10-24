@@ -6,8 +6,8 @@ import { addSignal } from 'utils/functions'
 import { Card, Divider, Grid, Select, Tab, Text, Title } from 'components'
 import Scenarios from '../../pages/Master/components/Scenarios'
 import Adventures from '../../pages/Master/components/Adventures'
-import Exploration from '../../pages/Master/components/Exploration'
-import Interaction from '../../pages/Master/components/Interaction'
+import Explorations from './components/Explorations'
+import Interactions from './components/Interactions'
 import Characters from '../../pages/Master/components/Characters'
 import Board from '../../pages/Master/components/Board'
 import Page from 'layouts/Page'
@@ -95,8 +95,8 @@ function Master() {
 			<Card margin="20px 0">
 				<Tab tabs={['Interação', 'Exploração']} stateTab={stateTab}>
 					{[
-						<Interaction key="interaction" />,
-						<Exploration key="exploration" />,
+						<Interactions key="interactions" />,
+						<Explorations key="explorations" />,
 					]}
 				</Tab>
 			</Card>

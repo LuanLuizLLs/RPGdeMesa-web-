@@ -1,9 +1,9 @@
-import { useExploration } from './hooks/useExploration'
+import { useExplorations } from './hooks/useExplorations'
 import { Box, List, Modal, Button } from 'components'
 import { Modals } from './components/Modals'
 
-function Exploration() {
-	const { list, handle, stateModal, stateValues } = useExploration()
+function Explorations() {
+	const { list, handle, stateModal, stateValues } = useExplorations()
 
 	return (
 		<>
@@ -28,4 +28,4 @@ function Exploration() {
 	)
 }
 
-export default Exploration
+export default Explorations
