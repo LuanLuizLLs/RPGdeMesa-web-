@@ -7,7 +7,7 @@ import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useExploration() {
-	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
+	const { SCENERY } = useSelector(({ reducer }) => reducer)
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -30,7 +30,7 @@ export function useExploration() {
 		},
 		listExploration() {
 			API('explorations-board', {
-				id_campaign: CAMPAIGN.id,
+				id_scenery: SCENERY.id,
 				active: 1,
 			})
 				.read(({ data }) => {
@@ -101,10 +101,10 @@ export function useExploration() {
 	}
 
 	useSse('master', () => {
-		if (CAMPAIGN.id) {
+		if (SCENERY.id) {
 			handle.listExploration()
 		}
-	}, [CAMPAIGN.id])
+	}, [SCENERY.id])
   
 	return {
 		handle,

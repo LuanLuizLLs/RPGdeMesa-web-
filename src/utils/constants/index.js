@@ -247,6 +247,20 @@ export const INVENTORY = {
 	},
 }
 
+export const ADVENTURE = {
+	ICONS: {
+		GOAL: '🎯',
+		REWARD: '🏆',
+	}
+}
+
+export const SCENARY = {
+	ICONS: {
+		REGION: '🌐',
+		CULTURE: '👥',
+	}
+}
+
 export const OPTIONS = {
 	ATTRIBUTE: {
 		PRIMARY: Object.keys(ATTRIBUTE.PRIMARY),
@@ -255,12 +269,12 @@ export const OPTIONS = {
 	BOARD: {
 		PIECES: Object.keys(BOARD.PIECES),
 	},
-	CHARACTERS: {
+	CHARACTER: {
 		RACE: Object.keys(RACE),
 		CASTE: Object.keys(CASTE),
 		TENDENCY: Object.keys(TENDENCY),
 	},
-	CAMPAIGNS: {
+	CAMPAIGN: {
 		PERIOD: Object.keys(CONDITIONS),
 		CLIMATE: Object.keys(CONDITIONS.Dia)
 	},

@@ -41,13 +41,13 @@ export function Modals({ handle, stateModal, stateValues }) {
 				<Select
 					name="period"
 					placeholder="Período"
-					options={OPTIONS.CAMPAIGNS.PERIOD}
+					options={OPTIONS.CAMPAIGN.PERIOD}
 					stateValue={stateValues}
 				/>
 				<Select
 					name="climate"
 					placeholder="Clima"
-					options={OPTIONS.CAMPAIGNS.CLIMATE}
+					options={OPTIONS.CAMPAIGN.CLIMATE}
 					stateValue={stateValues}
 				/>
 				<TextArea

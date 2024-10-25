@@ -42,23 +42,31 @@ export function useAdventures() {
 				name: optionRandow([1, 2, 3]),
 			})
 		},
+		initAdventure() {
+			API('adventures', {
+				id: CAMPAIGN.id_adventure,
+				id_campaign: CAMPAIGN.id,
+			})
+				.read(({ data }) => {
+					const [adventure] = data.response
+					setDispatch({
+						type: 'ADVENTURE',
+						data: adventure || {},
+					})
+				})
+		},
 		listAdventure() {
 			API('adventures', {
 				id_campaign: CAMPAIGN.id,
 			})
 				.read(({ data }) => {
-					const adventureStarted = data.response.find(({ id }) => (id === CAMPAIGN.id_adventure))
 					setList((state) => ({
 						...state, rows: data.response,
 					}))
-					setDispatch({
-						type: 'ADVENTURE',
-						data: adventureStarted || {},
-					})
 				})
 		},
 		createAdventure() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('adventures', {
 				...values,
@@ -73,7 +81,7 @@ export function useAdventures() {
 				.finally(handle.resetValues)
 		},
 		deleteAdventure() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('adventures', values)
 				.delete(({ data }) => {
@@ -85,7 +93,7 @@ export function useAdventures() {
 				.finally(handle.resetValues)
 		},
 		startAdventure() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('campaigns', {
 				...CAMPAIGN,
@@ -100,7 +108,7 @@ export function useAdventures() {
 				.finally(handle.resetValues)
 		},
 		updateAdventure() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('adventures', values)
 				.update(({ data }) => {
@@ -117,7 +125,10 @@ export function useAdventures() {
 		if (CAMPAIGN.id) {
 			handle.listAdventure()
 		}
-	}, [CAMPAIGN.id])
+		if (CAMPAIGN.id_adventure) {
+			handle.initAdventure()
+		}
+	}, [CAMPAIGN.id, CAMPAIGN.id_adventure])
 
 	return {
 		list,

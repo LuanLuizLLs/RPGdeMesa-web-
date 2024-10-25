@@ -7,7 +7,7 @@ import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useInteractions() {
-	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
+	const { ADVENTURE } = useSelector(({ reducer }) => reducer)
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -28,7 +28,7 @@ export function useInteractions() {
 		},
 		listInteraction() {
 			API('interactions', {
-				id_campaign: CAMPAIGN.id,
+				id_adventure: ADVENTURE.id,
 			})
 				.read(({ data }) => {
 					setList((state) => ({
@@ -42,7 +42,7 @@ export function useInteractions() {
 
 			API('interactions', {
 				...values,
-				id_campaign: CAMPAIGN.id,
+				id_adventure: ADVENTURE.id,
 			})
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
@@ -96,10 +96,10 @@ export function useInteractions() {
 	}
 
 	useSse('master', () => {
-		if (CAMPAIGN.id) {
+		if (ADVENTURE.id) {
 			handle.listInteraction()
 		}
-	}, [CAMPAIGN.id])
+	}, [ADVENTURE.id])
 
 	return {
 		list,

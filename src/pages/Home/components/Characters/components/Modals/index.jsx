@@ -41,19 +41,19 @@ export function Modals({ handle, stateModal, stateValues }) {
 				<Select
 					name="race"
 					placeholder="Raça"
-					options={OPTIONS.CHARACTERS.RACE}
+					options={OPTIONS.CHARACTER.RACE}
 					stateValue={stateValues}
 				/>
 				<Select
 					name="caste"
 					placeholder="Classe"
-					options={OPTIONS.CHARACTERS.CASTE}
+					options={OPTIONS.CHARACTER.CASTE}
 					stateValue={stateValues}
 				/>
 				<Select
 					name="tendency"
 					placeholder="Tendência"
-					options={OPTIONS.CHARACTERS.TENDENCY}
+					options={OPTIONS.CHARACTER.TENDENCY}
 					stateValue={stateValues}
 				/>
 				<TextArea

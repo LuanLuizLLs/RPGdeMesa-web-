@@ -6,6 +6,8 @@ export const INITIAL = {
 	VALUES: {
 		name: '',
 		description: '',
+		goal: '',
+		reward: '',
 	},
 	COLLAPSE: {
 		adventure: false,

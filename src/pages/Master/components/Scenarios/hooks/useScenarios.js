@@ -41,23 +41,31 @@ export function useScenarios() {
 				name: optionRandow([1, 2, 3]),
 			})
 		},
+		initSecenery() {
+			API('scenarios', {
+				id: CAMPAIGN.id_scenery,
+				id_campaign: CAMPAIGN.id,
+			})
+				.read(({ data }) => {
+					const [scenery] = data.response
+					setDispatch({
+						type: 'SCENERY',
+						data: scenery || {},
+					})
+				})
+		},
 		listSecenery() {
 			API('scenarios', {
 				id_campaign: CAMPAIGN.id,
 			})
 				.read(({ data }) => {
-					const scenerySelected = data.response.find(({ id }) => (id === CAMPAIGN.id_scenery))
 					setList((state) => ({
 						...state, rows: data.response,
 					}))
-					setDispatch({
-						type: 'SCENERY',
-						data: scenerySelected || {},
-					})
 				})
 		},
 		createScenery() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('scenarios', {
 				...values,
@@ -72,7 +80,7 @@ export function useScenarios() {
 				.finally(handle.resetValues)
 		},
 		deleteScenery() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('scenarios', values)
 				.delete(({ data }) => {
@@ -84,7 +92,7 @@ export function useScenarios() {
 				.finally(handle.resetValues)
 		},
 		startScenery() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('campaigns', {
 				...CAMPAIGN,
@@ -99,7 +107,7 @@ export function useScenarios() {
 				.finally(handle.resetValues)
 		},
 		updateScenery() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('scenarios', values)
 				.update(({ data }) => {
@@ -116,7 +124,10 @@ export function useScenarios() {
 		if (CAMPAIGN.id) {
 			handle.listSecenery()
 		}
-	}, [CAMPAIGN.id])
+		if (CAMPAIGN.id_scenery) {
+			handle.initSecenery()
+		}
+	}, [CAMPAIGN.id, CAMPAIGN.id_scenery])
 
 	return {
 		list,

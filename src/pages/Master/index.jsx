@@ -31,39 +31,15 @@ function Master() {
 					{CAMPAIGN.description}
 				</Text>
 			</Card>
-			<Card margin="20px 0">
-				<Grid type="row">
-					<Grid type="column" padding={[10, 10]} minWidth={250}>
-						<Adventures />
-					</Grid>
-					<Grid type="column" padding={[10, 10]} minWidth={250}>
-						<Scenarios />
-					</Grid>
-				</Grid>
-			</Card>
-			<Divider borderStyle="solid" />
-			<Card>
-				<Grid type="container">
-					<Grid type="row">
-						<Grid type="column" padding={[5, 0]} minWidth={250}>
-							<Title type="h6">
-                Personagens:
-							</Title>
-							<Characters />
-						</Grid>
-					</Grid>
-				</Grid>
-			</Card>
-			<Divider borderStyle="solid" />
 			<Grid type="row" alignItems="center">
 				<Grid type="column" padding={[0, 10]} minWidth={250}>
-					<Card>
+					<Card margin="20px 0">
 						<Grid type="row">
 							<Grid type="column" padding={[0, 10]} minWidth={200}>
 								<Select
 									name="period"
 									label="Período"
-									options={OPTIONS.CAMPAIGNS.PERIOD}
+									options={OPTIONS.CAMPAIGN.PERIOD}
 									onSelect={handle.updateCampaign}
 									stateValue={stateValues}
 								/>
@@ -72,7 +48,7 @@ function Master() {
 								<Select
 									name="climate"
 									label="Clima"
-									options={OPTIONS.CAMPAIGNS.CLIMATE}
+									options={OPTIONS.CAMPAIGN.CLIMATE}
 									onSelect={handle.updateCampaign}
 									stateValue={stateValues}
 								/>
@@ -89,11 +65,34 @@ function Master() {
 					</Card>
 				</Grid>
 			</Grid>
+			<Divider borderStyle="solid" />
+			<Card>
+				<Grid type="row">
+					<Grid type="column" padding={[10, 10]} minWidth={250}>
+						<Adventures />
+					</Grid>
+					<Grid type="column" padding={[10, 10]} minWidth={250}>
+						<Scenarios />
+					</Grid>
+				</Grid>
+			</Card>
+			<Card margin="20px 0">
+				<Grid type="container">
+					<Grid type="row">
+						<Grid type="column" padding={[5, 0]} minWidth={250}>
+							<Title type="h6">
+                Personagens:
+							</Title>
+							<Characters />
+						</Grid>
+					</Grid>
+				</Grid>
+			</Card>
 			<Card margin="20px 0">
 				<Board current={tab} />
 			</Card>
 			<Card margin="20px 0">
-				<Tab tabs={['Interação', 'Exploração']} stateTab={stateTab}>
+				<Tab tabs={['Interações', 'Explorações']} stateTab={stateTab}>
 					{[
 						<Interactions key="interactions" />,
 						<Explorations key="explorations" />,

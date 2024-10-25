@@ -1,4 +1,5 @@
 import { Box, Button, Input, Paper, Text, TextArea, Title } from 'components'
+import { ADVENTURE } from 'utils/constants'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
@@ -20,6 +21,18 @@ export function Modals({ handle, stateModal, stateValues }) {
 					label="Descreva a aventura:"
 					placeholder="Descrição"
 					stateValue={stateValues}
+				/>
+				<Input
+					name="goal"
+					placeholder="Objetivo"
+					stateValue={stateValues}
+					start={ADVENTURE.ICONS.GOAL}
+				/>
+				<Input
+					name="reward"
+					placeholder="Recompensa"
+					stateValue={stateValues}
+					start={ADVENTURE.ICONS.REWARD}
 				/>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="filled" color="secondary" padding={5} onClick={handle.generateAdventure}>
@@ -70,6 +83,18 @@ export function Modals({ handle, stateModal, stateValues }) {
 					label="Descrição da aventura:"
 					placeholder="Descrição"
 					stateValue={stateValues}
+				/>
+				<Input
+					name="goal"
+					placeholder="Objetivo"
+					stateValue={stateValues}
+					start={ADVENTURE.ICONS.GOAL}
+				/>
+				<Input
+					name="reward"
+					placeholder="Recompensa"
+					stateValue={stateValues}
+					start={ADVENTURE.ICONS.REWARD}
 				/>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="filled" color="secondary" padding={5} onClick={handle.resetValues}>

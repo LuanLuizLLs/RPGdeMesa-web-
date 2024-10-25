@@ -6,6 +6,8 @@ export const INITIAL = {
 	VALUES: {
 		name: '',
 		description: '',
+		region: '',
+		culture: '',
 	},
 	COLLAPSE: {
 		scenary: false,

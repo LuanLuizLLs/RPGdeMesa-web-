@@ -46,7 +46,7 @@ function Scenarios() {
 					/>
 				)}
 			</Collapse>
-			<Modal maxWidth={450} stateModal={stateModal} onClose={handle.resetValues}>
+			<Modal maxWidth={600} stateModal={stateModal} onClose={handle.resetValues}>
 				{Modals({ handle, stateModal, stateValues })}
 			</Modal>
 		</>

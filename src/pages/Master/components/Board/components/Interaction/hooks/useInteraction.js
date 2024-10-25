@@ -7,7 +7,7 @@ import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useInteraction() {
-	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
+	const { ADVENTURE } = useSelector(({ reducer }) => reducer)
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -29,7 +29,7 @@ export function useInteraction() {
 		},
 		listInteraction() {
 			API('interactions-board', {
-				id_campaign: CAMPAIGN.id,
+				id_adventure: ADVENTURE.id,
 			})
 				.read(({ data }) => {
 					setList(Object.assign({ ...INITIAL.LIST }, data.response))
@@ -60,10 +60,10 @@ export function useInteraction() {
 	}
 
 	useSse('master', () => {
-		if (CAMPAIGN.id) {
+		if (ADVENTURE.id) {
 			handle.listInteraction()
 		}
-	}, [CAMPAIGN.id])
+	}, [ADVENTURE.id])
 
 	return {
 		handle,
