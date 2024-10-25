@@ -14,16 +14,22 @@ function Adventures() {
 			</Title>
 			<Paper backgroundColor="secondary" margin="10px 0">
 				{ADVENTURE.id ? (
-					<>
-						<Text fontWeight="bold" color="gray">
-							<Text inline fontWeight="bold" color="primary" textTransform="capitalize">{ADVENTURE.name}:</Text> {ADVENTURE.description}
-						</Text>
-					</>
+					<Text color="black" fontWeight="bold" textTransform="capitalize">
+						{ADVENTURE.name}: <Text inline color="gray" fontWeight="bold">{ADVENTURE.description}</Text>
+					</Text>
 				) : (
 					<Text fontWeight="bold" color="gray">
             Nenhuma aventura iniciada...
 					</Text>
 				)}
+				<Paper backgroundColor="white" margin="10px 0">
+					<Text color="gray">
+						<Text inline color="primary">🎯 Objetivo: </Text>{ADVENTURE.goal || 'Nenhum'}
+					</Text>
+					<Text color="gray">
+						<Text inline color="primary">🏆 Recompensa: </Text>{ADVENTURE.reward || 'Nenhuma'}
+					</Text>
+				</Paper>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button fontSize="medium" type="filled" padding={5} onClick={() => handle.openModal('add_adventure')}>
             Criar

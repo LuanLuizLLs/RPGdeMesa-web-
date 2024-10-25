@@ -14,16 +14,22 @@ function Scenarios() {
 			</Title>
 			<Paper backgroundColor="secondary" margin="10px 0">
 				{SCENERY.id ? (
-					<>
-						<Text fontWeight="bold" color="gray">
-							<Text inline fontWeight="bold" color="primary" textTransform="capitalize">{SCENERY.name}</Text>: {SCENERY.description}
-						</Text>
-					</>
+					<Text color="black" fontWeight="bold" textTransform="capitalize">
+						{SCENERY.name}: <Text inline color="gray" fontWeight="bold">{SCENERY.description}</Text>
+					</Text>
 				) : (
 					<Text fontWeight="bold" color="gray">
             Nenhum cenário selecionado...
 					</Text>
 				)}
+				<Paper backgroundColor="white" margin="10px 0">
+					<Text color="gray">
+						<Text inline color="primary">🌐 Região: </Text>{SCENERY.region || 'Nenhuma'}
+					</Text>
+					<Text color="gray">
+						<Text inline color="primary">👥 Cultura: </Text>{SCENERY.culture || 'Nenhuma'}
+					</Text>
+				</Paper>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button fontSize="medium" type="filled" padding={5} onClick={() => handle.openModal('add_scenery')}>
             Criar
