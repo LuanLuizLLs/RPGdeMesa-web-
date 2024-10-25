@@ -1,11 +1,6 @@
 import Logo from 'assets/img/logo.png'
 import { useNavigate } from 'react-router-dom'
-import {
-	Grid,
-	Title,
-	Image,
-	Button,
-} from 'components'
+import { Grid, Title, Image, Button } from 'components'
 
 function NotFound() {
 	const setNavigate = useNavigate()
