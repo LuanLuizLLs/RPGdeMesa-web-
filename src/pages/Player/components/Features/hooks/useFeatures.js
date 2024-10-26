@@ -10,7 +10,7 @@ export function useFeatures() {
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
 
-	const { USER, CHARACTER } = useSelector(({ reducer }) => reducer)
+	const { CHARACTER } = useSelector(({ reducer }) => reducer)
 
 	const [list, setList] = useState(INITIAL.LIST)
 	const [modal, setModal] = useState(INITIAL.MODAL)
@@ -24,7 +24,6 @@ export function useFeatures() {
 		resetFeature() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
-			stopLoading({})
 		},
 		listFeature() {
 			API('features', {
@@ -35,22 +34,21 @@ export function useFeatures() {
 						...state, rows: data.response,
 					}))
 				})
+				.finally(stopLoading)
 		},
 		createFeature() {
 			startLoading('bar')
 
 			API('features', {
 				...values,
-				user: USER.id,
 				id_character: CHARACTER.id,
 			})
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetFeature)
+				.then(handle.resetFeature)
+				.then(handle.listFeature)
+				.catch(stopLoading)
 		},
 		deleteFeature() {
 			startLoading('bar')
@@ -59,18 +57,15 @@ export function useFeatures() {
 				.delete(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetFeature)
+				.then(handle.resetFeature)
+				.then(handle.listFeature)
+				.catch(stopLoading)
 		}
 	}
 
 	useSse('player', () => {
-		if (CHARACTER.id) {
-			handle.listFeature()
-		}
-	}, [CHARACTER.id])
+		handle.listFeature()
+	})
 
 	return {
 		list,

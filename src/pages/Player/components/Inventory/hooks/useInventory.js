@@ -15,7 +15,7 @@ export function useInventory() {
 	const [modal, setModal] = useState(INITIAL.MODAL)
 	const [values, setValues] = useState(INITIAL.VALUES)
 
-	const { USER, CHARACTER } = useSelector(({ reducer }) => reducer)
+	const { CHARACTER } = useSelector(({ reducer }) => reducer)
 
 	const handle = {
 		openModal(content, data = {}) {
@@ -25,7 +25,6 @@ export function useInventory() {
 		resetInventory() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
-			stopLoading()
 		},
 		listInventory() {
 			API('items', {
@@ -36,38 +35,35 @@ export function useInventory() {
 						...state, rows: data.response,
 					}))
 				})
+				.finally(stopLoading)
 		},
 		createInventory() {
 			startLoading('bar')
 
 			API('items', {
 				...values,
-				user: USER.id,
 				id_character: CHARACTER.id,
 			})
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetInventory)
+				.then(handle.resetInventory)
+				.then(handle.listInventory)
+				.catch(stopLoading)
 		},
 		updateInventory() {
 			startLoading('bar')
 
 			API('items', {
 				...values,
-				user: USER.id,
 				level: values.level + 1,
 			})
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetInventory)
+				.then(handle.resetInventory)
+				.then(handle.listInventory)
+				.catch(stopLoading)
 		},
 		deleteInventory() {
 			startLoading('bar')
@@ -78,18 +74,15 @@ export function useInventory() {
 				.delete(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetInventory)
+				.then(handle.resetInventory)
+				.then(handle.listInventory)
+				.catch(stopLoading)
 		},
 	}
 
 	useSse('player', () => {
-		if (CHARACTER.id) {
-			handle.listInventory()
-		}
-	}, [CHARACTER.id])
+		handle.listInventory()
+	})
 
 	useEffect(() => {
 		const [attribute] = optionsUsable(values.usable)

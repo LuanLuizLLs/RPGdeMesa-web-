@@ -44,7 +44,7 @@ export function usePlayer() {
 
 	useSse('player', () => {
 		handle.loadCharacter()
-	}, [id_character, CHARACTER.id, USER.id])
+	})
 
 	return {
 		stateTabs: [tab, setTab],

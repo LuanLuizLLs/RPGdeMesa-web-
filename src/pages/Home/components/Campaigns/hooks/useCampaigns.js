@@ -29,7 +29,6 @@ export function useCampaigns() {
 		resetCampaign() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
-			stopLoading()
 		},
 		listCampaign() {
 			API('campaigns', {
@@ -40,7 +39,7 @@ export function useCampaigns() {
 						...state, rows: data.response,
 					}))
 				})
-				.finally(handle.resetCampaign)
+				.finally(stopLoading)
 		},
 		createCampaign() {
 			startLoading('circular')
@@ -53,9 +52,9 @@ export function useCampaigns() {
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
+				.then(handle.resetCampaign)
+				.then(handle.listCampaign)
+				.catch(stopLoading)
 		},
 		updateCampaign() {
 			startLoading('circular')
@@ -64,9 +63,9 @@ export function useCampaigns() {
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
+				.then(handle.resetCampaign)
+				.then(handle.listCampaign)
+				.catch(stopLoading)
 		},
 		deleteCampaign() {
 			startLoading('circular')
@@ -75,9 +74,9 @@ export function useCampaigns() {
 				.delete(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
+				.then(handle.resetCampaign)
+				.then(handle.listCampaign)
+				.catch(stopLoading)
 		},
 		startCampaign() {
 			setDispatch({
@@ -90,7 +89,7 @@ export function useCampaigns() {
 
 	useSse('master', () => {
 		handle.listCampaign()
-	}, [USER.id])
+	})
 
 	return {
 		list,

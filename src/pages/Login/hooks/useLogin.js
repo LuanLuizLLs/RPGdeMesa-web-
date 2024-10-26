@@ -27,7 +27,7 @@ export function useLogin() {
 			})
 		},
 		resetLogin() {
-			stopLoading()
+			setView(INITIAL.VIEW)
 		},
 		submitLogin() {
 			if (isNull(values, ['new_password'])) {
@@ -39,14 +39,11 @@ export function useLogin() {
 			API('users', values)
 				.read(({ data }) => {
 					const [user = {}] = data.response
+					openMessage(data.status, data.message)
 					submitLogin(user)
 					setNavigate('/')
-					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetLogin)
+				.finally(stopLoading)
 		},
 		submitRegister() {
 			if (isNull(values)) {
@@ -59,13 +56,10 @@ export function useLogin() {
 
 			API('users', values)
 				.create(({ data }) => {
-					setView(INITIAL.VIEW)
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetLogin)
+				.then(handle.resetLogin)
+				.finally(stopLoading)
 		},
 		submitRecover() {
 			if (isNull(values)) {
@@ -78,13 +72,10 @@ export function useLogin() {
 
 			API('users', values)
 				.update(({ data }) => {
-					setView(INITIAL.VIEW)
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetLogin)
+				.then(handle.resetLogin)
+				.finally(stopLoading)
 		},
 	}
 

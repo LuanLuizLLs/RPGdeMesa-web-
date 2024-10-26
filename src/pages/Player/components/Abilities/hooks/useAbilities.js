@@ -10,7 +10,7 @@ export function useAbilities() {
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
 
-	const { USER, CHARACTER } = useSelector(({ reducer }) => reducer)
+	const { CHARACTER } = useSelector(({ reducer }) => reducer)
 
 	const [list, setLists] = useState(INITIAL.LIST)
 	const [modal, setModal] = useState(INITIAL.MODAL)
@@ -24,7 +24,6 @@ export function useAbilities() {
 		resetAbility() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
-			stopLoading()
 		},
 		listAbility() {
 			API('abilities', {
@@ -35,38 +34,35 @@ export function useAbilities() {
 						...state, rows: data.response,
 					}))
 				})
+				.finally(stopLoading)
 		},
 		createAbility() {
 			startLoading('bar')
 
 			API('abilities', {
 				...values,
-				user: USER.id,
 				id_character: CHARACTER.id,
 			})
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetAbility)
+				.then(handle.resetAbility)
+				.then(handle.listAbility)
+				.catch(stopLoading)
 		},
 		updateAbility() {
 			startLoading('bar')
 
 			API('abilities', {
 				...values,
-				user: USER.id,
 				level: values.level + 1,
 			})
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetAbility)
+				.then(handle.resetAbility)
+				.then(handle.listAbility)
+				.catch(stopLoading)
 		},
 		deleteAbility() {
 			startLoading('bar')
@@ -75,18 +71,15 @@ export function useAbilities() {
 				.delete(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetAbility)
+				.then(handle.resetAbility)
+				.then(handle.listAbility)
+				.catch(stopLoading)
 		},
 	}
 
 	useSse('player', () => {
-		if (CHARACTER.id) {
-			handle.listAbility()
-		}
-	}, [CHARACTER.id])
+		handle.listAbility()
+	})
 
 	return {
 		list,

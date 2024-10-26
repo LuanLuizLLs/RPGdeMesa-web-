@@ -29,7 +29,6 @@ export function useCharacters() {
 		resetCharacter() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
-			stopLoading()
 		},
 		listCharacter() {
 			API('characters', {
@@ -40,7 +39,7 @@ export function useCharacters() {
 						...state, rows: data.response,
 					}))
 				})
-				.finally(handle.resetCharacter)
+				.finally(stopLoading)
 		},
 		createCharacter() {
 			startLoading('circular')
@@ -53,9 +52,9 @@ export function useCharacters() {
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
+				.then(handle.resetCharacter)
+				.then(handle.listCharacter)
+				.catch(stopLoading)
 		},
 		updateCharacter() {
 			startLoading('circular')
@@ -64,9 +63,9 @@ export function useCharacters() {
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
+				.then(handle.resetCharacter)
+				.then(handle.listCharacter)
+				.catch(stopLoading)
 		},
 		deleteCharacter() {
 			startLoading('circular')
@@ -75,9 +74,9 @@ export function useCharacters() {
 				.delete(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
+				.then(handle.resetCharacter)
+				.then(handle.listCharacter)
+				.catch(stopLoading)
 		},
 		startCharacter() {
 			setDispatch({

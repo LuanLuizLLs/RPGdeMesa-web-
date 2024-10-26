@@ -6,10 +6,38 @@ const api = axios.create({
 
 const API = (prefix = '', params = {}) => {
 	return {
-		create: (callback) => api.post(`${prefix}/create`, params).then(callback),
-		read: (callback) => api.get(`${prefix}/read`, { params }).then(callback),
-		update: (callback) => api.patch(`${prefix}/update`, params).then(callback),
-		delete: (callback) => api.delete(`${prefix}/delete`, { params }).then(callback),
+		async create(callback) {
+			try {
+				const response = await api.post(prefix.concat('/create'), params)
+				callback(response)
+			} catch ({ response }) {
+				throw callback(response)
+			}
+		},
+		async read(callback) {
+			try {
+				const response = await api.get(prefix.concat('/read'), { params })
+				callback(response)
+			} catch ({ response }) {
+				throw callback(response)
+			}
+		},
+		async update(callback) {
+			try {
+				const response = await api.patch(prefix.concat('/update'), params)
+				callback(response)
+			} catch ({ response }) {
+				throw callback(response)
+			}
+		},
+		async delete(callback) {
+			try {
+				const response = await api.delete(prefix.concat('/delete'), { params })
+				callback(response)
+			} catch ({ response }) {
+				throw callback(response)
+			}
+		},
 	}
 }
 
