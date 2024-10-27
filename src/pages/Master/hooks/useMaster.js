@@ -6,14 +6,11 @@ import { campaignStore } from '../utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
-import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useMaster() {
 	const setNavigate = useNavigate()
-
-	const CAMPAIGN = useStore(campaignStore)
 
 	const { id_campaign } = useParams()
 	const { USER } = useSelector(({ reducer }) => reducer)
@@ -22,7 +19,7 @@ export function useMaster() {
 	const { startLoading, stopLoading } = useLoading()
 
 	const [tab, setTab] = useState(INITIAL.TAB)
-	const [values, setValues] = useState(CAMPAIGN)
+	const [values, setValues] = useState(INITIAL.VALUES)
 
 	const handle = {
 		loadCampaign() {
@@ -38,6 +35,7 @@ export function useMaster() {
 					}
 					const [campaign = INITIAL.VALUES] = data.response
 					campaignStore.set(campaign)
+					setValues(campaign)
 				})
 				.finally(stopLoading)
 		},

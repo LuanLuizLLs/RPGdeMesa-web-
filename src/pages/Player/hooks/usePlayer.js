@@ -4,14 +4,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { characterStore } from '../utils/store'
 import { INITIAL } from '../utils/constants'
 import useMessage from 'hooks/useMessage'
-import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function usePlayer() {
 	const setNavigate = useNavigate()
-
-	const CHARACTER = useStore(characterStore)
 
 	const { id_character } = useParams()
 	const { USER } = useSelector(({ reducer }) => reducer)
@@ -19,7 +16,7 @@ export function usePlayer() {
 	const { openMessage } = useMessage()
 	
 	const [tab, setTab] = useState(INITIAL.TAB)
-	const [values, setValues] = useState(CHARACTER)
+	const [values, setValues] = useState(INITIAL.VALUES)
 
 	const handle = {
 		loadCharacter() {
@@ -34,8 +31,8 @@ export function usePlayer() {
 						return setNavigate('/')
 					}
 					const [character = INITIAL.VALUES] = data.response
-					setValues(character)
 					characterStore.set(character)
+					setValues(character)
 				})
 		}
 	}
