@@ -76,6 +76,9 @@ export function useExploration() {
 				id,
 				board: updated
 			})
+				.update(({ data }) => {
+					openMessage(data.status, data.message)
+				})
 				.then(handle.resetExploration)
 				.then(handle.listExploration)
 				.catch(stopLoading)
