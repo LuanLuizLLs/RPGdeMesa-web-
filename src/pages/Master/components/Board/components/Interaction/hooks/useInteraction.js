@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { adventureStore } from 'pages/Master/utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
+import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useInteraction() {
-	const { ADVENTURE } = useSelector(({ reducer }) => reducer)
+	const ADVENTURE = useStore(adventureStore)
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -25,7 +26,6 @@ export function useInteraction() {
 		resetInteraction() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
-			stopLoading()
 		},
 		listInteraction() {
 			API('interactions-board', {
@@ -34,36 +34,35 @@ export function useInteraction() {
 				.read(({ data }) => {
 					setList(Object.assign({ ...INITIAL.LIST }, data.response))
 				})
+				.finally(stopLoading)
 		},
 		updateInteraction(update) {
+			startLoading('bar')
+
 			API('interactions-board', update)
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage(response.data.status, response.data.message)
-				})
-				.finally(handle.resetInteraction)
+				.then(handle.resetInteraction)
+				.then(handle.listInteraction)
+				.catch(stopLoading)
 		},
 		removeInteraction() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('interactions-board', values)
 				.delete(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage(response.data.status, response.data.message)
-				})
-				.finally(handle.resetInteraction)
+				.then(handle.resetInteraction)
+				.then(handle.listInteraction)
+				.catch(stopLoading)
 		}
 	}
 
 	useSse('master', () => {
-		if (ADVENTURE.id) {
-			handle.listInteraction()
-		}
-	}, [ADVENTURE.id])
+		handle.listInteraction()
+	}, [ADVENTURE.id], Boolean(ADVENTURE.id))
 
 	return {
 		handle,

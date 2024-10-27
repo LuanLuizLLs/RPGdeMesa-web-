@@ -22,7 +22,7 @@ function Characters() {
 					position="relative"
 				>
 					<Box position="absolute" top={15} right={20}>
-						<Link textDecoration="none" onClick={() => Boolean(character.id) && handle.openModal('remove_character', list[i])}>
+						<Link textDecoration="none" onClick={() => Boolean(character.id) && handle.openAdventure('remove_character', list[i])}>
               &#10006;
 						</Link>
 					</Box>
@@ -111,7 +111,7 @@ function Characters() {
 				{Modals({ handle, stateModal, stateValues })}
 			</Modal>
 			<Box display="flex" justifyContent="flex-end">
-				<Button type="filled" padding={10} onClick={() => handle.openModal('add_character')}>
+				<Button type="filled" padding={10} onClick={() => handle.openAdventure('add_character')}>
           Adicionar
 				</Button>
 			</Box>

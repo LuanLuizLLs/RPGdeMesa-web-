@@ -1,19 +1,22 @@
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { campaignAttributes } from '../utils/functions'
+import { campaignStore } from '../utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
+import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useMaster() {
 	const setNavigate = useNavigate()
-	const setDispatch = useDispatch()
+
+	const CAMPAIGN = useStore(campaignStore)
 
 	const { id_campaign } = useParams()
-	const { CAMPAIGN, USER } = useSelector(({ reducer }) => reducer)
+	const { USER } = useSelector(({ reducer }) => reducer)
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -24,23 +27,17 @@ export function useMaster() {
 	const handle = {
 		loadCampaign() {
 			API('campaigns', {
-				id: id_campaign || CAMPAIGN.id,
+				id: id_campaign,
 				user: USER.id,
 			})
 				.read(({ data }) => {
 					if (data.blocked) {
 						openMessage(data.status, data.message)
-						setDispatch({
-							type: 'CAMPAIGN',
-							data: {},
-						})
+						campaignStore.reset()
 						return setNavigate('/')
 					}
 					const [campaign = INITIAL.VALUES] = data.response
-					setDispatch({
-						type: 'CAMPAIGN',
-						data: campaign,
-					})
+					campaignStore.set(campaign)
 				})
 		},
 		updateCampaign(update = values) {
@@ -53,16 +50,13 @@ export function useMaster() {
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
 				.finally(stopLoading)
 		},
 	}
 
 	useSse('master', () => {
 		handle.loadCampaign()
-	}, [id_campaign, CAMPAIGN.id, USER.id])
+	}, [USER.id], Boolean(USER.id))
 
 	return {
 		handle,

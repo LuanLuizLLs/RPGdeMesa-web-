@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { campaignStore } from 'pages/Master/utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
+import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
@@ -14,10 +15,10 @@ export function useCharacters() {
 	const [modal, setModal] = useState(INITIAL.MODAL)
 	const [values, setValues] = useState(INITIAL.VALUES)
 
-	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
+	const CAMPAIGN = useStore(campaignStore)
 
 	const handle = {
-		openModal(content, data = {}) {
+		openAdventure(content, data = {}) {
 			setModal({ content, data })
 			setValues({ ...values, ...data })
 		},
@@ -27,7 +28,6 @@ export function useCharacters() {
 		resetCharacter() {
 			setValues(INITIAL.VALUES)
 			setModal(INITIAL.MODAL)
-			stopLoading()
 		},
 		listCharacter() {
 			API('characters', {
@@ -36,6 +36,7 @@ export function useCharacters() {
 				.read(({ data }) => {
 					setList(Object.assign({ ...INITIAL.LIST }, data.response))
 				})
+				.finally(stopLoading)
 		},
 		searchCharacter() {
 			startLoading('bar')
@@ -52,7 +53,7 @@ export function useCharacters() {
 				.finally(stopLoading)
 		},
 		addCharacter() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('characters', {
 				...values,
@@ -61,13 +62,12 @@ export function useCharacters() {
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetCharacter)
+				.then(handle.resetCharacter)
+				.then(handle.listCharacter)
+				.catch(stopLoading)
 		},
 		removeCharacter() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('characters', {
 				...values,
@@ -76,10 +76,9 @@ export function useCharacters() {
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetCharacter)
+				.then(handle.resetCharacter)
+				.then(handle.listCharacter)
+				.catch(stopLoading)
 		},
 		updateCharacter(index) {
 			startLoading('bar')
@@ -88,18 +87,14 @@ export function useCharacters() {
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetCharacter)
+				.then(handle.listCharacter)
+				.catch(stopLoading)
 		},
 	}
   
 	useSse('player', () => {
-		if (CAMPAIGN.id) {
-			handle.listCharacter()
-		}
-	}, [CAMPAIGN.id])
+		handle.listCharacter()
+	}, [CAMPAIGN.id], Boolean(CAMPAIGN.id))
 
 	return {
 		list,

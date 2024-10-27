@@ -1,11 +1,13 @@
-import { useSelector } from 'react-redux'
-import { useScenarios } from './hooks/useScenarios'
 import { Box, Button, Collapse, List, Modal, Paper, Text, Title } from 'components'
+import { sceneryStore } from 'pages/Master/utils/store'
+import { useScenarios } from './hooks/useScenarios'
 import { Modals } from './components/Modals'
+import useStore from 'hooks/useStore'
 
 function Scenarios() {
 	const { list, handle, stateModal, stateValues, stateCollapse } = useScenarios()
-	const { SCENERY } = useSelector(({ reducer }) => reducer)
+	
+	const SCENERY = useStore(sceneryStore)
 
 	return (
 		<>
@@ -31,12 +33,12 @@ function Scenarios() {
 					</Text>
 				</Paper>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
-					<Button fontSize="medium" type="filled" padding={5} onClick={() => handle.openModal('add_scenery')}>
+					<Button fontSize="medium" type="filled" padding={5} onClick={() => handle.openSecenery('add_scenery')}>
             Criar
 					</Button>
 				</Box>
 			</Paper>
-			<Button fontSize="larger" type="filled" onClick={() => handle.openCollapse('scenery')}>
+			<Button fontSize="larger" type="filled" onClick={() => handle.collapseSecenery('scenery')}>
         Cenários
 			</Button>
 			<Collapse name="scenery" stateCollapse={stateCollapse}>
@@ -45,14 +47,14 @@ function Scenarios() {
 						{...list}
 						height={150}
 						noColumns={true}
-						onClick={(row) => handle.openModal('detail_scenery', row)}
+						onClick={(row) => handle.openSecenery('detail_scenery', row)}
 						actions={{
-							update: (row) => handle.openModal('edit_scenery', row),
+							update: (row) => handle.openSecenery('edit_scenery', row),
 						}}
 					/>
 				)}
 			</Collapse>
-			<Modal maxWidth={600} stateModal={stateModal} onClose={handle.resetValues}>
+			<Modal maxWidth={600} stateModal={stateModal} onClose={handle.resetSecenery}>
 				{Modals({ handle, stateModal, stateValues })}
 			</Modal>
 		</>

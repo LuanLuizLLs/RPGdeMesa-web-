@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { sceneryStore } from 'pages/Master/utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
+import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useExploration() {
-	const { SCENERY } = useSelector(({ reducer }) => reducer)
+	const SCENERY = useStore(sceneryStore)
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -26,7 +27,6 @@ export function useExploration() {
 			setModal(INITIAL.MODAL)
 			setAction(INITIAL.ACTION)
 			setValues(INITIAL.VALUES)
-			stopLoading()
 		},
 		listExploration() {
 			API('explorations-board', {
@@ -37,9 +37,10 @@ export function useExploration() {
 					const [exploration = {}] = data.response
 					setList(exploration)
 				})
+				.finally(stopLoading)
 		},
 		updateExploration() {
-			startLoading('bar')
+			startLoading('circular')
 
 			const { id, board } = list
 			const { vertical, horizontal, ...rest } = values
@@ -58,13 +59,12 @@ export function useExploration() {
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage(response.data.status, response.data.message)
-				})
-				.finally(handle.resetExploration)
+				.then(handle.resetExploration)
+				.then(handle.listExploration)
+				.catch(stopLoading)
 		},
 		removeExploration() {
-			startLoading('bar')
+			startLoading('circular')
 
 			const { id, board } = list
 			const { vertical, horizontal } = values
@@ -76,13 +76,9 @@ export function useExploration() {
 				id,
 				board: updated
 			})
-				.update(({ data }) => {
-					openMessage(data.status, data.message)
-				})
-				.catch(({ response }) => {
-					openMessage(response.data.status, response.data.message)
-				})
-				.finally(handle.resetExploration)
+				.then(handle.resetExploration)
+				.then(handle.listExploration)
+				.catch(stopLoading)
 		},
 		moveExploration() {
 			setModal(INITIAL.MODAL)
@@ -101,10 +97,8 @@ export function useExploration() {
 	}
 
 	useSse('master', () => {
-		if (SCENERY.id) {
-			handle.listExploration()
-		}
-	}, [SCENERY.id])
+		handle.listExploration()
+	}, [SCENERY.id], Boolean(SCENERY.id))
   
 	return {
 		handle,

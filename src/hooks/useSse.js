@@ -3,13 +3,13 @@ import { SSE } from 'services/sse'
 
 const sse = new SSE()
 
-function useSse(key, callback, deps = []) {
+function useSse(key, callback, deps = [], enable = true) {
 	const [event, setEvent] = useState(null)
 
 	sse.defineEvent(key, setEvent)
 
 	useEffect(() => {
-		callback(event)
+		if (enable) callback(event)
 	}, [event, ...deps])
 }
 

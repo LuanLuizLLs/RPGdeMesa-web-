@@ -97,7 +97,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 					start={SCENARY.ICONS.CULTURE}
 				/>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
-					<Button type="filled" color="secondary" padding={5} onClick={handle.resetValues}>
+					<Button type="filled" color="secondary" padding={5} onClick={handle.resetSecenery}>
             Cancelar
 					</Button>
 					<Button type="filled" padding={5} onClick={handle.updateScenery}>

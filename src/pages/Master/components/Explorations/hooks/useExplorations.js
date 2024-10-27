@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { sceneryStore } from 'pages/Master/utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
+import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useExplorations() {
-	const { SCENERY } = useSelector(({ reducer }) => reducer)
+	const SCENERY = useStore(sceneryStore)
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -24,7 +25,6 @@ export function useExplorations() {
 		resetExploration() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
-			stopLoading()
 		},
 		listExploration() {
 			API('explorations', {
@@ -36,9 +36,10 @@ export function useExplorations() {
 						rows: data.response,
 					}))
 				})
+				.finally(stopLoading)
 		},
 		createExploration() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('explorations', {
 				...values,
@@ -47,37 +48,34 @@ export function useExplorations() {
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage(response.data.status, response.data.message)
-				})
-				.finally(handle.resetExploration)
+				.then(handle.resetExploration)
+				.then(handle.listExploration)
+				.catch(stopLoading)
 		},
 		updateExploration() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('explorations', values)
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage(response.data.status, response.data.message)
-				})
-				.finally(handle.resetExploration)
+				.then(handle.resetExploration)
+				.then(handle.listExploration)
+				.catch(stopLoading)
 		},
 		deleteExploration() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('explorations', values)
 				.delete(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage(response.data.status, response.data.message)
-				})
-				.finally(handle.resetExploration)
+				.then(handle.resetExploration)
+				.then(handle.listExploration)
+				.catch(stopLoading)
 		},
 		startExploration() {
-			startLoading('bar')
+			startLoading('circular')
 
 			const { id: id_exploration, ...rest } = values
 
@@ -88,18 +86,14 @@ export function useExplorations() {
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage(response.data.status, response.data.message)
-				})
-				.finally(handle.resetExploration)
+				.then(handle.resetExploration)
+				.catch(stopLoading)
 		}
 	}
 
 	useSse('master', () => {
-		if (SCENERY.id) {
-			handle.listExploration()
-		}
-	}, [SCENERY.id])
+		handle.listExploration()
+	}, [SCENERY.id], Boolean(SCENERY.id))
 
 	return {
 		list,

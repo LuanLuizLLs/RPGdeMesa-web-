@@ -97,7 +97,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 					start={ADVENTURE.ICONS.REWARD}
 				/>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
-					<Button type="filled" color="secondary" padding={5} onClick={handle.resetValues}>
+					<Button type="filled" color="secondary" padding={5} onClick={handle.resetAdventure}>
             Cancelar
 					</Button>
 					<Button type="filled" padding={5} onClick={handle.updateAdventure}>

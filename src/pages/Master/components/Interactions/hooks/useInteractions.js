@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { adventureStore } from 'pages/Master/utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
+import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useInteractions() {
-	const { ADVENTURE } = useSelector(({ reducer }) => reducer)
+	const ADVENTURE = useStore(adventureStore)
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -24,7 +25,6 @@ export function useInteractions() {
 		resetInteraction() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
-			stopLoading()
 		},
 		listInteraction() {
 			API('interactions', {
@@ -36,9 +36,10 @@ export function useInteractions() {
 						rows: data.response,
 					}))
 				})
+				.finally(stopLoading)
 		},
 		createInteraction() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('interactions', {
 				...values,
@@ -47,37 +48,34 @@ export function useInteractions() {
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage(response.data.status, response.data.message)
-				})
-				.finally(handle.resetInteraction)
+				.then(handle.resetInteraction)
+				.then(handle.listInteraction)
+				.catch(stopLoading)
 		},
 		updateInteraction() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('interactions', values)
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage(response.data.status, response.data.message)
-				})
-				.finally(handle.resetInteraction)
+				.then(handle.resetInteraction)
+				.then(handle.listInteraction)
+				.catch(stopLoading)
 		},
 		deleteInteraction() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('interactions', values)
 				.delete(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage(response.data.status, response.data.message)
-				})
-				.finally(handle.resetInteraction)
+				.then(handle.resetInteraction)
+				.then(handle.listInteraction)
+				.catch(stopLoading)
 		},
 		startInteraction() {
-			startLoading('bar')
+			startLoading('circular')
 
 			const { id: id_interaction, ...rest } = values
 
@@ -88,18 +86,14 @@ export function useInteractions() {
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage(response.data.status, response.data.message)
-				})
-				.finally(handle.resetInteraction)
+				.then(handle.resetInteraction)
+				.catch(stopLoading)
 		}
 	}
 
 	useSse('master', () => {
-		if (ADVENTURE.id) {
-			handle.listInteraction()
-		}
-	}, [ADVENTURE.id])
+		handle.listInteraction()
+	}, [ADVENTURE.id], Boolean(ADVENTURE.id))
 
 	return {
 		list,

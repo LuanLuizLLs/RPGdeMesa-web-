@@ -1,19 +1,18 @@
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { campaignStore, adventureStore } from 'pages/Master/utils/store'
 import { optionRandow } from 'utils/functions'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
+import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useAdventures() {
-	const setDispatch = useDispatch()
-
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
 
-	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
+	const CAMPAIGN = useStore(campaignStore)
 
 	const [list, setList] = useState(INITIAL.LIST)
 	const [modal, setModal] = useState(INITIAL.MODAL)
@@ -21,20 +20,18 @@ export function useAdventures() {
 	const [collapse, setCollapse] = useState(INITIAL.COLLAPSE)
 
 	const handle = {
-		openModal(content, data = {}) {
+		openAdventure(content, data = {}) {
 			setModal({ content, data })
 			setValues({ ...values, ...data })
 		},
-		openCollapse(name) {
+		collapseAdventure(name) {
 			setCollapse({
-				...collapse,
 				[name]: !collapse[name],
 			})
 		},
-		resetValues() {
+		resetAdventure() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
-			stopLoading()
 		},
 		generateAdventure() {
 			setValues({
@@ -49,11 +46,9 @@ export function useAdventures() {
 			})
 				.read(({ data }) => {
 					const [adventure] = data.response
-					setDispatch({
-						type: 'ADVENTURE',
-						data: adventure || {},
-					})
+					adventureStore.set(adventure)
 				})
+				.finally(stopLoading)
 		},
 		listAdventure() {
 			API('adventures', {
@@ -64,6 +59,7 @@ export function useAdventures() {
 						...state, rows: data.response,
 					}))
 				})
+				.finally(stopLoading)
 		},
 		createAdventure() {
 			startLoading('circular')
@@ -75,10 +71,9 @@ export function useAdventures() {
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
+				.then(handle.resetAdventure)
+				.then(handle.listAdventure)
+				.catch(stopLoading)
 		},
 		deleteAdventure() {
 			startLoading('circular')
@@ -87,10 +82,9 @@ export function useAdventures() {
 				.delete(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
+				.then(handle.resetAdventure)
+				.then(handle.listAdventure)
+				.catch(stopLoading)
 		},
 		startAdventure() {
 			startLoading('circular')
@@ -102,10 +96,8 @@ export function useAdventures() {
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
+				.then(handle.resetAdventure)
+				.catch(stopLoading)
 		},
 		updateAdventure() {
 			startLoading('circular')
@@ -114,21 +106,16 @@ export function useAdventures() {
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
+				.then(handle.resetAdventure)
+				.then(handle.listAdventure)
+				.catch(stopLoading)
 		},
 	}
 
 	useSse('master', () => {
-		if (CAMPAIGN.id) {
-			handle.listAdventure()
-		}
-		if (CAMPAIGN.id_adventure) {
-			handle.initAdventure()
-		}
-	}, [CAMPAIGN.id, CAMPAIGN.id_adventure])
+		handle.initAdventure()
+		handle.listAdventure()
+	}, [CAMPAIGN.id_adventure], Boolean(CAMPAIGN.id))
 
 	return {
 		list,

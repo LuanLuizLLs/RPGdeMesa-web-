@@ -1,11 +1,13 @@
 import { Box, Button, Collapse, List, Modal, Paper, Text, Title } from 'components'
+import { adventureStore } from 'pages/Master/utils/store'
 import { useAdventures } from './hooks/useAdventures'
-import { useSelector } from 'react-redux'
 import { Modals } from './components/Modals'
+import useStore from 'hooks/useStore'
 
 function Adventures() {
 	const { list, handle, stateModal, stateValues, stateCollapse } = useAdventures()
-	const { ADVENTURE } = useSelector(({ reducer }) => reducer)
+	
+	const ADVENTURE = useStore(adventureStore)
 
 	return (
 		<>
@@ -31,12 +33,12 @@ function Adventures() {
 					</Text>
 				</Paper>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
-					<Button fontSize="medium" type="filled" padding={5} onClick={() => handle.openModal('add_adventure')}>
+					<Button fontSize="medium" type="filled" padding={5} onClick={() => handle.openAdventure('add_adventure')}>
             Criar
 					</Button>
 				</Box>
 			</Paper>
-			<Button fontSize="larger" type="filled" onClick={() => handle.openCollapse('adventure')}>
+			<Button fontSize="larger" type="filled" onClick={() => handle.collapseAdventure('adventure')}>
         Aventuras
 			</Button>
 			<Collapse name="adventure" stateCollapse={stateCollapse}>
@@ -45,14 +47,14 @@ function Adventures() {
 						{...list}
 						height={150}
 						noColumns={true}
-						onClick={(row) => handle.openModal('detail_adventure', row)}
+						onClick={(row) => handle.openAdventure('detail_adventure', row)}
 						actions={{
-							update: (row) => handle.openModal('edit_adventure', row),
+							update: (row) => handle.openAdventure('edit_adventure', row),
 						}}
 					/>
 				)}
 			</Collapse>
-			<Modal maxWidth={600} stateModal={stateModal} onClose={handle.resetValues}>
+			<Modal maxWidth={600} stateModal={stateModal} onClose={handle.resetAdventure}>
 				{Modals({ handle, stateModal, stateValues })}
 			</Modal>
 		</>

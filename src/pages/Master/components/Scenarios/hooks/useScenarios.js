@@ -1,19 +1,18 @@
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { INITIAL } from '../utils/constants'
+import { campaignStore, sceneryStore } from 'pages/Master/utils/store'
 import { optionRandow } from 'utils/functions'
+import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
+import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useScenarios() {
-	const setDispatch = useDispatch()
-
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
 
-	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
+	const CAMPAIGN = useStore(campaignStore)
 
 	const [list, setList] = useState(INITIAL.LIST)
 	const [modal, setModal] = useState(INITIAL.MODAL)
@@ -21,19 +20,18 @@ export function useScenarios() {
 	const [collapse, setCollapse] = useState(INITIAL.COLLAPSE)
 
 	const handle = {
-		openModal(content, data = {}) {
+		openSecenery(content, data = {}) {
 			setModal({ content, data })
 			setValues({ ...values, ...data })
 		},
-		openCollapse(name) {
+		collapseSecenery(name) {
 			setCollapse({
-				...collapse, [name]: !collapse[name]
+				[name]: !collapse[name]
 			})
 		},
-		resetValues() {
+		resetSecenery() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
-			stopLoading()
 		},
 		generateSecenery() {
 			setValues({
@@ -48,11 +46,9 @@ export function useScenarios() {
 			})
 				.read(({ data }) => {
 					const [scenery] = data.response
-					setDispatch({
-						type: 'SCENERY',
-						data: scenery || {},
-					})
+					sceneryStore.set(scenery)
 				})
+				.finally(stopLoading)
 		},
 		listSecenery() {
 			API('scenarios', {
@@ -63,6 +59,7 @@ export function useScenarios() {
 						...state, rows: data.response,
 					}))
 				})
+				.finally(stopLoading)
 		},
 		createScenery() {
 			startLoading('circular')
@@ -74,10 +71,9 @@ export function useScenarios() {
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
+				.then(handle.resetSecenery)
+				.then(handle.listSecenery)
+				.catch(stopLoading)
 		},
 		deleteScenery() {
 			startLoading('circular')
@@ -86,10 +82,9 @@ export function useScenarios() {
 				.delete(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
+				.then(handle.resetSecenery)
+				.then(handle.listSecenery)
+				.catch(stopLoading)
 		},
 		startScenery() {
 			startLoading('circular')
@@ -101,10 +96,8 @@ export function useScenarios() {
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
+				.then(handle.resetSecenery)
+				.catch(stopLoading)
 		},
 		updateScenery() {
 			startLoading('circular')
@@ -113,21 +106,16 @@ export function useScenarios() {
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.catch(({ response }) => {
-					openMessage('error', response.data.message)
-				})
-				.finally(handle.resetValues)
+				.then(handle.resetSecenery)
+				.then(handle.listSecenery)
+				.catch(stopLoading)
 		},
 	}
 
 	useSse('master',() => {
-		if (CAMPAIGN.id) {
-			handle.listSecenery()
-		}
-		if (CAMPAIGN.id_scenery) {
-			handle.initSecenery()
-		}
-	}, [CAMPAIGN.id, CAMPAIGN.id_scenery])
+		handle.listSecenery()
+		handle.initSecenery()
+	}, [CAMPAIGN.id_scenery], Boolean(CAMPAIGN.id))
 
 	return {
 		list,
