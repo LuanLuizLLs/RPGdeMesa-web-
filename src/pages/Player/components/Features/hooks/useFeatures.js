@@ -1,16 +1,17 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { characterStore } from 'pages/Player/utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
+import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useFeatures() {
+	const CHARACTER = useStore(characterStore)
+
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
-
-	const { CHARACTER } = useSelector(({ reducer }) => reducer)
 
 	const [list, setList] = useState(INITIAL.LIST)
 	const [modal, setModal] = useState(INITIAL.MODAL)
@@ -65,7 +66,7 @@ export function useFeatures() {
 
 	useSse('player', () => {
 		handle.listFeature()
-	})
+	}, [CHARACTER.id], Boolean(CHARACTER.id))
 
 	return {
 		list,

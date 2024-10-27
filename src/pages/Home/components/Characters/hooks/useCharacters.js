@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { INITIAL } from '../utils/constants'
 import { characterAttributes } from '../utils/functions'
@@ -10,7 +10,6 @@ import API from 'services/api'
 
 export function useCharacters() {
 	const setNavigate = useNavigate()
-	const setDispatch = useDispatch()
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -79,10 +78,6 @@ export function useCharacters() {
 				.catch(stopLoading)
 		},
 		startCharacter() {
-			setDispatch({
-				type: 'CHARACTER',
-				data: values,
-			})
 			setNavigate(`/player/${values.id}`)
 		},
 	}

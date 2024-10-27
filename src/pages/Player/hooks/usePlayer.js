@@ -1,18 +1,22 @@
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
+import { characterStore } from '../utils/store'
 import { INITIAL } from '../utils/constants'
+import useMessage from 'hooks/useMessage'
+import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
-import useMessage from 'hooks/useMessage'
 
 export function usePlayer() {
 	const setNavigate = useNavigate()
-	const setDispatch = useDispatch()
+
+	const CHARACTER = useStore(characterStore)
 
 	const { id_character } = useParams()
+	const { USER } = useSelector(({ reducer }) => reducer)
+
 	const { openMessage } = useMessage()
-	const { CHARACTER, USER } = useSelector(({ reducer }) => reducer)
 	
 	const [tab, setTab] = useState(INITIAL.TAB)
 	const [values, setValues] = useState(CHARACTER)
@@ -20,31 +24,25 @@ export function usePlayer() {
 	const handle = {
 		loadCharacter() {
 			API('characters', {
-				id: id_character || CHARACTER.id,
+				id: id_character,
 				user: USER.id,
 			})
 				.read(({ data }) => {
 					if (data.blocked) {
 						openMessage(data.status, data.message)
-						setDispatch({
-							type: 'CHARACTER',
-							data: {},
-						})
+						characterStore.reset()
 						return setNavigate('/')
 					}
 					const [character = INITIAL.VALUES] = data.response
 					setValues(character)
-					setDispatch({
-						type: 'CHARACTER',
-						data: character,
-					})
+					characterStore.set(character)
 				})
 		}
 	}
 
 	useSse('player', () => {
 		handle.loadCharacter()
-	})
+	}, [USER.id], Boolean(USER.id))
 
 	return {
 		stateTabs: [tab, setTab],

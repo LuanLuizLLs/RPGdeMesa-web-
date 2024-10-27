@@ -39,6 +39,7 @@ export function useMaster() {
 					const [campaign = INITIAL.VALUES] = data.response
 					campaignStore.set(campaign)
 				})
+				.finally(stopLoading)
 		},
 		updateCampaign(update = values) {
 			startLoading('bar')
@@ -50,7 +51,8 @@ export function useMaster() {
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})
-				.finally(stopLoading)
+				.then(handle.loadCampaign)
+				.catch(stopLoading)
 		},
 	}
 

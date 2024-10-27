@@ -1,15 +1,16 @@
-import Page from 'layouts/Page'
-import Features from './components/Features'
-import Abilities from './components/Abilities'
-import Inventory from './components/Inventory'
-import { useSelector } from 'react-redux'
-import { usePlayer } from '../../pages/Player/hooks/usePlayer'
 import { Box, Card, Divider, Grid, Input, Tab, Text, TextArea, Title } from 'components'
+import { usePlayer } from '../../pages/Player/hooks/usePlayer'
+import { characterStore } from './utils/store'
+import Inventory from './components/Inventory'
+import Abilities from './components/Abilities'
+import Features from './components/Features'
+import useStore from 'hooks/useStore'
+import Page from 'layouts/Page'
 
 function Player() {
 	const { stateTabs, stateValues } = usePlayer()
 
-	const { CHARACTER } = useSelector(({ reducer }) => reducer)
+	const CHARACTER = useStore(characterStore)
 
 	return (
 		<Page tab="Jogador" title="Ficha do Jogador">
