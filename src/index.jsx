@@ -2,7 +2,7 @@ import './assets/styles/index.css'
 import ReactDOM from 'react-dom/client'
 import React from 'react'
 import App from './App'
-import reducer from './utils/reducer'
+import store from './services/redux'
 import { Provider } from 'react-redux'
 import { BREAKPOINT } from './utils/constants'
 import { BrowserRouter } from 'react-router-dom'
@@ -19,7 +19,7 @@ alterDevice()
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<Provider store={reducer}>
+			<Provider store={store}>
 				<App />
 			</Provider>
 		</BrowserRouter>

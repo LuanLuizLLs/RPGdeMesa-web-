@@ -5,10 +5,6 @@ import { combineReducers } from 'redux'
 
 const INITIAL = {
 	USER: {},
-	CAMPAIGN: {},
-	CHARACTER: {},
-	ADVENTURE: {},
-	SCENERY: {},
 }
 
 const initialState = defineState({ ...INITIAL })('reducer')
