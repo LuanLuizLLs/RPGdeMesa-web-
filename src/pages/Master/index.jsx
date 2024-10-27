@@ -1,20 +1,20 @@
-import { useSelector } from 'react-redux'
 import { useMaster } from '../../pages/Master/hooks/useMaster'
-import { colorConditions } from './utils/functions'
-import { OPTIONS } from 'utils/constants'
-import { addSignal } from 'utils/functions'
+import { colorConditions, difficultyLabel } from './utils/functions'
 import { Card, Divider, Grid, Select, Tab, Text, Title } from 'components'
+import { campaignStore } from './utils/store'
+import { OPTIONS } from 'utils/constants'
 import Scenarios from '../../pages/Master/components/Scenarios'
 import Adventures from '../../pages/Master/components/Adventures'
 import Explorations from './components/Explorations'
 import Interactions from './components/Interactions'
 import Characters from '../../pages/Master/components/Characters'
 import Board from '../../pages/Master/components/Board'
+import useStore from 'hooks/useStore'
 import Page from 'layouts/Page'
 
 function Master() {
 	const { handle, stateTab, stateValues } = useMaster()
-	const { CAMPAIGN } = useSelector(({ reducer }) => reducer)
+	const CAMPAIGN = useStore(campaignStore)
 
 	const [tab] = stateTab
 
@@ -59,8 +59,10 @@ function Master() {
 				<Grid type="column" padding={[0, 10]} minWidth={250}>
 					<Card margin="20px 0">
 						<Text color="primary" fontWeight="bold" textAlign="center">
-              Terreno: <Text inline color={colorConditions(CAMPAIGN.ground)}>{addSignal(CAMPAIGN.ground)}</Text> |
-              Recursos: <Text inline color={colorConditions(CAMPAIGN.resources)}>{addSignal(CAMPAIGN.resources)}</Text>
+              Terreno: <Text inline color={colorConditions(CAMPAIGN.ground)}>{difficultyLabel(CAMPAIGN.ground)}</Text>
+						</Text>
+						<Text color="primary" fontWeight="bold" textAlign="center">
+              Recursos: <Text inline color={colorConditions(CAMPAIGN.resources)}>{difficultyLabel(CAMPAIGN.resources)}</Text>
 						</Text>
 					</Card>
 				</Grid>

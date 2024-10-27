@@ -282,7 +282,7 @@ export const ADVENTURE = {
 	],
 }
 
-export const SCENARY = {
+export const SCENERY = {
 	ICONS: {
 		REGION: '🌐',
 		CULTURE: '👥',

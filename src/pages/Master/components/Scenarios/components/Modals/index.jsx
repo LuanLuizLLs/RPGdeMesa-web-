@@ -1,5 +1,5 @@
 import { Box, Button, Input, Paper, Text, TextArea, Title } from 'components'
-import { SCENARY } from 'utils/constants'
+import { SCENERY } from 'utils/constants'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
@@ -26,13 +26,13 @@ export function Modals({ handle, stateModal, stateValues }) {
 					name="region"
 					placeholder="Região"
 					stateValue={stateValues}
-					start={SCENARY.ICONS.REGION}
+					start={SCENERY.ICONS.REGION}
 				/>
 				<Input
 					name="culture"
 					placeholder="Cultura"
 					stateValue={stateValues}
-					start={SCENARY.ICONS.CULTURE}
+					start={SCENERY.ICONS.CULTURE}
 				/>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="filled" color="secondary" padding={5} onClick={handle.generateSecenery}>
@@ -88,13 +88,13 @@ export function Modals({ handle, stateModal, stateValues }) {
 					name="region"
 					placeholder="Região"
 					stateValue={stateValues}
-					start={SCENARY.ICONS.REGION}
+					start={SCENERY.ICONS.REGION}
 				/>
 				<Input
 					name="culture"
 					placeholder="Cultura"
 					stateValue={stateValues}
-					start={SCENARY.ICONS.CULTURE}
+					start={SCENERY.ICONS.CULTURE}
 				/>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="filled" color="secondary" padding={5} onClick={handle.resetSecenery}>
