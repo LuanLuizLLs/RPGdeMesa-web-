@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { campaignStore, sceneryStore } from 'pages/Master/utils/store'
-import { optionRandow } from 'utils/functions'
+import { sceneryAttributes } from '../utils/functions'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
@@ -36,7 +36,7 @@ export function useScenarios() {
 		generateSecenery() {
 			setValues({
 				...values,
-				name: optionRandow([1, 2, 3]),
+				...sceneryAttributes(),
 			})
 		},
 		initSecenery() {

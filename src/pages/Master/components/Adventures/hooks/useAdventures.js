@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { campaignStore, adventureStore } from 'pages/Master/utils/store'
-import { optionRandow } from 'utils/functions'
+import { adventureAttributes } from '../utils/functions'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
@@ -36,7 +36,7 @@ export function useAdventures() {
 		generateAdventure() {
 			setValues({
 				...values,
-				name: optionRandow([1, 2, 3]),
+				...adventureAttributes(),
 			})
 		},
 		initAdventure() {

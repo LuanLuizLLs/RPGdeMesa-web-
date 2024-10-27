@@ -251,14 +251,68 @@ export const ADVENTURE = {
 	ICONS: {
 		GOAL: '🎯',
 		REWARD: '🏆',
-	}
+	},
+	GOAL: [
+		'Atacar',
+		'Ajudar',
+		'Destruir',
+		'Adquirir',
+		'Encontrar',
+		'Recuperar',
+		'Resgatar',
+		'Descobrir',
+		'Matar',
+		'Perseguir',
+		'Escapar',
+		'Acompanhar',
+		'Ganhar',
+		'Negociar',
+		'Esconder',
+		'Defender',
+		'Proteger',
+		'Escoltar',
+		'Chegar',
+	],
+	REWARD: [
+		'Características',
+		'Habilidades',
+		'Itens',
+		'Moedas',
+		'Ações',
+	],
 }
 
 export const SCENARY = {
 	ICONS: {
 		REGION: '🌐',
 		CULTURE: '👥',
-	}
+	},
+	REGION: [
+		'Floresta',
+		'Selva',
+		'Pântano',
+		'Colina',
+		'Planíce',
+		'Montanha',
+		'Mar',
+		'Ártico',
+		'Deserto',
+		'Povoado',
+		'Aldeia',
+		'Vila',
+		'Cidade',
+		'Metrópole',
+		'Reino',
+	],
+	CULTURE: [
+		'Harmonia',
+		'Tensão ou rivalidade',
+		'Maioria racial são conquistadores',
+		'Minoria racial são governantes',
+		'Minoria racial são refugiados',
+		'Maioria racial oprime minoria',
+		'Minoria racial oprime maioria',
+	],
 }
 
 export const OPTIONS = {
