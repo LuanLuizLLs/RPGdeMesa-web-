@@ -91,7 +91,7 @@ export function Modals({ handle, stateModal, stateValues }) {
           Deletar exploração:
 				</Title>
 				<Text>
-          Tem certeza que deseja excluir essa exploração <b>{modal.data.name}</b>?
+          Tem certeza que deseja excluir a exploração <b>{modal.data.name}</b>?
 				</Text>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="bottomless" padding={10} onClick={handle.resetExploration}>
