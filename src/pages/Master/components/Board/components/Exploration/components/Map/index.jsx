@@ -1,4 +1,4 @@
-import { Box, Text, Title, Tooltip } from 'components'
+import { Box, Link, Text, Title, Tooltip } from 'components'
 import theme from 'utils/theme'
 
 export function Map({ handle, list, action }) {
@@ -9,12 +9,13 @@ export function Map({ handle, list, action }) {
 		return position[0] === vertical && position[1] === horizontal
 	}
 
-	const isBlocked = (column = {}, position = []) => {
+	const isBlocked = (column = null, position = []) => {
 		const isMove = action.type === 'move'
 		const isDuplicate = action.type === 'duplicate'
-    
-		if (isMove || isDuplicate) {
-			return column && !isSelected(position)
+		const isFilled = Boolean(column)
+
+		if (isFilled && (isMove || isDuplicate)) {
+			return !isSelected(position)
 		}
 
 		return false
@@ -29,6 +30,11 @@ export function Map({ handle, list, action }) {
 				<Text color="gray" fontWeight="bold" textAlign="center">
 					{list.description}
 				</Text>
+				<Box position="absolute" top={15} right={20}>
+					<Link textDecoration="none" onClick={() => handle.openExploration('delete_board', list)}>
+              &#10006;
+					</Link>
+				</Box>
 			</Box>
 			{explorations.map((row, horizontal) => (
 				<Box key={horizontal} display="flex">

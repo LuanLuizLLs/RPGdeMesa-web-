@@ -84,6 +84,24 @@ export function Modals({ handle, stateModal, stateValues }) {
 					</Button>
 				</Box>
 			</>
+		),
+		delete_board: (
+			<>
+				<Title type="h6">
+          Deletar exploração:
+				</Title>
+				<Text>
+          Tem certeza que deseja excluir essa exploração <b>{modal.data.name}</b>?
+				</Text>
+				<Box display="flex" justifyContent="flex-end" marginTop={10}>
+					<Button type="bottomless" padding={10} onClick={handle.resetExploration}>
+            Cancelar
+					</Button>
+					<Button type="filled" color="error" padding={10} onClick={handle.deleteExploration}>
+            Excluir
+					</Button>
+				</Box>
+			</>
 		)
 	}
 }

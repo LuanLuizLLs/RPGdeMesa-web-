@@ -83,6 +83,15 @@ export function useExploration() {
 				.then(handle.listExploration)
 				.catch(stopLoading)
 		},
+		deleteExploration() {
+			API('explorations-board', list)
+				.delete(({ data }) => {
+					openMessage(data.status, data.message)
+				})
+				.then(handle.resetExploration)
+				.then(handle.listExploration)
+				.catch(stopLoading)
+		},
 		moveExploration() {
 			setModal(INITIAL.MODAL)
 			setAction({
