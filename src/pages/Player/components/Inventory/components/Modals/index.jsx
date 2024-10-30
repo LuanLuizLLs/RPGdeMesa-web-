@@ -1,14 +1,15 @@
-import { useSelector } from 'react-redux'
+import { characterStore } from 'pages/Player/utils/store'
 import { optionsUsable } from '../../utils/functions'
 import { ATTRIBUTE, INVENTORY } from 'utils/constants'
 import { modifierPoints, scrollingPoints } from 'pages/Player/utils/functions'
 import { Box, Button, Grid, Input, Paper, Radio, Select, Text, TextArea, Title } from 'components'
+import useStore from 'hooks/useStore'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
 	const [values] = stateValues
 
-	const { CHARACTER } = useSelector(({ reducer }) => reducer)
+	const { CHARACTER } = useStore(characterStore)
 
 	return {
 		add_item: (

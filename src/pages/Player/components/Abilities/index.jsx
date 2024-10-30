@@ -1,11 +1,12 @@
-import { useSelector } from 'react-redux'
-import { Modals } from './components/Modals'
+import { characterStore } from 'pages/Player/utils/store'
 import { useAbilities } from './hooks/useAbilities'
+import { Modals } from './components/Modals'
 import { Box, Button, List, Modal, Text } from 'components'
+import useStore from 'hooks/useStore'
 
 function Abilities() {
 	const { list, handle, stateModal, stateValues } = useAbilities()
-	const { CHARACTER } = useSelector(({ reducer }) => reducer)
+	const CHARACTER = useStore(characterStore)
 
 	return (
 		<>

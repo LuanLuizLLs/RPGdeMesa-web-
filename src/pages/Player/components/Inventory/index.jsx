@@ -1,11 +1,12 @@
-import { useSelector } from 'react-redux'
+import { characterStore } from 'pages/Player/utils/store'
 import { useInventory } from './hooks/useInventory'
 import { Modals } from './components/Modals'
 import { Box, Button, List, Modal, Text } from 'components'
+import useStore from 'hooks/useStore'
 
 function Inventory() {
 	const { list, handle, stateModal, stateValues } = useInventory()
-	const { CHARACTER } = useSelector(({ reducer }) => reducer)
+	const CHARACTER = useStore(characterStore)
 
 	return (
 		<>
