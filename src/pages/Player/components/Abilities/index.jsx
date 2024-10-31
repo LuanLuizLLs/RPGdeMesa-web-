@@ -6,6 +6,7 @@ import useStore from 'hooks/useStore'
 
 function Abilities() {
 	const { list, handle, stateModal, stateValues } = useAbilities()
+
 	const CHARACTER = useStore(characterStore)
 
 	return (

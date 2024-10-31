@@ -8,7 +8,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
 	const [values] = stateValues
 
-	const { CHARACTER } = useStore(characterStore)
+	const CHARACTER = useStore(characterStore)
 
 	return {
 		add_ability: (

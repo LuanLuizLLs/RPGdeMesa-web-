@@ -6,6 +6,7 @@ import useStore from 'hooks/useStore'
 
 function Inventory() {
 	const { list, handle, stateModal, stateValues } = useInventory()
+
 	const CHARACTER = useStore(characterStore)
 
 	return (
