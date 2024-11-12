@@ -16,8 +16,13 @@ function Scenarios() {
 			</Title>
 			<Paper backgroundColor="secondary" margin="10px 0">
 				{SCENERY.id ? (
-					<Text color="black" fontWeight="bold" textTransform="capitalize">
-						{SCENERY.name}: <Text inline color="gray" fontWeight="bold">{SCENERY.description}</Text>
+					<Text color="black" fontWeight="bold">
+						<Text inline textTransform="capitalize">
+							{SCENERY.name}
+						</Text>
+						<Text color="gray">
+							{SCENERY.description}
+						</Text>
 					</Text>
 				) : (
 					<Text fontWeight="bold" color="gray">

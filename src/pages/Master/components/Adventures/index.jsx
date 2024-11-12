@@ -16,8 +16,13 @@ function Adventures() {
 			</Title>
 			<Paper backgroundColor="secondary" margin="10px 0">
 				{ADVENTURE.id ? (
-					<Text color="black" fontWeight="bold" textTransform="capitalize">
-						{ADVENTURE.name}: <Text inline color="gray" fontWeight="bold">{ADVENTURE.description}</Text>
+					<Text color="black" fontWeight="bold">
+						<Text inline textTransform="capitalize">
+							{ADVENTURE.name}
+						</Text>
+						<Text color="gray">
+							{ADVENTURE.description}
+						</Text>
 					</Text>
 				) : (
 					<Text fontWeight="bold" color="gray">
