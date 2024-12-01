@@ -51,6 +51,17 @@ export function useFeatures() {
 				.then(handle.listFeature)
 				.catch(stopLoading)
 		},
+		updateFeature() {
+			startLoading('bar')
+
+			API('features', values)
+				.update(({ data }) => {
+					openMessage(data.status, data.message)
+				})
+				.then(handle.resetFeature)
+				.then(handle.listFeature)
+				.catch(stopLoading)
+		},
 		deleteFeature() {
 			startLoading('bar')
 

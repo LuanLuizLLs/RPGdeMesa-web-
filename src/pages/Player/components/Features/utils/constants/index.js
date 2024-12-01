@@ -15,14 +15,9 @@ export const INITIAL = {
 	},
 	LIST: {
 		columns: {
-			id: 'ID',
 			name: 'Característica',
-			strength: 'FOR',
-			dexterity: 'DES',
-			constitution: 'CON',
-			intelligence: 'INT',
-			wisdom: 'SAB',
-			charisma: 'CAR',
+			description: 'Descrição',
+			modifier: 'Modificador',
 		},
 		rows: []
 	},

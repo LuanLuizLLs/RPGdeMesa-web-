@@ -17,10 +17,14 @@ function Features() {
 			<List
 				{...list}
 				height={200}
-				onClick={(row) => handle.openModal('detail_feature', row)}
+				onClick={(row) => handle.openModal('read_feature', row)}
+				actions={{
+					update: (row) => handle.openModal('update_feature', row),
+					delete: (row) => handle.openModal('delete_feature', row),
+				}}
 			/>
 			<Box display="flex" justifyContent="flex-end" margin={10}>
-				<Button type="filled" onClick={() => Boolean(CHARACTER.id) && handle.openModal('add_feature')}>
+				<Button type="filled" onClick={() => Boolean(CHARACTER.id) && handle.openModal('create_feature')}>
           Adicionar
 				</Button>
 			</Box>

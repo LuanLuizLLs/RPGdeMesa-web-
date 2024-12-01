@@ -5,14 +5,14 @@ export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
 
 	return {
-		add_feature: (
+		create_feature: (
 			<>
 				<Title type="h6" color="primary">
-          Adicionar característica:
+          Criar característica:
 				</Title>
 				<Input
 					name="name"
-					placeholder="Nome (adjetivo)"
+					placeholder="Nome"
 					stateValue={stateValues}
 				/>
 				<TextArea
@@ -100,9 +100,9 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Box>
 			</>
 		),
-		detail_feature: (
+		read_feature: (
 			<>
-				<Title type="h6">
+				<Title type="h6" color="primary">
           Detalhes da característica:
 				</Title>
 				<Paper backgroundColor="secondary">
@@ -134,11 +134,56 @@ export function Modals({ handle, stateModal, stateValues }) {
 					</Text>
 				</Paper>
 				<Box display="flex" justifyContent="flex-end">
-					<Button type="filled" padding={10} onClick={handle.resetFeature}>
+					<Button type="bottomless" padding={10} onClick={handle.resetFeature}>
+            Cancelar
+					</Button>
+					<Button type="filled" color="primary" padding={10} onClick={handle.resetFeature}>
             Fechar
 					</Button>
+				</Box>
+			</>
+		),
+		update_feature: (
+			<>
+				<Title type="h6" color="primary">
+          Editar característica:
+				</Title>
+				<Input
+					name="name"
+					label="Nome"
+					placeholder="Nome"
+					stateValue={stateValues}
+				/>
+				<TextArea
+					name="description"
+					label="Descrição"
+					placeholder="Descrição"
+					stateValue={stateValues}
+				/>
+				<Box display="flex" justifyContent="flex-end" marginTop={10}>
+					<Button type="filled" color="secondary" padding={10} onClick={handle.resetFeature}>
+            Cancelar
+					</Button>
+					<Button type="filled" padding={10} onClick={handle.updateFeature}>
+            Editar
+					</Button>
+				</Box>
+			</>
+		),
+		delete_feature: (
+			<>
+				<Title type="h6" color="primary">
+          Deletar característica:
+				</Title>
+				<Text>
+          Tem certeza que deseja excluir a característica <b>{modal.data.name}</b>?
+				</Text>
+				<Box display="flex" justifyContent="flex-end" marginTop={10}>
+					<Button type="bottomless" padding={10} onClick={handle.resetFeature}>
+            Cancelar
+					</Button>
 					<Button type="filled" color="error" padding={10} onClick={handle.deleteFeature}>
-            Remover
+            Deletar
 					</Button>
 				</Box>
 			</>
