@@ -4,6 +4,10 @@ export class Store {
 	storage = {}
 	listeners = new Set()
 
+	constructor (storage = {}) {
+		this.storage = storage
+	}
+
 	subscribe = (listener) => {
 		this.listeners.add(listener)
 		return () => {
