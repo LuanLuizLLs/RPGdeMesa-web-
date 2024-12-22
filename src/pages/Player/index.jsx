@@ -85,7 +85,7 @@ function Player() {
 								<Input
 									readOnly
 									start="❤️"
-									end={`+${CHARACTER.life_capacity}`}
+									end={`+${CHARACTER.capacity.life}`}
 									name="life"
 									type="number"
 									label="Vida"

@@ -21,7 +21,7 @@ function Abilities() {
 			/>
 			<Box display="flex" justifyContent="space-between" margin={10}>
 				<Text fontWeight="bold">
-					<Text inline color="primary">Capacidade: </Text> {CHARACTER.mental_capacity}
+					<Text inline color="primary">Capacidade: </Text> {CHARACTER.capacity.mental}
 				</Text>
 				<Button type="filled" onClick={() => Boolean(CHARACTER.id) && handle.openModal('add_ability')}>
           Adicionar

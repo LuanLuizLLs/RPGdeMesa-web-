@@ -21,7 +21,7 @@ function Inventory() {
 			/>
 			<Box display="flex" justifyContent="space-between" margin={10}>
 				<Text fontWeight="bold">
-					<Text inline color="primary">Capacidade: </Text> {CHARACTER.physical_capacity}
+					<Text inline color="primary">Capacidade: </Text> {CHARACTER.capacity.physical}
 				</Text>
 				<Button type="filled" onClick={() => Boolean(CHARACTER.id) && handle.openModal('add_item')}>
           Adicionar
