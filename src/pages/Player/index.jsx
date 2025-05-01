@@ -70,10 +70,10 @@ function Player() {
 					<Card>
 						<Box display="flex" justifyContent="space-around" flexWrap="wrap">
 							<Text fontSize="medium" textAlign="center" whiteSpace="nowrap">
-                💪 FOR {CHARACTER.strength} | 👋 DES {CHARACTER.dexterity} | ✊ CON {CHARACTER.constitution}
+                💪 FOR {CHARACTER.modified.strength} | 👋 DES {CHARACTER.modified.dexterity} | ✊ CON {CHARACTER.modified.constitution}
 							</Text>
 							<Text fontSize="medium" textAlign="center" whiteSpace="nowrap">
-                📙 INT {CHARACTER.intelligence} | 🙌 SAB {CHARACTER.wisdom} | 🤝 CAR {CHARACTER.charisma}
+                📙 INT {CHARACTER.modified.intelligence} | 🙌 SAB {CHARACTER.modified.wisdom} | 🤝 CAR {CHARACTER.modified.charisma}
 							</Text>
 						</Box>
 					</Card>
@@ -85,7 +85,7 @@ function Player() {
 								<Input
 									readOnly
 									start="❤️"
-									end={`+${CHARACTER.capacity.life}`}
+									end={`/${CHARACTER.capacity.life}`}
 									name="life"
 									type="number"
 									label="Vida"

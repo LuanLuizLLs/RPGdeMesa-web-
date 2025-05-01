@@ -57,7 +57,7 @@ function Characters() {
 												type="number"
 												fontSize="medium"
 												start={ATTRIBUTE.ICONS.VID}
-												end={`/${character.life_capacity}`}
+												end={`/${character.capacity.life}`}
 												readOnly={!character.id}
 												stateValue={stateList}
 												onBlur={() => handle.updateCharacter(i)}
@@ -92,12 +92,12 @@ function Characters() {
 									<Grid type="row">
 										<Grid type="column" flex="none" padding={[5, 10]}>
 											<Text fontSize="medium">
-												{ATTRIBUTE.ICONS.FOR} FOR {character.strength} | {ATTRIBUTE.ICONS.DES} DES {character.dexterity} | {ATTRIBUTE.ICONS.CON} CON {character.constitution}
+												{ATTRIBUTE.ICONS.FOR} FOR {character.modified.strength} | {ATTRIBUTE.ICONS.DES} DES {character.modified.dexterity} | {ATTRIBUTE.ICONS.CON} CON {character.modified.constitution}
 											</Text>
 										</Grid>
 										<Grid type="column" flex="none" padding={[5, 10]}>
 											<Text fontSize="medium">
-												{ATTRIBUTE.ICONS.INT} INT {character.intelligence} | {ATTRIBUTE.ICONS.SAB} SAB {character.wisdom} | {ATTRIBUTE.ICONS.CAR} CAR {character.charisma}
+												{ATTRIBUTE.ICONS.INT} INT {character.modified.intelligence} | {ATTRIBUTE.ICONS.SAB} SAB {character.modified.wisdom} | {ATTRIBUTE.ICONS.CAR} CAR {character.modified.charisma}
 											</Text>
 										</Grid>
 									</Grid>
