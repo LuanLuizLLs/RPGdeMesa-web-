@@ -15,7 +15,7 @@ function Player() {
 	return (
 		<Page tab="Jogador" title="Ficha do Jogador">
 			<Title type="h6" color="secondary">
-        #{CHARACTER.id || 'ID'} - {CHARACTER.name || 'Personagem'}
+        #{CHARACTER.id} - {CHARACTER.name}
 			</Title>
 			<Card>
 				<Grid type="container">
@@ -70,10 +70,10 @@ function Player() {
 					<Card>
 						<Box display="flex" justifyContent="space-around" flexWrap="wrap">
 							<Text fontSize="medium" textAlign="center" whiteSpace="nowrap">
-                💪 FOR {CHARACTER.strength || 0} | 👋 DES {CHARACTER.dexterity || 0} | ✊ CON {CHARACTER.constitution || 0}
+                💪 FOR {CHARACTER.strength} | 👋 DES {CHARACTER.dexterity} | ✊ CON {CHARACTER.constitution}
 							</Text>
 							<Text fontSize="medium" textAlign="center" whiteSpace="nowrap">
-                📙 INT {CHARACTER.intelligence || 0} | 🙌 SAB {CHARACTER.wisdom || 0} | 🤝 CAR {CHARACTER.charisma || 0}
+                📙 INT {CHARACTER.intelligence} | 🙌 SAB {CHARACTER.wisdom} | 🤝 CAR {CHARACTER.charisma}
 							</Text>
 						</Box>
 					</Card>
