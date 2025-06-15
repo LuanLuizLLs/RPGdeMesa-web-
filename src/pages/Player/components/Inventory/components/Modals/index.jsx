@@ -135,7 +135,7 @@ export function Modals({ handle, stateModal, stateValues }) {
             Cancelar
 					</Button>
 					<Button type="filled" padding={10} onClick={handle.updateInventory}>
-            Criar
+            Editar
 					</Button>
 				</Box>
 			</>
