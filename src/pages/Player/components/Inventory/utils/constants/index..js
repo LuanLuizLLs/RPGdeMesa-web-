@@ -12,7 +12,6 @@ export const INITIAL = {
 	},
 	LIST: {
 		columns: {
-			id: 'ID',
 			name: 'Item',
 			description: 'Descrição',
 			attribute: 'Atributo',
