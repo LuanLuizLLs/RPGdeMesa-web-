@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Input, Paper, Text, TextArea, Title } from 'components'
-import { ATTRIBUTE } from 'utils/constants'
+import { featureAttributes } from 'pages/Player/utils/functions'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
@@ -114,23 +114,8 @@ export function Modals({ handle, stateModal, stateValues }) {
 					</Text>
 				</Paper>
 				<Paper backgroundColor="secondary" margin="10px 0" overflow="auto">
-					<Text inline display="inline">
-						{ATTRIBUTE.ICONS.FOR} {modal.data.strength} &nbsp;
-					</Text>
-					<Text inline display="inline">
-						{ATTRIBUTE.ICONS.DES} {modal.data.dexterity} &nbsp;
-					</Text>
-					<Text inline display="inline">
-						{ATTRIBUTE.ICONS.CON} {modal.data.constitution} &nbsp;
-					</Text>
-					<Text inline display="inline">
-						{ATTRIBUTE.ICONS.INT} {modal.data.intelligence} &nbsp;
-					</Text>
-					<Text inline display="inline">
-						{ATTRIBUTE.ICONS.SAB} {modal.data.wisdom} &nbsp;
-					</Text>
-					<Text inline display="inline">
-						{ATTRIBUTE.ICONS.CAR} {modal.data.charisma}
+					<Text fontWeight="bold">
+						{featureAttributes(modal.data)}
 					</Text>
 				</Paper>
 				<Box display="flex" justifyContent="flex-end">

@@ -54,10 +54,7 @@ export function useAbilities() {
 		updateAbility() {
 			startLoading('bar')
 
-			API('abilities', {
-				...values,
-				level: values.level + 1,
-			})
+			API('abilities', values)
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})

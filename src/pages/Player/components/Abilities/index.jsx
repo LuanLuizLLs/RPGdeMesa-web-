@@ -17,13 +17,17 @@ function Abilities() {
 			<List 
 				{...list}
 				height={200} 
-				onClick={(row) => handle.openModal('detail_ability', row)} 
+				onClick={(row) => handle.openModal('read_ability', row)}
+				actions={{
+					update: (row) => handle.openModal('update_ability', row),
+					delete: (row) => handle.openModal('delete_ability', row),
+				}}
 			/>
 			<Box display="flex" justifyContent="space-between" margin={10}>
 				<Text fontWeight="bold">
 					<Text inline color="primary">Capacidade: </Text> {CHARACTER.capacity.mental}
 				</Text>
-				<Button type="filled" onClick={() => Boolean(CHARACTER.id) && handle.openModal('add_ability')}>
+				<Button type="filled" onClick={() => Boolean(CHARACTER.id) && handle.openModal('create_ability')}>
           Adicionar
 				</Button>
 			</Box>

@@ -1,7 +1,7 @@
 import { ATTRIBUTE, OPTIONS } from 'utils/constants'
 import { characterStore } from 'pages/Player/utils/store'
 import { Box, Button, Grid, Input, Paper, Select, Text, TextArea, Title } from 'components'
-import { modifierPoints, scrollingPoints } from 'pages/Player/utils/functions'
+import { modifierPoints } from 'pages/Player/utils/functions'
 import useStore from 'hooks/useStore'
 
 export function Modals({ handle, stateModal, stateValues }) {
@@ -11,14 +11,14 @@ export function Modals({ handle, stateModal, stateValues }) {
 	const CHARACTER = useStore(characterStore)
 
 	return {
-		add_ability: (
+		create_ability: (
 			<>
 				<Title type="h6" color="primary">
-          Adicionar habilidade:
+          Criar habilidade:
 				</Title>
 				<Input
 					name="name"
-					placeholder="Nome (verbo)"
+					placeholder="Nome"
 					stateValue={stateValues}
 				/>
 				<TextArea
@@ -57,7 +57,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Box>
 			</>
 		),
-		detail_ability: (
+		read_ability: (
 			<>
 				<Title type="h6">
           Detalhes da habilidade:
@@ -69,26 +69,84 @@ export function Modals({ handle, stateModal, stateValues }) {
 					<Text color="gray" fontWeight="bold">
 						{modal.data.description}
 					</Text>
-					<Text>
-						{modifierPoints(CHARACTER, modal.data)}
-					</Text>
 				</Paper>
 				<Paper backgroundColor="secondary" margin="10px 0">
-					<Box display="flex" justifyContent="space-between" alignItems="center">
-						<Text color="gray" fontWeight="bold">
-							{scrollingPoints(CHARACTER[ATTRIBUTE.PRIMARY[modal.data.attribute]], modal.data.level)}
-						</Text>
-						<Button type="filled" color="success" fontSize="medium" onClick={handle.updateAbility}>
-              Aprimorar
-						</Button>
-					</Box>
+					<Text fontWeight="bold">
+						{modifierPoints(CHARACTER.modified, modal.data)}
+					</Text>
 				</Paper>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
+					<Button type="bottomless" padding={10} onClick={handle.resetAbility}>
+            Cancelar
+					</Button>
 					<Button type="filled" padding={10} onClick={handle.resetAbility}>
             Fechar
 					</Button>
+				</Box>
+			</>
+		),
+		update_ability: (
+			<>
+				<Title type="h6" color="primary">
+          Editar habilidade:
+				</Title>
+				<Input
+					name="name"
+					label="Nome"
+					placeholder="Nome"
+					stateValue={stateValues}
+				/>
+				<TextArea
+					name="description"
+					label="Descrição"
+					placeholder="Descrição"
+					stateValue={stateValues}
+				/>
+				<Grid type="row">
+					<Grid type="column" padding={[0, 5]}>
+						<Select
+							name="attribute"
+							label="Atributo"
+							options={OPTIONS.ATTRIBUTE.PRIMARY}
+							stateValue={stateValues}
+						/>
+					</Grid>
+					<Grid type="column" padding={[0, 5]}>
+						<Input
+							min={1}
+							max={6}
+							type="number"
+							name="level"
+							label="Nível"
+							end={ATTRIBUTE.ICONS[values.attribute]}
+							stateValue={stateValues}
+						/>
+					</Grid>
+				</Grid>
+				<Box display="flex" justifyContent="flex-end" marginTop={10}>
+					<Button type="filled" color="secondary" padding={10} onClick={handle.resetAbility}>
+            Cancelar
+					</Button>
+					<Button type="filled" padding={10} onClick={handle.updateAbility}>
+            Editar
+					</Button>
+				</Box>
+			</>
+		),
+		delete_ability: (
+			<>
+				<Title type="h6" color="primary">
+          Deletar habilidade:
+				</Title>
+				<Text>
+          Tem certeza que deseja excluir a habilidade <b>{modal.data.name}</b>?
+				</Text>
+				<Box display="flex" justifyContent="flex-end" marginTop={10}>
+					<Button type="bottomless" padding={10} onClick={handle.resetAbility}>
+            Cancelar
+					</Button>
 					<Button type="filled" color="error" padding={10} onClick={handle.deleteAbility}>
-            Remover
+            Deletar
 					</Button>
 				</Box>
 			</>

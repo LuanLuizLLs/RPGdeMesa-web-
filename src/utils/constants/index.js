@@ -41,6 +41,7 @@ export const ATTRIBUTE = {
 		'MOE': '💰',
 		'ACO': '👣',
 		'DAN': '🩸',
+		'DAD': '🎲',
 	},
 	RANK: [
 		'A',
