@@ -55,10 +55,7 @@ export function useInventory() {
 		updateInventory() {
 			startLoading('bar')
 
-			API('items', {
-				...values,
-				level: values.level + 1,
-			})
+			API('items', values)
 				.update(({ data }) => {
 					openMessage(data.status, data.message)
 				})

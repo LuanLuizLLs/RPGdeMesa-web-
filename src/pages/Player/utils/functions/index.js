@@ -32,14 +32,3 @@ export const modifierPoints = (character = {}, item = {}) => {
 
 	return `${icon} ⨉ ${ATTRIBUTE.ICONS.DAD}-${level}`
 }
-
-export const scrollingPoints = (attribute = 0, level = 0) => {
-	const {
-		modifier,
-		damage,
-	} = {
-		modifier: attribute >= level ? attribute : attribute - level,
-		damage: attribute >= level ? level : level - (level - attribute),
-	}
-	return `1d20${modifier ? addSignal(modifier) : ''} | 1d6${damage ? addSignal(damage) : ''}`
-}

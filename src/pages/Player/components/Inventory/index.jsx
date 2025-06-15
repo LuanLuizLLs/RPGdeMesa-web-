@@ -17,13 +17,17 @@ function Inventory() {
 			<List 
 				{...list}
 				height={200} 
-				onClick={(row) => handle.openModal('detail_item', row)} 
+				onClick={(row) => handle.openModal('read_item', row)}
+				actions={{
+					update: (row) => handle.openModal('update_item', row),
+					delete: (row) => handle.openModal('delete_item', row),
+				}}
 			/>
 			<Box display="flex" justifyContent="space-between" margin={10}>
 				<Text fontWeight="bold">
 					<Text inline color="primary">Capacidade: </Text> {CHARACTER.capacity.physical}
 				</Text>
-				<Button type="filled" onClick={() => Boolean(CHARACTER.id) && handle.openModal('add_item')}>
+				<Button type="filled" onClick={() => Boolean(CHARACTER.id) && handle.openModal('create_item')}>
           Adicionar
 				</Button>
 			</Box>
