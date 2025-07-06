@@ -7,7 +7,7 @@ export const INITIAL = {
 		name: '',
 		description: '',
 		life: 0,
-		damage: 0,
+		modifier: 0,
 		strength: 0,
 		dexterity: 0,
 		constitution: 0,

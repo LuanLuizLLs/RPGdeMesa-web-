@@ -1,6 +1,7 @@
 import { Box, Divider, Grid, Input, Link, Modal, Paper, Text, Title } from 'components'
 import { useInteraction } from './hooks/useInteraction'
 import { Modals } from './components/Modals'
+import { ATTRIBUTE } from 'utils/constants'
 
 function Interaction() {
 	const { handle, stateTab, stateList, stateModal } = useInteraction()
@@ -39,7 +40,7 @@ function Interaction() {
 								<Input
 									noLabel
 									index={i}
-									start="❤️"
+									start={ATTRIBUTE.ICONS.VID}
 									name="life"
 									type="number"
 									fontSize="medium"
@@ -52,11 +53,11 @@ function Interaction() {
 								<Input
 									noLabel
 									index={i}
-									start="🩸"
-									name="damage"
+									start={ATTRIBUTE.ICONS.DAD}
+									name="modifier"
 									type="number"
 									fontSize="medium"
-									end={`/${interaction.shape.damage}`}
+									end={`/${interaction.shape.modifier}`}
 									stateValue={stateList}
 									onBlur={() => handle.updateInteraction(interaction)}
 								/>
@@ -66,7 +67,7 @@ function Interaction() {
 								<Input
 									noLabel
 									index={i}
-									start="💪"
+									start={ATTRIBUTE.ICONS.FOR}
 									name="strength"
 									type="number"
 									fontSize="medium"
@@ -79,7 +80,7 @@ function Interaction() {
 								<Input
 									noLabel
 									index={i}
-									start="👋"
+									start={ATTRIBUTE.ICONS.DES}
 									name="dexterity"
 									type="number"
 									fontSize="medium"
@@ -92,7 +93,7 @@ function Interaction() {
 								<Input
 									noLabel
 									index={i}
-									start="✊"
+									start={ATTRIBUTE.ICONS.CON}
 									name="constitution"
 									type="number"
 									fontSize="medium"
@@ -106,7 +107,7 @@ function Interaction() {
 								<Input
 									noLabel
 									index={i}
-									start="📙"
+									start={ATTRIBUTE.ICONS.INT}
 									name="intelligence"
 									type="number"
 									fontSize="medium"
@@ -119,7 +120,7 @@ function Interaction() {
 								<Input
 									noLabel
 									index={i}
-									start="🙌"
+									start={ATTRIBUTE.ICONS.SAB}
 									name="wisdom"
 									type="number"
 									fontSize="medium"
@@ -132,7 +133,7 @@ function Interaction() {
 								<Input
 									noLabel
 									index={i}
-									start="🤝"
+									start={ATTRIBUTE.ICONS.CAR}
 									name="charisma"
 									type="number"
 									fontSize="medium"

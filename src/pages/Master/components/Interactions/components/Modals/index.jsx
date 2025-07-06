@@ -34,9 +34,9 @@ export function Modals({ handle, stateModal, stateValues }) {
 						<Grid type="column" margin={[0, 5]} minWidth={180}>
 							<Input
 								type="number"
-								label="Dano"
-								name="damage"
-								start={ATTRIBUTE.ICONS.DAN}
+								label="Modificador"
+								name="modifier"
+								start={ATTRIBUTE.ICONS.DAD}
 								stateValue={stateValues}
 							/>
 						</Grid>
@@ -120,28 +120,28 @@ export function Modals({ handle, stateModal, stateValues }) {
 					<Text fontWeight="bold" color="gray">
 						{modal.data.description}
 					</Text>
-					<Text>
+					<Text fontWeight="bold">
 						{ATTRIBUTE.ICONS.VID} {modal.data.life} &nbsp;
-						{ATTRIBUTE.ICONS.DAN} {modal.data.damage}
+						{ATTRIBUTE.ICONS.DAD} {modal.data.modifier}
 					</Text>
 				</Paper>
 				<Paper backgroundColor="secondary" margin="10px 0">
-					<Text inline display="inline">
+					<Text inline display="inline" fontWeight="bold">
 						{ATTRIBUTE.ICONS.FOR} {modal.data.strength} &nbsp;
 					</Text>
-					<Text inline display="inline">
+					<Text inline display="inline" fontWeight="bold">
 						{ATTRIBUTE.ICONS.DES} {modal.data.dexterity} &nbsp;
 					</Text>
-					<Text inline display="inline">
+					<Text inline display="inline" fontWeight="bold">
 						{ATTRIBUTE.ICONS.CON} {modal.data.constitution} &nbsp;
 					</Text>
-					<Text inline display="inline">
+					<Text inline display="inline" fontWeight="bold">
 						{ATTRIBUTE.ICONS.INT} {modal.data.intelligence} &nbsp;
 					</Text>
-					<Text inline display="inline">
+					<Text inline display="inline" fontWeight="bold">
 						{ATTRIBUTE.ICONS.SAB} {modal.data.wisdom} &nbsp;
 					</Text>
-					<Text inline display="inline">
+					<Text inline display="inline" fontWeight="bold">
 						{ATTRIBUTE.ICONS.CAR} {modal.data.charisma}
 					</Text>
 				</Paper>
@@ -184,9 +184,9 @@ export function Modals({ handle, stateModal, stateValues }) {
 						<Grid type="column" margin={[0, 5]} minWidth={180}>
 							<Input
 								type="number"
-								label="Dano"
-								name="damage"
-								start={ATTRIBUTE.ICONS.DAN}
+								label="Modificador"
+								name="modifier"
+								start={ATTRIBUTE.ICONS.DAD}
 								stateValue={stateValues}
 							/>
 						</Grid>

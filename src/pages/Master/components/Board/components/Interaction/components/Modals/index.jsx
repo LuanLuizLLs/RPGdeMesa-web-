@@ -1,4 +1,4 @@
-import { ATTRIBUTE } from 'utils/constants'
+import { ATTRIBUTE, OPTIONS } from 'utils/constants'
 import { pointAttribute } from '../../utils/functions'
 import { Box, Button, Paper, Tab, Text, Title } from 'components'
 
@@ -18,31 +18,31 @@ export function Modals({ handle, stateTab, stateModal }) {
 					<Text fontWeight="bold" color="gray">
 						{modal.data.shape.description}
 					</Text>
-					<Text>
+					<Text fontWeight="bold">
 						{ATTRIBUTE.ICONS.VID} {modal.data.life} &nbsp;
-						{ATTRIBUTE.ICONS.DAN} {modal.data.damage}
+						{ATTRIBUTE.ICONS.DAD} {modal.data.modifier}
 					</Text>
 				</Paper>
 				<Paper backgroundColor="secondary" margin="10px 0">
-					<Tab tabs={[ATTRIBUTE.ICONS.FOR, ATTRIBUTE.ICONS.DES, ATTRIBUTE.ICONS.CON, ATTRIBUTE.ICONS.INT, ATTRIBUTE.ICONS.SAB, ATTRIBUTE.ICONS.CAR]} stateTab={stateTab}>
+					<Tab tabs={OPTIONS.ATTRIBUTE.PRIMARY} stateTab={stateTab}>
 						{[
 							<Text key="strength" color="gray" fontWeight="bold">
-								{pointAttribute(modal.data.strength, modal.data.damage)}
+								{pointAttribute(ATTRIBUTE.ICONS.FOR, modal.data.strength, modal.data.modifier)}
 							</Text>,
 							<Text key="dexterity" color="gray" fontWeight="bold">
-								{pointAttribute(modal.data.dexterity, modal.data.damage)}
+								{pointAttribute(ATTRIBUTE.ICONS.DES, modal.data.dexterity, modal.data.modifier)}
 							</Text>,
 							<Text key="constitution" color="gray" fontWeight="bold">
-								{pointAttribute(modal.data.constitution, modal.data.damage)}
+								{pointAttribute(ATTRIBUTE.ICONS.CON, modal.data.constitution, modal.data.modifier)}
 							</Text>,
 							<Text key="intelligence" color="gray" fontWeight="bold">
-								{pointAttribute(modal.data.intelligence, modal.data.damage)}
+								{pointAttribute(ATTRIBUTE.ICONS.INT, modal.data.intelligence, modal.data.modifier)}
 							</Text>,
 							<Text key="wisdom" color="gray" fontWeight="bold">
-								{pointAttribute(modal.data.wisdom, modal.data.damage)}
+								{pointAttribute(ATTRIBUTE.ICONS.SAB, modal.data.wisdom, modal.data.modifier)}
 							</Text>,
 							<Text key="charisma" color="gray" fontWeight="bold">
-								{pointAttribute(modal.data.charisma, modal.data.damage)}
+								{pointAttribute(ATTRIBUTE.ICONS.CAR, modal.data.charisma, modal.data.modifier)}
 							</Text>,
 						]}
 					</Tab>

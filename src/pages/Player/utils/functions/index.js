@@ -25,8 +25,8 @@ export const modifierPoints = (character = {}, item = {}, attribute = 'PRIMARY')
 	}
 
 	if (level > modifier) {
-		return `${icon} ${modifier} ${ATTRIBUTE.ICONS.DAD}${addSignal(modifier - level)}`
+		return `${icon} ${modifier} ${ATTRIBUTE.ICONS.DAD}${addSignal(modifier - level) || ''}`
 	}
 
-	return `${icon} ${modifier} ${ATTRIBUTE.ICONS.DAD}${addSignal(level)}`
+	return `${icon} ${modifier} ${ATTRIBUTE.ICONS.DAD}${addSignal(level) || ''}`
 }
