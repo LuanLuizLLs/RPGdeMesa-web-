@@ -241,6 +241,13 @@ export const CONDITIONS = {
 	},
 }
 
+export const ABILITY = {
+	ACTIVE: {
+		'Ativa': true,
+		'Passiva': false,
+	},
+}
+
 export const INVENTORY = {
 	USABLE: {
 		'Não': false,

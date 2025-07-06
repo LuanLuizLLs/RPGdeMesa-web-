@@ -118,14 +118,6 @@ export function Modals({ handle, stateModal, stateValues }) {
 						{featureAttributes(modal.data)}
 					</Text>
 				</Paper>
-				<Box display="flex" justifyContent="flex-end">
-					<Button type="bottomless" padding={10} onClick={handle.resetFeature}>
-            Cancelar
-					</Button>
-					<Button type="filled" color="primary" padding={10} onClick={handle.resetFeature}>
-            Fechar
-					</Button>
-				</Box>
 			</>
 		),
 		update_feature: (

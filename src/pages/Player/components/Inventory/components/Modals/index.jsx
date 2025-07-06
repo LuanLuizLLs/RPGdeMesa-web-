@@ -79,7 +79,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Paper>
 				<Paper backgroundColor="secondary" margin="10px 0">
 					<Text fontWeight="bold">
-						{modifierPoints(CHARACTER.modified, modal.data)}
+						{modal.data.usable ? modifierPoints(CHARACTER, modal.data, 'SECONDARY') : modifierPoints(CHARACTER.modified, modal.data)}
 					</Text>
 				</Paper>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>

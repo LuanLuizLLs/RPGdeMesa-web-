@@ -1,7 +1,8 @@
-import { ATTRIBUTE, OPTIONS } from 'utils/constants'
+import { ATTRIBUTE, ABILITY } from 'utils/constants'
 import { characterStore } from 'pages/Player/utils/store'
-import { Box, Button, Grid, Input, Paper, Select, Text, TextArea, Title } from 'components'
+import { Box, Button, Grid, Input, Paper, Radio, Select, Text, TextArea, Title } from 'components'
 import { modifierPoints } from 'pages/Player/utils/functions'
+import { optionsActive } from '../../utils/functions'
 import useStore from 'hooks/useStore'
 
 export function Modals({ handle, stateModal, stateValues }) {
@@ -16,6 +17,12 @@ export function Modals({ handle, stateModal, stateValues }) {
 				<Title type="h6" color="primary">
           Criar habilidade:
 				</Title>
+				<Radio
+					name="active"
+					label="Tipo"
+					options={ABILITY.ACTIVE}
+					stateValue={stateValues}
+				/>
 				<Input
 					name="name"
 					placeholder="Nome"
@@ -31,7 +38,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 						<Select
 							name="attribute"
 							label="Atributo"
-							options={OPTIONS.ATTRIBUTE.PRIMARY}
+							options={optionsActive(values.active)}
 							stateValue={stateValues}
 						/>
 					</Grid>
@@ -72,7 +79,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Paper>
 				<Paper backgroundColor="secondary" margin="10px 0">
 					<Text fontWeight="bold">
-						{modifierPoints(CHARACTER.modified, modal.data)}
+						{modal.data.active ? modifierPoints(CHARACTER.modified, modal.data) : modifierPoints(CHARACTER, modal.data, 'SECONDARY')}
 					</Text>
 				</Paper>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
@@ -107,7 +114,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 						<Select
 							name="attribute"
 							label="Atributo"
-							options={OPTIONS.ATTRIBUTE.PRIMARY}
+							options={optionsActive(values.active)}
 							stateValue={stateValues}
 						/>
 					</Grid>

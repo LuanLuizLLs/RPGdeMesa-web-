@@ -83,11 +83,13 @@ export function useInventory() {
 	}, [CHARACTER.id], Boolean(CHARACTER.id))
 
 	useEffect(() => {
-		const [attribute] = optionsUsable(values.usable)
-		setValues((state) => ({
-			...state,
-			attribute,
-		}))
+		if (modal.content === 'create_item') {
+			const [attribute] = optionsUsable(values.usable)
+			setValues((state) => ({
+				...state,
+				attribute,
+			}))
+		}
 	}, [values.usable])
 
 	return {

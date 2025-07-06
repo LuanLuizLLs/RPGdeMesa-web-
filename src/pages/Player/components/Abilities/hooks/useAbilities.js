@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { characterStore } from 'pages/Player/utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
@@ -6,6 +6,7 @@ import useMessage from 'hooks/useMessage'
 import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
+import { optionsActive } from '../utils/functions'
 
 export function useAbilities() {
 	const CHARACTER = useStore(characterStore)
@@ -78,6 +79,16 @@ export function useAbilities() {
 	useSse('player', () => {
 		handle.listAbility()
 	}, [CHARACTER.id], Boolean(CHARACTER.id))
+
+	useEffect(() => {
+		if (modal.content === 'create_ability') {
+			const [attribute] = optionsActive(values.active)
+			setValues((state) => ({
+				...state,
+				attribute,
+			}))
+		}
+	}, [values.active])
 
 	return {
 		list,

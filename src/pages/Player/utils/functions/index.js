@@ -13,22 +13,20 @@ export function featureAttributes(item = {}) {
 	}, '')
 }
 
-export const modifierPoints = (character = {}, item = {}) => {
+export const modifierPoints = (character = {}, item = {}, attribute = 'PRIMARY') => {
 	const {
 		icon,
 		modifier,
 		level,
 	} = {
 		icon: ATTRIBUTE.ICONS[item.attribute],
-		modifier: character[ATTRIBUTE.PRIMARY[item.attribute]],
+		modifier: character[ATTRIBUTE[attribute][item.attribute]],
 		level: item.level,
 	}
 
-	const rank = ATTRIBUTE.RANK[modifier - level]
-
-	if (rank) {
-		return `${icon} ${rank} ${ATTRIBUTE.ICONS.DAD}+${level}`
+	if (level > modifier) {
+		return `${icon} ${modifier} ${ATTRIBUTE.ICONS.DAD}${addSignal(modifier - level)}`
 	}
 
-	return `${icon} ⨉ ${ATTRIBUTE.ICONS.DAD}-${level}`
+	return `${icon} ${modifier} ${ATTRIBUTE.ICONS.DAD}${addSignal(level)}`
 }

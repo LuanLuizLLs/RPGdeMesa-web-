@@ -7,6 +7,7 @@ export const INITIAL = {
 		name: '',
 		description: '',
 		attribute: 'FOR',
+		active: true,
 		level: 1,
 	},
 	LIST: {
