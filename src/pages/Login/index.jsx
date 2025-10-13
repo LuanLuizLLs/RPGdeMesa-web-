@@ -25,7 +25,7 @@ function Login() {
                 Login
 							</Title>
 							<Input
-								name="name"
+								name="username"
 								label="Usuário"
 								placeholder="Digite seu usuário"
 								stateValue={stateValues}
@@ -76,7 +76,7 @@ function Login() {
                 Preencha os dados a seguir:
 							</Title>
 							<Input
-								name="name"
+								name="username"
 								label="Usuário"
 								placeholder="Seu novo usuário"
 								stateValue={stateValues}
@@ -132,7 +132,7 @@ function Login() {
                 Altere sua senha:
 							</Title>
 							<Input
-								name="name"
+								name="username"
 								label="Usuário"
 								placeholder="Digite seu usuário"
 								stateValue={stateValues}

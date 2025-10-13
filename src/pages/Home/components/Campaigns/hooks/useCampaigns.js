@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import { campaignAttributes } from '../utils/functions'
 import { INITIAL } from '../utils/constants'
 import useMessage from 'hooks/useMessage'
@@ -18,8 +17,6 @@ export function useCampaigns() {
 	const [modal, setModal] = useState(INITIAL.MODAL)
 	const [values, setValues] = useState(INITIAL.VALUES)
 
-	const { USER } = useSelector(({ reducer }) => reducer)
-
 	const handle = {
 		openModal(content, data = {}) {
 			setModal({ content, data })
@@ -30,9 +27,7 @@ export function useCampaigns() {
 			setValues(INITIAL.VALUES)
 		},
 		listCampaign() {
-			API('campaigns', {
-				id_user: USER.id
-			})
+			API('campaigns')
 				.read(({ data }) => {
 					setList((state) => ({
 						...state, rows: data.response,
@@ -46,7 +41,6 @@ export function useCampaigns() {
 			API('campaigns', {
 				...values,
 				...campaignAttributes(values.period, values.climate),
-				id_user: USER.id,
 			})
 				.create(({ data }) => {
 					openMessage(data.status, data.message)

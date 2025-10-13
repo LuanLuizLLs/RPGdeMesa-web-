@@ -1,20 +1,12 @@
-import { useDispatch } from 'react-redux'
+import { userStore } from 'pages/Login/utils/stores'
 
 function useLogin() {
-	const setDispatch = useDispatch()
-
 	const submitLogin = (data = {}) => {
-		setDispatch({
-			type: 'USER',
-			data,
-		})
+		userStore.set(data)
 	}
 
 	const submitLogout = () => {
-		setDispatch({
-			type: 'USER',
-			data: {},
-		})
+		userStore.set({})
 	}
 
 	return {

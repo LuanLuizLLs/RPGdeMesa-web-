@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { campaignAttributes } from '../utils/functions'
 import { campaignStore } from '../utils/store'
@@ -13,7 +12,6 @@ export function useMaster() {
 	const setNavigate = useNavigate()
 
 	const { id_campaign } = useParams()
-	const { USER } = useSelector(({ reducer }) => reducer)
 
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -24,8 +22,7 @@ export function useMaster() {
 	const handle = {
 		loadCampaign() {
 			API('campaigns', {
-				id: id_campaign,
-				user: USER.id,
+				id: id_campaign
 			})
 				.read(({ data }) => {
 					if (data.blocked) {
@@ -56,7 +53,7 @@ export function useMaster() {
 
 	useSse('master', () => {
 		handle.loadCampaign()
-	}, [USER.id], Boolean(USER.id))
+	})
 
 	return {
 		handle,

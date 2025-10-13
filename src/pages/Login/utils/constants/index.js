@@ -1,7 +1,7 @@
 export const INITIAL = {
 	VIEW: 'login',
 	VALUES: {
-		name: '',
+		username: '',
 		password: '',
 		new_password: '',
 	},

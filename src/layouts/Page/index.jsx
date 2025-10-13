@@ -1,5 +1,6 @@
 import { useLayoutEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { userStore } from 'pages/Login/utils/stores'
+import useStore from 'hooks/useStore'
 import classes from './style.module.css'
 import PropTypes from 'prop-types'
 import logo from 'assets/img/logo.png'
@@ -14,7 +15,7 @@ function Page({
 
 	const { submitLogout } = useLogin()
 
-	const { USER } = useSelector(({ reducer }) => reducer)
+	const USER = useStore(userStore)
 
 	useLayoutEffect(() => {
 		document.title = `RPG | ${tab}`
@@ -32,10 +33,10 @@ function Page({
 					<figure>
 						{USER.imagem ? (
 							<img src={USER.imagem} alt="user" />
-						) : USER.name && USER.name[0]}
+						) : USER.username && USER.username[0]}
 					</figure>
 					<div>
-						<span>{USER.name || '...'}</span>
+						<span>{USER.username || '...'}</span>
 						<span className={classes.logout} onClick={submitLogout}>Logout</span>
 					</div>
 				</div>

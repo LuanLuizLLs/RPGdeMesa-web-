@@ -1,19 +1,24 @@
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { userStore } from 'pages/Login/utils/stores'
 import { useNavigate } from 'react-router-dom'
 import Routes from 'routes'
+import Auth from 'services/auth'
 import Message from 'layouts/Message'
 import Loading from 'layouts/Loading'
 import GlobalContextProvider from 'context'
 
 function App() {
 	const setNavigate = useNavigate()
-
-	const { USER } = useSelector(({ reducer }) => reducer)
-
+  
 	useEffect(() => {
-		USER.id || setNavigate('/login')
-	}, [USER, setNavigate])
+		Auth()
+			.me(({ data }) => {
+				userStore.set(data.response)
+			})
+			.catch(() => {
+				setNavigate('/login')
+			})
+	}, [setNavigate])
 
 	return (
 		<GlobalContextProvider>

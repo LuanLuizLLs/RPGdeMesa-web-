@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { INITIAL } from '../utils/constants'
 import { characterAttributes } from '../utils/functions'
@@ -18,8 +17,6 @@ export function useCharacters() {
 	const [modal, setModal] = useState(INITIAL.MODAL)
 	const [values, setValues] = useState(INITIAL.VALUES)
 
-	const { USER } = useSelector(({ reducer }) => reducer)
-
 	const handle = {
 		openModal(content, data = {}) {
 			setModal({ content, data })
@@ -30,9 +27,7 @@ export function useCharacters() {
 			setValues(INITIAL.VALUES)
 		},
 		listCharacter() {
-			API('characters', {
-				id_user: USER.id
-			})
+			API('characters')
 				.read(({ data }) => {
 					setList((state) => ({
 						...state, rows: data.response,
@@ -46,7 +41,6 @@ export function useCharacters() {
 			API('characters', {
 				...values,
 				...characterAttributes(values.race, values.caste),
-				id_user: USER.id,
 			})
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
@@ -84,7 +78,7 @@ export function useCharacters() {
 
 	useSse('player', () => {
 		handle.listCharacter()
-	}, [USER.id])
+	})
 
 	return {
 		list,

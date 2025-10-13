@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import useMessage from 'hooks/useMessage'
 import useLoading from 'hooks/useLoading'
 import useAuth from 'hooks/useLogin'
-import API from 'services/api'
+import Auth from 'services/auth'
 import { comparativePassword } from '../utils/functions'
 import { INITIAL } from '../utils/constants'
 import { isNull } from 'utils/functions'
@@ -23,7 +23,7 @@ export function useLogin() {
 			setView(view)
 			setValues({
 				...INITIAL.VALUES,
-				name: values.name,
+				username: values.username,
 			})
 		},
 		resetLogin() {
@@ -36,11 +36,10 @@ export function useLogin() {
       
 			startLoading('circular')
 
-			API('users', values)
-				.read(({ data }) => {
-					const [user = {}] = data.response
+			Auth(values)
+				.login(({ data }) => {
 					openMessage(data.status, data.message)
-					submitLogin(user)
+					submitLogin(data.response)
 					setNavigate('/')
 				})
 				.finally(stopLoading)
@@ -54,8 +53,8 @@ export function useLogin() {
 
 			startLoading('bar')
 
-			API('users', values)
-				.create(({ data }) => {
+			Auth(values)
+				.register(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetLogin)
@@ -70,8 +69,8 @@ export function useLogin() {
 
 			startLoading('bar')
 
-			API('users', values)
-				.update(({ data }) => {
+			Auth(values)
+				.recover(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetLogin)
