@@ -285,8 +285,6 @@ export const ADVENTURE = {
 		'Características',
 		'Habilidades',
 		'Itens',
-		'Moedas',
-		'Ações',
 	],
 }
 
@@ -311,13 +309,9 @@ export const SCENERY = {
 		'Urbano',
 	],
 	CULTURE: [
-		'Harmonia',
-		'Tensão ou rivalidade',
-		'Maioria racial são conquistadores',
-		'Minoria racial são governantes',
-		'Minoria racial são refugiados',
-		'Maioria racial oprime minoria',
-		'Minoria racial oprime maioria',
+		'Amigável',
+		'Neutro',
+		'Hostil',
 	],
 }
 
