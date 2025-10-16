@@ -2,13 +2,16 @@ import axios from 'axios'
 import Token from './token'
 
 const api = axios.create({
-	baseURL: `http://${window.location.hostname}:8000`,
-	headers: {
-		authorization: `Bearer ${Token.get()}`
-	}
+	baseURL: `http://${window.location.hostname}:8000`
 })
 
 const API = (prefix = '', params = {}) => {
+	const token = Token.get()
+
+	if (token) {
+		api.defaults.headers.authorization = `Bearer ${Token.get()}`
+	}
+
 	return {
 		async create(callback) {
 			try {
