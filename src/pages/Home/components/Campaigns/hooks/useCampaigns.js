@@ -27,6 +27,8 @@ export function useCampaigns() {
 			setValues(INITIAL.VALUES)
 		},
 		listCampaign() {
+			startLoading('bar')
+
 			API('campaigns')
 				.read(({ data }) => {
 					setList((state) => ({

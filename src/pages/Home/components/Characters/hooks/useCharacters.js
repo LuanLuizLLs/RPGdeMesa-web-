@@ -27,6 +27,8 @@ export function useCharacters() {
 			setValues(INITIAL.VALUES)
 		},
 		listCharacter() {
+			startLoading('bar')
+
 			API('characters')
 				.read(({ data }) => {
 					setList((state) => ({

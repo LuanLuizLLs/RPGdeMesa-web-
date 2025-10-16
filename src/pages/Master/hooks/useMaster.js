@@ -21,6 +21,8 @@ export function useMaster() {
 
 	const handle = {
 		loadCampaign() {
+			startLoading('bar')
+
 			API('campaigns', {
 				id: id_campaign
 			})

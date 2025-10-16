@@ -40,6 +40,8 @@ export function useLogin() {
 				.login(({ data }) => {
 					openMessage(data.status, data.message)
 					submitLogin(data.response)
+				})
+				.then(() => {
 					setNavigate('/')
 				})
 				.finally(stopLoading)
