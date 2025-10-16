@@ -4,7 +4,10 @@ import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 
 const INITIAL = {
-	USER: {},
+	USER: {
+		avatar: null,
+		username: null,
+	},
 }
 
 const initialState = defineState({ ...INITIAL })('reducer')
