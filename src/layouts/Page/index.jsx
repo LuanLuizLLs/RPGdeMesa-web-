@@ -1,11 +1,10 @@
 import { useLayoutEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { usePage } from './hooks/usePage'
+import { Notifications } from './components/Notifications'
 import classes from './style.module.css'
 import PropTypes from 'prop-types'
 import logo from 'assets/img/logo.png'
-import useLogin from 'hooks/useLogin'
-import useMessage from 'hooks/useMessage'
-import Auth from 'services/auth'
 
 function Page({
 	children,
@@ -13,21 +12,8 @@ function Page({
 	title = '',
 	width = '90vw',
 }) {
-	const { submitLogout } = useLogin()
-	const { openMessage } = useMessage()
-
+	const { handle } = usePage()
 	const { USER } = useSelector(({ reducer }) => reducer)
-
-	function handleLogout() {
-		Auth()
-			.logout(({ data }) => {
-				openMessage(data.status, data.message)
-				submitLogout(data.response)
-			})
-			.catch(({ response }) => {
-				openMessage(response.data.status, response.data.message)
-			})
-	}
 
 	useLayoutEffect(() => {
 		document.title = `RPG | ${tab}`
@@ -41,6 +27,7 @@ function Page({
 						<img src={logo} alt="logo" />
 					</a>
 				</div>
+				<Notifications />
 				<div className={classes.user}>
 					<figure>
 						{USER.avatar ? (
@@ -49,7 +36,7 @@ function Page({
 					</figure>
 					<div>
 						<span>{USER.username || '...'}</span>
-						<span className={classes.logout} onClick={handleLogout}>Logout</span>
+						<span className={classes.logout} onClick={handle.submitLogout}>Logout</span>
 					</div>
 				</div>
 			</header>

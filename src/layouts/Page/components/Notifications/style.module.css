@@ -1,0 +1,88 @@
+.container {
+  color: var(--color-black);
+}
+
+.icon::before {
+  content: var(--icon-notification);
+  color: var(--color-white);
+  font-size: 20px;
+  font-weight: 400;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.icon:hover::before {
+  color: var(--color-secondary);
+}
+
+.notification {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes signal {
+  from {
+    top: 0px;
+  }
+
+  to {
+    top: 4px;
+  }
+}
+
+.notification[data-signal=true]::before {
+  content: '';
+
+  height: 4px;
+  width: 4px;
+  border-radius: 100%;
+
+  position: absolute;
+  right: 12px;
+
+  animation: signal 0.4s linear infinite alternate;
+  background-color: var(--color-white);
+}
+
+.inbox {
+  display: none;
+  flex-direction: column;
+
+  right: 0;
+  position: absolute;
+
+  padding: 4px;
+  width: 200px;
+  max-height: 200px;
+  border-radius: 4px;
+  overflow: auto;
+
+  color: var(--color-black);
+  border: solid var(--color-secondary);
+  background-color: var(--color-white);
+}
+
+.inbox:hover,
+.icon:hover+div {
+  display: flex;
+}
+
+.inbox:empty::before {
+  content: 'Não há notificações...';
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.message {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.message:hover {
+  cursor: pointer;
+  color: var(--color-primary);
+}
+
+.message:not(:last-child) {
+  border-bottom: thin solid var(--color-secondary);
+}

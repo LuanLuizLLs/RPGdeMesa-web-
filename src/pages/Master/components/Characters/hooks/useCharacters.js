@@ -6,6 +6,7 @@ import useMessage from 'hooks/useMessage'
 import useStore from 'hooks/useStore'
 import useSse from 'hooks/useSse'
 import API from 'services/api'
+import { NOTIFICATION_TYPE } from 'utils/enums'
 
 export function useCharacters() {
 	const { openMessage } = useMessage()
@@ -55,11 +56,13 @@ export function useCharacters() {
 		addCharacter() {
 			startLoading('circular')
 
-			API('characters', {
+			API('notifications', {
 				...values,
 				id_campaign: CAMPAIGN.id,
+				name_campaign: CAMPAIGN.name,
+				type: NOTIFICATION_TYPE.INVITE_CAMPAIGN,
 			})
-				.update(({ data }) => {
+				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetCharacter)
@@ -91,7 +94,7 @@ export function useCharacters() {
 				.catch(stopLoading)
 		},
 	}
-  
+
 	useSse('player', () => {
 		handle.listCharacter()
 	}, [CAMPAIGN.id], Boolean(CAMPAIGN.id))
