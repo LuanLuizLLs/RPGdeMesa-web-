@@ -1,28 +1,28 @@
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import Routes from 'routes'
-import Auth from 'services/auth'
-import Message from 'layouts/Message'
-import Loading from 'layouts/Loading'
-import useLogin from 'hooks/useLogin'
 import GlobalContextProvider from 'context'
+import Loading from 'layouts/Loading'
+import Message from 'layouts/Message'
+import Auth from 'services/auth'
+import Routes from 'routes'
 
 function App() {
 	const setNavigate = useNavigate()
-
-	const { submitLogin } = useLogin()
-	const { USER } = useSelector(({ reducer }) => reducer)
+	const setDispatch = useDispatch()
 
 	useEffect(() => {
 		Auth()
 			.me(({ data }) => {
-				submitLogin(data.response)
+				setDispatch({
+					type: 'USER',
+					data: data.response,
+				})
 			})
 			.catch(() => {
 				setNavigate('/login')
 			})
-	}, [USER.id])
+	}, [])
 
 	return (
 		<GlobalContextProvider>

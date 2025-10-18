@@ -1,21 +1,18 @@
 import axios from 'axios'
 import Token from './token'
 
-const api = axios.create({
-	baseURL: `http://${window.location.hostname}:8000`,
-})
-
 const Auth = (params = {}) => {
-	const token = Token.get()
-
-	if (token) {
-		api.defaults.headers.authorization = `Bearer ${Token.get()}`
-	}
+	const auth = axios.create({
+		baseURL: `http://${window.location.hostname}:8000`,
+		headers: {
+			authorization: `Bearer ${Token.get()}`
+		}
+	})
 
 	return {
 		async me(callback) {
 			try {
-				const response = await api.get('auth/me')
+				const response = await auth.get('auth/me')
 				callback(response)
 			} catch ({ response }) {
 				throw callback(response)
@@ -23,7 +20,7 @@ const Auth = (params = {}) => {
 		},
 		async register(callback) {
 			try {
-				const response = await api.post('auth/register', params)
+				const response = await auth.post('auth/register', params)
 				callback(response)
 			} catch ({ response }) {
 				throw callback(response)
@@ -31,7 +28,7 @@ const Auth = (params = {}) => {
 		},
 		async recover(callback) {
 			try {
-				const response = await api.patch('auth/recover', params)
+				const response = await auth.patch('auth/recover', params)
 				callback(response)
 			} catch ({ response }) {
 				throw callback(response)
@@ -39,7 +36,7 @@ const Auth = (params = {}) => {
 		},
 		async login(callback) {
 			try {
-				const response = await api.post('auth/login', params)
+				const response = await auth.post('auth/login', params)
 				Token.set(response.data.token)
 				callback(response)
 			} catch ({ response }) {
@@ -48,7 +45,7 @@ const Auth = (params = {}) => {
 		},
 		async logout(callback) {
 			try {
-				const response = await api.post('auth/logout')
+				const response = await auth.post('auth/logout')
 				Token.remove()
 				callback(response)
 			} catch ({ response }) {

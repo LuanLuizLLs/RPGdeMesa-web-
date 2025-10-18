@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import useMessage from 'hooks/useMessage'
 import useLoading from 'hooks/useLoading'
 import useAuth from 'hooks/useLogin'
@@ -9,8 +8,6 @@ import { INITIAL } from '../utils/constants'
 import { isNull } from 'utils/functions'
 
 export function useLogin() {
-	const setNavigate = useNavigate()
-
 	const { submitLogin } = useAuth()
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
@@ -33,16 +30,13 @@ export function useLogin() {
 			if (isNull(values, ['new_password'])) {
 				return openMessage('warning', 'Preencha todos os dados')
 			}
-      
+
 			startLoading('circular')
 
 			Auth(values)
 				.login(({ data }) => {
 					openMessage(data.status, data.message)
 					submitLogin(data.response)
-				})
-				.then(() => {
-					setNavigate('/')
 				})
 				.finally(stopLoading)
 		},
