@@ -13,7 +13,7 @@ function Page({
 	width = '90vw',
 }) {
 	const { handle } = usePage()
-	const { USER } = useSelector(({ reducer }) => reducer)
+	const { USER = {} } = useSelector(({ reducer }) => reducer)
 
 	useLayoutEffect(() => {
 		document.title = `RPG | ${tab}`

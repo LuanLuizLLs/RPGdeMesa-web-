@@ -7,7 +7,7 @@ import classes from './style.module.css'
 export function Notifications() {
 	const { handle, stateModal, stateList } = useNotifications()
 
-	const [list] = stateList
+	const [list = []] = stateList
 
 	const hasNotification = Boolean(list?.length)
 
