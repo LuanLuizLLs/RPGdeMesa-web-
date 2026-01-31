@@ -2,7 +2,6 @@ import { Box, Button, Input, Text, Title } from 'components'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
-	const [values] = stateValues
 
 	return {
 		add_character: (
@@ -12,20 +11,18 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Title>
 				<Box marginBottom={20}>
 					<Input
-						name={values.name ? 'name' : 'id'}
+						name="id"
 						label="Personagem"
 						placeholder="ID do personagem"
-						onEnter={handle.searchCharacter}
 						stateValue={stateValues}
-						readOnly={Boolean(values.name)}
 					/>
 				</Box>
 				<Box display="flex" justifyContent="flex-end">
 					<Button type="filled" color="secondary" width="fit-content" padding={10} onClick={handle.resetCharacter}>
-						{values.name ? 'Limpar' : 'Cancelar'}
+						Cancelar
 					</Button>
 					<Button type="filled" width="fit-content" padding={10} onClick={handle.addCharacter}>
-						{values.name ? 'Confirmar' : 'Pesquisar'}
+						Adicionar
 					</Button>
 				</Box>
 			</>

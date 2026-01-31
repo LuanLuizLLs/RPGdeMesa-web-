@@ -22,7 +22,7 @@ export function useNotifications() {
 			setModal(INITIAL.MODAL)
 			setValues(INITIAL.VALUES)
 		},
-		listNotification: () => {
+		listNotification() {
 			startLoading('bar')
 
 			API('notifications')
@@ -31,7 +31,7 @@ export function useNotifications() {
 				})
 				.finally(stopLoading)
 		},
-		acceptNotification: () => {
+		acceptNotification() {
 			startLoading('circular')
 
 			API(values.domain, values.data)[values.action](({ data }) => {
@@ -43,7 +43,7 @@ export function useNotifications() {
 				.finally(handle.closeModal)
 				.finally(stopLoading)
 		},
-		declineNotification: () => {
+		declineNotification() {
 			startLoading('circular')
 
 			API('notifications', values)
