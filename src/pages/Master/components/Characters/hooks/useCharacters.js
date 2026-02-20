@@ -39,20 +39,6 @@ export function useCharacters() {
 				})
 				.finally(stopLoading)
 		},
-		searchCharacter() {
-			startLoading('bar')
-
-			API('characters', values)
-				.read(({ data }) => {
-					const [character = {}] = data.response
-					setValues({
-						...values,
-						...character,
-					})
-					openMessage(data.status, data.message)
-				})
-				.finally(stopLoading)
-		},
 		addCharacter() {
 			startLoading('circular')
 

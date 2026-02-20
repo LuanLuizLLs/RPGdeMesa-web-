@@ -5,7 +5,6 @@ export const INITIAL = {
 	},
 	VALUES: {
 		id: '',
-		name: '',
 	},
 	LIST: {
 		0: {
