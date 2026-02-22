@@ -54,7 +54,7 @@ export function useNotifications() {
 		},
 	}
 
-	useSse('notification', () => {
+	useSse('notify', () => {
 		handle.listNotification()
 	})
 

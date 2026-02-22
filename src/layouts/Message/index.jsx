@@ -13,7 +13,11 @@ function Message() {
 
 	useEffect(() => {
 		if (state.open) {
-			setTimeout(closeMessage, state.time)
+			const timeout = setTimeout(closeMessage, state.time)
+
+			return () => {
+				clearTimeout(timeout)
+			}
 		}
 	}, [state, closeMessage])
 

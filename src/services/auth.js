@@ -3,7 +3,7 @@ import Token from './token'
 
 const Auth = (params = {}) => {
 	const auth = axios.create({
-		baseURL: `http://${window.location.hostname}:8000`,
+		baseURL: process.env.REACT_APP_API_URL,
 		headers: {
 			authorization: `Bearer ${Token.get()}`
 		}

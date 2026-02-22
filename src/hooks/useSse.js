@@ -1,16 +1,24 @@
 import { useEffect, useState } from 'react'
-import { SSE } from 'services/sse'
+import { useSelector } from 'react-redux'
+import SSE from 'services/sse'
 
-const sse = new SSE()
+function useSse(event, callback, deps = [], enable = true) {
+	const [trigged, setTrigged] = useState(null)
 
-function useSse(key, callback, deps = [], enable = true) {
-	const [event, setEvent] = useState(null)
-
-	sse.defineEvent(key, setEvent)
+	const { USER } = useSelector(({ reducer }) => reducer)
 
 	useEffect(() => {
-		if (enable) callback(event)
-	}, [event, ...deps])
+		SSE.connect(USER.id)
+		SSE.init(event, setTrigged)
+
+		return () => {
+			if (!USER.id) SSE.close()
+		}
+	}, [USER.id])
+
+	useEffect(() => {
+		if (enable) callback()
+	}, [trigged, ...deps])
 }
 
 export default useSse

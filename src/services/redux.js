@@ -1,10 +1,10 @@
-
 import storeSynchronize, { defineState } from 'redux-localstore'
 import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
 
 const INITIAL = {
 	USER: {
+		id: null,
 		avatar: null,
 		username: null,
 	},

@@ -1,9 +1,29 @@
-export class SSE {
-	event = new EventSource(`http://${window.location.hostname}:8000/services/sse`)
+class SseService {
+	constructor() {
+		this.event = null
+	}
 
-	defineEvent(key, callback) {
-		this.event.addEventListener(key, ({ data }) => {
-			callback(data)
-		})
+	connect(id) {
+		if (!this.event) {
+			this.event = new EventSource(`${process.env.REACT_APP_SSE_URL}/${id}`)
+		}
+	}
+
+	init(key, callback) {
+		if (this.event) {
+			this.event.addEventListener(key, ({ data }) => {
+				callback(data)
+			})
+		}
+	}
+
+	close() {
+		if (this.event) {
+			this.event.close()
+		}
 	}
 }
+
+const SSE = new SseService()
+
+export default SSE
