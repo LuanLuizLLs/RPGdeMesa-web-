@@ -5,7 +5,7 @@ import SSE from 'services/sse'
 function useSse(event, callback, deps = [], enable = true) {
 	const [trigged, setTrigged] = useState(null)
 
-	const { USER } = useSelector(({ reducer }) => reducer)
+	const { USER = {} } = useSelector(({ reducer }) => reducer)
 
 	useEffect(() => {
 		SSE.connect(USER.id)
