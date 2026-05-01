@@ -27,12 +27,14 @@ export function useMaster() {
 				id: id_campaign
 			})
 				.read(({ data }) => {
-					if (data.blocked) {
+					const [campaign = null] = data.response
+
+					if (!campaign) {
 						openMessage(data.status, data.message)
 						campaignStore.reset()
 						return setNavigate('/')
 					}
-					const [campaign = INITIAL.VALUES] = data.response
+
 					campaignStore.set(campaign)
 					setValues(campaign)
 				})

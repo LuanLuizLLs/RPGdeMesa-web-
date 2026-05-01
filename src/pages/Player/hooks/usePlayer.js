@@ -13,7 +13,7 @@ export function usePlayer() {
 	const { id_character } = useParams()
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
-	
+
 	const [tab, setTab] = useState(INITIAL.TAB)
 	const [values, setValues] = useState(INITIAL.VALUES)
 
@@ -25,12 +25,14 @@ export function usePlayer() {
 				id: id_character,
 			})
 				.read(({ data }) => {
-					if (data.blocked) {
+					const [character = null] = data.response
+
+					if (!character) {
 						openMessage(data.status, data.message)
 						characterStore.reset()
 						return setNavigate('/')
 					}
-					const [character = INITIAL.VALUES] = data.response
+
 					characterStore.set(character)
 					setValues(character)
 				})
