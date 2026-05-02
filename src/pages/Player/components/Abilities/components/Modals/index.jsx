@@ -3,19 +3,30 @@ import { characterStore } from 'pages/Player/utils/store'
 import { Box, Button, Grid, Input, Paper, Radio, Select, Text, TextArea, Title } from 'components'
 import { modifierPoints } from 'pages/Player/utils/functions'
 import { optionsActive } from '../../utils/functions'
+import { useEffect } from 'react'
 import useStore from 'hooks/useStore'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
-	const [values] = stateValues
+	const [values, setValues] = stateValues
 
 	const CHARACTER = useStore(characterStore)
+
+	useEffect(() => {
+		if (modal.content === 'create_ability') {
+			const [attribute] = optionsActive(values.active)
+			setValues((state) => ({
+				...state,
+				attribute,
+			}))
+		}
+	}, [values.active])
 
 	return {
 		create_ability: (
 			<>
 				<Title type="h6" color="primary">
-          Criar habilidade:
+					Criar habilidade:
 				</Title>
 				<Radio
 					name="active"
@@ -56,10 +67,10 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Grid>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="filled" color="secondary" padding={10} onClick={handle.resetAbility}>
-            Cancelar
+						Cancelar
 					</Button>
 					<Button type="filled" padding={10} onClick={handle.createAbility}>
-            Criar
+						Criar
 					</Button>
 				</Box>
 			</>
@@ -67,7 +78,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 		read_ability: (
 			<>
 				<Title type="h6">
-          Detalhes da habilidade:
+					Detalhes da habilidade:
 				</Title>
 				<Paper backgroundColor="secondary">
 					<Text color="primary" fontWeight="bold">
@@ -84,10 +95,10 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Paper>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="bottomless" padding={10} onClick={handle.resetAbility}>
-            Cancelar
+						Cancelar
 					</Button>
 					<Button type="filled" padding={10} onClick={handle.resetAbility}>
-            Fechar
+						Fechar
 					</Button>
 				</Box>
 			</>
@@ -95,7 +106,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 		update_ability: (
 			<>
 				<Title type="h6" color="primary">
-          Editar habilidade:
+					Editar habilidade:
 				</Title>
 				<Input
 					name="name"
@@ -132,10 +143,10 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Grid>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="filled" color="secondary" padding={10} onClick={handle.resetAbility}>
-            Cancelar
+						Cancelar
 					</Button>
 					<Button type="filled" padding={10} onClick={handle.updateAbility}>
-            Editar
+						Editar
 					</Button>
 				</Box>
 			</>
@@ -143,17 +154,17 @@ export function Modals({ handle, stateModal, stateValues }) {
 		delete_ability: (
 			<>
 				<Title type="h6" color="primary">
-          Deletar habilidade:
+					Deletar habilidade:
 				</Title>
 				<Text>
-          Tem certeza que deseja excluir a habilidade <b>{modal.data.name}</b>?
+					Tem certeza que deseja excluir a habilidade <b>{modal.data.name}</b>?
 				</Text>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="bottomless" padding={10} onClick={handle.resetAbility}>
-            Cancelar
+						Cancelar
 					</Button>
 					<Button type="filled" color="error" padding={10} onClick={handle.deleteAbility}>
-            Deletar
+						Deletar
 					</Button>
 				</Box>
 			</>
