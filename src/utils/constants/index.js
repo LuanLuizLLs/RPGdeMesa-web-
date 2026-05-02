@@ -309,9 +309,13 @@ export const SCENERY = {
 		'Urbano',
 	],
 	CULTURE: [
-		'Amigável',
-		'Neutro',
-		'Hostil',
+		'Harmonia',
+		'Tensão ou rivalidade',
+		'Maioria racial são conquistadores',
+		'Minoria racial são governantes',
+		'Minoria racial são refugiados',
+		'Maioria racial oprime minoria',
+		'Minoria racial oprime maioria',
 	],
 }
 
