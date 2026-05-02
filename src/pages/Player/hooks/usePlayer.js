@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { characterStore } from '../utils/store'
 import { INITIAL } from '../utils/constants'
 import useMessage from 'hooks/useMessage'
-import useSse from 'hooks/useSse'
+import usePusher from 'hooks/usePusher'
 import API from 'services/api'
 import useLoading from 'hooks/useLoading'
 
@@ -40,7 +40,7 @@ export function usePlayer() {
 		}
 	}
 
-	useSse('player', () => {
+	usePusher('player', id_character, () => {
 		handle.loadCharacter()
 	})
 

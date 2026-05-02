@@ -4,9 +4,7 @@ import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
 import useStore from 'hooks/useStore'
-import useSse from 'hooks/useSse'
 import API from 'services/api'
-import { optionsActive } from '../utils/functions'
 
 export function useAbilities() {
 	const CHARACTER = useStore(characterStore)
@@ -28,6 +26,8 @@ export function useAbilities() {
 			setValues(INITIAL.VALUES)
 		},
 		listAbility() {
+			startLoading('bar')
+
 			API('abilities', {
 				id_character: CHARACTER.id,
 			})
@@ -39,7 +39,7 @@ export function useAbilities() {
 				.finally(stopLoading)
 		},
 		createAbility() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('abilities', {
 				...values,
@@ -53,7 +53,7 @@ export function useAbilities() {
 				.catch(stopLoading)
 		},
 		updateAbility() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('abilities', values)
 				.update(({ data }) => {
@@ -64,7 +64,7 @@ export function useAbilities() {
 				.catch(stopLoading)
 		},
 		deleteAbility() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('abilities', values)
 				.delete(({ data }) => {
@@ -76,19 +76,11 @@ export function useAbilities() {
 		},
 	}
 
-	useSse('player', () => {
-		handle.listAbility()
-	}, [CHARACTER.id], Boolean(CHARACTER.id))
-
 	useEffect(() => {
-		if (modal.content === 'create_ability') {
-			const [attribute] = optionsActive(values.active)
-			setValues((state) => ({
-				...state,
-				attribute,
-			}))
+		if (CHARACTER.id) {
+			handle.listAbility()
 		}
-	}, [values.active])
+	}, [CHARACTER.id])
 
 	return {
 		list,

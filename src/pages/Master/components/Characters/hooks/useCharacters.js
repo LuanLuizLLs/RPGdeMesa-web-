@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { campaignStore } from 'pages/Master/utils/store'
 import { INITIAL } from '../utils/constants'
+import { NOTIFICATION_TYPE } from 'utils/enums'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
 import useStore from 'hooks/useStore'
-import useSse from 'hooks/useSse'
+import usePusher from 'hooks/usePusher'
 import API from 'services/api'
-import { NOTIFICATION_TYPE } from 'utils/enums'
 
 export function useCharacters() {
 	const { openMessage } = useMessage()
@@ -81,9 +81,9 @@ export function useCharacters() {
 		},
 	}
 
-	useSse('player', () => {
+	usePusher('master', CAMPAIGN.id, () => {
 		handle.listCharacter()
-	}, [CAMPAIGN.id], Boolean(CAMPAIGN.id))
+	})
 
 	return {
 		list,

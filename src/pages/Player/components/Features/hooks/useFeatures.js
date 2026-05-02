@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { characterStore } from 'pages/Player/utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
 import useStore from 'hooks/useStore'
-import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useFeatures() {
@@ -27,6 +26,8 @@ export function useFeatures() {
 			setValues(INITIAL.VALUES)
 		},
 		listFeature() {
+			startLoading('bar')
+
 			API('features', {
 				id_character: CHARACTER.id,
 			})
@@ -38,7 +39,7 @@ export function useFeatures() {
 				.finally(stopLoading)
 		},
 		createFeature() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('features', {
 				...values,
@@ -52,7 +53,7 @@ export function useFeatures() {
 				.catch(stopLoading)
 		},
 		updateFeature() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('features', values)
 				.update(({ data }) => {
@@ -63,7 +64,7 @@ export function useFeatures() {
 				.catch(stopLoading)
 		},
 		deleteFeature() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('features', values)
 				.delete(({ data }) => {
@@ -75,9 +76,11 @@ export function useFeatures() {
 		}
 	}
 
-	useSse('player', () => {
-		handle.listFeature()
-	}, [CHARACTER.id], Boolean(CHARACTER.id))
+	useEffect(() => {
+		if (CHARACTER.id) {
+			handle.listFeature()
+		}
+	}, [CHARACTER.id])
 
 	return {
 		list,

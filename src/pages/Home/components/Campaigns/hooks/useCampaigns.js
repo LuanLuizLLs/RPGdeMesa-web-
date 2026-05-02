@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { campaignAttributes } from '../utils/functions'
 import { INITIAL } from '../utils/constants'
 import useMessage from 'hooks/useMessage'
 import useLoading from 'hooks/useLoading'
-import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useCampaigns() {
@@ -78,9 +77,9 @@ export function useCampaigns() {
 		},
 	}
 
-	useSse('master', () => {
+	useEffect(() => {
 		handle.listCampaign()
-	})
+	}, [])
 
 	return {
 		list,

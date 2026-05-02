@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { sceneryStore } from 'pages/Master/utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
 import useStore from 'hooks/useStore'
-import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useExplorations() {
@@ -27,6 +26,8 @@ export function useExplorations() {
 			setValues(INITIAL.VALUES)
 		},
 		listExploration() {
+			startLoading('bar')
+
 			API('explorations', {
 				id_scenery: SCENERY.id,
 			})
@@ -91,9 +92,11 @@ export function useExplorations() {
 		}
 	}
 
-	useSse('master', () => {
-		handle.listExploration()
-	}, [SCENERY.id], Boolean(SCENERY.id))
+	useEffect(() => {
+		if (SCENERY.id) {
+			handle.listExploration()
+		}
+	}, [SCENERY.id])
 
 	return {
 		list,

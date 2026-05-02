@@ -4,7 +4,7 @@ import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
 import useStore from 'hooks/useStore'
-import useSse from 'hooks/useSse'
+import usePusher from 'hooks/usePusher'
 import API from 'services/api'
 
 export function useExploration() {
@@ -44,14 +44,14 @@ export function useExploration() {
 
 			const { id, board } = list
 			const { vertical, horizontal, ...rest } = values
-      
+
 			const updated = new Array(...board)
 			updated[horizontal][vertical] = rest
 
 			if (action.type === 'move') {
 				updated[action.data.horizontal][action.data.vertical] = null
 			}
-      
+
 			API('explorations-board', {
 				id,
 				board: updated
@@ -68,10 +68,10 @@ export function useExploration() {
 
 			const { id, board } = list
 			const { vertical, horizontal } = values
-      
+
 			const updated = new Array(...board)
 			updated[horizontal][vertical] = null
-      
+
 			API('explorations-board', {
 				id,
 				board: updated
@@ -108,10 +108,10 @@ export function useExploration() {
 		},
 	}
 
-	useSse('master', () => {
+	usePusher('exploration', SCENERY.id, () => {
 		handle.listExploration()
-	}, [SCENERY.id], Boolean(SCENERY.id))
-  
+	})
+
 	return {
 		handle,
 		stateList: [list, setList],

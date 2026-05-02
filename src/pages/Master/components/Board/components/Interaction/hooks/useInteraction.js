@@ -4,7 +4,7 @@ import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
 import useStore from 'hooks/useStore'
-import useSse from 'hooks/useSse'
+import usePusher from 'hooks/usePusher'
 import API from 'services/api'
 
 export function useInteraction() {
@@ -60,9 +60,9 @@ export function useInteraction() {
 		}
 	}
 
-	useSse('master', () => {
+	usePusher('interaction', ADVENTURE.id, () => {
 		handle.listInteraction()
-	}, [ADVENTURE.id], Boolean(ADVENTURE.id))
+	})
 
 	return {
 		handle,

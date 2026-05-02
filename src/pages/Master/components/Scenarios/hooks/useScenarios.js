@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { campaignStore, sceneryStore } from 'pages/Master/utils/store'
 import { sceneryAttributes } from '../utils/functions'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
 import useStore from 'hooks/useStore'
-import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useScenarios() {
@@ -40,9 +39,12 @@ export function useScenarios() {
 			})
 		},
 		initSecenery() {
+			if (!CAMPAIGN.id_scenery) {
+				return sceneryStore.reset()
+			}
+
 			API('scenarios', {
 				id: CAMPAIGN.id_scenery,
-				id_campaign: CAMPAIGN.id,
 			})
 				.read(({ data }) => {
 					const [scenery] = data.response
@@ -72,7 +74,6 @@ export function useScenarios() {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetSecenery)
-				.then(handle.listSecenery)
 				.catch(stopLoading)
 		},
 		deleteScenery() {
@@ -107,15 +108,18 @@ export function useScenarios() {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetSecenery)
+				.then(handle.initSecenery)
 				.then(handle.listSecenery)
 				.catch(stopLoading)
 		},
 	}
 
-	useSse('master',() => {
-		handle.listSecenery()
-		handle.initSecenery()
-	}, [CAMPAIGN.id_scenery], Boolean(CAMPAIGN.id))
+	useEffect(() => {
+		if (CAMPAIGN.id) {
+			handle.initSecenery()
+			handle.listSecenery()
+		}
+	}, [CAMPAIGN.id, CAMPAIGN.id_scenery])
 
 	return {
 		list,

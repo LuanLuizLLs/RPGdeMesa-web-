@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { campaignStore, adventureStore } from 'pages/Master/utils/store'
 import { adventureAttributes } from '../utils/functions'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
 import useStore from 'hooks/useStore'
-import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useAdventures() {
@@ -40,9 +39,12 @@ export function useAdventures() {
 			})
 		},
 		initAdventure() {
+			if (!CAMPAIGN.id_adventure) {
+				return adventureStore.reset()
+			}
+
 			API('adventures', {
 				id: CAMPAIGN.id_adventure,
-				id_campaign: CAMPAIGN.id,
 			})
 				.read(({ data }) => {
 					const [adventure] = data.response
@@ -72,7 +74,6 @@ export function useAdventures() {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetAdventure)
-				.then(handle.listAdventure)
 				.catch(stopLoading)
 		},
 		deleteAdventure() {
@@ -108,14 +109,17 @@ export function useAdventures() {
 				})
 				.then(handle.resetAdventure)
 				.then(handle.listAdventure)
+				.then(handle.initAdventure)
 				.catch(stopLoading)
 		},
 	}
 
-	useSse('master', () => {
-		handle.initAdventure()
-		handle.listAdventure()
-	}, [CAMPAIGN.id_adventure], Boolean(CAMPAIGN.id))
+	useEffect(() => {
+		if (CAMPAIGN.id) {
+			handle.listAdventure()
+			handle.initAdventure()
+		}
+	}, [CAMPAIGN.id, CAMPAIGN.id_adventure])
 
 	return {
 		list,

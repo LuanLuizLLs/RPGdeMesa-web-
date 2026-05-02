@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { INITIAL } from '../utils/constants'
 import { characterAttributes } from '../utils/functions'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
-import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useCharacters() {
@@ -78,9 +77,9 @@ export function useCharacters() {
 		},
 	}
 
-	useSse('player', () => {
+	useEffect(() => {
 		handle.listCharacter()
-	})
+	}, [])
 
 	return {
 		list,
