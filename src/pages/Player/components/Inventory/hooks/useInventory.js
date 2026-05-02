@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react'
 import { characterStore } from 'pages/Player/utils/store'
-import { optionsUsable } from '../utils/functions'
 import { INITIAL } from '../utils/constants/index.'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
 import useStore from 'hooks/useStore'
-import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useInventory() {
 	const CHARACTER = useStore(characterStore)
-  
+
 	const { openMessage } = useMessage()
 	const { startLoading, stopLoading } = useLoading()
 
@@ -28,6 +26,8 @@ export function useInventory() {
 			setValues(INITIAL.VALUES)
 		},
 		listInventory() {
+			startLoading('bar')
+
 			API('items', {
 				id_character: CHARACTER.id,
 			})
@@ -39,7 +39,7 @@ export function useInventory() {
 				.finally(stopLoading)
 		},
 		createInventory() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('items', {
 				...values,
@@ -53,7 +53,7 @@ export function useInventory() {
 				.catch(stopLoading)
 		},
 		updateInventory() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('items', values)
 				.update(({ data }) => {
@@ -64,7 +64,7 @@ export function useInventory() {
 				.catch(stopLoading)
 		},
 		deleteInventory() {
-			startLoading('bar')
+			startLoading('circular')
 
 			API('items', {
 				...values,
@@ -78,19 +78,11 @@ export function useInventory() {
 		},
 	}
 
-	useSse('player', () => {
-		handle.listInventory()
-	}, [CHARACTER.id], Boolean(CHARACTER.id))
-
 	useEffect(() => {
-		if (modal.content === 'create_item') {
-			const [attribute] = optionsUsable(values.usable)
-			setValues((state) => ({
-				...state,
-				attribute,
-			}))
+		if (CHARACTER.id) {
+			handle.listInventory()
 		}
-	}, [values.usable])
+	}, [CHARACTER.id])
 
 	return {
 		list,

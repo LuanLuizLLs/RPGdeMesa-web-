@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { adventureStore } from 'pages/Master/utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
 import useStore from 'hooks/useStore'
-import useSse from 'hooks/useSse'
 import API from 'services/api'
 
 export function useInteractions() {
@@ -27,6 +26,8 @@ export function useInteractions() {
 			setValues(INITIAL.VALUES)
 		},
 		listInteraction() {
+			startLoading('bar')
+
 			API('interactions', {
 				id_adventure: ADVENTURE.id,
 			})
@@ -91,9 +92,11 @@ export function useInteractions() {
 		}
 	}
 
-	useSse('master', () => {
-		handle.listInteraction()
-	}, [ADVENTURE.id], Boolean(ADVENTURE.id))
+	useEffect(() => {
+		if (ADVENTURE.id) {
+			handle.listInteraction()
+		}
+	}, [ADVENTURE.id])
 
 	return {
 		list,

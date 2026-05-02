@@ -5,7 +5,7 @@ import { campaignStore } from '../utils/store'
 import { INITIAL } from '../utils/constants'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
-import useSse from 'hooks/useSse'
+import usePusher from 'hooks/usePusher'
 import API from 'services/api'
 
 export function useMaster() {
@@ -55,7 +55,7 @@ export function useMaster() {
 		},
 	}
 
-	useSse('master', () => {
+	usePusher('master', id_campaign, () => {
 		handle.loadCampaign()
 	})
 

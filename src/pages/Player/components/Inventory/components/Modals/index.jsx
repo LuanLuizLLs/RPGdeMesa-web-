@@ -3,19 +3,30 @@ import { optionsUsable } from '../../utils/functions'
 import { ATTRIBUTE, INVENTORY } from 'utils/constants'
 import { modifierPoints } from 'pages/Player/utils/functions'
 import { Box, Button, Grid, Input, Paper, Radio, Select, Text, TextArea, Title } from 'components'
+import { useLayoutEffect } from 'react'
 import useStore from 'hooks/useStore'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
-	const [values] = stateValues
+	const [values, setValues] = stateValues
 
 	const CHARACTER = useStore(characterStore)
+
+	useLayoutEffect(() => {
+		if (modal.content === 'create_item') {
+			const [attribute] = optionsUsable(values.usable)
+			setValues((state) => ({
+				...state,
+				attribute,
+			}))
+		}
+	}, [values.usable])
 
 	return {
 		create_item: (
 			<>
 				<Title type="h6" color="primary">
-          Criar item:
+					Criar item:
 				</Title>
 				<Radio
 					name="usable"
@@ -56,10 +67,10 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Grid>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="filled" color="secondary" padding={10} onClick={handle.resetInventory}>
-            Cancelar
+						Cancelar
 					</Button>
 					<Button type="filled" padding={10} onClick={handle.createInventory}>
-            Criar
+						Criar
 					</Button>
 				</Box>
 			</>
@@ -67,7 +78,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 		read_item: (
 			<>
 				<Title type="h6">
-          Detalhes do item:
+					Detalhes do item:
 				</Title>
 				<Paper backgroundColor="secondary">
 					<Text color="primary" fontWeight="bold">
@@ -84,10 +95,10 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Paper>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="bottomless" padding={10} onClick={handle.resetInventory}>
-            Cancelar
+						Cancelar
 					</Button>
 					<Button type="filled" padding={10} onClick={handle.resetInventory}>
-            Fechar
+						Fechar
 					</Button>
 				</Box>
 			</>
@@ -95,7 +106,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 		update_item: (
 			<>
 				<Title type="h6" color="primary">
-          Editar item:
+					Editar item:
 				</Title>
 				<Input
 					name="name"
@@ -132,10 +143,10 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Grid>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="filled" color="secondary" padding={10} onClick={handle.resetInventory}>
-            Cancelar
+						Cancelar
 					</Button>
 					<Button type="filled" padding={10} onClick={handle.updateInventory}>
-            Editar
+						Editar
 					</Button>
 				</Box>
 			</>
@@ -143,17 +154,17 @@ export function Modals({ handle, stateModal, stateValues }) {
 		delete_item: (
 			<>
 				<Title type="h6" color="primary">
-          Deletar item:
+					Deletar item:
 				</Title>
 				<Text>
-          Tem certeza que deseja excluir o item <b>{modal.data.name}</b>?
+					Tem certeza que deseja excluir o item <b>{modal.data.name}</b>?
 				</Text>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="bottomless" padding={10} onClick={handle.resetInventory}>
-            Cancelar
+						Cancelar
 					</Button>
 					<Button type="filled" color="error" padding={10} onClick={handle.deleteInventory}>
-            Deletar
+						Deletar
 					</Button>
 				</Box>
 			</>

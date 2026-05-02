@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@laravel/echo-react": "^2.3.3",
     "@reduxjs/toolkit": "^1.8.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -54,6 +55,8 @@
     "@typescript-eslint/parser": "^7.0.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.32.2",
+    "laravel-echo": "^2.3.4",
+    "pusher-js": "^8.5.0",
     "typescript-plugin-css-modules": "^5.1.0"
   }
 }
