@@ -9,7 +9,7 @@ const pusher = new Echo({
 	wsHost: process.env.REACT_APP_PUSHER_APP_HOST,
 	wsPort: process.env.REACT_APP_PUSHER_APP_PORT_WS,
 	wssPort: process.env.REACT_APP_PUSHER_APP_PORT_WSS,
-	wsPath: '/ws',
+	wsPath: process.env.REACT_APP_PUSHER_APP_PATH_WS,
 	enabledTransports: ['ws', 'wss'],
 	cluster: 'mt1',
 	disableStats: true,
