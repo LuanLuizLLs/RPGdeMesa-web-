@@ -3,7 +3,7 @@ import imagePlayer from 'assets/img/player.png'
 import { Modals } from './components/Modals'
 import { ATTRIBUTE } from 'utils/constants'
 import { useCharacters } from './hooks/useCharacters'
-import { Box, Button, Divider, Grid, Image, Input, Link, Modal,  Paper, Text } from 'components'
+import { Box, Button, Divider, Grid, Image, Input, Link, Modal, Paper, Text } from 'components'
 
 function Characters() {
 	const { handle, stateList, stateModal, stateValues } = useCharacters()
@@ -23,7 +23,7 @@ function Characters() {
 				>
 					<Box position="absolute" top={15} right={20}>
 						<Link textDecoration="none" onClick={() => Boolean(character.id) && handle.openAdventure('remove_character', list[i])}>
-              &#10006;
+							&#10006;
 						</Link>
 					</Box>
 					<Grid type="container">
@@ -40,7 +40,7 @@ function Characters() {
 							</Grid>
 							<Grid type="column" padding={[5, 5]} minWidth={300}>
 								<Paper backgroundColor="secondary">
-									<Text fontSize="medium">
+									<Text fontSize="small">
 										<Link target="_blank" {...Boolean(character.id) && { href: `/player/${character.id}` }}>
 											{character.name}
 										</Link> ({character.race} | {character.caste} | {character.tendency})
@@ -55,7 +55,7 @@ function Characters() {
 												index={i}
 												name="life"
 												type="number"
-												fontSize="medium"
+												fontSize="small"
 												start={ATTRIBUTE.ICONS.VID}
 												end={`/${character.capacity.life}`}
 												readOnly={!character.id}
@@ -68,7 +68,7 @@ function Characters() {
 												index={i}
 												name="actions"
 												type="number"
-												fontSize="medium"
+												fontSize="small"
 												start={ATTRIBUTE.ICONS.ACO}
 												readOnly={!character.id}
 												stateValue={stateList}
@@ -80,7 +80,7 @@ function Characters() {
 												index={i}
 												name="coins"
 												type="number"
-												fontSize="medium"
+												fontSize="small"
 												start={ATTRIBUTE.ICONS.MOE}
 												readOnly={!character.id}
 												stateValue={stateList}
@@ -91,12 +91,12 @@ function Characters() {
 									<Divider borderStyle="solid" margin="10px 0 0" />
 									<Grid type="row">
 										<Grid type="column" flex="none" padding={[5, 10]}>
-											<Text fontSize="medium">
+											<Text fontSize="small">
 												{ATTRIBUTE.ICONS.FOR} FOR {character.modified.strength} | {ATTRIBUTE.ICONS.DES} DES {character.modified.dexterity} | {ATTRIBUTE.ICONS.CON} CON {character.modified.constitution}
 											</Text>
 										</Grid>
 										<Grid type="column" flex="none" padding={[5, 10]}>
-											<Text fontSize="medium">
+											<Text fontSize="small">
 												{ATTRIBUTE.ICONS.INT} INT {character.modified.intelligence} | {ATTRIBUTE.ICONS.SAB} SAB {character.modified.wisdom} | {ATTRIBUTE.ICONS.CAR} CAR {character.modified.charisma}
 											</Text>
 										</Grid>
@@ -112,7 +112,7 @@ function Characters() {
 			</Modal>
 			<Box display="flex" justifyContent="flex-end">
 				<Button type="filled" padding={10} onClick={() => handle.openAdventure('add_character')}>
-          Adicionar
+					Adicionar
 				</Button>
 			</Box>
 		</>

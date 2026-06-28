@@ -12,7 +12,7 @@ function Interaction() {
 	return (
 		<>
 			<Title type="h6">
-        Quadro de interação:
+				Quadro de interação:
 			</Title>
 			<Box height={500} overflow="auto">
 				{!interactions.length && (
@@ -24,11 +24,11 @@ function Interaction() {
 					<Paper key={i} backgroundColor="secondary" margin="10px 0">
 						<Box margin={5}>
 							<Text inline color="primary" fontWeight="bold">
-              #{i + 1}&nbsp;
+								#{i + 1}&nbsp;
 								<Link target="_blank" onClick={() => handle.openInteraction('interaction_details', interaction)}>
 									{interaction.shape.name}
 								</Link>
-              &nbsp;(Lv {interaction.shape.level})
+								&nbsp;(Lv {interaction.shape.level})
 							</Text>
 							<Text color="gray" fontSize="small">
 								{interaction.shape.description}
@@ -43,7 +43,7 @@ function Interaction() {
 									start={ATTRIBUTE.ICONS.VID}
 									name="life"
 									type="number"
-									fontSize="medium"
+									fontSize="small"
 									end={`/${interaction.shape.life}`}
 									stateValue={stateList}
 									onBlur={() => handle.updateInteraction(interaction)}
@@ -56,7 +56,7 @@ function Interaction() {
 									start={ATTRIBUTE.ICONS.DAD}
 									name="modifier"
 									type="number"
-									fontSize="medium"
+									fontSize="small"
 									end={`/${interaction.shape.modifier}`}
 									stateValue={stateList}
 									onBlur={() => handle.updateInteraction(interaction)}
@@ -70,7 +70,7 @@ function Interaction() {
 									start={ATTRIBUTE.ICONS.FOR}
 									name="strength"
 									type="number"
-									fontSize="medium"
+									fontSize="small"
 									end={`/${interaction.shape.strength}`}
 									stateValue={stateList}
 									onBlur={() => handle.updateInteraction(interaction)}
@@ -83,7 +83,7 @@ function Interaction() {
 									start={ATTRIBUTE.ICONS.DES}
 									name="dexterity"
 									type="number"
-									fontSize="medium"
+									fontSize="small"
 									end={`/${interaction.shape.dexterity}`}
 									stateValue={stateList}
 									onBlur={() => handle.updateInteraction(interaction)}
@@ -96,7 +96,7 @@ function Interaction() {
 									start={ATTRIBUTE.ICONS.CON}
 									name="constitution"
 									type="number"
-									fontSize="medium"
+									fontSize="small"
 									end={`/${interaction.shape.constitution}`}
 									stateValue={stateList}
 									onBlur={() => handle.updateInteraction(interaction)}
@@ -110,7 +110,7 @@ function Interaction() {
 									start={ATTRIBUTE.ICONS.INT}
 									name="intelligence"
 									type="number"
-									fontSize="medium"
+									fontSize="small"
 									end={`/${interaction.shape.intelligence}`}
 									stateValue={stateList}
 									onBlur={() => handle.updateInteraction(interaction)}
@@ -123,7 +123,7 @@ function Interaction() {
 									start={ATTRIBUTE.ICONS.SAB}
 									name="wisdom"
 									type="number"
-									fontSize="medium"
+									fontSize="small"
 									end={`/${interaction.shape.wisdom}`}
 									stateValue={stateList}
 									onBlur={() => handle.updateInteraction(interaction)}
@@ -136,7 +136,7 @@ function Interaction() {
 									start={ATTRIBUTE.ICONS.CAR}
 									name="charisma"
 									type="number"
-									fontSize="medium"
+									fontSize="small"
 									end={`/${interaction.shape.charisma}`}
 									stateValue={stateList}
 									onBlur={() => handle.updateInteraction(interaction)}
