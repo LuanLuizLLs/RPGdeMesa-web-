@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 * {
   margin: 0;
   padding: 0;
   font-size: 1rem;
-  font-family: monospace;
+  font-family: monospace, 'Material Icons';
 }
 
 *::-webkit-scrollbar {
@@ -44,12 +46,16 @@
   --color-gray: #76767E;
   --color-white: #EBEFD4;
 
-  --icon-success: '\2713';
-  --icon-error: '\2717';
-  --icon-warning: '\0021';
-  --icon-info: '\003F';
-  --icon-close: '\2716';
-  --icon-edit: '\270E';
-  --icon-delete: '\2718';
-  --icon-notification: '\2709';
+  --icon-success: '\e86c';
+  --icon-error: '\e5c9';
+  --icon-warning: '\e000';
+  --icon-info: '\e88e';
+  --icon-close: '\e5cd';
+  --icon-edit: '\e3c9';
+  --icon-delete: '\e872';
+  --icon-notification: '\e7f4';
+  --icon-arrow-up: '\f182';
+  --icon-arrow-down: '\f181';
+  --icon-arrow-right: '\eaaa';
+  --icon-arrow-left: '\eaa7';
 }

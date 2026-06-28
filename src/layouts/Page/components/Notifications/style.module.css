@@ -6,7 +6,6 @@
   content: var(--icon-notification);
   color: var(--color-white);
   font-size: 20px;
-  font-weight: 400;
   padding: 10px;
   cursor: pointer;
 }

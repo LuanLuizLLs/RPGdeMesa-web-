@@ -26,10 +26,9 @@
 
 .message::before {
   width: 20px;
-  height: 10px;
-  font-size: .8rem;
-  font-weight: bold;
-  display: inline-block;
+  height: 20px;
+  margin-right: 10px;
+  vertical-align: middle;
 }
 
 .message[type=success]::before {
@@ -48,12 +47,13 @@
 }
 
 .message[type=info]::before {
-  content: var(--color-info);
+  content: var(--icon-info);
   color: var(--color-info);
 }
 
 .message:hover::before {
-  content: var(--icon-close);
+  content: var(--icon-arrow-right);
+  color: var(--color-primary);
 }
 
 :root[device=mobile] .message {
