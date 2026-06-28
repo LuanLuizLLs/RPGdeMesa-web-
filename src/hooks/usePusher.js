@@ -3,16 +3,18 @@ import pusher from 'services/pusher'
 
 function usePusher(event, id, callback) {
 	useEffect(() => {
-		const channel = pusher.channel(`${event}.${id}`)
+		if (event && id) {
+			const channel = pusher.channel(`${event}.${id}`)
 
-		channel.listen('PusherEvent', () => {
+			channel.listen('PusherEvent', () => {
+				callback()
+			})
+
 			callback()
-		})
 
-		callback()
-
-		return () => {
-			channel.stopListening(event)
+			return () => {
+				channel.stopListening(event)
+			}
 		}
 	}, [event, id])
 }
