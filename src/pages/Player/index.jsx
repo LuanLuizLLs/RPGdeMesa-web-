@@ -15,7 +15,7 @@ function Player() {
 	return (
 		<Page tab="Jogador" title="Ficha do Jogador">
 			<Title type="h6" color="secondary">
-        #{CHARACTER.id} - {CHARACTER.name}
+				#{CHARACTER.id} - {CHARACTER.name}
 			</Title>
 			<Card>
 				<Grid type="container">
@@ -69,11 +69,11 @@ function Player() {
 				<Grid type="column" padding={[10, 10]} minWidth={250}>
 					<Card>
 						<Box display="flex" justifyContent="space-around" flexWrap="wrap">
-							<Text fontSize="medium" textAlign="center" whiteSpace="nowrap">
-                💪 FOR {CHARACTER.modified.strength} | 👋 DES {CHARACTER.modified.dexterity} | ✊ CON {CHARACTER.modified.constitution}
+							<Text fontSize="small" textAlign="center" whiteSpace="nowrap">
+								💪 FOR {CHARACTER.modified.strength} | 👋 DES {CHARACTER.modified.dexterity} | ✊ CON {CHARACTER.modified.constitution}
 							</Text>
-							<Text fontSize="medium" textAlign="center" whiteSpace="nowrap">
-                📙 INT {CHARACTER.modified.intelligence} | 🙌 SAB {CHARACTER.modified.wisdom} | 🤝 CAR {CHARACTER.modified.charisma}
+							<Text fontSize="small" textAlign="center" whiteSpace="nowrap">
+								📙 INT {CHARACTER.modified.intelligence} | 🙌 SAB {CHARACTER.modified.wisdom} | 🤝 CAR {CHARACTER.modified.charisma}
 							</Text>
 						</Box>
 					</Card>
@@ -89,7 +89,7 @@ function Player() {
 									name="life"
 									type="number"
 									label="Vida"
-									fontSize="medium"
+									fontSize="small"
 									stateValue={stateValues}
 								/>
 							</Grid>
@@ -100,7 +100,7 @@ function Player() {
 									name="actions"
 									type="number"
 									label="Ações"
-									fontSize="medium"
+									fontSize="small"
 									stateValue={stateValues}
 								/>
 							</Grid>
@@ -111,7 +111,7 @@ function Player() {
 									name="coins"
 									type="number"
 									label="Moedas"
-									fontSize="medium"
+									fontSize="small"
 									stateValue={stateValues}
 								/>
 							</Grid>
