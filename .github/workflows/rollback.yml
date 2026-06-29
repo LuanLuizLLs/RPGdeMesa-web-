@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Versão/tag para fazer rollback (ex: v1.2.3)'
+        description: 'Tag de rollback (v#.#.#)'
         required: true
         type: string
 
