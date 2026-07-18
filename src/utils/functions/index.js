@@ -13,7 +13,9 @@ export const whichDevice = (device = '') => {
 export const isNull = (values = {}, optionals = []) => {
 	const nulls = []
 	Object.entries(values).forEach(([key, value]) => {
-		(!value && !optionals.includes(key)) && nulls.push(key)
+		if (!value && !optionals.includes(key)) {
+			nulls.push(key)
+		}
 	})
 	return nulls.length > 0 && nulls
 }

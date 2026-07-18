@@ -5,5 +5,6 @@ export const INITIAL = {
 		username: '',
 		password: '',
 		new_password: '',
+		code: '',
 	},
 }

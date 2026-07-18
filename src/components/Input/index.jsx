@@ -6,6 +6,7 @@ export const Input = ({
 	name,
 	max,
 	min,
+	maxLength,
 	type = 'text',
 	label = '',
 	start = '',
@@ -18,8 +19,9 @@ export const Input = ({
 	readOnly = false,
 	placeholder = null,
 	stateValue = [],
-	onBlur = () => {},
-	onEnter = () => {},
+	formatter = null,
+	onBlur = () => { },
+	onEnter = () => { },
 }) => {
 
 	const [value, setValue] = stateValue
@@ -32,6 +34,10 @@ export const Input = ({
 			fontSize,
 			width,
 		},
+	}
+
+	const formatterValue = (value = '') => {
+		return formatter ? formatter(value) : value
 	}
 
 	return (
@@ -51,6 +57,7 @@ export const Input = ({
 					type={type}
 					disabled={disabled}
 					readOnly={readOnly}
+					maxLength={maxLength}
 					value={(index > -1) ? value[index][name] : value[name]}
 					className={classes.input}
 					placeholder={placeholder}
@@ -63,12 +70,12 @@ export const Input = ({
 							if (index > -1) {
 								return ({
 									...state, [index]: {
-										...state[index], [name]: target.value
+										...state[index], [name]: formatterValue(target.value)
 									}
 								})
 							}
 							return ({
-								...state, [name]: target.value
+								...state, [name]: formatterValue(target.value)
 							})
 						})
 					}}

@@ -20,14 +20,13 @@ export function useLogin() {
 			setView(view)
 			setValues({
 				...INITIAL.VALUES,
-				username: values.username,
 			})
 		},
 		resetLogin() {
 			setView(INITIAL.VIEW)
 		},
 		submitLogin() {
-			if (isNull(values, ['new_password', 'email'])) {
+			if (isNull(values, ['new_password', 'email', 'code'])) {
 				return openMessage('warning', 'Preencha todos os dados')
 			}
 
@@ -41,7 +40,7 @@ export function useLogin() {
 				.finally(stopLoading)
 		},
 		submitRegister() {
-			if (isNull(values)) {
+			if (isNull(values, ['code'])) {
 				return openMessage('warning', 'Preencha todos os dados')
 			}
 
@@ -49,7 +48,7 @@ export function useLogin() {
 				return openMessage('warning', 'E-mail inválido')
 			}
 
-			if (!validateUsername(values.username)) {
+			if (!validateUsername(values.username).valid) {
 				return openMessage('warning', 'Usuário inválido')
 			}
 
@@ -66,10 +65,44 @@ export function useLogin() {
 				.then(handle.resetLogin)
 				.finally(stopLoading)
 		},
+		sendEmail() {
+			if (isNull(values, ['username', 'password', 'new_password', 'code'])) {
+				return openMessage('warning', 'Preencha o campo de e-mail')
+			}
+
+			startLoading('bar')
+
+			Auth(values)
+				.sendCode(({ data }) => {
+					openMessage(data.status, data.message)
+				})
+				.then(() => {
+					handle.alterView('send_code')
+				})
+				.finally(stopLoading)
+		},
+		sendCode() {
+			if (isNull(values, ['username', 'password', 'new_password', 'email'])) {
+				return openMessage('warning', 'Preencha o campo de código')
+			}
+
+			startLoading('bar')
+
+			Auth(values)
+				.confirmCode(({ data }) => {
+					openMessage(data.status, data.message)
+				})
+				.then(() => {
+					handle.alterView('recover')
+				})
+				.finally(stopLoading)
+		},
 		submitRecover() {
-			if (isNull(values, ['email'])) {
+			if (isNull(values, ['username', 'email', 'code'])) {
 				return openMessage('warning', 'Preencha todos os dados')
-			} else if (!comparativePassword(values.password, values.new_password).valid) {
+			}
+
+			if (!comparativePassword(values.password, values.new_password).valid) {
 				return openMessage('warning', 'As senhas não coincidem')
 			}
 

@@ -20,3 +20,7 @@ export const validateEmail = (email = '') => {
 		validate: email ? valid ? 'valid' : 'invalid' : 'default',
 	}
 }
+
+export const formatCode = (code = '') => {
+	return String(code).toUpperCase()
+}
