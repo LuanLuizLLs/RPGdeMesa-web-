@@ -1,19 +1,19 @@
 import Logo from 'assets/img/logo.png'
 import { useLogin } from './hooks/useLogin'
-import { comparativePassword } from './utils/functions'
+import { comparativePassword, validateEmail, validateUsername } from './utils/functions'
 import { Box, Title, Card, Image, Input, Button, Link, Grid } from 'components'
 
 function Login() {
 	const { view, handle, stateValues } = useLogin()
-  
+
 	const [values] = stateValues
 
 	return (
-		<Box flex="auto">
-			<Card maxWidth="350px">
+		<Box maxHeight="100vh" overflow="auto" flex="auto">
+			<Box padding="10px">
 				{({
 					login: (
-						<>
+						<Card maxWidth="350px">
 							<Image
 								src={Logo}
 								alt="logo"
@@ -22,7 +22,7 @@ function Login() {
 								margin="10px auto"
 							/>
 							<Title type="h1" color="primary" textAlign="center">
-                Login
+								Login
 							</Title>
 							<Input
 								name="username"
@@ -43,25 +43,25 @@ function Login() {
 								<Grid type="row">
 									<Grid type="column" size={6} margin={[0, 10]}>
 										<Button type="filled" color="secondary" onClick={() => handle.alterView('register')}>
-                      Cadastrar-se
+											Cadastrar-se
 										</Button>
 									</Grid>
 									<Grid type="column" size={6} margin={[0, 10]}>
 										<Button type="filled" onClick={handle.submitLogin}>
-                      Logar
+											Logar
 										</Button>
 									</Grid>
 								</Grid>
 							</Grid>
 							<Box width="fit-content" margin="0 auto">
 								<Link onClick={() => handle.alterView('recover')}>
-                  Esqueceu sua senha?
+									Esqueceu sua senha?
 								</Link>
 							</Box>
-						</>
+						</Card>
 					),
 					register: (
-						<>
+						<Card maxWidth="350px">
 							<Image
 								src={Logo}
 								alt="logo"
@@ -70,17 +70,24 @@ function Login() {
 								margin="10px auto"
 							/>
 							<Title type="h1" color="primary" textAlign="center">
-                Cadastre-se
+								Cadastre-se
 							</Title>
-							<Title type="h6" color="primary" textAlign="center">
-                Preencha os dados a seguir:
-							</Title>
+							<Input
+								type="email"
+								name="email"
+								label="E-mail"
+								placeholder="Digite seu e-mail"
+								stateValue={stateValues}
+								onEnter={handle.submitLogin}
+								{...validateEmail(values.email)}
+							/>
 							<Input
 								name="username"
 								label="Usuário"
-								placeholder="Seu novo usuário"
+								placeholder="Digite seu usuário"
 								stateValue={stateValues}
 								onEnter={handle.submitRegister}
+								{...validateUsername(values.username)}
 							/>
 							<Input
 								name="password"
@@ -104,20 +111,20 @@ function Login() {
 								<Grid type="row">
 									<Grid type="column" size={6} margin={[0, 10]}>
 										<Button type="filled" color="secondary" onClick={() => handle.alterView()}>
-                      Voltar
+											Voltar
 										</Button>
 									</Grid>
 									<Grid type="column" size={6} margin={[0, 10]}>
 										<Button type="filled" onClick={handle.submitRegister}>
-                      Cadastrar
+											Cadastrar
 										</Button>
 									</Grid>
 								</Grid>
 							</Grid>
-						</>
+						</Card>
 					),
 					recover: (
-						<>
+						<Card maxWidth="350px">
 							<Image
 								src={Logo}
 								alt="logo"
@@ -126,10 +133,10 @@ function Login() {
 								margin="10px auto"
 							/>
 							<Title type="h1" color="primary" textAlign="center">
-                Recuperar
+								Recuperar
 							</Title>
 							<Title type="h6" color="primary" textAlign="center">
-                Altere sua senha:
+								Altere sua senha:
 							</Title>
 							<Input
 								name="username"
@@ -160,20 +167,20 @@ function Login() {
 								<Grid type="row">
 									<Grid type="column" size={6} margin={[0, 10]}>
 										<Button type="filled" color="secondary" onClick={() => handle.alterView()}>
-                      Cancelar
+											Cancelar
 										</Button>
 									</Grid>
 									<Grid type="column" size={6} margin={[0, 10]}>
 										<Button type="filled" onClick={handle.submitRecover}>
-                      Salvar
+											Salvar
 										</Button>
 									</Grid>
 								</Grid>
 							</Grid>
-						</>
+						</Card>
 					),
 				})[view]}
-			</Card>
+			</Box>
 		</Box>
 	)
 }

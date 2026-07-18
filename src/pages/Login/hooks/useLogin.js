@@ -3,7 +3,7 @@ import useMessage from 'hooks/useMessage'
 import useLoading from 'hooks/useLoading'
 import useAuth from 'hooks/useLogin'
 import Auth from 'services/auth'
-import { comparativePassword } from '../utils/functions'
+import { comparativePassword, validateEmail, validateUsername } from '../utils/functions'
 import { INITIAL } from '../utils/constants'
 import { isNull } from 'utils/functions'
 
@@ -27,7 +27,7 @@ export function useLogin() {
 			setView(INITIAL.VIEW)
 		},
 		submitLogin() {
-			if (isNull(values, ['new_password'])) {
+			if (isNull(values, ['new_password', 'email'])) {
 				return openMessage('warning', 'Preencha todos os dados')
 			}
 
@@ -43,7 +43,17 @@ export function useLogin() {
 		submitRegister() {
 			if (isNull(values)) {
 				return openMessage('warning', 'Preencha todos os dados')
-			} else if (!comparativePassword(values.password, values.new_password).valid) {
+			}
+
+			if (!validateEmail(values.email).valid) {
+				return openMessage('warning', 'E-mail inválido')
+			}
+
+			if (!validateUsername(values.username)) {
+				return openMessage('warning', 'Usuário inválido')
+			}
+
+			if (!comparativePassword(values.password, values.new_password).valid) {
 				return openMessage('warning', 'As senhas não coincidem')
 			}
 
@@ -57,7 +67,7 @@ export function useLogin() {
 				.finally(stopLoading)
 		},
 		submitRecover() {
-			if (isNull(values)) {
+			if (isNull(values, ['email'])) {
 				return openMessage('warning', 'Preencha todos os dados')
 			} else if (!comparativePassword(values.password, values.new_password).valid) {
 				return openMessage('warning', 'As senhas não coincidem')
