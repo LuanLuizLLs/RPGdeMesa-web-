@@ -13,6 +13,7 @@
         "name": "typescript-plugin-css-modules"
       }
     ],
+    "ignoreDeprecations": "6.0",
     "moduleResolution": "bundler",
     "module": "esnext",
     "target": "es2015",
