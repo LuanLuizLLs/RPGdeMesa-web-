@@ -26,9 +26,27 @@ const Auth = (params = {}) => {
 				throw callback(response)
 			}
 		},
+		async sendCode(callback) {
+			try {
+				const response = await auth.post('auth/send-code', params)
+				callback(response)
+			} catch ({ response }) {
+				throw callback(response)
+			}
+		},
+		async confirmCode(callback) {
+			try {
+				const response = await auth.post('auth/confirm-code', params)
+				Token.set(response.data.token)
+				callback(response)
+			} catch ({ response }) {
+				throw callback(response)
+			}
+		},
 		async recover(callback) {
 			try {
 				const response = await auth.patch('auth/recover', params)
+				Token.remove()
 				callback(response)
 			} catch ({ response }) {
 				throw callback(response)

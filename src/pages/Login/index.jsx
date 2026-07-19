@@ -1,6 +1,6 @@
 import Logo from 'assets/img/logo.png'
 import { useLogin } from './hooks/useLogin'
-import { comparativePassword, validateEmail, validateUsername } from './utils/functions'
+import { comparativePassword, formatCode, validateEmail, validateUsername } from './utils/functions'
 import { Box, Title, Card, Image, Input, Button, Link, Grid } from 'components'
 
 function Login() {
@@ -54,7 +54,7 @@ function Login() {
 								</Grid>
 							</Grid>
 							<Box width="fit-content" margin="0 auto">
-								<Link onClick={() => handle.alterView('recover')}>
+								<Link onClick={() => handle.alterView('send_email')}>
 									Esqueceu sua senha?
 								</Link>
 							</Box>
@@ -123,6 +123,86 @@ function Login() {
 							</Grid>
 						</Card>
 					),
+					send_email: (
+						<Card maxWidth="350px">
+							<Image
+								src={Logo}
+								alt="logo"
+								maxWidth={100}
+								maxHeight={100}
+								margin="10px auto"
+							/>
+							<Title type="h1" color="primary" textAlign="center">
+								Recuperar
+							</Title>
+							<Title type="h6" color="primary" textAlign="center">
+								Digite o e-mail da sua conta:
+							</Title>
+							<Input
+								type="email"
+								name="email"
+								label="E-mail"
+								placeholder="Digite seu e-mail"
+								stateValue={stateValues}
+								onEnter={handle.submitLogin}
+								{...validateEmail(values.email)}
+							/>
+							<Grid type="container" padding={[20, 0]}>
+								<Grid type="row">
+									<Grid type="column" size={6} margin={[0, 10]}>
+										<Button type="filled" color="secondary" onClick={() => handle.alterView()}>
+											Voltar
+										</Button>
+									</Grid>
+									<Grid type="column" size={6} margin={[0, 10]}>
+										<Button type="filled" onClick={handle.sendEmail}>
+											Enviar
+										</Button>
+									</Grid>
+								</Grid>
+							</Grid>
+						</Card>
+					),
+					send_code: (
+						<Card maxWidth="350px">
+							<Image
+								src={Logo}
+								alt="logo"
+								maxWidth={100}
+								maxHeight={100}
+								margin="10px auto"
+							/>
+							<Title type="h1" color="primary" textAlign="center">
+								Recuperar
+							</Title>
+							<Title type="h6" color="primary" textAlign="center">
+								Digite o código de confirmação:
+							</Title>
+							<Input
+								name="code"
+								label="Código"
+								maxLength={6}
+								placeholder="Digite o código"
+								formatter={formatCode}
+								stateValue={stateValues}
+								onEnter={handle.submitLogin}
+							/>
+							<Grid type="container" padding={[20, 0]}>
+								<Grid type="row">
+									<Grid type="column" size={6} margin={[0, 10]}>
+										<Button type="filled" color="secondary" onClick={() => handle.alterView('send_email')}>
+											Voltar
+										</Button>
+									</Grid>
+									<Grid type="column" size={6} margin={[0, 10]}>
+										<Button type="filled" onClick={handle.sendCode}>
+											Confirmar
+										</Button>
+									</Grid>
+								</Grid>
+							</Grid>
+						</Card>
+					),
 					recover: (
 						<Card maxWidth="350px">
 							<Image
@@ -138,13 +218,6 @@ function Login() {
 							<Title type="h6" color="primary" textAlign="center">
 								Altere sua senha:
 							</Title>
-							<Input
-								name="username"
-								label="Usuário"
-								placeholder="Digite seu usuário"
-								stateValue={stateValues}
-								onEnter={handle.submitRecover}
-							/>
 							<Input
 								name="password"
 								label="Nova senha"
