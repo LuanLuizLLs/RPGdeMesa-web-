@@ -26,6 +26,10 @@
   background-color: var(--color-background);
 }
 
+input:-webkit-autofill {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 #root {
   height: 100vh;
   width: 100vw;
