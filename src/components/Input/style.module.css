@@ -42,6 +42,11 @@
   box-shadow: 0 0 4px var(--color-error);
 }
 
+.start[data-visible=false],
+.end[data-visible=false] {
+  display: none;
+}
+
 .start,
 .end {
   font-size: inherit;
@@ -54,6 +59,18 @@
 
 .end {
   padding-right: 6px;
+}
+
+.input[type=password]+.end::before {
+  content: '\e8f4';
+  cursor: pointer;
+  color: var(--color-primary)
+}
+
+.input[type=text]+.end::before {
+  content: '\e8f5';
+  cursor: pointer;
+  color: var(--color-primary)
 }
 
 .input {
