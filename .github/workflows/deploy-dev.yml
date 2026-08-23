@@ -20,4 +20,5 @@ jobs:
             git fetch origin
             git reset --hard origin/master
             npm ci
+            npm test
             npm run build
