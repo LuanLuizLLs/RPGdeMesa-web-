@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { INITIAL } from '../utils/constants'
-import { characterAttributes } from '../utils/functions'
 import useLoading from 'hooks/useLoading'
 import useMessage from 'hooks/useMessage'
 import API from 'services/api'
@@ -39,10 +38,7 @@ export function useCharacters() {
 		createCharacter() {
 			startLoading('circular')
 
-			API('characters', {
-				...values,
-				...characterAttributes(values.race, values.caste),
-			})
+			API('characters', values)
 				.create(({ data }) => {
 					openMessage(data.status, data.message)
 				})

@@ -10,7 +10,7 @@ export const TextArea = ({
 	name = '',
 	stateValue = [],
 }) => {
-  
+
 	const [value, setValue] = stateValue
 
 	return (
