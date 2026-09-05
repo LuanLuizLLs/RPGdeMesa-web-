@@ -1,6 +1,7 @@
 {
   "name": "rpg",
-  "version": "0.1.0",
+  "version": "0.3.0",
+  "description": "Sistema de RPG.",
   "private": true,
   "dependencies": {
     "@laravel/echo-react": "^2.3.3",
