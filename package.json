@@ -1,6 +1,6 @@
 {
   "name": "rpg",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Sistema de RPG.",
   "private": true,
   "dependencies": {
