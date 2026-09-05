@@ -1,5 +1,4 @@
-import { Box, Button, Input, Paper, Select, Text, TextArea, Title } from 'components'
-import { OPTIONS } from 'utils/constants'
+import { Box, Button, Input, Paper, Text, TextArea, Title } from 'components'
 
 export function Modals({ handle, stateModal, stateValues }) {
 	const [modal] = stateModal
@@ -8,7 +7,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 		character_start: (
 			<>
 				<Title type="h6">
-          Detalhes do personagem:
+					Detalhes do personagem:
 				</Title>
 				<Paper backgroundColor="secondary">
 					<Text color="primary" fontWeight="bold">
@@ -20,10 +19,10 @@ export function Modals({ handle, stateModal, stateValues }) {
 				</Paper>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="bottomless" color="primary" padding={10} onClick={handle.resetCharacter}>
-            Voltar
+						Voltar
 					</Button>
 					<Button type="filled" padding={10} onClick={handle.startCharacter}>
-            Jogar
+						Jogar
 					</Button>
 				</Box>
 			</>
@@ -31,29 +30,11 @@ export function Modals({ handle, stateModal, stateValues }) {
 		character_create: (
 			<>
 				<Title type="h6">
-          Criar personagem:
+					Criar personagem:
 				</Title>
 				<Input
 					name="name"
 					placeholder="Nome"
-					stateValue={stateValues}
-				/>
-				<Select
-					name="race"
-					placeholder="Raça"
-					options={OPTIONS.CHARACTER.RACE}
-					stateValue={stateValues}
-				/>
-				<Select
-					name="caste"
-					placeholder="Classe"
-					options={OPTIONS.CHARACTER.CASTE}
-					stateValue={stateValues}
-				/>
-				<Select
-					name="tendency"
-					placeholder="Tendência"
-					options={OPTIONS.CHARACTER.TENDENCY}
 					stateValue={stateValues}
 				/>
 				<TextArea
@@ -64,10 +45,10 @@ export function Modals({ handle, stateModal, stateValues }) {
 				/>
 				<Box display="flex" justifyContent="flex-end">
 					<Button type="filled" color="secondary" padding={10} onClick={handle.resetCharacter}>
-            Cancelar
+						Cancelar
 					</Button>
 					<Button type="filled" padding={10} onClick={handle.createCharacter}>
-            Criar
+						Criar
 					</Button>
 				</Box>
 			</>
@@ -75,7 +56,7 @@ export function Modals({ handle, stateModal, stateValues }) {
 		character_update: (
 			<>
 				<Title type="h6">
-          Editar personagem:
+					Editar personagem:
 				</Title>
 				<Input
 					name="name"
@@ -90,10 +71,10 @@ export function Modals({ handle, stateModal, stateValues }) {
 				/>
 				<Box display="flex" justifyContent="flex-end">
 					<Button type="filled" color="secondary" padding={10} onClick={handle.resetCharacter}>
-            Cancelar
+						Cancelar
 					</Button>
 					<Button type="filled" padding={10} onClick={handle.updateCharacter}>
-            Salvar
+						Salvar
 					</Button>
 				</Box>
 			</>
@@ -101,17 +82,17 @@ export function Modals({ handle, stateModal, stateValues }) {
 		character_delete: (
 			<>
 				<Title type="h6">
-          Deletar personagem:
+					Deletar personagem:
 				</Title>
 				<Text>
-          Tem certeza que deseja excluir o personagem <b>{modal.data.name}</b>?
+					Tem certeza que deseja excluir o personagem <b>{modal.data.name}</b>?
 				</Text>
 				<Box display="flex" justifyContent="flex-end" marginTop={10}>
 					<Button type="bottomless" padding={10} onClick={handle.resetCharacter}>
-            Cancelar
+						Cancelar
 					</Button>
 					<Button type="filled" color="error" padding={10} onClick={handle.deleteCharacter}>
-            Excluir
+						Excluir
 					</Button>
 				</Box>
 			</>

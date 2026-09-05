@@ -12,7 +12,7 @@ export const INITIAL = {
 	},
 	LIST: {
 		columns: {
-			name: 'Item',
+			name: 'Nome',
 			description: 'Descrição',
 			attribute: 'Atributo',
 			level: 'Nível',

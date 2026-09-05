@@ -6,9 +6,6 @@ export const INITIAL = {
 	VALUES: {
 		name: '',
 		description: '',
-		race: '',
-		caste: '',
-		tendency: '',
 	},
 	LIST: {
 		columns: {

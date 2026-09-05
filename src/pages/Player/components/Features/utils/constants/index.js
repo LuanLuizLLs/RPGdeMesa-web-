@@ -15,7 +15,7 @@ export const INITIAL = {
 	},
 	LIST: {
 		columns: {
-			name: 'Característica',
+			name: 'Nome',
 			description: 'Descrição',
 			modifier: 'Modificador',
 		},
