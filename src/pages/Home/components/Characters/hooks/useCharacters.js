@@ -28,7 +28,7 @@ export function useCharacters() {
 			startLoading('bar')
 
 			API('characters')
-				.read(({ data }) => {
+				.get(({ data }) => {
 					setList((state) => ({
 						...state, rows: data.response,
 					}))
@@ -39,7 +39,7 @@ export function useCharacters() {
 			startLoading('circular')
 
 			API('characters', values)
-				.create(({ data }) => {
+				.post(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetCharacter)
@@ -50,7 +50,7 @@ export function useCharacters() {
 			startLoading('circular')
 
 			API('characters', values)
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetCharacter)

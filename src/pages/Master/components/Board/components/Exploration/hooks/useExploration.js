@@ -33,7 +33,7 @@ export function useExploration() {
 				id_scenery: SCENERY.id,
 				active: 1,
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					const [exploration = {}] = data.response
 					setList(exploration)
 				})
@@ -56,7 +56,7 @@ export function useExploration() {
 				id,
 				board: updated
 			})
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetExploration)
@@ -76,7 +76,7 @@ export function useExploration() {
 				id,
 				board: updated
 			})
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetExploration)

@@ -31,7 +31,7 @@ export function useInventory() {
 			API('items', {
 				id_character: CHARACTER.id,
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					setList((state) => ({
 						...state, rows: data.response,
 					}))
@@ -45,7 +45,7 @@ export function useInventory() {
 				...values,
 				id_character: CHARACTER.id,
 			})
-				.create(({ data }) => {
+				.post(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetInventory)
@@ -56,7 +56,7 @@ export function useInventory() {
 			startLoading('circular')
 
 			API('items', values)
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetInventory)

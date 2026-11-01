@@ -24,7 +24,7 @@ export function usePlayer() {
 			API('characters', {
 				id: id_character,
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					const [character = null] = data.response
 
 					if (!character) {

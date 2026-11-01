@@ -31,7 +31,7 @@ export function useInteractions() {
 			API('interactions', {
 				id_adventure: ADVENTURE.id,
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					setList((state) => ({
 						...state,
 						rows: data.response,
@@ -46,7 +46,7 @@ export function useInteractions() {
 				...values,
 				id_adventure: ADVENTURE.id,
 			})
-				.create(({ data }) => {
+				.post(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetInteraction)
@@ -57,7 +57,7 @@ export function useInteractions() {
 			startLoading('circular')
 
 			API('interactions', values)
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetInteraction)
@@ -84,7 +84,7 @@ export function useInteractions() {
 				id_interaction,
 				...rest
 			})
-				.create(({ data }) => {
+				.post(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetInteraction)

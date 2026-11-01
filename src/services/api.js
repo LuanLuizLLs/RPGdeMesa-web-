@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Token from './token'
 
-const API = (prefix = '', params = {}) => {
+const API = (route, params = {}) => {
 	const api = axios.create({
 		baseURL: process.env.REACT_APP_API_URL,
 		headers: {
@@ -10,25 +10,25 @@ const API = (prefix = '', params = {}) => {
 	})
 
 	return {
-		async create(callback) {
+		async post(callback) {
 			try {
-				const response = await api.post(prefix.concat('/create'), params)
+				const response = await api.post(route, params)
 				callback(response)
 			} catch ({ response }) {
 				throw callback(response)
 			}
 		},
-		async read(callback) {
+		async get(callback) {
 			try {
-				const response = await api.get(prefix.concat('/read'), { params })
+				const response = await api.get(route, { params })
 				callback(response)
 			} catch ({ response }) {
 				throw callback(response)
 			}
 		},
-		async update(callback) {
+		async patch(callback) {
 			try {
-				const response = await api.patch(prefix.concat('/update'), params)
+				const response = await api.patch(route, params)
 				callback(response)
 			} catch ({ response }) {
 				throw callback(response)
@@ -36,7 +36,7 @@ const API = (prefix = '', params = {}) => {
 		},
 		async delete(callback) {
 			try {
-				const response = await api.delete(prefix.concat('/delete'), { params })
+				const response = await api.delete(route, { params })
 				callback(response)
 			} catch ({ response }) {
 				throw callback(response)

@@ -31,7 +31,7 @@ export function useFeatures() {
 			API('features', {
 				id_character: CHARACTER.id,
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					setList((state) => ({
 						...state, rows: data.response,
 					}))
@@ -45,7 +45,7 @@ export function useFeatures() {
 				...values,
 				id_character: CHARACTER.id,
 			})
-				.create(({ data }) => {
+				.post(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetFeature)
@@ -56,7 +56,7 @@ export function useFeatures() {
 			startLoading('circular')
 
 			API('features', values)
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetFeature)

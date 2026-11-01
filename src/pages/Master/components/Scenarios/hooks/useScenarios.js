@@ -46,7 +46,7 @@ export function useScenarios() {
 			API('scenarios', {
 				id: CAMPAIGN.id_scenery,
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					const [scenery] = data.response
 					sceneryStore.set(scenery)
 				})
@@ -56,7 +56,7 @@ export function useScenarios() {
 			API('scenarios', {
 				id_campaign: CAMPAIGN.id,
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					setList((state) => ({
 						...state, rows: data.response,
 					}))
@@ -70,7 +70,7 @@ export function useScenarios() {
 				...values,
 				id_campaign: CAMPAIGN.id,
 			})
-				.create(({ data }) => {
+				.post(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetSecenery)
@@ -94,7 +94,7 @@ export function useScenarios() {
 				...CAMPAIGN,
 				id_scenery: values.id,
 			})
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetSecenery)
@@ -104,7 +104,7 @@ export function useScenarios() {
 			startLoading('circular')
 
 			API('scenarios', values)
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetSecenery)

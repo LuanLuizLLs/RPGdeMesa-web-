@@ -31,7 +31,7 @@ export function useInteraction() {
 			API('interactions-board', {
 				id_adventure: ADVENTURE.id,
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					setList(Object.assign({ ...INITIAL.LIST }, data.response))
 				})
 				.finally(stopLoading)
@@ -40,7 +40,7 @@ export function useInteraction() {
 			startLoading('bar')
 
 			API('interactions-board', update)
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetInteraction)

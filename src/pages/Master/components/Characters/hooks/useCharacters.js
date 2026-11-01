@@ -34,7 +34,7 @@ export function useCharacters() {
 			API('characters', {
 				id_campaign: CAMPAIGN.id
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					setList(Object.assign({ ...INITIAL.LIST }, data.response))
 				})
 				.finally(stopLoading)
@@ -48,7 +48,7 @@ export function useCharacters() {
 				name_campaign: CAMPAIGN.name,
 				type: NOTIFICATION_TYPE.INVITE_CAMPAIGN,
 			})
-				.create(({ data }) => {
+				.post(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetCharacter)
@@ -62,7 +62,7 @@ export function useCharacters() {
 				...values,
 				id_campaign: null,
 			})
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetCharacter)
@@ -73,7 +73,7 @@ export function useCharacters() {
 			startLoading('bar')
 
 			API('characters', list[index])
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.listCharacter)
