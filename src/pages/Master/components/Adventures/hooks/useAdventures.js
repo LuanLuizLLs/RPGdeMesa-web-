@@ -46,7 +46,7 @@ export function useAdventures() {
 			API('adventures', {
 				id: CAMPAIGN.id_adventure,
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					const [adventure] = data.response
 					adventureStore.set(adventure)
 				})
@@ -56,7 +56,7 @@ export function useAdventures() {
 			API('adventures', {
 				id_campaign: CAMPAIGN.id,
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					setList((state) => ({
 						...state, rows: data.response,
 					}))
@@ -70,7 +70,7 @@ export function useAdventures() {
 				...values,
 				id_campaign: CAMPAIGN.id,
 			})
-				.create(({ data }) => {
+				.post(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetAdventure)
@@ -94,7 +94,7 @@ export function useAdventures() {
 				...CAMPAIGN,
 				id_adventure: values.id,
 			})
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetAdventure)
@@ -104,7 +104,7 @@ export function useAdventures() {
 			startLoading('circular')
 
 			API('adventures', values)
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetAdventure)

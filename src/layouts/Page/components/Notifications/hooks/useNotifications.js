@@ -26,7 +26,7 @@ export function useNotifications() {
 			startLoading('bar')
 
 			API('notifications')
-				.read(({ data }) => {
+				.get(({ data }) => {
 					setList(data.response)
 				})
 				.finally(stopLoading)

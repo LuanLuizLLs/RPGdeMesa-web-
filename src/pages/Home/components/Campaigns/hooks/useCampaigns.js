@@ -29,7 +29,7 @@ export function useCampaigns() {
 			startLoading('bar')
 
 			API('campaigns')
-				.read(({ data }) => {
+				.get(({ data }) => {
 					setList((state) => ({
 						...state, rows: data.response,
 					}))
@@ -43,7 +43,7 @@ export function useCampaigns() {
 				...values,
 				...campaignAttributes(values.period, values.climate),
 			})
-				.create(({ data }) => {
+				.post(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetCampaign)
@@ -54,7 +54,7 @@ export function useCampaigns() {
 			startLoading('circular')
 
 			API('campaigns', values)
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetCampaign)

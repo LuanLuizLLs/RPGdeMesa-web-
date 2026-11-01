@@ -26,7 +26,7 @@ export function useMaster() {
 			API('campaigns', {
 				id: id_campaign
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					const [campaign = null] = data.response
 
 					if (!campaign) {
@@ -47,7 +47,7 @@ export function useMaster() {
 				...update,
 				...campaignAttributes(update.period, update.climate),
 			})
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.loadCampaign)

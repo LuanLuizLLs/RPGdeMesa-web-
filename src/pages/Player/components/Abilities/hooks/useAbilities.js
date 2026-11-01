@@ -31,7 +31,7 @@ export function useAbilities() {
 			API('abilities', {
 				id_character: CHARACTER.id,
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					setLists((state) => ({
 						...state, rows: data.response,
 					}))
@@ -45,7 +45,7 @@ export function useAbilities() {
 				...values,
 				id_character: CHARACTER.id,
 			})
-				.create(({ data }) => {
+				.post(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetAbility)
@@ -56,7 +56,7 @@ export function useAbilities() {
 			startLoading('circular')
 
 			API('abilities', values)
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetAbility)

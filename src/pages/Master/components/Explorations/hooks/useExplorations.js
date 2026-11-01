@@ -31,7 +31,7 @@ export function useExplorations() {
 			API('explorations', {
 				id_scenery: SCENERY.id,
 			})
-				.read(({ data }) => {
+				.get(({ data }) => {
 					setList((state) => ({
 						...state,
 						rows: data.response,
@@ -46,7 +46,7 @@ export function useExplorations() {
 				...values,
 				id_scenery: SCENERY.id,
 			})
-				.create(({ data }) => {
+				.post(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetExploration)
@@ -57,7 +57,7 @@ export function useExplorations() {
 			startLoading('circular')
 
 			API('explorations', values)
-				.update(({ data }) => {
+				.patch(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetExploration)
@@ -84,7 +84,7 @@ export function useExplorations() {
 				id_exploration,
 				...rest
 			})
-				.create(({ data }) => {
+				.post(({ data }) => {
 					openMessage(data.status, data.message)
 				})
 				.then(handle.resetExploration)
